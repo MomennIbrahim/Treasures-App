@@ -1,0 +1,43 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+abstract class AppTextStyles {
+  // 14px
+  static TextStyle text14Bold = TextStyle(
+    fontSize: 14.sp,
+    fontWeight: FontWeight.w700,
+    fontFamily: 'Cairo',
+  );
+
+  static TextStyle text14Regular = TextStyle(
+    fontSize: 14.sp,
+    fontWeight: FontWeight.w400,
+    fontFamily: 'Cairo',
+  );
+
+  // 12px
+  static TextStyle text12Bold = TextStyle(
+    fontSize: 12.sp,
+    fontWeight: FontWeight.w700,
+    fontFamily: 'Cairo',
+  );
+
+  static TextStyle text12Regular = TextStyle(
+    fontSize: 12.sp,
+    fontWeight: FontWeight.w400,
+    fontFamily: 'Cairo',
+  );
+
+  // 10px
+  static TextStyle text10Bold = TextStyle(
+    fontSize: 10.sp,
+    fontWeight: FontWeight.w700,
+    fontFamily: 'Cairo',
+  );
+
+  static TextStyle text10Regular = TextStyle(
+    fontSize: 10.sp,
+    fontWeight: FontWeight.w400,
+    fontFamily: 'Cairo',
+  );
+}
