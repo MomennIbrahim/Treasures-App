@@ -6,7 +6,7 @@ abstract class AppColors {
   //static const primary500 = Color(0xff198C8C);
 
   // Base
-  static const black = Color(0xff333333);
+  static const black = Color(0xff000000);
   static const white = Color(0xffffffff);
 
   // Background
@@ -15,7 +15,6 @@ abstract class AppColors {
   // Neutral
   static const neutral500 = Color(0xff94A3B8);
   static const neutral600 = Color(0xff64748B);
- 
 
   // Semantic — Success
   static const success800 = Color(0xff2CAA81);
