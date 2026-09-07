@@ -13,12 +13,12 @@ class BestSellingItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: 160.w,
-      height: 200.h, // نفس ارتفاع الـ SizedBox بتاع الـ ListView بالظبط
+      height: 200.h,
       child: Stack(
         children: [
           AppImage.cachedNetwork(
             width: double.infinity,
-            height: double.infinity, // تاخد كل ارتفاع وعرض الـ SizedBox
+            height: double.infinity,
             borderRadius: AppRadius.br16,
             "https://i.pinimg.com/736x/52/21/7e/52217e4c3e4cbc9ef40e891b8e108f2e.jpg",
           ),

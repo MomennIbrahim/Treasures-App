@@ -13,39 +13,36 @@ class HomeHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SliverToBoxAdapter(
-      child: SafeArea(
-        bottom: false,
-        child: Padding(
-          padding: paddingHorizontal(16),
-          child: Row(
-            children: [
-              Expanded(
-                child: GradientText(
-                  'A Better Mood Starts With KONOOZ',
-                  style: AppTextStyles.text16Bold,
-                  colors: [AppColors.white, AppColors.primary],
-                ),
+      child: Padding(
+        padding: paddingAll(16),
+        child: Row(
+          children: [
+            Expanded(
+              child: GradientText(
+                'A Better Mood Starts With KONOOZ',
+                style: AppTextStyles.text16Bold,
+                colors: [AppColors.white, AppColors.primary],
               ),
-              10.horizontalSpace,
-              GlassIconButton(
-                onPressed: () {},
-                icon: const HugeIcon(
-                  icon: HugeIcons.strokeRoundedNotification01,
-                  strokeWidth: 1.5,
-                  color: Colors.white,
-                ),
+            ),
+            10.horizontalSpace,
+            GlassIconButton(
+              onPressed: () {},
+              icon: const HugeIcon(
+                icon: HugeIcons.strokeRoundedNotification01,
+                strokeWidth: 1.5,
+                color: Colors.white,
               ),
-              10.horizontalSpace,
-              GlassIconButton(
-                onPressed: () {},
-                icon: HugeIcon(
-                  icon: HugeIcons.strokeRoundedFavourite,
-                  strokeWidth: 1.5,
-                  color: AppColors.white,
-                ),
+            ),
+            10.horizontalSpace,
+            GlassIconButton(
+              onPressed: () {},
+              icon: HugeIcon(
+                icon: HugeIcons.strokeRoundedFavourite,
+                strokeWidth: 1.5,
+                color: AppColors.white,
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

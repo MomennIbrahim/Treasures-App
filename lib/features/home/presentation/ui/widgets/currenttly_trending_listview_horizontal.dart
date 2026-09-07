@@ -9,7 +9,7 @@ class CurrenttlyTrendingListviewHorizontal extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 180.h,
+      height: 177.h,
       child: ListView.separated(
         physics: const BouncingScrollPhysics(),
         padding: paddingHorizontal(16),

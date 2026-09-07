@@ -4,7 +4,7 @@ import 'package:konoz/features/home/presentation/ui/widgets/best_selling_section
 import 'package:konoz/features/home/presentation/ui/widgets/currenttly_trending_section.dart';
 import 'package:konoz/features/home/presentation/ui/widgets/home_header.dart';
 import 'package:konoz/features/home/presentation/ui/widgets/home_offers_section.dart';
-import 'package:konoz/features/home/presentation/ui/widgets/search_card.dart';
+import 'package:konoz/features/home/presentation/ui/widgets/packages_section.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -12,14 +12,14 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: paddingOnly(bottom: 16, top: 8),
+      padding: paddingOnly(bottom: 16),
       child: CustomScrollView(
         slivers: [
           HomeHeader(),
-          SliverToBoxAdapter(child: SearchCard()),
           HomeOffersSection(),
           CurrenttlyTrendingSection(),
           BestSellingSection(),
+          PackagesSection(),
           SliverToBoxAdapter(
             child: SafeArea(top: false, child: SizedBox.shrink()),
           ),
