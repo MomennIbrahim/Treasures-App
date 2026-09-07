@@ -12,7 +12,7 @@ class SearchCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: paddingVertical(16),
+      margin: paddingAll(16),
       padding: paddingAll(14),
       decoration: BoxDecoration(
         borderRadius: AppRadius.br20,

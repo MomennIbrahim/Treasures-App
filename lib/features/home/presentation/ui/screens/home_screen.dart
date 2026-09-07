@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:konoz/core/helper/app_padding.dart';
+import 'package:konoz/features/home/presentation/ui/widgets/best_selling_section.dart';
 import 'package:konoz/features/home/presentation/ui/widgets/currenttly_trending_section.dart';
 import 'package:konoz/features/home/presentation/ui/widgets/home_header.dart';
 import 'package:konoz/features/home/presentation/ui/widgets/home_offers_section.dart';
@@ -18,6 +19,10 @@ class HomeScreen extends StatelessWidget {
           SliverToBoxAdapter(child: SearchCard()),
           HomeOffersSection(),
           CurrenttlyTrendingSection(),
+          BestSellingSection(),
+          SliverToBoxAdapter(
+            child: SafeArea(top: false, child: SizedBox.shrink()),
+          ),
         ],
       ),
     );

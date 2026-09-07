@@ -28,13 +28,13 @@ class AppBottomNavBar extends StatelessWidget {
       child: ClipRRect(
         borderRadius: AppRadius.br48,
         child: BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
+          filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
           child: Container(
             decoration: BoxDecoration(
-              color: AppColors.black.withValues(alpha: 0.20),
+              color: AppColors.black.withValues(alpha: 0.55),
               borderRadius: AppRadius.br48,
               border: Border.all(
-                color: AppColors.white.withValues(alpha: 0.25),
+                color: AppColors.white.withValues(alpha: 0.15),
                 width: 1,
               ),
               boxShadow: [
