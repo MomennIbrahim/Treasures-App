@@ -11,7 +11,7 @@ class LayoutScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       extendBody: true,
-      body: SafeArea(bottom: false, child: navigationShell),
+      body: navigationShell,
       bottomNavigationBar: AppBottomNavBar(navigationShell: navigationShell),
     );
   }

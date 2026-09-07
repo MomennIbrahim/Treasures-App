@@ -13,9 +13,10 @@ abstract class AppThemeData {
 
     colorScheme: lightColorScheme,
     fontFamily: 'Cairo',
-    scaffoldBackgroundColor: AppColors.black,
+    scaffoldBackgroundColor: Colors.white10,
 
     textTheme: TextTheme(
+      
       bodyLarge: AppTextStyles.text14Bold.copyWith(color: AppColors.white),
       bodyMedium: AppTextStyles.text14Regular.copyWith(color: AppColors.white),
       bodySmall: AppTextStyles.text12Regular.copyWith(color: AppColors.white),
