@@ -1,0 +1,93 @@
+import 'dart:ui';
+
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
+import 'package:hugeicons/hugeicons.dart';
+import 'package:konoz/core/helper/app_padding.dart';
+import 'package:konoz/core/theme/app_colors.dart';
+import 'package:konoz/core/theme/app_radius.dart';
+import 'package:konoz/core/theme/app_text_style.dart';
+
+class AppBottomNavBar extends StatelessWidget {
+  final StatefulNavigationShell navigationShell;
+
+  const AppBottomNavBar({super.key, required this.navigationShell});
+
+  void _onTap(int index) {
+    navigationShell.goBranch(
+      index,
+      initialLocation: index == navigationShell.currentIndex,
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return ClipRRect(
+      borderRadius: AppRadius.br20,
+      child: BackdropFilter(
+        filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
+        child: Container(
+          padding: paddingAll(4),
+          margin: paddingOnly(bottom: 30, left: 16, right: 16),
+          decoration: BoxDecoration(
+            color: AppColors.white.withValues(alpha: 0.100),
+            borderRadius: AppRadius.br48,
+            border: Border.all(
+              color: AppColors.white.withValues(alpha: 0.35),
+              width: 1,
+            ),
+          ),
+          child: MediaQuery.removePadding(
+            context: context,
+            removeBottom: true,
+            child: BottomNavigationBar(
+              currentIndex: navigationShell.currentIndex,
+              type: BottomNavigationBarType.fixed,
+              backgroundColor: Colors.transparent,
+              elevation: 0,
+              selectedItemColor: AppColors.white,
+              unselectedItemColor: AppColors.neutral500,
+              selectedLabelStyle: AppTextStyles.text10Bold,
+              onTap: _onTap,
+              items: [
+                BottomNavigationBarItem(
+                  icon: HugeIcon(
+                    icon: HugeIcons.strokeRoundedHome09,
+                    strokeWidth: 1.5,
+                    size: 18.sp,
+                  ),
+                  label: 'Home',
+                ),
+                BottomNavigationBarItem(
+                  icon: HugeIcon(
+                    icon: HugeIcons.strokeRoundedShapeCollection,
+                    strokeWidth: 1.5,
+                    size: 18.sp,
+                  ),
+                  label: 'Collection',
+                ),
+                BottomNavigationBarItem(
+                  icon: HugeIcon(
+                    icon: HugeIcons.strokeRoundedShapeCollection,
+                    strokeWidth: 1.5,
+                    size: 18.sp,
+                  ),
+                  label: 'About',
+                ),
+                BottomNavigationBarItem(
+                  icon: HugeIcon(
+                    icon: HugeIcons.strokeRoundedAccountSetting01,
+                    strokeWidth: 1.5,
+                    size: 18.sp,
+                  ),
+                  label: 'Me',
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}

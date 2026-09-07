@@ -2,6 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 abstract class AppTextStyles {
+  // 18px
+  static TextStyle text16Bold = TextStyle(
+    fontSize: 16.sp,
+    fontWeight: FontWeight.w700,
+    fontFamily: 'Cairo',
+  );
+
   // 14px
   static TextStyle text14Bold = TextStyle(
     fontSize: 14.sp,

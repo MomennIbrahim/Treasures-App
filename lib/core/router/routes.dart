@@ -1,7 +1,7 @@
-abstract class Routes {
+class Routes {
+  static const String layout = '/layout';
   static const String home = '/home';
-  static const String perfumes = '/perfumes';
-  static const String categories = '/categories';
-  static const String guides = '/guides';
-
+  static const String collections = '/collections';
+  static const String aboutUs = '/about-us';
+  static const String contactUs = '/contact-us';
 }

@@ -6,7 +6,6 @@ import 'package:konoz/core/theme/app_outline_button_theme.dart';
 import 'package:konoz/core/theme/app_text_button_theme.dart';
 import 'package:konoz/core/theme/app_text_style.dart';
 import 'package:konoz/core/theme/color_scheme.dart';
- 
 
 abstract class AppThemeData {
   static ThemeData get light => ThemeData(
@@ -14,13 +13,13 @@ abstract class AppThemeData {
 
     colorScheme: lightColorScheme,
     fontFamily: 'Cairo',
-    scaffoldBackgroundColor: AppColors.background,
+    scaffoldBackgroundColor: AppColors.black,
 
     textTheme: TextTheme(
-      bodyLarge: AppTextStyles.text14Bold.copyWith(color: AppColors.black),
-      bodyMedium: AppTextStyles.text14Regular.copyWith(color: AppColors.black),
-      bodySmall: AppTextStyles.text12Regular.copyWith(color: AppColors.black),
-      labelLarge: AppTextStyles.text12Bold.copyWith(color: AppColors.black),
+      bodyLarge: AppTextStyles.text14Bold.copyWith(color: AppColors.white),
+      bodyMedium: AppTextStyles.text14Regular.copyWith(color: AppColors.white),
+      bodySmall: AppTextStyles.text12Regular.copyWith(color: AppColors.white),
+      labelLarge: AppTextStyles.text12Bold.copyWith(color: AppColors.white),
     ),
 
     splashFactory: NoSplash.splashFactory,
