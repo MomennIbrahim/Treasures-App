@@ -1,6 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:konoz/core/networking/api_service.dart';
+import 'package:konoz/features/collections/data/repo/collections_repo.dart';
+import 'package:konoz/features/collections/data/repo/collections_repo_implementation.dart';
+import 'package:konoz/features/collections/presentation/controllers/collections/collections_cubit.dart';
 import 'package:konoz/features/home/data/repo/home_repo.dart';
 import 'package:konoz/features/home/data/repo/home_repo_implementation.dart';
 import 'package:konoz/features/home/presentation/controllers/banners_cubit/banners_cubit.dart';
@@ -32,7 +35,11 @@ Future<void> setupGetIt() async {
   getIt.registerLazySingleton<HomeRepo>(
     () => HomeRepoImplementation(getIt<ApiService>()),
   );
-  
+
+  getIt.registerLazySingleton<CollectionsRepo>(
+    () => CollectionsRepoImplementation(getIt<ApiService>()),
+  );
+
   /*
   // Profile Repository
   getIt.registerLazySingleton<ProfileRepo>(
@@ -50,6 +57,11 @@ Future<void> setupGetIt() async {
   // Home Cubits
   getIt.registerLazySingleton<BannersCubit>(() => BannersCubit());
   getIt.registerLazySingleton<BestSellingCubit>(() => BestSellingCubit());
-  getIt.registerLazySingleton<CurrentlyTrendingCubit>(() => CurrentlyTrendingCubit());
+  getIt.registerLazySingleton<CurrentlyTrendingCubit>(
+    () => CurrentlyTrendingCubit(),
+  );
   getIt.registerLazySingleton<PackagesCubit>(() => PackagesCubit());
+
+  // Collections Cubits
+  getIt.registerFactory<CollectionsCubit>(() => CollectionsCubit());
 }

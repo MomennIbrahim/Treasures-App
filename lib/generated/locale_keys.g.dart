@@ -14,6 +14,9 @@ abstract class  LocaleKeys {
   static const home_best_selling = 'home.best_selling';
   static const home_packages = 'home.packages';
   static const home = 'home';
+  static const collections_featured_collections = 'collections.featured_collections';
+  static const collections_featured_collections_description = 'collections.featured_collections_description';
+  static const collections = 'collections';
   static const errors_errors_timeout = 'errors.errors_timeout';
   static const errors_errors_no_internet = 'errors.errors_no_internet';
   static const errors_errors_unexpected = 'errors.errors_unexpected';

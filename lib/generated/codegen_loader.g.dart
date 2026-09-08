@@ -28,6 +28,10 @@ class CodegenLoader extends AssetLoader{
     "best_selling": "Best Selling",
     "packages": "Packages"
   },
+  "collections": {
+    "featured_collections": "FEATURED COLLECTIONS",
+    "featured_collections_description": "Discover the fragrance everyone's talking about - bold, unique, and made to be your signature scent."
+  },
   "errors": {
     "errors_timeout": "Connection timed out. Please try again.",
     "errors_no_internet": "No internet connection. Please check your connection.",
@@ -48,6 +52,10 @@ static const Map<String,dynamic> _ar = {
     "currently_trending": "الأكثر رواجًا حاليًا",
     "best_selling": "الأكثر مبيعًا",
     "packages": "الباقات"
+  },
+  "collections": {
+    "featured_collections": "مجموعات مميزة",
+    "featured_collections_description": "اكتشف العطر الذي يتحدث عنه الجميع - جريء، مميز، ومصمم ليكون عطرك المميز."
   },
   "errors": {
     "errors_timeout": "انتهت مهلة الاتصال. حاول مرة أخرى.",

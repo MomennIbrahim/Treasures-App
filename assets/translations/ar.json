@@ -13,6 +13,11 @@
         "best_selling": "الأكثر مبيعًا",
         "packages": "الباقات"
     },
+
+    "collections": {
+        "featured_collections":  "مجموعات مميزة",
+        "featured_collections_description": "اكتشف العطر الذي يتحدث عنه الجميع - جريء، مميز، ومصمم ليكون عطرك المميز."
+    },
     
     "errors": {
     "errors_timeout": "انتهت مهلة الاتصال. حاول مرة أخرى.",
