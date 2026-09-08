@@ -14,7 +14,7 @@ class PackagesSection extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: paddingOnly(left: 16, right: 16, top: 16),
+            padding: paddingOnly(left: 16, right: 16, top: 20),
             child: Text("Packages", style: AppTextStyles.text14Bold),
           ),
           10.verticalSpace,

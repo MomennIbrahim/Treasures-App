@@ -21,7 +21,7 @@ class PackageItem extends StatelessWidget {
         ),
       ),
       child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           AppImage.cachedNetwork(
             height: 160,
@@ -32,10 +32,9 @@ class PackageItem extends StatelessWidget {
             ),
             "https://i.pinimg.com/736x/ef/2f/76/ef2f767715a8c352f92e680c7e51013d.jpg",
           ),
-          10.horizontalSpace,
           Expanded(
             child: Padding(
-              padding: paddingVertical(10),
+              padding: paddingSymmetric(10, 12),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -47,20 +46,15 @@ class PackageItem extends StatelessWidget {
                   Text(
                     "2500 L.E (100 ML)",
                     style: AppTextStyles.text14Bold.copyWith(
-                      color: AppColors.primary,
+                      color: Colors.amber,
                     ),
                   ),
-                  2.verticalSpace,
+                  4.verticalSpace,
                   Text(
                     "Big Sale Up to 50% Off on All Fragrances",
                     style: AppTextStyles.text10Bold.copyWith(
-                      color: AppColors.primary,
+                      color: Colors.amber,
                     ),
-                  ),
-                  5.verticalSpace,
-                  Text(
-                    "Want to smell luxurious without the luxury price tag? These 5 fragrances — Noir Intense",
-                    style: AppTextStyles.text10Regular,
                   ),
                 ],
               ),
