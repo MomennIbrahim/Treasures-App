@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:konoz/core/di/dependency_injection.dart';
@@ -11,7 +12,8 @@ import 'package:konoz/features/home/presentation/controllers/currently_trending/
 import 'package:konoz/features/home/presentation/controllers/packages_cubit.dart';
 import 'package:konoz/features/home/presentation/ui/screens/home_screen.dart';
 import 'package:konoz/features/layout/presentation/ui/screens/layout_screen.dart';
-import 'package:konoz/features/product_details/presentation/screens/product_details_screen.dart';
+import 'package:konoz/features/product_details/presentation/controllers/product_details/product_details_cubit.dart';
+import 'package:konoz/features/product_details/presentation/ui/screens/product_details_screen.dart';
 
 import 'routes.dart';
 
@@ -75,12 +77,35 @@ class AppRouter {
         ],
       ),
 
-       GoRoute(
+      GoRoute(
         path: Routes.productDetails,
-        builder: (context, state) {
-          return const ProductDetailsScreen();
+        pageBuilder: (context, state) {
+          return AppPageTransition.fade(
+            state: state,
+            child: BlocProvider.value(
+              value: getIt.get<ProductDetailsCubit>(),
+              child: ProductDetailsScreen(),
+            ),
+          );
         },
       ),
     ],
   );
+}
+
+class AppPageTransition {
+  static CustomTransitionPage<T> fade<T>({
+    required GoRouterState state,
+    required Widget child,
+  }) {
+    return CustomTransitionPage<T>(
+      key: state.pageKey,
+      transitionDuration: const Duration(milliseconds: 50),
+      reverseTransitionDuration: const Duration(milliseconds: 50),
+      child: child,
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        return FadeTransition(opacity: animation, child: child);
+      },
+    );
+  }
 }

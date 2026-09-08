@@ -42,6 +42,8 @@ dependencies:
   cached_network_image: ^3.4.1
   # Flutter package for adding animations to your Flutter widgets.
   animate_do: ^5.1.0
+  # Flutter package for creating and animating widgets that display a progress indicator.
+  flutter_rating_bar: ^4.0.1
   # Flutter package for creating Skeleton UI.
   shimmer: ^3.0.0
   # Flutter icon UI.

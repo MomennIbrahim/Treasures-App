@@ -11,6 +11,9 @@ import 'package:konoz/features/home/presentation/controllers/best_selling/best_s
 import 'package:konoz/features/home/presentation/controllers/currently_trending/currently_trending_cubit.dart';
 import 'package:konoz/features/home/presentation/controllers/packages_cubit.dart';
 import 'package:konoz/features/layout/presentation/controller/layout_cubit.dart';
+import 'package:konoz/features/product_details/data/repo/product_details_repo.dart';
+import 'package:konoz/features/product_details/data/repo/product_details_repo_implmentation.dart';
+import 'package:konoz/features/product_details/presentation/controllers/product_details/product_details_cubit.dart';
 
 final getIt = GetIt.instance;
 
@@ -40,6 +43,9 @@ Future<void> setupGetIt() async {
     () => CollectionsRepoImplementation(getIt<ApiService>()),
   );
 
+  getIt.registerLazySingleton<ProductDetailsRepo>(
+    () => ProductDetailsRepoImplementation(getIt<ApiService>()),
+  );
   /*
   // Profile Repository
   getIt.registerLazySingleton<ProfileRepo>(
@@ -64,4 +70,9 @@ Future<void> setupGetIt() async {
 
   // Collections Cubits
   getIt.registerFactory<CollectionsCubit>(() => CollectionsCubit());
+
+  // Product Details Cubit
+  getIt.registerFactory<ProductDetailsCubit>(
+    () => ProductDetailsCubit(getIt()),
+  );
 }

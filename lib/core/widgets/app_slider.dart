@@ -2,35 +2,24 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:konoz/core/helper/app_padding.dart';
 import 'package:konoz/core/theme/app_colors.dart';
 import 'package:konoz/features/home/presentation/ui/widgets/banner_Item.dart';
-
-class ImageBannerItem {
-  final String imagePath;
-  final String title;
-  final String subtitle;
-  final String buttonLabel;
-  final VoidCallback onPressed;
-
-  const ImageBannerItem({
-    required this.imagePath,
-    required this.title,
-    required this.subtitle,
-    required this.buttonLabel,
-    required this.onPressed,
-  });
-}
 
 class AppSlider extends StatefulWidget {
   final List<ImageBannerItem> items;
   final double height;
   final Duration autoScrollDuration;
+  final bool showBannerInfo;
+  final BoxFit? fit;
 
   const AppSlider({
     super.key,
     required this.items,
     this.height = 170,
     this.autoScrollDuration = const Duration(seconds: 4),
+    this.showBannerInfo = true,
+    this.fit,
   });
 
   @override
@@ -84,6 +73,8 @@ class _AppSliderState extends State<AppSlider> {
             itemBuilder: (context, index) {
               final item = widget.items[index];
               return BannerItem(
+                showInfo: widget.showBannerInfo,
+                boxFit: widget.fit,
                 imagePath: item.imagePath,
                 title: item.title,
                 subtitle: item.subtitle,
@@ -95,7 +86,7 @@ class _AppSliderState extends State<AppSlider> {
           ),
         ),
         if (widget.items.length > 1) ...[
-          8.verticalSpace,
+          10.verticalSpace,
           _Indicators(count: widget.items.length, currentIndex: _currentPage),
         ],
       ],
@@ -118,9 +109,9 @@ class _Indicators extends StatelessWidget {
 
         return AnimatedContainer(
           duration: const Duration(milliseconds: 250),
-          margin: EdgeInsets.symmetric(horizontal: 3.w),
-          width: isActive ? 20.w : 6.w,
-          height: 6.h,
+          margin: paddingHorizontal(3),
+          width: isActive ? 22.w : 7.w,
+          height: 7.h,
           decoration: BoxDecoration(
             color: isActive
                 ? AppColors.primary
@@ -131,4 +122,20 @@ class _Indicators extends StatelessWidget {
       }),
     );
   }
+}
+
+class ImageBannerItem {
+  final String imagePath;
+  final String title;
+  final String subtitle;
+  final String buttonLabel;
+  final VoidCallback onPressed;
+
+  const ImageBannerItem({
+    required this.imagePath,
+    required this.title,
+    required this.subtitle,
+    required this.buttonLabel,
+    required this.onPressed,
+  });
 }

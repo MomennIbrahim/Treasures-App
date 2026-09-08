@@ -18,6 +18,15 @@
         "featured_collections":  "مجموعات مميزة",
         "featured_collections_description": "اكتشف العطر الذي يتحدث عنه الجميع - جريء، مميز، ومصمم ليكون عطرك المميز."
     },
+
+    "product_details":{
+        "longevity": "الثبات",
+        "sillage": "الفوحان",
+        "description": "الوصف",
+        "how_to_use": "طريقة الأستخدام",
+        "ingredients": "المكونات",
+        "details": "التفاصيل"
+    },
     
     "errors": {
     "errors_timeout": "انتهت مهلة الاتصال. حاول مرة أخرى.",

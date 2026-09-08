@@ -18,6 +18,15 @@
         "featured_collections_description": "Discover the fragrance everyone's talking about - bold, unique, and made to be your signature scent."
     },
 
+    "product_details":{
+        "longevity": "Longevity",
+        "sillage": "Sillage",
+        "description": "Description",
+        "how_to_use": "How To Use",
+        "ingredients": "Ingredients",
+        "details": "Details"
+    },
+
     "errors": {
     "errors_timeout": "Connection timed out. Please try again.",
     "errors_no_internet": "No internet connection. Please check your connection.",

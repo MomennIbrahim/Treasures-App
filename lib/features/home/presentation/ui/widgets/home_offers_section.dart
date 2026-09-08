@@ -6,6 +6,7 @@ import 'package:konoz/core/helper/app_padding.dart';
 import 'package:konoz/core/theme/app_shimmer.dart';
 import 'package:konoz/core/theme/app_text_style.dart';
 import 'package:konoz/core/widgets/app_slider.dart';
+import 'package:konoz/core/widgets/app_toast.dart';
 import 'package:konoz/features/home/data/demo/demo_banners_data.dart';
 import 'package:konoz/features/home/presentation/controllers/banners_cubit/banners_cubit.dart';
 import 'package:konoz/generated/locale_keys.g.dart';
@@ -32,11 +33,18 @@ class _HomeOffersSectionState extends State<HomeOffersSection> {
       sliver: SliverToBoxAdapter(
         child: BlocConsumer<BannersCubit, BannersState>(
           listener: (context, state) {
-            if (state.failure != null) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text(state.failure!.getAllError())),
+            if (state.isFailure) {
+              AppToast.show(
+                context,
+                message: state.failure?.getAllError() ?? "Something went wrong",
+                type: AppToastType.error,
               );
             }
+            AppToast.show(
+              context,
+              message: "Banners loaded successfully 🎉",
+              type: AppToastType.success,
+            );
           },
           builder: (context, state) {
             final bool isLoading = state.isLoading || state.isInitial;

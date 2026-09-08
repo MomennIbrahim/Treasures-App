@@ -17,7 +17,7 @@ abstract class AppColors {
   static const neutral600 = Color(0xff64748B);
 
   // Semantic — Success
-  static const success800 = Color(0xff2CAA81);
+  static const success800 = Color(0xff49b989);
   static const success100 = Color(0xffF1FCFA);
 
   // Semantic — Error

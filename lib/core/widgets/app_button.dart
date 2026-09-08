@@ -39,7 +39,7 @@ class AppButton extends StatelessWidget {
       padding: padding ?? EdgeInsets.zero,
       child: SizedBox(
         width: width?.w.toDouble() ?? double.infinity,
-        height: height?.h.toDouble() ?? 40.h,
+        height: height?.h.toDouble() ?? 42.5.h,
         child: _isOutlined ? _buildOutlined() : _buildFilled(),
       ),
     );
@@ -75,8 +75,8 @@ class AppButton extends StatelessWidget {
     final style =
         labelStyle ??
         (variant == AppButtonVariant.outlined
-            ? AppTextStyles.text12Regular.copyWith(color: AppColors.black)
-            : AppTextStyles.text12Regular);
+            ? AppTextStyles.text14Bold.copyWith(color: AppColors.black)
+            : AppTextStyles.text14Bold);
 
     if (icon != null) {
       return Row(

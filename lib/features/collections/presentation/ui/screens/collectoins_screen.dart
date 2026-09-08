@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:konoz/core/helper/app_padding.dart';
 import 'package:konoz/core/theme/app_shimmer.dart';
 import 'package:konoz/core/theme/app_text_style.dart';
+import 'package:konoz/core/widgets/app_toast.dart';
 import 'package:konoz/features/collections/presentation/controllers/collections/collections_cubit.dart';
 import 'package:konoz/features/collections/presentation/ui/widgets/collections_grid_view.dart';
 import 'package:konoz/generated/locale_keys.g.dart';
@@ -27,7 +28,22 @@ class _CollectionScreenState extends State<CollectionScreen> {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<CollectionsCubit, CollectionsState>(
-      listener: (context, state) {},
+      listener: (context, state) {
+        if (state.isFailure) {
+          AppToast.show(
+            context,
+            message: "Something went wrong",
+            type: AppToastType.error,
+          );
+        }
+        if (state.isSuccess) {
+          AppToast.show(
+            context,
+            message: "Collections loaded successfully",
+            type: AppToastType.success,
+          );
+        }
+      },
       builder: (context, state) {
         final isLoading = state.isLoading || state.isInitial;
 
