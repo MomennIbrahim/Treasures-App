@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -6,6 +7,7 @@ import 'package:konoz/core/theme/app_shimmer.dart';
 import 'package:konoz/core/theme/app_text_style.dart';
 import 'package:konoz/features/home/presentation/controllers/currently_trending/currently_trending_cubit.dart';
 import 'package:konoz/features/home/presentation/ui/widgets/currently_trending_listview_horizontal.dart';
+import 'package:konoz/generated/locale_keys.g.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class CurrenttlyTrendingSection extends StatefulWidget {
@@ -52,7 +54,7 @@ class _CurrenttlyTrendingSectionState extends State<CurrenttlyTrendingSection> {
                 Padding(
                   padding: paddingOnly(left: 16, right: 16, top: 16, bottom: 4),
                   child: Text(
-                    "Currently Trending",
+                    LocaleKeys.home_currently_trending.tr(),
                     style: AppTextStyles.text14Bold,
                   ),
                 ),

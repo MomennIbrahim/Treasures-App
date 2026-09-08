@@ -63,15 +63,22 @@ class PackageItem extends StatelessWidget {
                     ),
                   ),
 
-                  4.verticalSpace,
-
+                  2.verticalSpace,
                   Text(
-                    'Big Sale Up to ${package.discountPercentage}% Off on All Fragrances',
+                    'Big Sale Up to ${package.discountPercentage}% Off on this package',
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                     style: AppTextStyles.text10Bold.copyWith(
                       color: Colors.amber,
                     ),
+                  ),
+                  2.verticalSpace,
+
+                  Text(
+                    package.description,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppTextStyles.text10Bold.copyWith(),
                   ),
                 ],
               ),

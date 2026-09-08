@@ -21,6 +21,13 @@ class CodegenLoader extends AssetLoader{
     "about_us": "About Us",
     "contact_us": "Contact Us"
   },
+  "home": {
+    "a_better_mood_starts_with_konooz": "A Better Mood Starts With KONOOZ",
+    "exclusive_offers": "Exclusive Offers 🔥",
+    "currently_trending": "Currently Trending",
+    "best_selling": "Best Selling",
+    "packages": "Packages"
+  },
   "errors": {
     "errors_timeout": "Connection timed out. Please try again.",
     "errors_no_internet": "No internet connection. Please check your connection.",
@@ -34,6 +41,13 @@ static const Map<String,dynamic> _ar = {
     "collections": "المجموعات",
     "about_us": "من نحن",
     "contact_us": "اتصل بنا"
+  },
+  "home": {
+    "a_better_mood_starts_with_konooz": "مزاج أفضل يبدأ مع كنوز",
+    "exclusive_offers": "عروض حصرية 🔥",
+    "currently_trending": "الأكثر رواجًا حاليًا",
+    "best_selling": "الأكثر مبيعًا",
+    "packages": "الباقات"
   },
   "errors": {
     "errors_timeout": "انتهت مهلة الاتصال. حاول مرة أخرى.",

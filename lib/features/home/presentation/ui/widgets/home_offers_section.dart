@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -7,6 +8,7 @@ import 'package:konoz/core/theme/app_text_style.dart';
 import 'package:konoz/core/widgets/app_slider.dart';
 import 'package:konoz/features/home/data/demo/demo_banners_data.dart';
 import 'package:konoz/features/home/presentation/controllers/banners_cubit/banners_cubit.dart';
+import 'package:konoz/generated/locale_keys.g.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class HomeOffersSection extends StatefulWidget {
@@ -53,7 +55,10 @@ class _HomeOffersSectionState extends State<HomeOffersSection> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("Exclusive Offers 🔥", style: AppTextStyles.text14Bold),
+                  Text(
+                    LocaleKeys.home_exclusive_offers.tr(),
+                    style: AppTextStyles.text14Bold,
+                  ),
                   10.verticalSpace,
                   AppSlider(
                     items: bannersList
