@@ -11,6 +11,7 @@ import 'package:konoz/features/home/presentation/controllers/currently_trending/
 import 'package:konoz/features/home/presentation/controllers/packages_cubit.dart';
 import 'package:konoz/features/home/presentation/ui/screens/home_screen.dart';
 import 'package:konoz/features/layout/presentation/ui/screens/layout_screen.dart';
+import 'package:konoz/features/product_details/presentation/screens/product_details_screen.dart';
 
 import 'routes.dart';
 
@@ -41,17 +42,19 @@ class AppRouter {
               ),
             ],
           ),
+
           StatefulShellBranch(
             routes: [
               GoRoute(
                 path: Routes.collections,
-                builder: (context, state) =>   BlocProvider.value(
-                  value:  getIt.get<CollectionsCubit>(),
+                builder: (context, state) => BlocProvider.value(
+                  value: getIt.get<CollectionsCubit>(),
                   child: CollectionScreen(),
                 ),
               ),
             ],
           ),
+
           StatefulShellBranch(
             routes: [
               GoRoute(
@@ -60,6 +63,7 @@ class AppRouter {
               ),
             ],
           ),
+
           StatefulShellBranch(
             routes: [
               GoRoute(
@@ -69,6 +73,13 @@ class AppRouter {
             ],
           ),
         ],
+      ),
+
+       GoRoute(
+        path: Routes.productDetails,
+        builder: (context, state) {
+          return const ProductDetailsScreen();
+        },
       ),
     ],
   );

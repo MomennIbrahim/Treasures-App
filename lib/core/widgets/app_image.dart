@@ -5,8 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:konoz/core/theme/app_colors.dart';
-import 'package:konoz/core/theme/app_shimmer.dart';
-import 'package:skeletonizer/skeletonizer.dart';
 
 enum AppImageType { asset, svg, network, cachedNetwork, file }
 
