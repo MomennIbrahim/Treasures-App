@@ -1,51 +1,77 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:konoz/core/helper/app_padding.dart';
+import 'package:konoz/core/theme/app_shimmer.dart';
 import 'package:konoz/core/theme/app_text_style.dart';
 import 'package:konoz/core/widgets/app_slider.dart';
+import 'package:konoz/features/home/data/demo/demo_banners_data.dart';
+import 'package:konoz/features/home/presentation/controllers/banners_cubit/banners_cubit.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
-class HomeOffersSection extends StatelessWidget {
+class HomeOffersSection extends StatefulWidget {
   const HomeOffersSection({super.key});
+
+  @override
+  State<HomeOffersSection> createState() => _HomeOffersSectionState();
+}
+
+class _HomeOffersSectionState extends State<HomeOffersSection> {
+  @override
+  void initState() {
+    super.initState();
+    context.read<BannersCubit>().getBanners();
+  }
 
   @override
   Widget build(BuildContext context) {
     return SliverPadding(
       padding: paddingHorizontal(16),
       sliver: SliverToBoxAdapter(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text("Exclusive Offers 🔥", style: AppTextStyles.text14Bold),
-            10.verticalSpace,
-            AppSlider(
-              items: [
-                ImageBannerItem(
-                  imagePath:
-                      'https://i.pinimg.com/736x/91/46/b1/9146b1806b9cc89d22d12ccb987e0d5a.jpg',
-                  title: 'New perfume collection 2026',
-                  subtitle: 'Choose perfect perfume for your life style',
-                  buttonLabel: 'Discover',
-                  onPressed: () {},
-                ),
-                ImageBannerItem(
-                  imagePath:
-                      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRylEOduNlj_SZdJbNm7k0KUS_18QdEHPjFWM8gcj2SHwGJBzueARYk_50&s=10',
-                  title: 'Limited Edition',
-                  subtitle: 'Exclusive scents crafted for you',
-                  buttonLabel: 'Discover',
-                  onPressed: () {},
-                ),
-                ImageBannerItem(
-                  imagePath:
-                      'https://img.pikbest.com/wp/202413/aroma-men-s-perfume-plant-leaves-promotional-web-banner_9087731.jpg!sw800',
-                  title: 'Limited Edition',
-                  subtitle: 'Exclusive scents crafted for you',
-                  buttonLabel: 'Discover',
-                  onPressed: () {},
-                ),
-              ],
-            ),
-          ],
+        child: BlocConsumer<BannersCubit, BannersState>(
+          listener: (context, state) {
+            if (state.failure != null) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text(state.failure!.getAllError())),
+              );
+            }
+          },
+          builder: (context, state) {
+            final bool isLoading = state.isLoading || state.isInitial;
+
+            final bannersList = isLoading
+                ? DemoBannersData.banners.bannersData ?? []
+                : state.banners?.bannersData ?? [];
+
+            if (bannersList.isEmpty && !isLoading) {
+              return SizedBox.shrink();
+            }
+
+            return Skeletonizer(
+              effect: AppShimmer.effect,
+              enabled: isLoading,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text("Exclusive Offers 🔥", style: AppTextStyles.text14Bold),
+                  10.verticalSpace,
+                  AppSlider(
+                    items: bannersList
+                        .map(
+                          (e) => ImageBannerItem(
+                            imagePath: e.image,
+                            title: e.title,
+                            subtitle: e.subtitle,
+                            buttonLabel: e.buttonLabel,
+                            onPressed: () {},
+                          ),
+                        )
+                        .toList(),
+                  ),
+                ],
+              ),
+            );
+          },
         ),
       ),
     );

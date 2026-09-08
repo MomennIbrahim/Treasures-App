@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:konoz/features/home/presentation/ui/widgets/search_card.dart';
 
-class AppHeader extends StatelessWidget implements PreferredSizeWidget {
-  const AppHeader({super.key});
+class AppSearchBar extends StatelessWidget implements PreferredSizeWidget {
+  const AppSearchBar({super.key});
 
   @override
   Widget build(BuildContext context) {

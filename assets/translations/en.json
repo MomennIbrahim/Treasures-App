@@ -4,5 +4,12 @@
         "collections": "Collections",
         "about_us": "About Us",
         "contact_us": "Contact Us"
-    }   
+    },
+    
+    "errors": {
+    "errors_timeout": "Connection timed out. Please try again.",
+    "errors_no_internet": "No internet connection. Please check your connection.",
+    "errors_unexpected": "An unexpected error occurred. Please try again.",
+    "errors_internal_server_error": "Internal server error. Please try again later."
+  }
 }

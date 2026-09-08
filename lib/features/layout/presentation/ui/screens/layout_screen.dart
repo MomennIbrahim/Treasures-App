@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:konoz/core/widgets/app_header.dart';
+import 'package:konoz/core/widgets/app_search_bar.dart';
 import 'package:konoz/features/layout/presentation/ui/widgets/app_bottom_nav_bar.dart';
 
 class LayoutScreen extends StatelessWidget {
@@ -11,7 +11,7 @@ class LayoutScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const AppHeader(),
+      appBar: const AppSearchBar(),
       extendBody: true,
       body: navigationShell,
       bottomNavigationBar: AppBottomNavBar(navigationShell: navigationShell),

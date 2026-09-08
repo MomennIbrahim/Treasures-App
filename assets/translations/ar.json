@@ -4,5 +4,12 @@
         "collections": "المجموعات",
         "about_us": "من نحن",
         "contact_us": "اتصل بنا"
-    }   
+    },
+    
+    "errors": {
+    "errors_timeout": "انتهت مهلة الاتصال. حاول مرة أخرى.",
+    "errors_no_internet": "لا يوجد اتصال بالإنترنت. يرجى التحقق من اتصالك.",
+    "errors_unexpected": "حدث خطأ غير متوقع. حاول مرة أخرى.",
+    "errors_internal_server_error": "حدث خطأ في الخادم. حاول مرة أخرى لاحقًا."
+  }
 }

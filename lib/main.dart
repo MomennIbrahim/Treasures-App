@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:konoz/core/di/dependency_injection.dart';
 import 'package:konoz/treasures_app.dart';
 
 void main() async {
@@ -9,6 +10,7 @@ void main() async {
 
   await EasyLocalization.ensureInitialized();
   await ScreenUtil.ensureScreenSize();
+  await setupGetIt();
 
   // Remove Landscape Mode
   SystemChrome.setPreferredOrientations([
