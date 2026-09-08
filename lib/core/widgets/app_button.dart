@@ -83,9 +83,9 @@ class AppButton extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         mainAxisSize: MainAxisSize.min,
         children: [
-          icon!,
-          8.0.horizontalSpace,
           Text(label.tr(), style: style),
+          8.0.horizontalSpace,
+          icon!,
         ],
       );
     }

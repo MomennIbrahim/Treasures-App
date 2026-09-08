@@ -66,7 +66,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                   children: [
                                     Text(
                                       state.product!.name,
-                                      style: AppTextStyles.text16Bold,
+                                      style: AppTextStyles.text18Bold,
                                     ),
                                     6.verticalSpace,
                                     Row(

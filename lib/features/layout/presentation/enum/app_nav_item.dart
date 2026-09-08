@@ -3,8 +3,8 @@ import 'package:konoz/core/router/routes.dart';
 enum AppNavItem {
   home,
   collection,
-  about,
-  contact,
+  cart,
+  profile,
 }
 
 extension AppNavItemRoute on AppNavItem {
@@ -14,10 +14,10 @@ extension AppNavItemRoute on AppNavItem {
         return Routes.home;
       case AppNavItem.collection:
         return Routes.collections;
-      case AppNavItem.about:
-        return Routes.aboutUs;
-      case AppNavItem.contact:
-        return Routes.contactUs;
+      case AppNavItem.cart:
+        return Routes.cart;
+      case AppNavItem.profile:
+        return Routes.profile;
     }
   }
 }

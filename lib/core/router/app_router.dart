@@ -3,9 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:konoz/core/di/dependency_injection.dart';
 import 'package:konoz/features/about_us/about_us_screen.dart';
+import 'package:konoz/features/cart/ui/screens/cart_screen.dart';
 import 'package:konoz/features/collections/presentation/controllers/collections/collections_cubit.dart';
 import 'package:konoz/features/collections/presentation/ui/screens/collectoins_screen.dart';
-import 'package:konoz/features/contact_us/contact_screen.dart';
+import 'package:konoz/features/profile/profile_screen.dart';
 import 'package:konoz/features/home/presentation/controllers/banners_cubit/banners_cubit.dart';
 import 'package:konoz/features/home/presentation/controllers/best_selling/best_selling_cubit.dart';
 import 'package:konoz/features/home/presentation/controllers/currently_trending/currently_trending_cubit.dart';
@@ -60,8 +61,8 @@ class AppRouter {
           StatefulShellBranch(
             routes: [
               GoRoute(
-                path: Routes.aboutUs,
-                builder: (context, state) => const AboutUsScreen(),
+                path: Routes.cart,
+                builder: (context, state) => const CartScreen(),
               ),
             ],
           ),
@@ -69,7 +70,7 @@ class AppRouter {
           StatefulShellBranch(
             routes: [
               GoRoute(
-                path: Routes.contactUs,
+                path: Routes.profile,
                 builder: (context, state) => const ContactScreen(),
               ),
             ],
