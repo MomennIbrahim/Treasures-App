@@ -7,6 +7,7 @@ import 'package:konoz/features/contact_us/contact_screen.dart';
 import 'package:konoz/features/home/presentation/controllers/banners_cubit/banners_cubit.dart';
 import 'package:konoz/features/home/presentation/controllers/best_selling/best_selling_cubit.dart';
 import 'package:konoz/features/home/presentation/controllers/currently_trending/currently_trending_cubit.dart';
+import 'package:konoz/features/home/presentation/controllers/packages_cubit.dart';
 import 'package:konoz/features/home/presentation/ui/screens/home_screen.dart';
 import 'package:konoz/features/layout/presentation/ui/screens/layout_screen.dart';
 
@@ -30,6 +31,7 @@ class AppRouter {
                     BlocProvider.value(value: getIt.get<BannersCubit>()),
                     BlocProvider.value(value: getIt.get<BestSellingCubit>()),
                     BlocProvider.value(value: getIt.get<CurrentlyTrendingCubit>()),
+                    BlocProvider.value(value: getIt.get<PackagesCubit>()),
                   ],
                   child: HomeScreen(),
                 ),

@@ -5,9 +5,17 @@ import 'package:konoz/core/theme/app_colors.dart';
 import 'package:konoz/core/theme/app_radius.dart';
 import 'package:konoz/core/theme/app_text_style.dart';
 import 'package:konoz/core/widgets/app_image.dart';
+import 'package:konoz/features/home/data/model/packages_model.dart';
 
 class PackageItem extends StatelessWidget {
-  const PackageItem({super.key});
+  final PackageItemModel package;
+  final bool isLoading;
+
+  const PackageItem({
+    super.key,
+    required this.package,
+    required this.isLoading,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -24,14 +32,15 @@ class PackageItem extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           AppImage.cachedNetwork(
+            package.image,
             height: 160,
             width: 150,
             borderRadius: AppRadius.only(
-              topLeft: Radius.circular(12),
-              bottomLeft: Radius.circular(12),
+              topLeft: const Radius.circular(12),
+              bottomLeft: const Radius.circular(12),
             ),
-            "https://i.pinimg.com/736x/ef/2f/76/ef2f767715a8c352f92e680c7e51013d.jpg",
           ),
+
           Expanded(
             child: Padding(
               padding: paddingSymmetric(10, 12),
@@ -39,19 +48,27 @@ class PackageItem extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "5 Men's Perfumes That Smell Expensive (But Aren't)",
+                    package.name,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
                     style: AppTextStyles.text12Bold,
                   ),
+
                   5.verticalSpace,
+
                   Text(
-                    "2500 L.E (100 ML)",
+                    '${package.discountPrice} L.E (${package.size})',
                     style: AppTextStyles.text14Bold.copyWith(
                       color: Colors.amber,
                     ),
                   ),
+
                   4.verticalSpace,
+
                   Text(
-                    "Big Sale Up to 50% Off on All Fragrances",
+                    'Big Sale Up to ${package.discountPercentage}% Off on All Fragrances',
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
                     style: AppTextStyles.text10Bold.copyWith(
                       color: Colors.amber,
                     ),

@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:konoz/core/helper/app_padding.dart';
+import 'package:konoz/core/theme/app_shimmer.dart';
 import 'package:konoz/core/theme/app_text_style.dart';
 import 'package:konoz/features/home/presentation/controllers/best_selling/best_selling_cubit.dart';
 import 'package:konoz/features/home/presentation/ui/widgets/best_selling_listview_horizontal.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 class BestSellingSection extends StatefulWidget {
   const BestSellingSection({super.key});
@@ -40,19 +42,23 @@ class _BestSellingSectionState extends State<BestSellingSection> {
             return const SizedBox.shrink();
           }
 
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: paddingOnly(left: 16, right: 16, top: 16, bottom: 4),
-                child: Text('Best Selling', style: AppTextStyles.text14Bold),
-              ),
-              10.verticalSpace,
-              BestSellingListviewHorizontal(
-                products: products,
-                isLoading: isLoading,
-              ),
-            ],
+          return Skeletonizer(
+            enabled: isLoading,
+            effect: AppShimmer.effect,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: paddingOnly(left: 16, right: 16, top: 16, bottom: 4),
+                  child: Text('Best Selling', style: AppTextStyles.text14Bold),
+                ),
+                10.verticalSpace,
+                BestSellingListviewHorizontal(
+                  products: products,
+                  isLoading: isLoading,
+                ),
+              ],
+            ),
           );
         },
       ),
