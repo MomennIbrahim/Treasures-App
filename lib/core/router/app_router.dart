@@ -15,7 +15,7 @@ import 'package:konoz/features/home/presentation/ui/screens/home_screen.dart';
 import 'package:konoz/features/layout/presentation/ui/screens/layout_screen.dart';
 import 'package:konoz/features/product_details/presentation/controllers/product_details/product_details_cubit.dart';
 import 'package:konoz/features/product_details/presentation/ui/screens/product_details_screen.dart';
-import 'package:konoz/features/profile/profile_screen.dart';
+import 'package:konoz/features/profile/presentation/ui/screens/profile_screen.dart';
 
 import 'routes.dart';
 
@@ -84,7 +84,7 @@ class AppRouter {
             routes: [
               GoRoute(
                 path: Routes.profile,
-                builder: (context, state) => const ContactScreen(),
+                builder: (context, state) => const ProfileScreen(),
               ),
             ],
           ),
