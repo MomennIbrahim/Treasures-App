@@ -13,6 +13,7 @@ import 'package:konoz/features/home/presentation/controllers/currently_trending/
 import 'package:konoz/features/home/presentation/controllers/packages_cubit.dart';
 import 'package:konoz/features/home/presentation/ui/screens/home_screen.dart';
 import 'package:konoz/features/layout/presentation/ui/screens/layout_screen.dart';
+import 'package:konoz/features/orders/presentation/ui/screens/orders_screen.dart';
 import 'package:konoz/features/product_details/presentation/controllers/product_details/product_details_cubit.dart';
 import 'package:konoz/features/product_details/presentation/ui/screens/product_details_screen.dart';
 import 'package:konoz/features/profile/presentation/ui/screens/profile_screen.dart';
@@ -86,6 +87,15 @@ class AppRouter {
               GoRoute(
                 path: Routes.profile,
                 builder: (context, state) => const ProfileScreen(),
+              ),
+              GoRoute(
+                path: Routes.orders,
+                pageBuilder: (context, state) {
+                  return AppPageTransition.fade(
+                    state: state,
+                    child: OrdersScreen(),
+                  );
+                },
               ),
             ],
           ),

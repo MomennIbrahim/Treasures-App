@@ -1,8 +1,10 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hugeicons/hugeicons.dart';
 import 'package:konoz/core/helper/app_padding.dart';
+import 'package:konoz/core/router/routes.dart';
 import 'package:konoz/core/theme/app_colors.dart';
 import 'package:konoz/core/theme/app_radius.dart';
 import 'package:konoz/core/theme/app_text_style.dart';
@@ -25,6 +27,7 @@ class ProfileTabWidget extends StatelessWidget {
             _buildCustomTab(
               title: LocaleKeys.me_orders,
               icon: HugeIcons.strokeRoundedDeliveryBox01,
+              onTap: () => context.push(Routes.orders),
             ),
             _buildCustomTab(
               title: LocaleKeys.me_favorites,
@@ -74,44 +77,48 @@ class ProfileTabWidget extends StatelessWidget {
     );
   }
 
-  Container _buildCustomTab({
+  GestureDetector _buildCustomTab({
     required String title,
     required List<List<dynamic>> icon,
+    VoidCallback? onTap,
   }) {
-    return Container(
-      padding: paddingHorizontal(12),
-      margin: paddingVertical(8),
-      decoration: BoxDecoration(
-        color: Colors.white10,
-        borderRadius: AppRadius.br12,
-      ),
-      child: Row(
-        children: [
-          Container(
-            padding: paddingAll(6),
-            margin: paddingVertical(8),
-            decoration: BoxDecoration(
-              color: Colors.white10,
-              borderRadius: AppRadius.br12,
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: paddingHorizontal(12),
+        margin: paddingVertical(8),
+        decoration: BoxDecoration(
+          color: Colors.white10,
+          borderRadius: AppRadius.br12,
+        ),
+        child: Row(
+          children: [
+            Container(
+              padding: paddingAll(6),
+              margin: paddingVertical(8),
+              decoration: BoxDecoration(
+                color: Colors.white10,
+                borderRadius: AppRadius.br12,
+              ),
+              child: HugeIcon(icon: icon, color: AppColors.white, size: 18.sp),
             ),
-            child: HugeIcon(icon: icon, color: AppColors.white, size: 18.sp),
-          ),
-          6.horizontalSpace,
-          Expanded(child: Text(title.tr(), style: AppTextStyles.text12Bold)),
-          Container(
-            padding: paddingAll(6),
-            margin: paddingVertical(8),
-            decoration: BoxDecoration(
-              color: Colors.white10,
-              shape: BoxShape.circle,
+            6.horizontalSpace,
+            Expanded(child: Text(title.tr(), style: AppTextStyles.text12Bold)),
+            Container(
+              padding: paddingAll(6),
+              margin: paddingVertical(8),
+              decoration: BoxDecoration(
+                color: Colors.white10,
+                shape: BoxShape.circle,
+              ),
+              child: Icon(
+                Icons.arrow_forward_ios,
+                color: AppColors.white,
+                size: 14.sp,
+              ),
             ),
-            child: Icon(
-              Icons.arrow_forward_ios,
-              color: AppColors.white,
-              size: 14.sp,
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
