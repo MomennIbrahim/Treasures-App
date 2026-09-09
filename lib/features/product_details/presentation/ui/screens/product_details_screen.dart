@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -5,12 +6,12 @@ import 'package:konoz/core/helper/app_padding.dart';
 import 'package:konoz/core/theme/app_text_style.dart';
 import 'package:konoz/core/widgets/app_button.dart';
 import 'package:konoz/core/widgets/app_loading.dart';
-import 'package:konoz/core/widgets/app_search_bar.dart';
 import 'package:konoz/core/widgets/app_toast.dart';
 import 'package:konoz/core/widgets/custom_rating_widget.dart';
 import 'package:konoz/features/product_details/presentation/controllers/product_details/product_details_cubit.dart';
 import 'package:konoz/features/product_details/presentation/ui/widgets/product_images_and_sizing_section.dart';
 import 'package:konoz/features/product_details/presentation/ui/widgets/product_information_section.dart';
+import 'package:konoz/generated/locale_keys.g.dart';
 
 class ProductDetailsScreen extends StatefulWidget {
   const ProductDetailsScreen({super.key});
@@ -29,7 +30,6 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppSearchBar(showBackIcon: true),
       body: BlocConsumer<ProductDetailsCubit, ProductDetailsState>(
         listener: (context, state) {
           if (state.isFailure) {
@@ -79,7 +79,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                           child: FittedBox(
                                             fit: BoxFit.scaleDown,
                                             child: Text(
-                                              "${state.product!.rate} | 1k Reviews",
+                                              "${state.product!.rate} | 1k ${LocaleKeys.product_details_reviews.tr()}",
                                               style: AppTextStyles.text12Bold,
                                             ),
                                           ),
@@ -94,12 +94,12 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    "Longevity: ${state.product!.longevity}",
+                                    "${LocaleKeys.product_details_longevity.tr()}: ${state.product!.longevity}",
                                     style: AppTextStyles.text12Regular,
                                   ),
                                   6.verticalSpace,
                                   Text(
-                                    "Sillage: ${state.product!.sillage}",
+                                    "${LocaleKeys.product_details_sillage.tr()}: ${state.product!.sillage}",
                                     style: AppTextStyles.text12Regular,
                                   ),
                                 ],
@@ -136,7 +136,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                         16.horizontalSpace,
                         Expanded(
                           child: AppButton(
-                            label: "Add to cart",
+                            label: LocaleKeys.general_add_to_cart.tr(),
                             onPressed: () {},
                           ),
                         ),

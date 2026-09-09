@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
@@ -8,6 +9,7 @@ import 'package:konoz/core/helper/app_padding.dart';
 import 'package:konoz/core/theme/app_colors.dart';
 import 'package:konoz/core/theme/app_radius.dart';
 import 'package:konoz/core/theme/app_text_style.dart';
+import 'package:konoz/generated/locale_keys.g.dart';
 
 class AppBottomNavBar extends StatelessWidget {
   final StatefulNavigationShell navigationShell;
@@ -65,7 +67,7 @@ class AppBottomNavBar extends StatelessWidget {
                       strokeWidth: 1.5,
                       size: 18.sp,
                     ),
-                    label: 'Home',
+                    label: LocaleKeys.layout_home.tr(),
                   ),
                   BottomNavigationBarItem(
                     icon: HugeIcon(
@@ -73,7 +75,7 @@ class AppBottomNavBar extends StatelessWidget {
                       strokeWidth: 1.5,
                       size: 18.sp,
                     ),
-                    label: 'Collection',
+                    label: LocaleKeys.layout_collections.tr(),
                   ),
                   BottomNavigationBarItem(
                     icon: HugeIcon(
@@ -81,15 +83,15 @@ class AppBottomNavBar extends StatelessWidget {
                       strokeWidth: 1.5,
                       size: 18.sp,
                     ),
-                    label: 'Cart',
+                    label: LocaleKeys.layout_cart.tr(),
                   ),
                   BottomNavigationBarItem(
                     icon: HugeIcon(
-                      icon: HugeIcons.strokeRoundedAccountSetting01,
+                      icon: HugeIcons.strokeRoundedUser,
                       strokeWidth: 1.5,
                       size: 18.sp,
                     ),
-                    label: 'Me',
+                    label: LocaleKeys.layout_me.tr(),
                   ),
                 ],
               ),

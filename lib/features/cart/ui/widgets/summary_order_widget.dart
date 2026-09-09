@@ -1,9 +1,11 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:konoz/core/helper/app_padding.dart';
 import 'package:konoz/core/theme/app_colors.dart';
 import 'package:konoz/core/theme/app_radius.dart';
 import 'package:konoz/core/theme/app_text_style.dart';
+import 'package:konoz/generated/locale_keys.g.dart';
 
 class SummaryOrderWidget extends StatelessWidget {
   const SummaryOrderWidget({super.key});
@@ -21,21 +23,30 @@ class SummaryOrderWidget extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text("Summary Order", style: AppTextStyles.text14Bold),
+            Text(
+              LocaleKeys.cart_summary_order.tr(),
+              style: AppTextStyles.text14Bold,
+            ),
             10.verticalSpace,
-            _buildListTileSummaryOrder(title: "Coast", value: "5000 L.E"),
-            _buildListTileSummaryOrder(title: "Shipping", value: "35 L.E"),
-            _buildListTileSummaryOrder(title: "Tax", value: "10%"),
             _buildListTileSummaryOrder(
-              title: "Discount",
+              title: LocaleKeys.cart_coast,
+              value: "5000 L.E",
+            ),
+            _buildListTileSummaryOrder(
+              title: LocaleKeys.cart_shipping,
+              value: "35 L.E",
+            ),
+            _buildListTileSummaryOrder(
+              title: LocaleKeys.cart_tax,
+              value: "10%",
+            ),
+            _buildListTileSummaryOrder(
+              title: LocaleKeys.cart_discount,
               value: "35%",
-              titleStyle: AppTextStyles.text14Regular.copyWith(
-                color: AppColors.primary,
-              ),
             ),
             const Divider(),
             _buildListTileSummaryOrder(
-              title: "Total",
+              title: LocaleKeys.cart_total,
               value: "5350 L.E",
               titleStyle: AppTextStyles.text14Bold.copyWith(
                 color: AppColors.primary,
@@ -61,7 +72,7 @@ class SummaryOrderWidget extends StatelessWidget {
       minTileHeight: 5.h,
       minVerticalPadding: 2.5.h,
       title: Text(
-        title,
+        title.tr(),
         style:
             titleStyle ??
             AppTextStyles.text12Regular.copyWith(color: AppColors.primary),

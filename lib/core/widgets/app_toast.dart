@@ -1,4 +1,5 @@
 import 'package:animate_do/animate_do.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hugeicons/hugeicons.dart';
@@ -6,6 +7,7 @@ import 'package:konoz/core/helper/app_padding.dart';
 import 'package:konoz/core/theme/app_colors.dart';
 import 'package:konoz/core/theme/app_radius.dart';
 import 'package:konoz/core/theme/app_text_style.dart';
+import 'package:konoz/generated/locale_keys.g.dart';
 
 enum AppToastType { success, error, warning }
 
@@ -44,8 +46,8 @@ class AppToast {
           GestureDetector(
             onTap: () => overlayEntry.remove(),
             child: Text(
-              "Undo",
-              style: AppTextStyles.text12Bold.copyWith(
+              LocaleKeys.general_undo.tr(),
+              style: AppTextStyles.text10Bold.copyWith(
                 decoration: TextDecoration.underline,
                 color: AppColors.black,
                 decorationColor: AppColors.black,

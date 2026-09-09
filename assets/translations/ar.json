@@ -1,9 +1,15 @@
 {
+    "general": {
+        "add_to_cart":  "اضافة الى السلة"  ,
+        "search_hint": "ابحث عن عطر...",
+        "undo": "الغاء",
+        "show_details": "اظهار التفاصيل"
+    },
     "layout": {
-        "home": "الصفحة الرئيسية",
-        "collections": "المجموعات",
-        "about_us": "من نحن",
-        "contact_us": "اتصل بنا"
+        "home": "الرئيسية",
+        "collections": "الفئات",
+        "cart": "السلة",
+        "me": "أنا"
     },
     
     "home": {
@@ -19,13 +25,36 @@
         "featured_collections_description": "اكتشف العطر الذي يتحدث عنه الجميع - جريء، مميز، ومصمم ليكون عطرك المميز."
     },
 
+    "me": {
+        "personal_data": "حسابي",
+        "orders": "الطلبات",
+        "favorites": "المفضلة",
+        "faq": "الأسئلة الشائعة",
+        "community": "المجتمع",
+        "settings": "الإعدادات",
+        "help_hint": "لا تتردد في السؤال، نحن مستعدون لمساعدتك",
+        "logout": "تسجيل الخروج"
+    },
+
     "product_details":{
         "longevity": "الثبات",
         "sillage": "الفوحان",
         "description": "الوصف",
         "how_to_use": "طريقة الأستخدام",
         "ingredients": "المكونات",
-        "details": "التفاصيل"
+        "details": "التفاصيل",
+        "reviews": "التقييمات"
+    },
+
+     "cart":{
+        "proceed_to_buy": "المتابعة للشراء",
+        "items": "المنتجات",
+        "summary_order": "ملخص الطلب",
+        "coast": "السعر",
+        "shipping": "الشحن",
+        "tax": "الضريبة",
+        "discount": "الخصم",
+        "total": "الأجمالي"
     },
     
     "errors": {

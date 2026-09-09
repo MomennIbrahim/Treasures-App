@@ -1,9 +1,16 @@
 {
+    "general": {
+        "add_to_cart": "Add to Cart"  ,
+        "search_hint": "Search for perfumery or fragrances...",
+        "undo": "Undo",
+        "show_details": "Show Details"
+    },
+
     "layout": {
         "home": "Home",
         "collections": "Collections",
-        "about_us": "About Us",
-        "contact_us": "Contact Us"
+        "cart": "Cart",
+        "me": "Me"
     },
     "home": {
         "a_better_mood_starts_with_konooz": "A Better Mood Starts With KONOOZ",
@@ -18,13 +25,36 @@
         "featured_collections_description": "Discover the fragrance everyone's talking about - bold, unique, and made to be your signature scent."
     },
 
+    "me": {
+        "personal_data": "My Account",
+        "orders": "Orders",
+        "favorites": "Favorites",
+        "faq": "FAQ",
+        "community": "Community",
+        "settings": "Settings",
+        "help_hint": "Fell free to Ask, We Ready to Help",
+        "logout": "Logout"
+    },
+
     "product_details":{
         "longevity": "Longevity",
         "sillage": "Sillage",
         "description": "Description",
         "how_to_use": "How To Use",
         "ingredients": "Ingredients",
-        "details": "Details"
+        "details": "Details",
+        "reviews": "Reviews"
+    },
+
+    "cart":{
+        "proceed_to_buy": "Proceed to Buy",
+        "items": "Items",
+        "summary_order": "Summary Order",
+        "coast": "Coast",
+        "shipping": "Shipping",
+        "tax": "Tax",
+        "discount": "Discount",
+        "total": "Total"
     },
 
     "errors": {

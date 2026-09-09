@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hugeicons/hugeicons.dart';
@@ -5,6 +6,7 @@ import 'package:konoz/core/helper/app_padding.dart';
 import 'package:konoz/core/theme/app_colors.dart';
 import 'package:konoz/core/theme/app_radius.dart';
 import 'package:konoz/core/theme/app_text_style.dart';
+import 'package:konoz/generated/locale_keys.g.dart';
 
 class ProfileTabWidget extends StatelessWidget {
   const ProfileTabWidget({super.key});
@@ -17,29 +19,29 @@ class ProfileTabWidget extends StatelessWidget {
         child: Column(
           children: [
             _buildCustomTab(
-              title: "Personal Data",
+              title: LocaleKeys.me_personal_data,
               icon: HugeIcons.strokeRoundedUser03,
             ),
             _buildCustomTab(
-              title: "Orders",
+              title: LocaleKeys.me_orders,
               icon: HugeIcons.strokeRoundedDeliveryBox01,
             ),
             _buildCustomTab(
-              title: "Favorites",
+              title: LocaleKeys.me_favorites,
               icon: HugeIcons.strokeRoundedFavouriteCircle,
             ),
             _buildCustomTab(
-              title: "Settings",
+              title: LocaleKeys.me_settings,
               icon: HugeIcons.strokeRoundedSettings02,
             ),
 
             Divider(color: AppColors.neutral600),
             _buildCustomTab(
-              title: "FAQ",
+              title: LocaleKeys.me_faq,
               icon: HugeIcons.strokeRoundedComment03,
             ),
             _buildCustomTab(
-              title: "Community",
+              title: LocaleKeys.me_community,
               icon: HugeIcons.strokeRoundedUserGroup,
             ),
 
@@ -60,7 +62,7 @@ class ProfileTabWidget extends StatelessWidget {
                   ),
                   6.horizontalSpace,
                   Text(
-                    "Fell free to Ask, We Ready to Help",
+                    LocaleKeys.me_help_hint.tr(),
                     style: AppTextStyles.text12Bold,
                   ),
                 ],
@@ -95,7 +97,7 @@ class ProfileTabWidget extends StatelessWidget {
             child: HugeIcon(icon: icon, color: AppColors.white, size: 18.sp),
           ),
           6.horizontalSpace,
-          Expanded(child: Text(title, style: AppTextStyles.text12Bold)),
+          Expanded(child: Text(title.tr(), style: AppTextStyles.text12Bold)),
           Container(
             padding: paddingAll(6),
             margin: paddingVertical(8),

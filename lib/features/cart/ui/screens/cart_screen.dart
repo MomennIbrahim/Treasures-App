@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:konoz/core/helper/app_padding.dart';
@@ -7,6 +8,7 @@ import 'package:konoz/core/widgets/app_button.dart';
 import 'package:konoz/core/widgets/app_text_rich.dart';
 import 'package:konoz/features/cart/ui/widgets/cart_items_list.dart';
 import 'package:konoz/features/cart/ui/widgets/summary_order_widget.dart';
+import 'package:konoz/generated/locale_keys.g.dart';
 
 class CartScreen extends StatefulWidget {
   const CartScreen({super.key});
@@ -42,7 +44,7 @@ class _CartScreenState extends State<CartScreen> {
                       child: Container(
                         padding: paddingSymmetric(8, 4),
                         child: Text(
-                          "show details",
+                          LocaleKeys.general_show_details.tr(),
                           style: AppTextStyles.text12Bold.copyWith(
                             color: AppColors.primary,
                           ),
@@ -60,7 +62,9 @@ class _CartScreenState extends State<CartScreen> {
                   toolbarHeight: 42.5.h,
                   flexibleSpace: FlexibleSpaceBar(
                     background: AppButton(
-                      label: "Proceed to buy (2 Items)",
+                      label:
+                          "${LocaleKeys.cart_proceed_to_buy.tr()} (2 ${LocaleKeys.cart_items.tr()})",
+                      labelStyle: AppTextStyles.text12Bold,
                       icon: Icon(Icons.arrow_forward),
                       onPressed: () {},
                     ),

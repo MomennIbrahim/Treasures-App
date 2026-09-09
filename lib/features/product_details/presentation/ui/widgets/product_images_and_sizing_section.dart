@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:konoz/core/helper/app_padding.dart';
 import 'package:konoz/core/widgets/app_slider.dart';
+import 'package:konoz/core/widgets/custom_back_icon.dart';
 import 'package:konoz/features/product_details/data/model/product_details_model.dart';
 import 'package:konoz/features/product_details/presentation/controllers/product_details/product_details_cubit.dart';
 import 'package:konoz/features/product_details/presentation/ui/widgets/product_size_item.dart';
@@ -24,7 +25,7 @@ class ProductImagesAndSizingSection extends StatelessWidget {
             children: [
               AppSlider(
                 autoScrollDuration: const Duration(seconds: 10),
-                height: 300,
+                height: 325.h,
                 showBannerInfo: false,
                 fit: BoxFit.contain,
                 items: productDetails.images
@@ -39,7 +40,6 @@ class ProductImagesAndSizingSection extends StatelessWidget {
                     )
                     .toList(),
               ),
-
               Positioned(
                 bottom: 35.h,
                 left: 35.w,
@@ -74,6 +74,20 @@ class ProductImagesAndSizingSection extends StatelessWidget {
                       ),
                     );
                   },
+                ),
+              ),
+
+              PositionedDirectional(
+                start: 16.w,
+                child: SafeArea(
+                  child: Container(
+                    padding: paddingAll(8),
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Colors.white24,
+                    ),
+                    child: CustomBackIcon(),
+                  ),
                 ),
               ),
             ],

@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:konoz/core/helper/app_padding.dart';
@@ -8,6 +9,7 @@ import 'package:konoz/features/product_details/data/model/product_details_model.
 import 'package:konoz/features/product_details/presentation/ui/widgets/description_content.dart';
 import 'package:konoz/features/product_details/presentation/ui/widgets/how_to_use_content.dart';
 import 'package:konoz/features/product_details/presentation/ui/widgets/ingredients_content.dart';
+import 'package:konoz/generated/locale_keys.g.dart';
 
 class ProductInformationSection extends StatefulWidget {
   final ProductDetailsModel product;
@@ -22,7 +24,11 @@ class ProductInformationSection extends StatefulWidget {
 class _ProductInformationSectionState extends State<ProductInformationSection> {
   int _selectedTab = 0;
 
-  final List<String> _tabs = const ['Description', 'How to use', 'Ingredients'];
+  final List<String> _tabs = [
+    LocaleKeys.product_details_description,
+    LocaleKeys.product_details_how_to_use,
+    LocaleKeys.product_details_ingredients,
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +67,7 @@ class _ProductInformationSectionState extends State<ProductInformationSection> {
                       : Colors.white.withValues(alpha: 0.90),
                   borderRadius: AppRadius.br12,
                   border: Border.all(
-                    width: 3,
+                    width: 2.7,
                     color: isSelected ? AppColors.primary : Colors.transparent,
                   ),
                   boxShadow: isSelected
@@ -77,14 +83,14 @@ class _ProductInformationSectionState extends State<ProductInformationSection> {
                 child: AnimatedDefaultTextStyle(
                   duration: const Duration(milliseconds: 200),
                   style: isSelected
-                      ? AppTextStyles.text12Bold.copyWith(
+                      ? AppTextStyles.text10Bold.copyWith(
                           color: AppColors.primary,
                         )
-                      : AppTextStyles.text12Regular.copyWith(
+                      : AppTextStyles.text10Regular.copyWith(
                           color: AppColors.black,
                         ),
                   child: Text(
-                    _tabs[index],
+                    _tabs[index].tr(),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
