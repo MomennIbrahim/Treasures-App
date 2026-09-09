@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:konoz/core/di/dependency_injection.dart';
-import 'package:konoz/features/about_us/about_us_screen.dart';
 import 'package:konoz/features/cart/ui/screens/cart_screen.dart';
+import 'package:konoz/features/collection_products/presentation/controllers/collection_products/collection_products_cubit.dart';
+import 'package:konoz/features/collection_products/presentation/ui/screens/collection_products_screen.dart';
 import 'package:konoz/features/collections/presentation/controllers/collections/collections_cubit.dart';
 import 'package:konoz/features/collections/presentation/ui/screens/collectoins_screen.dart';
-import 'package:konoz/features/profile/profile_screen.dart';
 import 'package:konoz/features/home/presentation/controllers/banners_cubit/banners_cubit.dart';
 import 'package:konoz/features/home/presentation/controllers/best_selling/best_selling_cubit.dart';
 import 'package:konoz/features/home/presentation/controllers/currently_trending/currently_trending_cubit.dart';
@@ -15,6 +15,7 @@ import 'package:konoz/features/home/presentation/ui/screens/home_screen.dart';
 import 'package:konoz/features/layout/presentation/ui/screens/layout_screen.dart';
 import 'package:konoz/features/product_details/presentation/controllers/product_details/product_details_cubit.dart';
 import 'package:konoz/features/product_details/presentation/ui/screens/product_details_screen.dart';
+import 'package:konoz/features/profile/profile_screen.dart';
 
 import 'routes.dart';
 
@@ -54,6 +55,18 @@ class AppRouter {
                   value: getIt.get<CollectionsCubit>(),
                   child: CollectionScreen(),
                 ),
+              ),
+              GoRoute(
+                path: Routes.collectionProducts,
+                pageBuilder: (context, state) {
+                  return AppPageTransition.fade(
+                    state: state,
+                    child: BlocProvider.value(
+                      value: getIt.get<CollectionProductsCubit>(),
+                      child: CollectionProductsScreen(),
+                    ),
+                  );
+                },
               ),
             ],
           ),

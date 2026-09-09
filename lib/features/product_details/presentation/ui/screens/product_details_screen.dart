@@ -75,15 +75,21 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                           initialRating: state.product!.rate,
                                         ),
                                         2.horizontalSpace,
-                                        Text(
-                                          state.product!.rate.toString(),
-                                          style: AppTextStyles.text12Bold,
+                                        Flexible(
+                                          child: FittedBox(
+                                            fit: BoxFit.scaleDown,
+                                            child: Text(
+                                              "${state.product!.rate} | 1k Reviews",
+                                              style: AppTextStyles.text12Bold,
+                                            ),
+                                          ),
                                         ),
                                       ],
                                     ),
                                   ],
                                 ),
                               ),
+                              8.horizontalSpace,
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [

@@ -1,6 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:konoz/core/networking/api_service.dart';
+import 'package:konoz/features/collection_products/data/repo/collection_products_repo.dart';
+import 'package:konoz/features/collection_products/data/repo/collection_products_repo_implmentation.dart';
+import 'package:konoz/features/collection_products/presentation/controllers/collection_products/collection_products_cubit.dart';
 import 'package:konoz/features/collections/data/repo/collections_repo.dart';
 import 'package:konoz/features/collections/data/repo/collections_repo_implementation.dart';
 import 'package:konoz/features/collections/presentation/controllers/collections/collections_cubit.dart';
@@ -46,6 +49,10 @@ Future<void> setupGetIt() async {
   getIt.registerLazySingleton<ProductDetailsRepo>(
     () => ProductDetailsRepoImplementation(getIt<ApiService>()),
   );
+
+  getIt.registerLazySingleton<CollectionProductsRepo>(
+    () => CollectionProductsRepoImplementation(getIt<ApiService>()),
+  );
   /*
   // Profile Repository
   getIt.registerLazySingleton<ProfileRepo>(
@@ -69,10 +76,15 @@ Future<void> setupGetIt() async {
   getIt.registerLazySingleton<PackagesCubit>(() => PackagesCubit());
 
   // Collections Cubits
-  getIt.registerFactory<CollectionsCubit>(() => CollectionsCubit());
+  getIt.registerLazySingleton<CollectionsCubit>(() => CollectionsCubit());
 
   // Product Details Cubit
   getIt.registerFactory<ProductDetailsCubit>(
     () => ProductDetailsCubit(getIt()),
+  );
+
+  // Collection Products Cubit
+  getIt.registerFactory<CollectionProductsCubit>(
+    () => CollectionProductsCubit(),
   );
 }

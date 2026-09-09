@@ -5,6 +5,7 @@ import 'package:konoz/core/theme/app_colors.dart';
 import 'package:konoz/core/theme/app_radius.dart';
 import 'package:konoz/core/theme/app_text_style.dart';
 import 'package:konoz/core/widgets/app_image.dart';
+import 'package:konoz/core/widgets/app_text_rich.dart';
 
 class CartItemsList extends StatelessWidget {
   const CartItemsList({super.key});
@@ -27,10 +28,38 @@ class CartItemsList extends StatelessWidget {
       ),
       child: Row(
         children: [
-          AppImage.cachedNetwork(
-            'https://i.pinimg.com/736x/cd/78/f8/cd78f82c6f052162af45b1b2fead67fc.jpg',
-            width: 100,
-            borderRadius: AppRadius.br8,
+          Column(
+            children: [
+              AppImage.cachedNetwork(
+                'https://i.pinimg.com/736x/cd/78/f8/cd78f82c6f052162af45b1b2fead67fc.jpg',
+                width: 100,
+                borderRadius: AppRadius.br8,
+              ),
+              6.verticalSpace,
+              Container(
+                padding: paddingAll(8),
+                decoration: BoxDecoration(
+                  color: Colors.white10,
+                  borderRadius: AppRadius.br24,
+                  border: Border.all(
+                    color: AppColors.neutral500.withValues(alpha: 0.4),
+                  ),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    _buildCustomCartActionButton(onTap: () {}),
+                    7.horizontalSpace,
+                    Text("1", style: AppTextStyles.text14Regular),
+                    7.horizontalSpace,
+                    _buildCustomCartActionButton(
+                      onTap: () {},
+                      icon: Icons.remove,
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ),
           15.horizontalSpace,
           Expanded(
@@ -45,42 +74,36 @@ class CartItemsList extends StatelessWidget {
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),
-                12.verticalSpace,
-                Row(
-                  children: [
-                    Expanded(
-                      child: Text(
-                        '2500 L.E',
-                        style: AppTextStyles.text16Bold,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ),
-                    6.horizontalSpace,
-                    Container(
-                      padding: paddingAll(8),
-                      decoration: BoxDecoration(
-                        color: Colors.white10,
-                        borderRadius: AppRadius.br24,
-                        border: Border.all(
-                          color: AppColors.neutral500.withValues(alpha: 0.4),
-                        ),
-                      ),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          _buildCustomCartActionButton(onTap: () {}),
-                          7.horizontalSpace,
-                          Text("1", style: AppTextStyles.text14Regular),
-                          7.horizontalSpace,
-                          _buildCustomCartActionButton(
-                            onTap: () {},
-                            icon: Icons.remove,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
+                6.verticalSpace,
+                Text(
+                  '2500 L.E',
+                  style: AppTextStyles.text16Bold,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                6.verticalSpace,
+                AppRichText(
+                  normalText: 'Free delivery ',
+                  actionText: "Friday, 11 September",
+                  normalStyle: AppTextStyles.text12Regular,
+                  actionStyle: AppTextStyles.text12Bold.copyWith(
+                    color: Colors.amber,
+                  ),
+                ),
+
+                6.verticalSpace,
+                Text(
+                  'Available',
+                  style: AppTextStyles.text12Bold.copyWith(
+                    color: AppColors.success800,
+                  ),
+                ),
+                4.verticalSpace,
+                Text(
+                  '3 days return policy',
+                  style: AppTextStyles.text12Regular.copyWith(
+                    color: AppColors.success800,
+                  ),
                 ),
               ],
             ),
@@ -97,12 +120,12 @@ class CartItemsList extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        padding: paddingAll(4),
+        padding: paddingSymmetric(6, 3),
         decoration: BoxDecoration(
           color: AppColors.primary,
           shape: BoxShape.circle,
         ),
-        child: Icon(icon, color: AppColors.white, size: 18.sp),
+        child: Icon(icon, color: AppColors.white, size: 14.sp),
       ),
     );
   }

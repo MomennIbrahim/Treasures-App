@@ -4,5 +4,6 @@ abstract class EndPoints {
   static const String bestSelling = "best-selling";
   static const String currentlyTrending = "currently-trending";
   static const String collections = "collections";
+  static const String collectionProducts = "collection-products";
   
 }

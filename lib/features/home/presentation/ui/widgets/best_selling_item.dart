@@ -17,6 +17,9 @@ class BestSellingItem extends StatelessWidget {
     required this.isLoading,
   });
 
+  bool get _hasDiscount =>
+      product.discountPrice != null && product.discountPrice!.isNotEmpty;
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -72,9 +75,10 @@ class BestSellingItem extends StatelessWidget {
                         ),
                       ),
 
-                      4.horizontalSpace,
-
-                      if (product.discountPercentage!.isNotEmpty)
+                      if (_hasDiscount &&
+                          product.discountPercentage != null &&
+                          product.discountPercentage!.isNotEmpty) ...[
+                        4.horizontalSpace,
                         Container(
                           padding: paddingSymmetric(4, 1),
                           decoration: BoxDecoration(
@@ -90,6 +94,7 @@ class BestSellingItem extends StatelessWidget {
                             style: AppTextStyles.text10Regular,
                           ),
                         ),
+                      ],
                     ],
                   ),
 
@@ -104,34 +109,42 @@ class BestSellingItem extends StatelessWidget {
 
                   2.verticalSpace,
 
-                  Row(
-                    children: [
-                      Flexible(
-                        child: Text(
-                          '${product.discountPrice} L.E',
-                          style: AppTextStyles.text12Bold,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
-
-                      4.horizontalSpace,
-
-                      Flexible(
-                        child: Text(
-                          '${product.price} L.E',
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 1,
-                          style: AppTextStyles.text12Regular.copyWith(
-                            decoration: TextDecoration.lineThrough,
-                            decorationColor: AppColors.primary,
-                            decorationThickness: 1.8,
-                            color: AppColors.background,
+                  if (_hasDiscount)
+                    Row(
+                      children: [
+                        Flexible(
+                          child: Text(
+                            '${product.discountPrice} L.E',
+                            style: AppTextStyles.text12Bold,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
                           ),
                         ),
-                      ),
-                    ],
-                  ),
+
+                        4.horizontalSpace,
+
+                        Flexible(
+                          child: Text(
+                            '${product.price} L.E',
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 1,
+                            style: AppTextStyles.text12Regular.copyWith(
+                              decoration: TextDecoration.lineThrough,
+                              decorationColor: AppColors.primary,
+                              decorationThickness: 1.8,
+                              color: AppColors.background,
+                            ),
+                          ),
+                        ),
+                      ],
+                    )
+                  else
+                    Text(
+                      '${product.price} L.E',
+                      style: AppTextStyles.text12Bold,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
                 ],
               ),
             ),

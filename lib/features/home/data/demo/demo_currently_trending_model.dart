@@ -19,6 +19,11 @@ class DemoCurrentlyTrendingData {
         rating: '4.8',
         reviewCount: '154',
         inStock: true,
+        sizes: [
+          ProductSizeModel(id: 1, size: '30ml'),
+          ProductSizeModel(id: 2, size: '50ml'),
+          ProductSizeModel(id: 3, size: '100ml'),
+        ],
       ),
       ProductItemModel(
         id: 6,
@@ -32,6 +37,11 @@ class DemoCurrentlyTrendingData {
         rating: '4.7',
         reviewCount: '132',
         inStock: true,
+        sizes: [
+          ProductSizeModel(id: 1, size: '30ml'),
+          ProductSizeModel(id: 2, size: '50ml'),
+          ProductSizeModel(id: 3, size: '100ml'),
+        ],
       ),
       ProductItemModel(
         id: 7,
@@ -45,6 +55,11 @@ class DemoCurrentlyTrendingData {
         rating: '4.6',
         reviewCount: '87',
         inStock: true,
+        sizes: [
+          ProductSizeModel(id: 1, size: '30ml'),
+          ProductSizeModel(id: 2, size: '50ml'),
+          ProductSizeModel(id: 3, size: '100ml'),
+        ],
       ),
       ProductItemModel(
         id: 8,
@@ -58,6 +73,11 @@ class DemoCurrentlyTrendingData {
         rating: '4.8',
         reviewCount: '176',
         inStock: true,
+        sizes: [
+          ProductSizeModel(id: 1, size: '30ml'),
+          ProductSizeModel(id: 2, size: '50ml'),
+          ProductSizeModel(id: 3, size: '100ml'),
+        ],
       ),
     ],
     pagination: const PaginationModel(

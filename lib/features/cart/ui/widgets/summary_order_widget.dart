@@ -37,10 +37,10 @@ class SummaryOrderWidget extends StatelessWidget {
             _buildListTileSummaryOrder(
               title: "Total",
               value: "5350 L.E",
-              titleStyle: AppTextStyles.text16Bold.copyWith(
+              titleStyle: AppTextStyles.text14Bold.copyWith(
                 color: AppColors.primary,
               ),
-              valueStyle: AppTextStyles.text16Bold.copyWith(
+              valueStyle: AppTextStyles.text14Bold.copyWith(
                 color: AppColors.white,
               ),
             ),
@@ -58,19 +58,19 @@ class SummaryOrderWidget extends StatelessWidget {
   }) {
     return ListTile(
       contentPadding: EdgeInsets.zero,
-      minTileHeight: 5.0.h,
-      minVerticalPadding: 5.0.h,
+      minTileHeight: 5.h,
+      minVerticalPadding: 2.5.h,
       title: Text(
         title,
         style:
             titleStyle ??
-            AppTextStyles.text14Regular.copyWith(color: AppColors.primary),
+            AppTextStyles.text12Regular.copyWith(color: AppColors.primary),
       ),
       trailing: Text(
         value.toString(),
         style:
             valueStyle ??
-            AppTextStyles.text14Regular.copyWith(color: AppColors.white),
+            AppTextStyles.text12Regular.copyWith(color: AppColors.white),
       ),
     );
   }

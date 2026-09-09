@@ -16,7 +16,7 @@ abstract class AppThemeData {
     scaffoldBackgroundColor: Colors.black45,
 
     textTheme: TextTheme(
-      bodyLarge: AppTextStyles.text14Bold.copyWith(color: AppColors.white),
+      bodyLarge: AppTextStyles.text14Bold.copyWith(color: AppColors.white,),
       bodyMedium: AppTextStyles.text14Regular.copyWith(color: AppColors.white),
       bodySmall: AppTextStyles.text12Regular.copyWith(color: AppColors.white),
       labelLarge: AppTextStyles.text12Bold.copyWith(color: AppColors.white),

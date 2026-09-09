@@ -14,6 +14,8 @@ class BestSellingModel {
     this.pagination,
   });
 
+  
+
   factory BestSellingModel.fromJson(Map<String, dynamic> json) {
     return BestSellingModel(
       success: json['success'],

@@ -6,23 +6,25 @@ import 'package:konoz/core/helper/app_padding.dart';
 class CustomRatingWidget extends StatelessWidget {
   final double initialRating;
   final bool readOnly;
+  final double? width;
   const CustomRatingWidget({
     super.key,
     required this.initialRating,
     this.readOnly = true,
+    this.width,
   });
 
   @override
   Widget build(BuildContext context) {
     return RatingBar.builder(
       initialRating: initialRating,
-      itemSize: 16.sp,
+      itemSize: width?? 14.sp,
       minRating: 1,
       direction: Axis.horizontal,
-      allowHalfRating: true,
+      allowHalfRating: false,
       ignoreGestures: readOnly,
       itemCount: 5,
-      itemPadding: paddingHorizontal(2.0),
+      itemPadding: paddingHorizontal(1.0),
       itemBuilder: (context, _) => Icon(Icons.star, color: Colors.amber),
       onRatingUpdate: (rating) {},
     );

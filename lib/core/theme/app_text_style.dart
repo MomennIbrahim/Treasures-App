@@ -10,6 +10,11 @@ abstract class AppTextStyles {
   );
 
   // 16px
+  static TextStyle text16Regular = TextStyle(
+    fontSize: 16.sp,
+    fontWeight: FontWeight.w400,
+    fontFamily: 'Cairo',
+  );
   static TextStyle text16Bold = TextStyle(
     fontSize: 16.sp,
     fontWeight: FontWeight.w700,

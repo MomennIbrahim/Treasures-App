@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:konoz/core/helper/app_padding.dart';
@@ -37,7 +38,10 @@ class CollectionsGridView extends StatelessWidget {
                       )
               : collections[index];
 
-          return CollectionItem(collection: collection);
+          return FadeIn(
+            delay: Duration(milliseconds: 25 * index),
+            child: CollectionItem(collection: collection),
+          );
         },
       ),
     );

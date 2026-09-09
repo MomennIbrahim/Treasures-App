@@ -16,7 +16,7 @@ class AppSearchBar extends StatelessWidget implements PreferredSizeWidget {
       bottom: PreferredSize(
         preferredSize: Size.fromHeight(65.h),
         child: Padding(
-          padding: EdgeInsets.only(bottom: 10.h),
+          padding: EdgeInsets.only(bottom: 12.h),
           child: Row(
             children: [
               if (showBackIcon)
