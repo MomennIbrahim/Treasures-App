@@ -101,6 +101,16 @@
       "confirm": "حذف الحساب"
     }
   },
+
+  "checkout":{
+    "payment_method": "طريقة الدفع",
+    "delivery_address": "عنوان التوصيل",
+    "cash_on_delivery": "الدفع عند الاستلام",
+    "pay_when_your_order_arrives": "ادفع عند وصول طلبك",
+    "pay_securely_with_your_card": "ادفع بأمان باستخدام بطاقتك",
+    "credit_debit_card": "بطاقة ائتمان / بطاقة خصم",
+    "place_order": "تأكيد الطلب"
+  },
   
   "auth": {
     "get_started": "ابدأ الآن مع ",

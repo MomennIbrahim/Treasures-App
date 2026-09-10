@@ -26,7 +26,7 @@ class CurrentlyTrendingItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => context.push(Routes.productDetails),
+      onTap: () => context.push("${Routes.home}/${Routes.productDetails}"),
       child: Container(
         width: 140.w,
         decoration: BoxDecoration(

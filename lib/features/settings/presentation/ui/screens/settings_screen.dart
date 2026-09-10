@@ -1,4 +1,3 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hugeicons/hugeicons.dart';
@@ -27,7 +26,7 @@ class SettingsScreen extends StatelessWidget {
               16.verticalSpace,
               SettingsTileWidget(
                 icon: HugeIcons.strokeRoundedTranslate,
-                title: LocaleKeys.settings_change_language ,
+                title: LocaleKeys.settings_change_language,
                 onTap: () => showChangeLanguageDialog(context),
               ),
               SettingsTileWidget(

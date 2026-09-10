@@ -20,6 +20,7 @@ class AppButton extends StatelessWidget {
     this.padding,
     this.labelStyle,
     this.borderRadius,
+    this.isLoading = false,
   });
 
   final String label;
@@ -32,6 +33,7 @@ class AppButton extends StatelessWidget {
   final EdgeInsetsGeometry? padding;
   final TextStyle? labelStyle;
   final BorderRadius? borderRadius;
+  final bool isLoading;
 
   bool get _isOutlined => variant == AppButtonVariant.outlined;
 
@@ -49,23 +51,26 @@ class AppButton extends StatelessWidget {
 
   Widget _buildFilled() {
     return ElevatedButton(
-      onPressed: onPressed,
+      // بنقفل الزرار وقت اللودينج عشان نمنع الضغط المتكرر (زي double submit)
+      onPressed: isLoading ? null : onPressed,
       style: ElevatedButton.styleFrom(
         backgroundColor: buttonColor ?? AppColors.primary,
-        disabledBackgroundColor: AppColors.primary.withValues(alpha: 0.6),
+        disabledBackgroundColor: isLoading
+            ? (buttonColor ?? AppColors.primary)
+            : AppColors.primary.withValues(alpha: 0.6),
         foregroundColor: AppColors.white,
         elevation: 0,
         shape: RoundedRectangleBorder(
           borderRadius: borderRadius ?? AppRadius.br20,
         ),
       ),
-      child: _buildChild(),
+      child: _buildChild(loaderColor: AppColors.white),
     );
   }
 
   Widget _buildOutlined() {
     return OutlinedButton(
-      onPressed: onPressed,
+      onPressed: isLoading ? null : onPressed,
       style: OutlinedButton.styleFrom(
         foregroundColor: AppColors.primary,
         side: BorderSide(color: AppColors.primary, width: 1.0),
@@ -73,11 +78,22 @@ class AppButton extends StatelessWidget {
           borderRadius: borderRadius ?? AppRadius.br20,
         ),
       ),
-      child: _buildChild(),
+      child: _buildChild(loaderColor: AppColors.primary),
     );
   }
 
-  Widget _buildChild() {
+  Widget _buildChild({required Color loaderColor}) {
+    if (isLoading) {
+      return SizedBox(
+        width: 20.w,
+        height: 20.h,
+        child: CircularProgressIndicator(
+          strokeWidth: 2.5,
+          valueColor: AlwaysStoppedAnimation<Color>(loaderColor),
+        ),
+      );
+    }
+
     final style =
         labelStyle ??
         (variant == AppButtonVariant.outlined
@@ -96,6 +112,6 @@ class AppButton extends StatelessWidget {
       );
     }
 
-    return Text(label.tr(), style: style);
+    return FittedBox(child: Text(label.tr(), style: style));
   }
 }

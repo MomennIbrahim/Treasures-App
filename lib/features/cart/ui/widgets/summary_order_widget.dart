@@ -12,51 +12,46 @@ class SummaryOrderWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SliverToBoxAdapter(
-      child: Container(
-        margin: paddingVertical(16),
-        padding: paddingAll(16),
-        decoration: BoxDecoration(
-          color: Colors.white10,
-          borderRadius: AppRadius.br24,
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              LocaleKeys.cart_summary_order.tr(),
-              style: AppTextStyles.text14Bold,
+    return Container(
+      margin: paddingVertical(16),
+      padding: paddingAll(16),
+      decoration: BoxDecoration(
+        color: Colors.white10,
+        borderRadius: AppRadius.br24,
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            LocaleKeys.cart_summary_order.tr(),
+            style: AppTextStyles.text14Bold,
+          ),
+          10.verticalSpace,
+          _buildListTileSummaryOrder(
+            title: LocaleKeys.cart_coast,
+            value: "5,000 L.E",
+          ),
+          _buildListTileSummaryOrder(
+            title: LocaleKeys.cart_shipping,
+            value: "35 L.E",
+          ),
+          _buildListTileSummaryOrder(title: LocaleKeys.cart_tax, value: "10%"),
+          _buildListTileSummaryOrder(
+            title: LocaleKeys.cart_discount,
+            value: "35%",
+          ),
+          const Divider(),
+          _buildListTileSummaryOrder(
+            title: LocaleKeys.cart_total,
+            value: "5,350 L.E",
+            titleStyle: AppTextStyles.text14Bold.copyWith(
+              color: AppColors.primary,
             ),
-            10.verticalSpace,
-            _buildListTileSummaryOrder(
-              title: LocaleKeys.cart_coast,
-              value: "5000 L.E",
+            valueStyle: AppTextStyles.text14Bold.copyWith(
+              color: AppColors.white,
             ),
-            _buildListTileSummaryOrder(
-              title: LocaleKeys.cart_shipping,
-              value: "35 L.E",
-            ),
-            _buildListTileSummaryOrder(
-              title: LocaleKeys.cart_tax,
-              value: "10%",
-            ),
-            _buildListTileSummaryOrder(
-              title: LocaleKeys.cart_discount,
-              value: "35%",
-            ),
-            const Divider(),
-            _buildListTileSummaryOrder(
-              title: LocaleKeys.cart_total,
-              value: "5350 L.E",
-              titleStyle: AppTextStyles.text14Bold.copyWith(
-                color: AppColors.primary,
-              ),
-              valueStyle: AppTextStyles.text14Bold.copyWith(
-                color: AppColors.white,
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

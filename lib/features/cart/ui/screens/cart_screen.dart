@@ -1,7 +1,9 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:konoz/core/helper/app_padding.dart';
+import 'package:konoz/core/router/routes.dart';
 import 'package:konoz/core/theme/app_colors.dart';
 import 'package:konoz/core/theme/app_text_style.dart';
 import 'package:konoz/core/widgets/app_button.dart';
@@ -58,7 +60,7 @@ class _CartScreenState extends State<CartScreen> {
                 padding: paddingVertical(16),
                 sliver: SliverAppBar(
                   pinned: true,
-                  backgroundColor: Colors.black,
+                  backgroundColor: AppColors.black,
                   toolbarHeight: 42.5.h,
                   flexibleSpace: FlexibleSpaceBar(
                     background: AppButton(
@@ -66,13 +68,15 @@ class _CartScreenState extends State<CartScreen> {
                           "${LocaleKeys.cart_proceed_to_buy.tr()} (2 ${LocaleKeys.cart_items.tr()})",
                       labelStyle: AppTextStyles.text12Bold,
                       icon: Icon(Icons.arrow_forward),
-                      onPressed: () {},
+                      onPressed: () {
+                        context.push(Routes.checkout);
+                      },
                     ),
                   ),
                 ),
               ),
               CartItemsList(),
-              SummaryOrderWidget(key: _summaryKey),
+              SliverToBoxAdapter(child: SummaryOrderWidget(key: _summaryKey)),
 
               // SliverToBoxAdapter(
               //   child: Column(

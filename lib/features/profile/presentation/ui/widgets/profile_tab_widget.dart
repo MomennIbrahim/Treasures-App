@@ -23,11 +23,12 @@ class ProfileTabWidget extends StatelessWidget {
             _buildCustomTab(
               title: LocaleKeys.me_personal_data,
               icon: HugeIcons.strokeRoundedUser03,
+              onTap: () =>  context.push("${Routes.profile}/${Routes.personalData}"),
             ),
             _buildCustomTab(
               title: LocaleKeys.me_orders,
               icon: HugeIcons.strokeRoundedDeliveryBox01,
-              onTap: () => context.push(Routes.orders),
+              onTap: () => context.push("${Routes.profile}/${Routes.orders}"),
             ),
             _buildCustomTab(
               title: LocaleKeys.me_favorites,
@@ -36,7 +37,7 @@ class ProfileTabWidget extends StatelessWidget {
             _buildCustomTab(
               title: LocaleKeys.me_settings,
               icon: HugeIcons.strokeRoundedSettings02,
-              onTap: () => context.push(Routes.settings),
+              onTap: () => context.push("${Routes.profile}/${Routes.settings}"),
             ),
 
             Divider(color: AppColors.neutral600),

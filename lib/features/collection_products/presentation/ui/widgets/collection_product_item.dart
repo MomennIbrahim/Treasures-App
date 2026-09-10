@@ -30,7 +30,8 @@ class CollectionProductItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => context.push(Routes.productDetails),
+      onTap: () =>
+          context.push("${Routes.collectionProducts}/${Routes.productDetails}"),
       child: Container(
         width: 125.w,
         decoration: BoxDecoration(

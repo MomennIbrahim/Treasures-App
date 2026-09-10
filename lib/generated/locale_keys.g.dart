@@ -80,6 +80,14 @@ abstract class  LocaleKeys {
   static const dialogs_delete_account_confirm = 'dialogs.delete_account.confirm';
   static const dialogs_delete_account = 'dialogs.delete_account';
   static const dialogs = 'dialogs';
+  static const checkout_payment_method = 'checkout.payment_method';
+  static const checkout_delivery_address = 'checkout.delivery_address';
+  static const checkout_cash_on_delivery = 'checkout.cash_on_delivery';
+  static const checkout_pay_when_your_order_arrives = 'checkout.pay_when_your_order_arrives';
+  static const checkout_pay_securely_with_your_card = 'checkout.pay_securely_with_your_card';
+  static const checkout_credit_debit_card = 'checkout.credit_debit_card';
+  static const checkout_place_order = 'checkout.place_order';
+  static const checkout = 'checkout';
   static const auth_get_started = 'auth.get_started';
   static const auth_app_name = 'auth.app_name';
   static const auth_subtitle = 'auth.subtitle';

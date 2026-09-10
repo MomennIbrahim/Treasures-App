@@ -101,6 +101,16 @@
     }
   },
 
+  "checkout":{
+    "payment_method": "Payment Method",
+    "delivery_address": "Delivery Address",
+    "cash_on_delivery": "Cash on Delivery",
+    "pay_when_your_order_arrives": "Pay when your order arrives",
+    "pay_securely_with_your_card": "Pay securely with your card",
+    "credit_debit_card": "Credit / Debit Card",
+    "place_order": "Place Order"
+  },
+
   "auth": {
     "get_started": "Get Started Now With ",
     "app_name": "Konoz!",

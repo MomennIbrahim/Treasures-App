@@ -106,6 +106,15 @@ class CodegenLoader extends AssetLoader{
       "confirm": "Delete Permanently"
     }
   },
+  "checkout": {
+    "payment_method": "Payment Method",
+    "delivery_address": "Delivery Address",
+    "cash_on_delivery": "Cash on Delivery",
+    "pay_when_your_order_arrives": "Pay when your order arrives",
+    "pay_securely_with_your_card": "Pay securely with your card",
+    "credit_debit_card": "Credit / Debit Card",
+    "place_order": "Place Order"
+  },
   "auth": {
     "get_started": "Get Started Now With ",
     "app_name": "Konoz!",
@@ -209,6 +218,15 @@ static const Map<String,dynamic> _ar = {
       "message": "سيتم حذف حسابك وكل بياناتك بشكل نهائي ولا يمكن التراجع عن هذا الإجراء.",
       "confirm": "حذف الحساب"
     }
+  },
+  "checkout": {
+    "payment_method": "طريقة الدفع",
+    "delivery_address": "عنوان التوصيل",
+    "cash_on_delivery": "الدفع عند الاستلام",
+    "pay_when_your_order_arrives": "ادفع عند وصول طلبك",
+    "pay_securely_with_your_card": "ادفع بأمان باستخدام بطاقتك",
+    "credit_debit_card": "بطاقة ائتمان / بطاقة خصم",
+    "place_order": "تأكيد الطلب"
   },
   "auth": {
     "get_started": "ابدأ الآن مع ",

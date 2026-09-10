@@ -17,11 +17,14 @@ Future<void> showBlurredConfirmationDialog({
   required String message,
   required String confirmText,
   required VoidCallback onConfirm,
+  String? secondaryText,
+  VoidCallback? onSecondary,
   Color confirmColor = AppColors.error700,
+  bool barrierDismissible = true,
 }) {
   return showGeneralDialog(
     context: context,
-    barrierDismissible: true,
+    barrierDismissible: barrierDismissible,
     barrierLabel: title,
     barrierColor: Colors.black.withValues(alpha: 0.01),
     transitionDuration: const Duration(milliseconds: 250),
@@ -30,6 +33,7 @@ Future<void> showBlurredConfirmationDialog({
     },
     transitionBuilder: (context, animation, secondaryAnimation, child) {
       final curved = CurvedAnimation(parent: animation, curve: Curves.easeOut);
+
       return BackdropFilter(
         filter: ImageFilter.blur(
           sigmaX: 6 * curved.value,
@@ -46,6 +50,8 @@ Future<void> showBlurredConfirmationDialog({
                 confirmText: confirmText,
                 confirmColor: confirmColor,
                 onConfirm: onConfirm,
+                secondaryText: secondaryText,
+                onSecondary: onSecondary,
               ),
             ),
           ),
@@ -60,6 +66,8 @@ class _DialogContent extends StatelessWidget {
   final String message;
   final String confirmText;
   final Color confirmColor;
+  final String? secondaryText;
+  final VoidCallback? onSecondary;
   final VoidCallback onConfirm;
 
   const _DialogContent({
@@ -68,6 +76,8 @@ class _DialogContent extends StatelessWidget {
     required this.confirmText,
     required this.confirmColor,
     required this.onConfirm,
+    this.secondaryText,
+    this.onSecondary,
   });
 
   @override
@@ -96,17 +106,19 @@ class _DialogContent extends StatelessWidget {
               children: [
                 Expanded(
                   child: AppButton(
-                    label: LocaleKeys.dialogs_cancel.tr(),
+                    height: 37,
+                    label: secondaryText ?? LocaleKeys.dialogs_cancel.tr(),
                     buttonColor: AppColors.lightWhite,
-                    labelStyle: AppTextStyles.text14Bold.copyWith(
+                    labelStyle: AppTextStyles.text12Bold.copyWith(
                       color: AppColors.primary,
                     ),
-                    onPressed: () => Navigator.pop(context),
+                    onPressed: onSecondary ?? () => context.pop(),
                   ),
                 ),
                 12.horizontalSpace,
                 Expanded(
                   child: AppButton(
+                    height: 37,
                     label: confirmText,
                     buttonColor: confirmColor,
                     onPressed: () {

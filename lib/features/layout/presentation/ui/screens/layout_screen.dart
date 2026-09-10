@@ -12,10 +12,21 @@ class LayoutScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final currentPath = GoRouterState.of(context).uri.path;
-    final isOrdersScreen = currentPath == Routes.orders;
-    final isSettingsScreen = currentPath == Routes.settings;
+
+    final isOrdersScreen = currentPath.contains(Routes.orders);
+    final isProductDetailsScreen = currentPath.contains(Routes.productDetails);
+    final isProfileScreen = currentPath == Routes.profile;
+    final isPersonalDataScreen = currentPath.contains(Routes.personalData);
+    final isSettingsScreen = currentPath.contains(Routes.settings);
     final isSearchScreen = currentPath.contains(Routes.search);
-    final hideSearchBar = isOrdersScreen || isSettingsScreen || isSearchScreen;
+
+    final hideSearchBar =
+        isOrdersScreen ||
+        isSettingsScreen ||
+        isSearchScreen ||
+        isProfileScreen ||
+        isProductDetailsScreen ||
+        isPersonalDataScreen;
 
     return SafeArea(
       top: false,

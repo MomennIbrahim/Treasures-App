@@ -5,10 +5,12 @@ import 'package:konoz/core/di/dependency_injection.dart';
 import 'package:konoz/features/auth/presentation/ui/screens/auth_screen.dart';
 import 'package:konoz/features/auth/presentation/ui/screens/otp_screen.dart';
 import 'package:konoz/features/cart/ui/screens/cart_screen.dart';
+import 'package:konoz/features/checkout/presentation/ui/screens/checkout_screen.dart';
 import 'package:konoz/features/collection_products/presentation/controllers/collection_products/collection_products_cubit.dart';
 import 'package:konoz/features/collection_products/presentation/ui/screens/collection_products_screen.dart';
 import 'package:konoz/features/collections/presentation/controllers/collections/collections_cubit.dart';
 import 'package:konoz/features/collections/presentation/ui/screens/collectoins_screen.dart';
+import 'package:konoz/features/edit_profile/ui/screens/personal_data_screen.dart';
 import 'package:konoz/features/home/presentation/controllers/banners_cubit/banners_cubit.dart';
 import 'package:konoz/features/home/presentation/controllers/best_selling/best_selling_cubit.dart';
 import 'package:konoz/features/home/presentation/controllers/currently_trending/currently_trending_cubit.dart';
@@ -66,6 +68,18 @@ class AppRouter {
 
                 routes: [
                   GoRoute(
+                    path: Routes.productDetails,
+                    pageBuilder: (context, state) {
+                      return AppPageTransition.fade(
+                        state: state,
+                        child: BlocProvider(
+                          create: (context) => getIt.get<ProductDetailsCubit>(),
+                          child: ProductDetailsScreen(),
+                        ),
+                      );
+                    },
+                  ),
+                  GoRoute(
                     path: Routes.search,
                     pageBuilder: (context, state) {
                       return AppPageTransition.fade(
@@ -94,6 +108,7 @@ class AppRouter {
               ),
             ],
           ),
+
           StatefulShellBranch(
             routes: [
               GoRoute(
@@ -114,6 +129,20 @@ class AppRouter {
                     ),
                   );
                 },
+                routes: [
+                  GoRoute(
+                    path: Routes.productDetails,
+                    pageBuilder: (context, state) {
+                      return AppPageTransition.fade(
+                        state: state,
+                        child: BlocProvider(
+                          create: (context) => getIt.get<ProductDetailsCubit>(),
+                          child: ProductDetailsScreen(),
+                        ),
+                      );
+                    },
+                  ),
+                ],
               ),
             ],
           ),
@@ -135,24 +164,35 @@ class AppRouter {
                   state: state,
                   child: ProfileScreen(),
                 ),
-              ),
-              GoRoute(
-                path: Routes.orders,
-                pageBuilder: (context, state) {
-                  return AppPageTransition.fade(
-                    state: state,
-                    child: OrdersScreen(),
-                  );
-                },
-              ),
-              GoRoute(
-                path: Routes.settings,
-                pageBuilder: (context, state) {
-                  return AppPageTransition.fade(
-                    state: state,
-                    child: SettingsScreen(),
-                  );
-                },
+                routes: [
+                  GoRoute(
+                    path: Routes.orders,
+                    pageBuilder: (context, state) {
+                      return AppPageTransition.fade(
+                        state: state,
+                        child: OrdersScreen(),
+                      );
+                    },
+                  ),
+                  GoRoute(
+                    path: Routes.personalData,
+                    pageBuilder: (context, state) {
+                      return AppPageTransition.fade(
+                        state: state,
+                        child: PersonalDataScreen(),
+                      );
+                    },
+                  ),
+                  GoRoute(
+                    path: Routes.settings,
+                    pageBuilder: (context, state) {
+                      return AppPageTransition.fade(
+                        state: state,
+                        child: SettingsScreen(),
+                      );
+                    },
+                  ),
+                ],
               ),
             ],
           ),
@@ -160,17 +200,24 @@ class AppRouter {
       ),
 
       GoRoute(
-        path: Routes.productDetails,
+        path: Routes.checkout,
         pageBuilder: (context, state) {
-          return AppPageTransition.fade(
-            state: state,
-            child: BlocProvider(
-              create: (context) => getIt.get<ProductDetailsCubit>(),
-              child: ProductDetailsScreen(),
-            ),
-          );
+          return AppPageTransition.fade(state: state, child: CheckoutScreen());
         },
       ),
+
+      // GoRoute(
+      //   path: Routes.addressPicker,
+      //   pageBuilder: (context, state) {
+      //     // بنبعت العنوان الحالي (لو موجود) عن طريق extra لأنه object
+      //     // مركب مش نص بسيط، فمينفعش يتبعت كـ query parameter.
+      //     final initialAddress = state.extra as AddressModel?;
+      //     return AppPageTransition.fade(
+      //       state: state,
+      //       child: AddressPickerScreen(initialAddress: initialAddress),
+      //     );
+      //   },
+      // ),
     ],
   );
 }

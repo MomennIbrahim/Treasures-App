@@ -39,6 +39,7 @@ abstract class AppTextStyles {
     fontSize: 12.sp,
     fontWeight: FontWeight.w700,
     fontFamily: 'Cairo',
+    
   );
 
   static TextStyle text12Regular = TextStyle(

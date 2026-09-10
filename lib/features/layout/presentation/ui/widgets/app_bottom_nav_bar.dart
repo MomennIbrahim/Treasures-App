@@ -81,10 +81,21 @@ class AppBottomNavBar extends StatelessWidget {
                     label: LocaleKeys.layout_collections.tr(),
                   ),
                   BottomNavigationBarItem(
-                    icon: HugeIcon(
-                      icon: HugeIcons.strokeRoundedShoppingBag01,
-                      strokeWidth: 1.5,
-                      size: 18.sp,
+                    icon: Badge(
+                      backgroundColor: AppColors.primary,
+                      largeSize: 10.sp,
+                      label: Text(
+                        '2',
+                        style: AppTextStyles.text10Bold.copyWith(
+                          color: AppColors.white,
+                          fontSize: 9,
+                        ),
+                      ),
+                      child: HugeIcon(
+                        icon: HugeIcons.strokeRoundedShoppingBag01,
+                        strokeWidth: 1.5,
+                        size: 18.sp,
+                      ),
                     ),
                     label: LocaleKeys.layout_cart.tr(),
                   ),
