@@ -19,6 +19,7 @@ class AppButton extends StatelessWidget {
     this.buttonColor,
     this.padding,
     this.labelStyle,
+    this.borderRadius,
   });
 
   final String label;
@@ -30,6 +31,7 @@ class AppButton extends StatelessWidget {
   final double? height;
   final EdgeInsetsGeometry? padding;
   final TextStyle? labelStyle;
+  final BorderRadius? borderRadius;
 
   bool get _isOutlined => variant == AppButtonVariant.outlined;
 
@@ -53,7 +55,9 @@ class AppButton extends StatelessWidget {
         disabledBackgroundColor: AppColors.primary.withValues(alpha: 0.6),
         foregroundColor: AppColors.white,
         elevation: 0,
-        shape: RoundedRectangleBorder(borderRadius: AppRadius.br20),
+        shape: RoundedRectangleBorder(
+          borderRadius: borderRadius ?? AppRadius.br20,
+        ),
       ),
       child: _buildChild(),
     );
@@ -65,7 +69,9 @@ class AppButton extends StatelessWidget {
       style: OutlinedButton.styleFrom(
         foregroundColor: AppColors.primary,
         side: BorderSide(color: AppColors.primary, width: 1.0),
-        shape: RoundedRectangleBorder(borderRadius: AppRadius.br20),
+        shape: RoundedRectangleBorder(
+          borderRadius: borderRadius ?? AppRadius.br20,
+        ),
       ),
       child: _buildChild(),
     );

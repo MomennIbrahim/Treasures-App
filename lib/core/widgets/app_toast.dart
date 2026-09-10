@@ -19,11 +19,18 @@ class AppToast {
     required String message,
     AppToastType type = AppToastType.success,
     AppToastPosition position = AppToastPosition.bottom,
+    void Function()? onTap,
   }) {
     final config = _getConfig(type);
     final overlay = Overlay.of(context);
 
     late OverlayEntry overlayEntry;
+
+    void removeToast() {
+      if (overlayEntry.mounted) {
+        overlayEntry.remove();
+      }
+    }
 
     final toast = Container(
       padding: paddingAll(8),
@@ -36,15 +43,25 @@ class AppToast {
         children: [
           HugeIcon(icon: config.icon, size: 16.sp, color: AppColors.white),
           8.horizontalSpace,
-          Flexible(
-            child: Text(
-              message,
-              style: AppTextStyles.text12Bold.copyWith(color: AppColors.white),
+          GestureDetector(
+            onTap: () {
+              onTap?.call();
+              removeToast(); // يقفل التوست فورًا لما يدوس، من غير ما يستنى الـ duration
+            },
+            child: Flexible(
+              child: Text(
+                message,
+                style: AppTextStyles.text12Bold.copyWith(
+                  color: AppColors.white,
+                  decoration: onTap != null ? TextDecoration.underline : null,
+                  decorationColor: AppColors.white,
+                ),
+              ),
             ),
           ),
           8.horizontalSpace,
           GestureDetector(
-            onTap: () => overlayEntry.remove(),
+            onTap: removeToast,
             child: Text(
               LocaleKeys.general_undo.tr(),
               style: AppTextStyles.text10Bold.copyWith(
@@ -71,8 +88,17 @@ class AppToast {
             color: Colors.transparent,
             child: Center(
               child: isTop
-                  ? FadeInDownBig(child: toast)
-                  : FadeInUpBig(child: toast),
+                  ? FadeInDown(
+                      duration: const Duration(milliseconds: 250),
+                      from:
+                          30, // مسافة الحركة بالبكسل، صغيرة عشان تحس إنه طالع بسرعة
+                      child: toast,
+                    )
+                  : FadeInUp(
+                      duration: const Duration(milliseconds: 250),
+                      from: 30,
+                      child: toast,
+                    ),
             ),
           ),
         );
@@ -81,11 +107,7 @@ class AppToast {
 
     overlay.insert(overlayEntry);
 
-    Future.delayed(const Duration(seconds: 3), () {
-      if (overlayEntry.mounted) {
-        overlayEntry.remove();
-      }
-    });
+    Future.delayed(const Duration(seconds: 3), removeToast);
   }
 
   static _AppToastConfig _getConfig(AppToastType type) {

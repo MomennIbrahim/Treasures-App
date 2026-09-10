@@ -3,7 +3,8 @@
         "add_to_cart":  "اضافة الى السلة"  ,
         "search_hint": "ابحث عن عطر...",
         "undo": "الغاء",
-        "show_details": "اظهار التفاصيل"
+        "show_details": "اظهار التفاصيل",
+        "product_added_to_cart" : "تمت إضافة المنتج إلى عربة التسوق، اضغط للانتقال إلى العربة"
     },
     "layout": {
         "home": "الرئيسية",
@@ -70,5 +71,47 @@
   "validation": {
     "please_enter_phone": "من فضلك ادخل رقم الهاتف",
     "invalid_phone": "رقم الهاتف غير صحيح"
+  },
+
+  "settings": {
+    "title": "الإعدادات",
+    "change_language": "تغيير اللغة",
+    "logout": "تسجيل الخروج",
+    "delete_account": "حذف الحساب"
+  },
+
+  "dialogs": {
+    "cancel": "إلغاء",
+    "confirm": "موافق",
+    "change_language": {
+      "title": "تغيير اللغة",
+      "message": "تغيير اللغة سيؤدي لإعادة فتح التطبيق، هل تريد المتابعة؟",
+      "confirm": "موافق"
+    },
+
+    "logout": {
+      "title": "تسجيل الخروج",
+      "message": "هل أنت متأكد من رغبتك في تسجيل الخروج؟",
+      "confirm": "تسجيل الخروج"
+    },
+
+    "delete_account": {
+      "title": "حذف الحساب",
+      "message": "سيتم حذف حسابك وكل بياناتك بشكل نهائي ولا يمكن التراجع عن هذا الإجراء.",
+      "confirm": "حذف الحساب"
+    }
+  },
+  
+  "auth": {
+    "get_started": "ابدأ الآن مع ",
+    "app_name": "كنوز!",
+    "subtitle": "اكتشف أفضل المنتجات من حول العالم",
+    "phone_number": "رقم الهاتف",
+    "phone_hint": "01x xxxxxxxx",
+    "login": "تسجيل الدخول",
+    "or_login_with": "أو سجل الدخول باستخدام",
+    "phone_required": "من فضلك أدخل رقم الهاتف",
+    "phone_invalid": "رقم الهاتف غير صحيح"
   }
+
 }

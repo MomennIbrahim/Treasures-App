@@ -20,6 +20,7 @@ import 'package:konoz/features/product_details/presentation/controllers/product_
 import 'package:konoz/features/product_details/presentation/ui/screens/product_details_screen.dart';
 import 'package:konoz/features/profile/presentation/ui/screens/profile_screen.dart';
 import 'package:konoz/features/search/presentation/ui/screens/search_screen.dart';
+import 'package:konoz/features/settings/presentation/ui/screens/settings_screen.dart';
 
 import 'routes.dart';
 
@@ -113,6 +114,15 @@ class AppRouter {
                   return AppPageTransition.fade(
                     state: state,
                     child: OrdersScreen(),
+                  );
+                },
+              ),
+              GoRoute(
+                path: Routes.settings,
+                pageBuilder: (context, state) {
+                  return AppPageTransition.fade(
+                    state: state,
+                    child: SettingsScreen(),
                   );
                 },
               ),

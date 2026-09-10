@@ -40,11 +40,6 @@ class _HomeOffersSectionState extends State<HomeOffersSection> {
                 type: AppToastType.error,
               );
             }
-            AppToast.show(
-              context,
-              message: "Banners loaded successfully 🎉",
-              type: AppToastType.success,
-            );
           },
           builder: (context, state) {
             final bool isLoading = state.isLoading || state.isInitial;

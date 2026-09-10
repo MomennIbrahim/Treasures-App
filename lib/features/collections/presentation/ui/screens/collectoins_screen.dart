@@ -36,13 +36,6 @@ class _CollectionScreenState extends State<CollectionScreen> {
             type: AppToastType.error,
           );
         }
-        if (state.isSuccess) {
-          AppToast.show(
-            context,
-            message: "Collections loaded successfully",
-            type: AppToastType.success,
-          );
-        }
       },
       builder: (context, state) {
         final isLoading = state.isLoading || state.isInitial;

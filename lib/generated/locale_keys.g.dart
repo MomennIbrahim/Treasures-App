@@ -7,6 +7,7 @@ abstract class  LocaleKeys {
   static const general_search_hint = 'general.search_hint';
   static const general_undo = 'general.undo';
   static const general_show_details = 'general.show_details';
+  static const general_product_added_to_cart = 'general.product_added_to_cart';
   static const general = 'general';
   static const layout_home = 'layout.home';
   static const layout_collections = 'layout.collections';
@@ -59,5 +60,35 @@ abstract class  LocaleKeys {
   static const validation_please_enter_phone = 'validation.please_enter_phone';
   static const validation_invalid_phone = 'validation.invalid_phone';
   static const validation = 'validation';
+  static const settings_title = 'settings.title';
+  static const settings_change_language = 'settings.change_language';
+  static const settings_logout = 'settings.logout';
+  static const settings_delete_account = 'settings.delete_account';
+  static const settings = 'settings';
+  static const dialogs_cancel = 'dialogs.cancel';
+  static const dialogs_confirm = 'dialogs.confirm';
+  static const dialogs_change_language_title = 'dialogs.change_language.title';
+  static const dialogs_change_language_message = 'dialogs.change_language.message';
+  static const dialogs_change_language_confirm = 'dialogs.change_language.confirm';
+  static const dialogs_change_language = 'dialogs.change_language';
+  static const dialogs_logout_title = 'dialogs.logout.title';
+  static const dialogs_logout_message = 'dialogs.logout.message';
+  static const dialogs_logout_confirm = 'dialogs.logout.confirm';
+  static const dialogs_logout = 'dialogs.logout';
+  static const dialogs_delete_account_title = 'dialogs.delete_account.title';
+  static const dialogs_delete_account_message = 'dialogs.delete_account.message';
+  static const dialogs_delete_account_confirm = 'dialogs.delete_account.confirm';
+  static const dialogs_delete_account = 'dialogs.delete_account';
+  static const dialogs = 'dialogs';
+  static const auth_get_started = 'auth.get_started';
+  static const auth_app_name = 'auth.app_name';
+  static const auth_subtitle = 'auth.subtitle';
+  static const auth_phone_number = 'auth.phone_number';
+  static const auth_phone_hint = 'auth.phone_hint';
+  static const auth_login = 'auth.login';
+  static const auth_or_login_with = 'auth.or_login_with';
+  static const auth_phone_required = 'auth.phone_required';
+  static const auth_phone_invalid = 'auth.phone_invalid';
+  static const auth = 'auth';
 
 }

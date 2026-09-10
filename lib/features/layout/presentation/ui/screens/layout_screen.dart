@@ -11,17 +11,18 @@ class LayoutScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isOrdersScreen = GoRouterState.of(context).uri.path == '/orders';
+    final currentPath = GoRouterState.of(context).uri.path;
+    final isOrdersScreen = currentPath == Routes.orders;
+    final isSettingsScreen = currentPath == Routes.settings;
+    final hideSearchBar = isOrdersScreen || isSettingsScreen;
 
     return SafeArea(
       top: false,
       child: Scaffold(
-        appBar: isOrdersScreen
+        appBar: hideSearchBar
             ? null
             : AppSearchBar(
-                showBackIcon:
-                    GoRouterState.of(context).uri.path ==
-                    Routes.collectionProducts,
+                showBackIcon: currentPath == Routes.collectionProducts,
               ),
         extendBody: true,
         body: navigationShell,

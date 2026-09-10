@@ -70,11 +70,15 @@ class _AuthScreenState extends State<AuthScreen> {
               48.verticalSpace,
               AuthForm(formKey: _formKey),
               48.verticalSpace,
-              AppButton(label: "Login", onPressed: () {
-                    if (_formKey.currentState!.validate()) {
+              AppButton(
+                label: "Login",
+                borderRadius: AppRadius.br8,
+                onPressed: () {
+                  if (_formKey.currentState!.validate()) {
                     context.push(Routes.otp);
                   }
-              }),
+                },
+              ),
               24.verticalSpace,
               Text("Or Login with"),
               InkWell(

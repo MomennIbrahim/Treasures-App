@@ -10,4 +10,5 @@ class Routes {
   static const String collectionProducts = '/collection_products';
   static const String search = '/search';
   static const String orders = '/orders';
+  static const String settings = '/settings';
 }

@@ -22,7 +22,7 @@ class CurrentlyTrendingListviewHorizontal extends StatelessWidget {
         : products;
 
     return SizedBox(
-      height: 180.h,
+      height: 220.h,
       child: ListView.separated(
         physics: const BouncingScrollPhysics(),
         padding: paddingHorizontal(16),

@@ -22,7 +22,7 @@ class BestSellingListviewHorizontal extends StatelessWidget {
         : products;
 
     return SizedBox(
-      height: 200.h,
+      height: 240.h,
       child: ListView.separated(
         physics: const BouncingScrollPhysics(),
         padding: paddingHorizontal(16),

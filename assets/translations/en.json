@@ -1,9 +1,10 @@
 {
     "general": {
-        "add_to_cart": "Add to Cart"  ,
+        "add_to_cart": "Add to cart",
         "search_hint": "Search for perfumery or fragrances...",
         "undo": "Undo",
-        "show_details": "Show Details"
+        "show_details": "Show Details",
+        "product_added_to_cart" : "Product added to cart, Press to go to cart"
     },
 
     "layout": {
@@ -69,5 +70,46 @@
   "validation": {
     "please_enter_phone": "Please enter phone",
     "invalid_phone": "Your phone is not valid"
- }
+ },
+ 
+  "settings": {
+    "title": "Settings",
+    "change_language": "Change Language",
+    "logout": "Logout",
+    "delete_account": "Delete Account"
+  },
+
+  "dialogs": {
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "change_language": {
+      "title": "Change Language",
+      "message": "Changing the language will restart the app. Do you want to continue?",
+      "confirm": "Confirm"
+    },
+
+    "logout": {
+      "title": "Logout",
+      "message": "Are you sure you want to log out?",
+      "confirm": "Logout"
+    },
+
+    "delete_account": {
+      "title": "Delete Account",
+      "message": "Your account and all your data will be permanently deleted. This action cannot be undone.",
+      "confirm": "Delete Permanently"
+    }
+  },
+
+  "auth": {
+    "get_started": "Get Started Now With ",
+    "app_name": "Konoz!",
+    "subtitle": "Discover the best products from around the world",
+    "phone_number": "Phone Number",
+    "phone_hint": "01x xxxxxxxx",
+    "login": "Login",
+    "or_login_with": "Or Login with",
+    "phone_required": "Please enter your phone number",
+    "phone_invalid": "Invalid phone number"
+  }
 }

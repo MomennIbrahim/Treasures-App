@@ -36,6 +36,7 @@ class ProfileTabWidget extends StatelessWidget {
             _buildCustomTab(
               title: LocaleKeys.me_settings,
               icon: HugeIcons.strokeRoundedSettings02,
+              onTap: () => context.push(Routes.settings),
             ),
 
             Divider(color: AppColors.neutral600),

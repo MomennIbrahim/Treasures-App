@@ -16,10 +16,11 @@ class CodegenLoader extends AssetLoader{
 
   static const Map<String,dynamic> _en = {
   "general": {
-    "add_to_cart": "Add to Cart",
+    "add_to_cart": "Add to cart",
     "search_hint": "Search for perfumery or fragrances...",
     "undo": "Undo",
-    "show_details": "Show Details"
+    "show_details": "Show Details",
+    "product_added_to_cart": "Product added to cart, Press to go to cart"
   },
   "layout": {
     "home": "Home",
@@ -79,6 +80,42 @@ class CodegenLoader extends AssetLoader{
   "validation": {
     "please_enter_phone": "Please enter phone",
     "invalid_phone": "Your phone is not valid"
+  },
+  "settings": {
+    "title": "Settings",
+    "change_language": "Change Language",
+    "logout": "Logout",
+    "delete_account": "Delete Account"
+  },
+  "dialogs": {
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "change_language": {
+      "title": "Change Language",
+      "message": "Changing the language will restart the app. Do you want to continue?",
+      "confirm": "Confirm"
+    },
+    "logout": {
+      "title": "Logout",
+      "message": "Are you sure you want to log out?",
+      "confirm": "Logout"
+    },
+    "delete_account": {
+      "title": "Delete Account",
+      "message": "Your account and all your data will be permanently deleted. This action cannot be undone.",
+      "confirm": "Delete Permanently"
+    }
+  },
+  "auth": {
+    "get_started": "Get Started Now With ",
+    "app_name": "Konoz!",
+    "subtitle": "Discover the best products from around the world",
+    "phone_number": "Phone Number",
+    "phone_hint": "01x xxxxxxxx",
+    "login": "Login",
+    "or_login_with": "Or Login with",
+    "phone_required": "Please enter your phone number",
+    "phone_invalid": "Invalid phone number"
   }
 };
 static const Map<String,dynamic> _ar = {
@@ -86,7 +123,8 @@ static const Map<String,dynamic> _ar = {
     "add_to_cart": "اضافة الى السلة",
     "search_hint": "ابحث عن عطر...",
     "undo": "الغاء",
-    "show_details": "اظهار التفاصيل"
+    "show_details": "اظهار التفاصيل",
+    "product_added_to_cart": "تمت إضافة المنتج إلى عربة التسوق، اضغط للانتقال إلى العربة"
   },
   "layout": {
     "home": "الرئيسية",
@@ -146,6 +184,42 @@ static const Map<String,dynamic> _ar = {
   "validation": {
     "please_enter_phone": "من فضلك ادخل رقم الهاتف",
     "invalid_phone": "رقم الهاتف غير صحيح"
+  },
+  "settings": {
+    "title": "الإعدادات",
+    "change_language": "تغيير اللغة",
+    "logout": "تسجيل الخروج",
+    "delete_account": "حذف الحساب"
+  },
+  "dialogs": {
+    "cancel": "إلغاء",
+    "confirm": "موافق",
+    "change_language": {
+      "title": "تغيير اللغة",
+      "message": "تغيير اللغة سيؤدي لإعادة فتح التطبيق، هل تريد المتابعة؟",
+      "confirm": "موافق"
+    },
+    "logout": {
+      "title": "تسجيل الخروج",
+      "message": "هل أنت متأكد من رغبتك في تسجيل الخروج؟",
+      "confirm": "تسجيل الخروج"
+    },
+    "delete_account": {
+      "title": "حذف الحساب",
+      "message": "سيتم حذف حسابك وكل بياناتك بشكل نهائي ولا يمكن التراجع عن هذا الإجراء.",
+      "confirm": "حذف الحساب"
+    }
+  },
+  "auth": {
+    "get_started": "ابدأ الآن مع ",
+    "app_name": "كنوز!",
+    "subtitle": "اكتشف أفضل المنتجات من حول العالم",
+    "phone_number": "رقم الهاتف",
+    "phone_hint": "01x xxxxxxxx",
+    "login": "تسجيل الدخول",
+    "or_login_with": "أو سجل الدخول باستخدام",
+    "phone_required": "من فضلك أدخل رقم الهاتف",
+    "phone_invalid": "رقم الهاتف غير صحيح"
   }
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"en": _en, "ar": _ar};
