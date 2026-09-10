@@ -1,4 +1,6 @@
 class Routes {
+  static const String auth = '/auth';
+  static const String otp = '/otp';
   static const String layout = '/layout';
   static const String home = '/home';
   static const String collections = '/collections';

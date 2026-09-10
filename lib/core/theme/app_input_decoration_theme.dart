@@ -11,6 +11,7 @@ abstract class AppInputDecorationTheme {
     hintStyle: AppTextStyles.text12Regular.copyWith(
       color: AppColors.neutral500,
     ),
+    errorStyle: AppTextStyles.text10Bold.copyWith(color: AppColors.warning900),
     border: OutlineInputBorder(
       borderRadius: AppRadius.br12,
       borderSide: const BorderSide(color: Colors.transparent),

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:konoz/core/di/dependency_injection.dart';
+import 'package:konoz/features/auth/presentation/ui/screens/auth_screen.dart';
+import 'package:konoz/features/auth/presentation/ui/screens/otp_screen.dart';
 import 'package:konoz/features/cart/ui/screens/cart_screen.dart';
 import 'package:konoz/features/collection_products/presentation/controllers/collection_products/collection_products_cubit.dart';
 import 'package:konoz/features/collection_products/presentation/ui/screens/collection_products_screen.dart';
@@ -23,8 +25,22 @@ import 'routes.dart';
 
 class AppRouter {
   static final GoRouter router = GoRouter(
-    initialLocation: Routes.home,
+    initialLocation: Routes.auth,
     routes: [
+      // Auth Routes
+      GoRoute(
+        path: Routes.auth,
+        pageBuilder: (context, state) {
+          return AppPageTransition.fade(state: state, child: AuthScreen());
+        },
+      ),
+      GoRoute(
+        path: Routes.otp,
+        pageBuilder: (context, state) {
+          return AppPageTransition.fade(state: state, child: OtpScreen());
+        },
+      ),
+
       StatefulShellRoute.indexedStack(
         builder: (context, state, navigationShell) {
           return LayoutScreen(navigationShell: navigationShell);

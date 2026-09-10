@@ -38,6 +38,8 @@ dependencies:
   easy_localization: ^3.0.8
   # An SVG rendering and widget library for Flutter, which allows painting and displaying Scalable Vector Graphics 1.1 files.  
   flutter_svg: ^2.3.0
+  # A Flutter plugin for creating a pin code input field.
+  pin_code_fields: ^9.4.0
   # Flutter library to load and cache network images. Can also be used with placeholder and error widgets.
   cached_network_image: ^3.4.1
   # Flutter package for adding animations to your Flutter widgets.

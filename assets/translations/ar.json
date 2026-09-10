@@ -65,5 +65,10 @@
     "errors_no_internet": "لا يوجد اتصال بالإنترنت. يرجى التحقق من اتصالك.",
     "errors_unexpected": "حدث خطأ غير متوقع. حاول مرة أخرى.",
     "errors_internal_server_error": "حدث خطأ في الخادم. حاول مرة أخرى لاحقًا."
+  },
+
+  "validation": {
+    "please_enter_phone": "من فضلك ادخل رقم الهاتف",
+    "invalid_phone": "رقم الهاتف غير صحيح"
   }
 }

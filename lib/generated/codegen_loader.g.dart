@@ -14,70 +14,7 @@ class CodegenLoader extends AssetLoader{
     return Future.value(mapLocales[locale.toString()]);
   }
 
-  static const Map<String,dynamic> _ar = {
-  "general": {
-    "add_to_cart": "اضافة الى السلة",
-    "search_hint": "ابحث عن عطر...",
-    "undo": "الغاء",
-    "show_details": "اظهار التفاصيل"
-  },
-  "layout": {
-    "home": "الرئيسية",
-    "collections": "الفئات",
-    "cart": "السلة",
-    "me": "أنا"
-  },
-  "home": {
-    "a_better_mood_starts_with_konooz": "مزاج أفضل يبدأ مع كنوز",
-    "exclusive_offers": "عروض حصرية 🔥",
-    "currently_trending": "الأكثر رواجًا حاليًا",
-    "best_selling": "الأكثر مبيعًا",
-    "packages": "الباقات"
-  },
-  "collections": {
-    "featured_collections": "مجموعات مميزة",
-    "featured_collections_description": "اكتشف العطر الذي يتحدث عنه الجميع - جريء، مميز، ومصمم ليكون عطرك المميز."
-  },
-  "me": {
-    "personal_data": "حسابي",
-    "orders": "الطلبات",
-    "favorites": "المفضلة",
-    "faq": "الأسئلة الشائعة",
-    "community": "المجتمع",
-    "settings": "الإعدادات",
-    "help_hint": "لا تتردد في السؤال، نحن مستعدون لمساعدتك",
-    "logout": "تسجيل الخروج"
-  },
-  "product_details": {
-    "longevity": "الثبات",
-    "sillage": "الفوحان",
-    "description": "الوصف",
-    "how_to_use": "طريقة الأستخدام",
-    "notes": "المكونات",
-    "details": "التفاصيل",
-    "reviews": "التقييمات",
-    "top_notes": "المكونات العليا",
-    "heart_notes": "قلب العطر",
-    "base_notes": "المكونات الأساسية"
-  },
-  "cart": {
-    "proceed_to_buy": "المتابعة للشراء",
-    "items": "المنتجات",
-    "summary_order": "ملخص الطلب",
-    "coast": "السعر",
-    "shipping": "الشحن",
-    "tax": "الضريبة",
-    "discount": "الخصم",
-    "total": "الأجمالي"
-  },
-  "errors": {
-    "errors_timeout": "انتهت مهلة الاتصال. حاول مرة أخرى.",
-    "errors_no_internet": "لا يوجد اتصال بالإنترنت. يرجى التحقق من اتصالك.",
-    "errors_unexpected": "حدث خطأ غير متوقع. حاول مرة أخرى.",
-    "errors_internal_server_error": "حدث خطأ في الخادم. حاول مرة أخرى لاحقًا."
-  }
-};
-static const Map<String,dynamic> _en = {
+  static const Map<String,dynamic> _en = {
   "general": {
     "add_to_cart": "Add to Cart",
     "search_hint": "Search for perfumery or fragrances...",
@@ -116,9 +53,9 @@ static const Map<String,dynamic> _en = {
     "sillage": "Sillage",
     "description": "Description",
     "how_to_use": "How To Use",
-    "notes": "Notes",
     "details": "Details",
     "reviews": "Reviews",
+    "notes": "Notes",
     "base_notes": "Base Notes",
     "heart_notes": "Heart Notes",
     "top_notes": "Top Notes"
@@ -138,7 +75,78 @@ static const Map<String,dynamic> _en = {
     "errors_no_internet": "No internet connection. Please check your connection.",
     "errors_unexpected": "An unexpected error occurred. Please try again.",
     "errors_internal_server_error": "Internal server error. Please try again later."
+  },
+  "validation": {
+    "please_enter_phone": "Please enter phone",
+    "invalid_phone": "Your phone is not valid"
   }
 };
-static const Map<String, Map<String,dynamic>> mapLocales = {"ar": _ar, "en": _en};
+static const Map<String,dynamic> _ar = {
+  "general": {
+    "add_to_cart": "اضافة الى السلة",
+    "search_hint": "ابحث عن عطر...",
+    "undo": "الغاء",
+    "show_details": "اظهار التفاصيل"
+  },
+  "layout": {
+    "home": "الرئيسية",
+    "collections": "الفئات",
+    "cart": "السلة",
+    "me": "أنا"
+  },
+  "home": {
+    "a_better_mood_starts_with_konooz": "مزاج أفضل يبدأ مع كنوز",
+    "exclusive_offers": "عروض حصرية 🔥",
+    "currently_trending": "الأكثر رواجًا حاليًا",
+    "best_selling": "الأكثر مبيعًا",
+    "packages": "الباقات"
+  },
+  "collections": {
+    "featured_collections": "مجموعات مميزة",
+    "featured_collections_description": "اكتشف العطر الذي يتحدث عنه الجميع - جريء، مميز، ومصمم ليكون عطرك المميز."
+  },
+  "me": {
+    "personal_data": "بيانات شخصية",
+    "orders": "الطلبات",
+    "favorites": "المفضلة",
+    "faq": "الأسئلة الشائعة",
+    "community": "المجتمع",
+    "settings": "الإعدادات",
+    "help_hint": "لا تتردد في السؤال، نحن مستعدون لمساعدتك",
+    "logout": "تسجيل الخروج"
+  },
+  "product_details": {
+    "longevity": "الثبات",
+    "sillage": "الفوحان",
+    "description": "الوصف",
+    "how_to_use": "طريقة الأستخدام",
+    "notes": "المكونات",
+    "details": "التفاصيل",
+    "reviews": "التقييمات",
+    "top_notes": "المكونات العليا",
+    "heart_notes": "قلب العطر",
+    "base_notes": "المكونات الأساسية"
+  },
+  "cart": {
+    "proceed_to_buy": "المتابعة للشراء",
+    "items": "المنتجات",
+    "summary_order": "ملخص الطلب",
+    "coast": "السعر",
+    "shipping": "الشحن",
+    "tax": "الضريبة",
+    "discount": "الخصم",
+    "total": "الأجمالي"
+  },
+  "errors": {
+    "errors_timeout": "انتهت مهلة الاتصال. حاول مرة أخرى.",
+    "errors_no_internet": "لا يوجد اتصال بالإنترنت. يرجى التحقق من اتصالك.",
+    "errors_unexpected": "حدث خطأ غير متوقع. حاول مرة أخرى.",
+    "errors_internal_server_error": "حدث خطأ في الخادم. حاول مرة أخرى لاحقًا."
+  },
+  "validation": {
+    "please_enter_phone": "من فضلك ادخل رقم الهاتف",
+    "invalid_phone": "رقم الهاتف غير صحيح"
+  }
+};
+static const Map<String, Map<String,dynamic>> mapLocales = {"en": _en, "ar": _ar};
 }

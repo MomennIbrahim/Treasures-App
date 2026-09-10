@@ -35,12 +35,12 @@ abstract class  LocaleKeys {
   static const product_details_sillage = 'product_details.sillage';
   static const product_details_description = 'product_details.description';
   static const product_details_how_to_use = 'product_details.how_to_use';
-  static const product_details_notes = 'product_details.notes';
   static const product_details_details = 'product_details.details';
   static const product_details_reviews = 'product_details.reviews';
-  static const product_details_top_notes = 'product_details.top_notes';
-  static const product_details_heart_notes = 'product_details.heart_notes';
+  static const product_details_notes = 'product_details.notes';
   static const product_details_base_notes = 'product_details.base_notes';
+  static const product_details_heart_notes = 'product_details.heart_notes';
+  static const product_details_top_notes = 'product_details.top_notes';
   static const product_details = 'product_details';
   static const cart_proceed_to_buy = 'cart.proceed_to_buy';
   static const cart_items = 'cart.items';
@@ -56,5 +56,8 @@ abstract class  LocaleKeys {
   static const errors_errors_unexpected = 'errors.errors_unexpected';
   static const errors_errors_internal_server_error = 'errors.errors_internal_server_error';
   static const errors = 'errors';
+  static const validation_please_enter_phone = 'validation.please_enter_phone';
+  static const validation_invalid_phone = 'validation.invalid_phone';
+  static const validation = 'validation';
 
 }

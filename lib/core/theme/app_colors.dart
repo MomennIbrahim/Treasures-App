@@ -15,6 +15,7 @@ abstract class AppColors {
   // Neutral
   static const neutral500 = Color(0xff94A3B8);
   static const neutral600 = Color(0xff64748B);
+  static const lightWhite = Colors.white12;
 
   // Semantic — Success
   static const success800 = Color(0xff49b989);

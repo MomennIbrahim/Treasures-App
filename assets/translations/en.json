@@ -65,5 +65,9 @@
     "errors_no_internet": "No internet connection. Please check your connection.",
     "errors_unexpected": "An unexpected error occurred. Please try again.",
     "errors_internal_server_error": "Internal server error. Please try again later."
-  }
+  },
+  "validation": {
+    "please_enter_phone": "Please enter phone",
+    "invalid_phone": "Your phone is not valid"
+ }
 }
