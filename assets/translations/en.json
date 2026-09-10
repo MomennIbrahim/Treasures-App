@@ -41,9 +41,12 @@
         "sillage": "Sillage",
         "description": "Description",
         "how_to_use": "How To Use",
-        "ingredients": "Ingredients",
         "details": "Details",
-        "reviews": "Reviews"
+        "reviews": "Reviews",
+        "notes": "Notes",
+        "base_notes": "Base Notes",
+        "heart_notes": "Heart Notes",
+        "top_notes": "Top Notes"
     },
 
     "cart":{

@@ -33,7 +33,7 @@ class _CartScreenState extends State<CartScreen> {
                 child: Row(
                   children: [
                     AppRichText(
-                      normalText: "Total  ",
+                      normalText: "${LocaleKeys.cart_total.tr()}  ",
                       normalStyle: AppTextStyles.text16Regular,
                       actionText: "5,370 L.E",
                       actionStyle: AppTextStyles.text18Bold,

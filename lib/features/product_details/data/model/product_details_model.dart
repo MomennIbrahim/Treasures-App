@@ -10,7 +10,7 @@ class ProductDetailsModel extends Equatable {
   final double rate;
   final String description;
   final HowToUseModel? howToUse;
-  final List<String> ingredients;
+  final FragranceNotesModel notes;
   final String details;
 
   const ProductDetailsModel({
@@ -23,7 +23,7 @@ class ProductDetailsModel extends Equatable {
     required this.rate,
     required this.description,
     this.howToUse,
-    required this.ingredients,
+    required this.notes,
     required this.details,
   });
 
@@ -42,7 +42,9 @@ class ProductDetailsModel extends Equatable {
       howToUse: json['how_to_use'] != null
           ? HowToUseModel.fromJson(json['how_to_use'] as Map<String, dynamic>)
           : null,
-      ingredients: List<String>.from(json['ingredients'] ?? []),
+      notes: FragranceNotesModel.fromJson(
+        json['notes'] as Map<String, dynamic>? ?? {},
+      ),
       details: json['details'] as String? ?? '',
     );
   }
@@ -58,7 +60,7 @@ class ProductDetailsModel extends Equatable {
       'rate': rate,
       'description': description,
       'how_to_use': howToUse?.toJson(),
-      'ingredients': ingredients,
+      'notes': notes.toJson(),
       'details': details,
     };
   }
@@ -74,10 +76,14 @@ class ProductDetailsModel extends Equatable {
     rate,
     description,
     howToUse,
-    ingredients,
+    notes,
     details,
   ];
 }
+
+// ─────────────────────────────────────────────
+// Product Size
+// ─────────────────────────────────────────────
 
 class ProductSizeModel extends Equatable {
   final int id;
@@ -138,6 +144,10 @@ class ProductSizeModel extends Equatable {
   ];
 }
 
+// ─────────────────────────────────────────────
+// How To Use
+// ─────────────────────────────────────────────
+
 class HowToUseModel extends Equatable {
   final String title;
   final List<String> steps;
@@ -157,4 +167,76 @@ class HowToUseModel extends Equatable {
 
   @override
   List<Object?> get props => [title, steps];
+}
+
+// ─────────────────────────────────────────────
+// Fragrance Notes
+// ─────────────────────────────────────────────
+
+class FragranceNotesModel extends Equatable {
+  final List<FragranceNoteModel> topNotes;
+  final List<FragranceNoteModel> heartNotes;
+  final List<FragranceNoteModel> baseNotes;
+
+  const FragranceNotesModel({
+    required this.topNotes,
+    required this.heartNotes,
+    required this.baseNotes,
+  });
+
+  factory FragranceNotesModel.fromJson(Map<String, dynamic> json) {
+    return FragranceNotesModel(
+      topNotes: (json['top_notes'] as List<dynamic>? ?? [])
+          .map((e) => FragranceNoteModel.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      heartNotes: (json['heart_notes'] as List<dynamic>? ?? [])
+          .map((e) => FragranceNoteModel.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      baseNotes: (json['base_notes'] as List<dynamic>? ?? [])
+          .map((e) => FragranceNoteModel.fromJson(e as Map<String, dynamic>))
+          .toList(),
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'top_notes': topNotes.map((e) => e.toJson()).toList(),
+      'heart_notes': heartNotes.map((e) => e.toJson()).toList(),
+      'base_notes': baseNotes.map((e) => e.toJson()).toList(),
+    };
+  }
+
+  @override
+  List<Object?> get props => [topNotes, heartNotes, baseNotes];
+}
+
+// ─────────────────────────────────────────────
+// Fragrance Note
+// ─────────────────────────────────────────────
+
+class FragranceNoteModel extends Equatable {
+  final int id;
+  final String name;
+  final String image;
+
+  const FragranceNoteModel({
+    required this.id,
+    required this.name,
+    required this.image,
+  });
+
+  factory FragranceNoteModel.fromJson(Map<String, dynamic> json) {
+    return FragranceNoteModel(
+      id: json['id'] as int,
+      name: json['name'] as String,
+      image: json['image'] as String? ?? '',
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {'id': id, 'name': name, 'image': image};
+  }
+
+  @override
+  List<Object?> get props => [id, name, image];
 }

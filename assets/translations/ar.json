@@ -41,9 +41,12 @@
         "sillage": "الفوحان",
         "description": "الوصف",
         "how_to_use": "طريقة الأستخدام",
-        "ingredients": "المكونات",
+        "notes": "المكونات",
         "details": "التفاصيل",
-        "reviews": "التقييمات"
+        "reviews": "التقييمات",
+        "top_notes": "المكونات العليا",
+        "heart_notes": "قلب العطر",
+        "base_notes": "المكونات الأساسية"
     },
 
      "cart":{

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:konoz/core/helper/app_padding.dart';
+import 'package:konoz/core/theme/app_colors.dart';
 import 'package:konoz/core/theme/app_text_style.dart';
 import 'package:konoz/core/widgets/app_button.dart';
 import 'package:konoz/core/widgets/app_loading.dart';
@@ -111,7 +112,12 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                     ),
                   ),
                   SliverPadding(
-                    padding: paddingOnly(left: 16, right: 16, bottom: 115),
+                    padding: paddingOnly(
+                      left: 16,
+                      right: 16,
+                      bottom: 115,
+                      top: 12,
+                    ),
                     sliver: SliverToBoxAdapter(
                       child: ProductInformationSection(product: state.product!),
                     ),
@@ -126,7 +132,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                 child: SafeArea(
                   child: Container(
                     padding: paddingVertical(8),
-                    decoration: BoxDecoration(color: Colors.black),
+                    decoration: BoxDecoration(color: AppColors.black),
                     child: Row(
                       children: [
                         Text(

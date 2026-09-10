@@ -8,7 +8,7 @@ import 'package:konoz/core/theme/app_text_style.dart';
 import 'package:konoz/features/product_details/data/model/product_details_model.dart';
 import 'package:konoz/features/product_details/presentation/ui/widgets/description_content.dart';
 import 'package:konoz/features/product_details/presentation/ui/widgets/how_to_use_content.dart';
-import 'package:konoz/features/product_details/presentation/ui/widgets/ingredients_content.dart';
+import 'package:konoz/features/product_details/presentation/ui/widgets/notes_content.dart';
 import 'package:konoz/generated/locale_keys.g.dart';
 
 class ProductInformationSection extends StatefulWidget {
@@ -27,7 +27,7 @@ class _ProductInformationSectionState extends State<ProductInformationSection> {
   final List<String> _tabs = [
     LocaleKeys.product_details_description,
     LocaleKeys.product_details_how_to_use,
-    LocaleKeys.product_details_ingredients,
+    LocaleKeys.product_details_notes,
   ];
 
   @override
@@ -36,7 +36,7 @@ class _ProductInformationSectionState extends State<ProductInformationSection> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         _buildTabs(),
-        20.verticalSpace,
+        16.verticalSpace,
         _buildContent(key: ValueKey(_selectedTab)),
       ],
     );
@@ -62,12 +62,10 @@ class _ProductInformationSectionState extends State<ProductInformationSection> {
                 padding: paddingAll(8),
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
-                  color: isSelected
-                      ? Colors.white
-                      : Colors.white.withValues(alpha: 0.90),
+                  color: Colors.white12,
                   borderRadius: AppRadius.br12,
                   border: Border.all(
-                    width: 2.7,
+                    width: 1.5,
                     color: isSelected ? AppColors.primary : Colors.transparent,
                   ),
                   boxShadow: isSelected
@@ -87,7 +85,7 @@ class _ProductInformationSectionState extends State<ProductInformationSection> {
                           color: AppColors.primary,
                         )
                       : AppTextStyles.text10Regular.copyWith(
-                          color: AppColors.black,
+                          color: AppColors.white,
                         ),
                   child: Text(
                     _tabs[index].tr(),
@@ -112,10 +110,7 @@ class _ProductInformationSectionState extends State<ProductInformationSection> {
         return HowToUseContent(key: key, howToUse: widget.product.howToUse);
 
       case 2:
-        return IngredientsContent(
-          key: key,
-          ingredients: widget.product.ingredients,
-        );
+        return NotesContent(key: key, notes: widget.product.notes);
 
       default:
         return const SizedBox.shrink();

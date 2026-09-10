@@ -14,67 +14,7 @@ class CodegenLoader extends AssetLoader{
     return Future.value(mapLocales[locale.toString()]);
   }
 
-  static const Map<String,dynamic> _en = {
-  "general": {
-    "add_to_cart": "Add to Cart",
-    "search_hint": "Search for perfumery or fragrances...",
-    "undo": "Undo",
-    "show_details": "Show Details"
-  },
-  "layout": {
-    "home": "Home",
-    "collections": "Collections",
-    "cart": "Cart",
-    "me": "Me"
-  },
-  "home": {
-    "a_better_mood_starts_with_konooz": "A Better Mood Starts With KONOOZ",
-    "exclusive_offers": "Exclusive Offers 🔥",
-    "currently_trending": "Currently Trending",
-    "best_selling": "Best Selling",
-    "packages": "Packages"
-  },
-  "collections": {
-    "featured_collections": "FEATURED COLLECTIONS",
-    "featured_collections_description": "Discover the fragrance everyone's talking about - bold, unique, and made to be your signature scent."
-  },
-  "me": {
-    "personal_data": "My Account",
-    "orders": "Orders",
-    "favorites": "Favorites",
-    "faq": "FAQ",
-    "community": "Community",
-    "settings": "Settings",
-    "help_hint": "Fell free to Ask, We Ready to Help",
-    "logout": "Logout"
-  },
-  "product_details": {
-    "longevity": "Longevity",
-    "sillage": "Sillage",
-    "description": "Description",
-    "how_to_use": "How To Use",
-    "ingredients": "Ingredients",
-    "details": "Details",
-    "reviews": "Reviews"
-  },
-  "cart": {
-    "proceed_to_buy": "Proceed to Buy",
-    "items": "Items",
-    "summary_order": "Summary Order",
-    "coast": "Coast",
-    "shipping": "Shipping",
-    "tax": "Tax",
-    "discount": "Discount",
-    "total": "Total"
-  },
-  "errors": {
-    "errors_timeout": "Connection timed out. Please try again.",
-    "errors_no_internet": "No internet connection. Please check your connection.",
-    "errors_unexpected": "An unexpected error occurred. Please try again.",
-    "errors_internal_server_error": "Internal server error. Please try again later."
-  }
-};
-static const Map<String,dynamic> _ar = {
+  static const Map<String,dynamic> _ar = {
   "general": {
     "add_to_cart": "اضافة الى السلة",
     "search_hint": "ابحث عن عطر...",
@@ -113,9 +53,12 @@ static const Map<String,dynamic> _ar = {
     "sillage": "الفوحان",
     "description": "الوصف",
     "how_to_use": "طريقة الأستخدام",
-    "ingredients": "المكونات",
+    "notes": "المكونات",
     "details": "التفاصيل",
-    "reviews": "التقييمات"
+    "reviews": "التقييمات",
+    "top_notes": "المكونات العليا",
+    "heart_notes": "قلب العطر",
+    "base_notes": "المكونات الأساسية"
   },
   "cart": {
     "proceed_to_buy": "المتابعة للشراء",
@@ -134,5 +77,68 @@ static const Map<String,dynamic> _ar = {
     "errors_internal_server_error": "حدث خطأ في الخادم. حاول مرة أخرى لاحقًا."
   }
 };
-static const Map<String, Map<String,dynamic>> mapLocales = {"en": _en, "ar": _ar};
+static const Map<String,dynamic> _en = {
+  "general": {
+    "add_to_cart": "Add to Cart",
+    "search_hint": "Search for perfumery or fragrances...",
+    "undo": "Undo",
+    "show_details": "Show Details"
+  },
+  "layout": {
+    "home": "Home",
+    "collections": "Collections",
+    "cart": "Cart",
+    "me": "Me"
+  },
+  "home": {
+    "a_better_mood_starts_with_konooz": "A Better Mood Starts With KONOOZ",
+    "exclusive_offers": "Exclusive Offers 🔥",
+    "currently_trending": "Currently Trending",
+    "best_selling": "Best Selling",
+    "packages": "Packages"
+  },
+  "collections": {
+    "featured_collections": "FEATURED COLLECTIONS",
+    "featured_collections_description": "Discover the fragrance everyone's talking about - bold, unique, and made to be your signature scent."
+  },
+  "me": {
+    "personal_data": "My Account",
+    "orders": "Orders",
+    "favorites": "Favorites",
+    "faq": "FAQ",
+    "community": "Community",
+    "settings": "Settings",
+    "help_hint": "Fell free to Ask, We Ready to Help",
+    "logout": "Logout"
+  },
+  "product_details": {
+    "longevity": "Longevity",
+    "sillage": "Sillage",
+    "description": "Description",
+    "how_to_use": "How To Use",
+    "notes": "Notes",
+    "details": "Details",
+    "reviews": "Reviews",
+    "base_notes": "Base Notes",
+    "heart_notes": "Heart Notes",
+    "top_notes": "Top Notes"
+  },
+  "cart": {
+    "proceed_to_buy": "Proceed to Buy",
+    "items": "Items",
+    "summary_order": "Summary Order",
+    "coast": "Coast",
+    "shipping": "Shipping",
+    "tax": "Tax",
+    "discount": "Discount",
+    "total": "Total"
+  },
+  "errors": {
+    "errors_timeout": "Connection timed out. Please try again.",
+    "errors_no_internet": "No internet connection. Please check your connection.",
+    "errors_unexpected": "An unexpected error occurred. Please try again.",
+    "errors_internal_server_error": "Internal server error. Please try again later."
+  }
+};
+static const Map<String, Map<String,dynamic>> mapLocales = {"ar": _ar, "en": _en};
 }

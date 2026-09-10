@@ -26,7 +26,7 @@ class AppBottomNavBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: paddingOnly(bottom: 30, left: 16, right: 16),
+      padding: paddingOnly(bottom: 8, left: 16, right: 16),
       child: ClipRRect(
         borderRadius: AppRadius.br48,
         child: BackdropFilter(
