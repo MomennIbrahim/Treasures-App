@@ -6,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hugeicons/hugeicons.dart';
 import 'package:konoz/core/helper/app_padding.dart';
+import 'package:konoz/core/router/routes.dart';
 import 'package:konoz/core/theme/app_colors.dart';
 import 'package:konoz/core/theme/app_radius.dart';
 import 'package:konoz/core/theme/app_text_style.dart';
@@ -16,10 +17,12 @@ class AppBottomNavBar extends StatelessWidget {
 
   const AppBottomNavBar({super.key, required this.navigationShell});
 
-  void _onTap(int index) {
+  void _onTap(BuildContext context, int index) {
     navigationShell.goBranch(
       index,
-      initialLocation: index == navigationShell.currentIndex,
+      initialLocation:
+          index == navigationShell.currentIndex &&
+          GoRouterState.of(context).uri.path != Routes.home,
     );
   }
 
@@ -59,7 +62,7 @@ class AppBottomNavBar extends StatelessWidget {
                 unselectedItemColor: AppColors.neutral500,
                 selectedLabelStyle: AppTextStyles.text10Bold,
                 unselectedLabelStyle: AppTextStyles.text10Regular,
-                onTap: _onTap,
+                onTap: (index) => _onTap(context, index),
                 items: [
                   BottomNavigationBarItem(
                     icon: HugeIcon(

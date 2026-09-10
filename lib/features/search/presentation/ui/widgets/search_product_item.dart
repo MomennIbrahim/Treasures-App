@@ -1,4 +1,3 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
@@ -10,15 +9,13 @@ import 'package:konoz/core/theme/app_radius.dart';
 import 'package:konoz/core/theme/app_text_style.dart';
 import 'package:konoz/core/widgets/app_button.dart';
 import 'package:konoz/core/widgets/app_image.dart';
-import 'package:konoz/core/widgets/app_toast.dart';
 import 'package:konoz/core/widgets/custom_rating_widget.dart';
-import 'package:konoz/generated/locale_keys.g.dart';
 
-class CollectionProductItem extends StatelessWidget {
+class SearchProductItem extends StatelessWidget {
   final ProductItemModel product;
   final bool isLoading;
 
-  const CollectionProductItem({
+  const SearchProductItem({
     super.key,
     required this.product,
     required this.isLoading,
@@ -95,7 +92,6 @@ class CollectionProductItem extends StatelessWidget {
                       ],
                     ),
                     2.verticalSpace,
-
                     Text(
                       '${_hasDiscount ? product.discountPrice : product.price} L.E',
                       style: AppTextStyles.text12Bold,
@@ -152,22 +148,9 @@ class CollectionProductItem extends StatelessWidget {
                     6.verticalSpace,
                     if (product.inStock)
                       AppButton(
-                        label: LocaleKeys.general_add_to_cart.tr(),
+                        label: product.inStock ? "Add to cart" : "Notify me",
                         labelStyle: AppTextStyles.text12Bold,
-                        onPressed: product.inStock
-                            ? () {
-                                AppToast.show(
-                                  context,
-                                  message: LocaleKeys
-                                      .general_product_added_to_cart
-                                      .tr(),
-                                  type: AppToastType.success,
-                                  onTap: () {
-                                    context.go(Routes.cart);
-                                  },
-                                );
-                              }
-                            : null,
+                        onPressed: product.inStock ? () {} : null,
                         height: 30,
                       ),
                   ],

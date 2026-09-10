@@ -82,7 +82,7 @@ class _AuthScreenState extends State<AuthScreen> {
               24.verticalSpace,
               Text("Or Login with"),
               InkWell(
-                onTap: () => context.push(Routes.home),
+                onTap: () => context.go(Routes.home),
                 child: Container(
                   padding: paddingAll(12),
                   margin: paddingAll(12),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:konoz/features/collection_products/presentation/controllers/collection_products/collection_products_cubit.dart';
-import 'package:konoz/features/collection_products/presentation/ui/widgets/collection_products_grid_view.dart';
+import 'package:konoz/features/collection_products/presentation/ui/widgets/collection_products_list.dart';
 import 'package:konoz/features/collection_products/presentation/ui/widgets/tabs_section.dart';
 
 class CollectionProductsScreen extends StatefulWidget {

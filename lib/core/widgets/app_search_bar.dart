@@ -6,7 +6,8 @@ import 'package:konoz/features/home/presentation/ui/widgets/search_card.dart';
 
 class AppSearchBar extends StatelessWidget implements PreferredSizeWidget {
   final bool showBackIcon;
-  const AppSearchBar({super.key, this.showBackIcon = false});
+  final String? title;
+  const AppSearchBar({super.key, this.showBackIcon = false, this.title});
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +21,7 @@ class AppSearchBar extends StatelessWidget implements PreferredSizeWidget {
           child: Row(
             children: [
               if (showBackIcon) CustomBackIcon(),
-              Expanded(child: SearchCard()),
+              Expanded(child: SearchCard(title: title)),
             ],
           ),
         ),

@@ -19,6 +19,7 @@ import 'package:konoz/features/orders/presentation/ui/screens/orders_screen.dart
 import 'package:konoz/features/product_details/presentation/controllers/product_details/product_details_cubit.dart';
 import 'package:konoz/features/product_details/presentation/ui/screens/product_details_screen.dart';
 import 'package:konoz/features/profile/presentation/ui/screens/profile_screen.dart';
+import 'package:konoz/features/search/presentation/ui/screens/search_products_screen.dart';
 import 'package:konoz/features/search/presentation/ui/screens/search_screen.dart';
 import 'package:konoz/features/settings/presentation/ui/screens/settings_screen.dart';
 
@@ -62,10 +63,37 @@ class AppRouter {
                   ],
                   child: HomeScreen(),
                 ),
+
+                routes: [
+                  GoRoute(
+                    path: Routes.search,
+                    pageBuilder: (context, state) {
+                      return AppPageTransition.fade(
+                        state: state,
+                        child: SearchScreen(),
+                      );
+                    },
+                    routes: [
+                      GoRoute(
+                        path: Routes.searchResult,
+                        pageBuilder: (context, state) {
+                          return AppPageTransition.fade(
+                            state: state,
+                            child: BlocProvider(
+                              create: (context) =>
+                                  getIt.get<CollectionProductsCubit>()
+                                    ..getCollectionProducts(categoryId: 1),
+                              child: SearchProductsScreen(),
+                            ),
+                          );
+                        },
+                      ),
+                    ],
+                  ),
+                ],
               ),
             ],
           ),
-
           StatefulShellBranch(
             routes: [
               GoRoute(
@@ -143,13 +171,6 @@ class AppRouter {
           );
         },
       ),
-
-      GoRoute(
-        path: Routes.search,
-        pageBuilder: (context, state) {
-          return AppPageTransition.fade(state: state, child: SearchScreen());
-        },
-      ),
     ],
   );
 }
@@ -161,8 +182,8 @@ class AppPageTransition {
   }) {
     return CustomTransitionPage<T>(
       key: state.pageKey,
-      transitionDuration: const Duration(milliseconds: 50),
-      reverseTransitionDuration: const Duration(milliseconds: 50),
+      transitionDuration: const Duration(milliseconds: 100),
+      reverseTransitionDuration: const Duration(milliseconds: 100),
       child: child,
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
         return FadeTransition(opacity: animation, child: child);

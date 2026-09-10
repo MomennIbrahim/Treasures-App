@@ -11,12 +11,13 @@ import 'package:konoz/core/theme/app_text_style.dart';
 import 'package:konoz/generated/locale_keys.g.dart';
 
 class SearchCard extends StatelessWidget {
-  const SearchCard({super.key});
+  final String? title;
+  const SearchCard({super.key, this.title});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => context.push(Routes.search),
+      onTap: () => context.push('${Routes.home}/${Routes.search}'),
       child: Container(
         margin: paddingSymmetric(16, 4),
         padding: paddingAll(14),
@@ -33,7 +34,7 @@ class SearchCard extends StatelessWidget {
             ),
             6.horizontalSpace,
             Text(
-              LocaleKeys.general_search_hint.tr(),
+              title ?? LocaleKeys.general_search_hint.tr(),
               style: AppTextStyles.text12Regular.copyWith(
                 color: AppColors.neutral500,
               ),

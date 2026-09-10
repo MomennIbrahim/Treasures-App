@@ -14,7 +14,8 @@ class LayoutScreen extends StatelessWidget {
     final currentPath = GoRouterState.of(context).uri.path;
     final isOrdersScreen = currentPath == Routes.orders;
     final isSettingsScreen = currentPath == Routes.settings;
-    final hideSearchBar = isOrdersScreen || isSettingsScreen;
+    final isSearchScreen = currentPath.contains(Routes.search);
+    final hideSearchBar = isOrdersScreen || isSettingsScreen || isSearchScreen;
 
     return SafeArea(
       top: false,

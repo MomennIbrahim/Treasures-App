@@ -35,7 +35,9 @@ class TendingSearchSection extends StatelessWidget {
               return SuggestionChip(
                 label: suggestion,
                 onTap: () {
-                  context.push(Routes.productDetails);
+                  context.push(
+                    '${Routes.home}/${Routes.search}/${Routes.searchResult}',
+                  );
                 },
               );
             }).toList(),
