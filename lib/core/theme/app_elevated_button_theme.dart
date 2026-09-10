@@ -7,7 +7,7 @@ import 'package:konoz/core/theme/app_text_style.dart';
  
 
 abstract class AppElevatedButtonTheme {
-  static final light = ElevatedButtonThemeData(
+  static final dark = ElevatedButtonThemeData(
     style: ElevatedButton.styleFrom(
       elevation: 0,
       backgroundColor: AppColors.primary,

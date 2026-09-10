@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:konoz/core/theme/app_colors.dart';
  
 const ColorScheme lightColorScheme = ColorScheme(
-  brightness: Brightness.light,
+  brightness: Brightness.dark,
 
   // Primary
   primary: AppColors.primary,

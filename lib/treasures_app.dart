@@ -22,9 +22,8 @@ class TreasuresApp extends StatelessWidget {
           supportedLocales: context.supportedLocales,
           localizationsDelegates: context.localizationDelegates,
           title: 'Treasures',
-          theme: AppThemeData.light,
-
-          darkTheme: AppThemeData.light,
+          theme: AppThemeData.dark,
+          darkTheme: AppThemeData.dark,
           themeMode: ThemeMode.system,
         ),
       ),

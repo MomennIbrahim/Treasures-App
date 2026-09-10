@@ -102,7 +102,7 @@ static const Map<String,dynamic> _en = {
     "featured_collections_description": "Discover the fragrance everyone's talking about - bold, unique, and made to be your signature scent."
   },
   "me": {
-    "personal_data": "My Account",
+    "personal_data": "Personal Data",
     "orders": "Orders",
     "favorites": "Favorites",
     "faq": "FAQ",

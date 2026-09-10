@@ -126,13 +126,14 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
               ),
 
               Positioned(
-                bottom: 16.0,
+                bottom: 0.0,
                 right: 16.0,
                 left: 16.0,
-                child: SafeArea(
-                  child: Container(
-                    padding: paddingVertical(8),
-                    decoration: BoxDecoration(color: AppColors.black),
+                child: Container(
+                  padding: paddingVertical(8),
+                  decoration: BoxDecoration(color: AppColors.black),
+                  child: SafeArea(
+                    top: false,
                     child: Row(
                       children: [
                         Text(
