@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:konoz/core/helper/app_padding.dart';
+import 'package:konoz/core/theme/app_colors.dart';
 import 'package:konoz/features/collection_products/data/model/category_model.dart';
 import 'package:konoz/features/collection_products/presentation/ui/widgets/category_tab_item.dart';
 
@@ -33,10 +34,10 @@ class _TabsSectionState extends State<TabsSection> {
   Widget build(BuildContext context) {
     return SliverAppBar(
       automaticallyImplyLeading: false,
-      backgroundColor: Colors.black,
+      backgroundColor: AppColors.black,
       floating: true,
       snap: true,
-      toolbarHeight: 37.h,
+      toolbarHeight: 35.h,
       flexibleSpace: FlexibleSpaceBar(
         background: SizedBox(
           child: ListView.separated(

@@ -26,20 +26,12 @@ class HomeHeader extends StatelessWidget {
                 colors: [AppColors.white, AppColors.primary],
               ),
             ),
-            10.horizontalSpace,
-            GlassIconButton(
-              onPressed: () {},
-              icon: const HugeIcon(
-                icon: HugeIcons.strokeRoundedNotification01,
-                strokeWidth: 1.5,
-                color: Colors.white,
-              ),
-            ),
+
             10.horizontalSpace,
             GlassIconButton(
               onPressed: () {},
               icon: HugeIcon(
-                icon: HugeIcons.strokeRoundedFavourite,
+                icon: HugeIcons.strokeRoundedFavouriteCircle,
                 strokeWidth: 1.5,
                 color: AppColors.white,
               ),

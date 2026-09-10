@@ -4,12 +4,6 @@ import 'package:konoz/core/theme/app_colors.dart';
 import 'package:konoz/core/theme/app_radius.dart';
 import 'package:konoz/core/theme/app_text_style.dart';
 
-
-
-
-
-
-
 class CategoryChip extends StatelessWidget {
   const CategoryChip({
     super.key,
@@ -31,7 +25,6 @@ class CategoryChip extends StatelessWidget {
         padding: paddingHorizontal(16),
         decoration: BoxDecoration(
           color: isSelected ? AppColors.primary : Colors.white12,
-
           borderRadius: AppRadius.br48,
         ),
         alignment: Alignment.center,

@@ -63,8 +63,8 @@ class AppRouter {
                 pageBuilder: (context, state) {
                   return AppPageTransition.fade(
                     state: state,
-                    child: BlocProvider.value(
-                      value: getIt.get<CollectionProductsCubit>(),
+                    child: BlocProvider(
+                      create: (context) => getIt.get<CollectionProductsCubit>(),
                       child: CollectionProductsScreen(),
                     ),
                   );
@@ -86,7 +86,10 @@ class AppRouter {
             routes: [
               GoRoute(
                 path: Routes.profile,
-                builder: (context, state) => const ProfileScreen(),
+                pageBuilder: (context, state) => AppPageTransition.fade(
+                  state: state,
+                  child: ProfileScreen(),
+                ),
               ),
               GoRoute(
                 path: Routes.orders,
@@ -107,8 +110,8 @@ class AppRouter {
         pageBuilder: (context, state) {
           return AppPageTransition.fade(
             state: state,
-            child: BlocProvider.value(
-              value: getIt.get<ProductDetailsCubit>(),
+            child: BlocProvider(
+              create: (context) => getIt.get<ProductDetailsCubit>(),
               child: ProductDetailsScreen(),
             ),
           );

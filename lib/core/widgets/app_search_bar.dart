@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:go_router/go_router.dart';
-import 'package:konoz/core/theme/app_colors.dart';
+import 'package:konoz/core/helper/app_padding.dart';
+import 'package:konoz/core/widgets/custom_back_icon.dart';
 import 'package:konoz/features/home/presentation/ui/widgets/search_card.dart';
 
 class AppSearchBar extends StatelessWidget implements PreferredSizeWidget {
@@ -16,14 +16,10 @@ class AppSearchBar extends StatelessWidget implements PreferredSizeWidget {
       bottom: PreferredSize(
         preferredSize: Size.fromHeight(65.h),
         child: Padding(
-          padding: EdgeInsets.only(bottom: 12.h),
+          padding: paddingOnly(left: 16, bottom: 12),
           child: Row(
             children: [
-              if (showBackIcon)
-                IconButton(
-                  onPressed: () => context.pop(),
-                  icon: const Icon(Icons.arrow_back, color: AppColors.white),
-                ),
+              if (showBackIcon) CustomBackIcon(),
               Expanded(child: SearchCard()),
             ],
           ),
