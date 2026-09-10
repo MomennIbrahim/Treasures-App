@@ -48,14 +48,12 @@ class AppToast {
               onTap?.call();
               removeToast(); // يقفل التوست فورًا لما يدوس، من غير ما يستنى الـ duration
             },
-            child: Flexible(
-              child: Text(
-                message,
-                style: AppTextStyles.text12Bold.copyWith(
-                  color: AppColors.white,
-                  decoration: onTap != null ? TextDecoration.underline : null,
-                  decorationColor: AppColors.white,
-                ),
+            child: Text(
+              message,
+              style: AppTextStyles.text12Bold.copyWith(
+                color: AppColors.white,
+                decoration: onTap != null ? TextDecoration.underline : null,
+                decorationColor: AppColors.white,
               ),
             ),
           ),

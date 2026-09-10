@@ -28,183 +28,186 @@ class BestSellingItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: 160.w,
-      height: 200.h,
-      child: Stack(
-        children: [
-          AppImage.cachedNetwork(
-            product.image,
-            width: double.infinity,
-            height: double.infinity,
-            borderRadius: AppRadius.br16,
-          ),
+    return GestureDetector(
+      onTap: () => context.push('${Routes.home}/${Routes.productDetails}'),
+      child: SizedBox(
+        width: 160.w,
+        height: 200.h,
+        child: Stack(
+          children: [
+            AppImage.cachedNetwork(
+              product.image,
+              width: double.infinity,
+              height: double.infinity,
+              borderRadius: AppRadius.br16,
+            ),
 
-          Positioned(
-            top: 4,
-            left: 4,
-            child: InkWell(
-              borderRadius: AppRadius.br48,
-              onTap: () {
-                AppToast.show(
-                  context,
-                  message: "Prodcut added to cart, Press to go to cart",
-                  type: AppToastType.success,
-                  onTap: () {
-                    context.go(Routes.cart);
-                  },
-                );
-              },
-              child: CircleAvatar(
-                backgroundColor: isLoading
-                    ? Colors.transparent
-                    : AppColors.primary.withValues(alpha: 0.9),
-                radius: 12.r,
-                child: isLoading
-                    ? null
-                    : HugeIcon(
-                        icon: HugeIcons.strokeRoundedShoppingBagAdd,
-                        color: AppColors.white,
-                        size: 13.sp,
-                        strokeWidth: 2.5,
-                      ),
+            Positioned(
+              top: 4,
+              left: 4,
+              child: InkWell(
+                borderRadius: AppRadius.br48,
+                onTap: () {
+                  AppToast.show(
+                    context,
+                    message: "Prodcut added to cart, Press to go to cart",
+                    type: AppToastType.success,
+                    onTap: () {
+                      context.go(Routes.cart);
+                    },
+                  );
+                },
+                child: CircleAvatar(
+                  backgroundColor: isLoading
+                      ? Colors.transparent
+                      : AppColors.primary.withValues(alpha: 0.9),
+                  radius: 12.r,
+                  child: isLoading
+                      ? null
+                      : HugeIcon(
+                          icon: HugeIcons.strokeRoundedShoppingBagAdd,
+                          color: AppColors.white,
+                          size: 13.sp,
+                          strokeWidth: 2.5,
+                        ),
+                ),
               ),
             ),
-          ),
 
-          Positioned(
-            bottom: 0,
-            left: 0,
-            right: 0,
-            child: Container(
-              padding: paddingOnly(top: 5),
-              decoration: BoxDecoration(
-                color: AppColors.black.withValues(alpha: .6),
-                borderRadius: AppRadius.bottom(const Radius.circular(16)),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Padding(
-                    padding: paddingHorizontal(8),
-                    child: Row(
-                      children: [
-                        Icon(Icons.star, color: Colors.amber, size: 14.sp),
-                        2.horizontalSpace,
-                        Expanded(
-                          child: Text(
-                            '${product.rating} (${product.reviewCount})',
-                            style: AppTextStyles.text10Regular,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ),
-
-                        if (_hasDiscount &&
-                            product.discountPercentage != null &&
-                            product.discountPercentage!.isNotEmpty) ...[
-                          4.horizontalSpace,
-                          Container(
-                            padding: paddingSymmetric(4, 1),
-                            decoration: BoxDecoration(
-                              color: isLoading
-                                  ? Colors.transparent
-                                  : AppColors.primary,
-                              borderRadius: AppRadius.br4,
-                            ),
-                            child: Text(
-                              '${product.discountPercentage}% OFF',
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 1,
-                              style: AppTextStyles.text10Regular,
-                            ),
-                          ),
-                        ],
-                      ],
-                    ),
-                  ),
-
-                  2.verticalSpace,
-
-                  Padding(
-                    padding: paddingHorizontal(8),
-                    child: Text(
-                      product.name,
-                      style: AppTextStyles.text12Bold,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
-
-                  2.verticalSpace,
-
-                  if (_hasDiscount)
+            Positioned(
+              bottom: 0,
+              left: 0,
+              right: 0,
+              child: Container(
+                padding: paddingOnly(top: 5),
+                decoration: BoxDecoration(
+                  color: AppColors.black.withValues(alpha: .6),
+                  borderRadius: AppRadius.bottom(const Radius.circular(16)),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
                     Padding(
                       padding: paddingHorizontal(8),
                       child: Row(
                         children: [
-                          Flexible(
+                          Icon(Icons.star, color: Colors.amber, size: 14.sp),
+                          2.horizontalSpace,
+                          Expanded(
                             child: Text(
-                              '${product.discountPrice} L.E',
-                              style: AppTextStyles.text12Bold,
+                              '${product.rating} (${product.reviewCount})',
+                              style: AppTextStyles.text10Regular,
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                             ),
                           ),
 
-                          4.horizontalSpace,
-
-                          Flexible(
-                            child: Text(
-                              '${product.price} L.E',
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 1,
-                              style: AppTextStyles.text12Regular.copyWith(
-                                decoration: TextDecoration.lineThrough,
-                                decorationColor: AppColors.primary,
-                                decorationThickness: 1.8,
-                                color: AppColors.background,
+                          if (_hasDiscount &&
+                              product.discountPercentage != null &&
+                              product.discountPercentage!.isNotEmpty) ...[
+                            4.horizontalSpace,
+                            Container(
+                              padding: paddingSymmetric(4, 1),
+                              decoration: BoxDecoration(
+                                color: isLoading
+                                    ? Colors.transparent
+                                    : AppColors.primary,
+                                borderRadius: AppRadius.br4,
+                              ),
+                              child: Text(
+                                '${product.discountPercentage}% OFF',
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 1,
+                                style: AppTextStyles.text10Regular,
                               ),
                             ),
-                          ),
+                          ],
                         ],
                       ),
-                    )
-                  else
+                    ),
+
+                    2.verticalSpace,
+
                     Padding(
                       padding: paddingHorizontal(8),
                       child: Text(
-                        '${product.price} L.E',
+                        product.name,
                         style: AppTextStyles.text12Bold,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
                     ),
-                  Align(
-                    alignment: Alignment.bottomLeft,
-                    child: Container(
-                      padding: paddingAll(4),
-                      margin: paddingOnly(top: 5),
-                      decoration: BoxDecoration(
-                        color: isLoading
-                            ? Colors.transparent
-                            : AppColors.error700,
-                        borderRadius: AppRadius.only(
-                          bottomLeft: Radius.circular(12),
+
+                    2.verticalSpace,
+
+                    if (_hasDiscount)
+                      Padding(
+                        padding: paddingHorizontal(8),
+                        child: Row(
+                          children: [
+                            Flexible(
+                              child: Text(
+                                '${product.discountPrice} L.E',
+                                style: AppTextStyles.text12Bold,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+
+                            4.horizontalSpace,
+
+                            Flexible(
+                              child: Text(
+                                '${product.price} L.E',
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 1,
+                                style: AppTextStyles.text12Regular.copyWith(
+                                  decoration: TextDecoration.lineThrough,
+                                  decorationColor: AppColors.primary,
+                                  decorationThickness: 1.8,
+                                  color: AppColors.background,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
+                    else
+                      Padding(
+                        padding: paddingHorizontal(8),
+                        child: Text(
+                          '${product.price} L.E',
+                          style: AppTextStyles.text12Bold,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
                         ),
                       ),
-                      child: Text(
-                        LocaleKeys.home_best_selling.tr(),
-                        style: AppTextStyles.text10Bold,
+                    Align(
+                      alignment: Alignment.bottomLeft,
+                      child: Container(
+                        padding: paddingAll(4),
+                        margin: paddingOnly(top: 5),
+                        decoration: BoxDecoration(
+                          color: isLoading
+                              ? Colors.transparent
+                              : AppColors.error700,
+                          borderRadius: AppRadius.only(
+                            bottomLeft: Radius.circular(12),
+                          ),
+                        ),
+                        child: Text(
+                          LocaleKeys.home_best_selling.tr(),
+                          style: AppTextStyles.text10Bold,
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
