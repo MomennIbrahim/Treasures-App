@@ -1,0 +1,161 @@
+{
+    "general": {
+        "add_to_cart": "Add to cart",
+        "search_hint": "Search for perfumery or fragrances...",
+        "undo": "Undo",
+        "show_details": "Show Details",
+        "product_added_to_cart" : "Product added to cart, Press to go to cart"
+    },
+
+    "layout": {
+        "home": "Home",
+        "collections": "Collections",
+        "cart": "Cart",
+        "me": "Me"
+    },
+    "home": {
+        "a_better_mood_starts_with_konooz": "A Better Mood Starts With KONOOZ",
+        "exclusive_offers": "Exclusive Offers 🔥",
+        "currently_trending": "Currently Trending",
+        "best_selling": "Best Selling",
+        "packages": "Packages"
+    },
+
+    "collections": {
+        "featured_collections": "FEATURED COLLECTIONS",
+        "featured_collections_description": "Discover the fragrance everyone's talking about - bold, unique, and made to be your signature scent."
+    },
+
+    "me": {
+        "personal_data": "Personal Data",
+        "orders": "Orders",
+        "favorites": "Favorites",
+        "faq": "FAQ",
+        "community": "Community",
+        "settings": "Settings",
+        "help_hint": "Fell free to Ask, We Ready to Help",
+        "logout": "Logout",
+        "delivery_addresses": "Delivery Addresses"
+    },
+
+    "product_details":{
+        "longevity": "Longevity",
+        "sillage": "Sillage",
+        "description": "Description",
+        "how_to_use": "How To Use",
+        "details": "Details",
+        "reviews": "Reviews",
+        "notes": "Notes",
+        "base_notes": "Base Notes",
+        "heart_notes": "Heart Notes",
+        "top_notes": "Top Notes"
+    },
+
+    "cart":{
+        "proceed_to_buy": "Proceed to Buy",
+        "items": "Items",
+        "summary_order": "Summary Order",
+        "coast": "Coast",
+        "shipping": "Shipping",
+        "tax": "Tax",
+        "discount": "Discount",
+        "total": "Total"
+    },
+
+    "errors": {
+    "errors_timeout": "Connection timed out. Please try again.",
+    "errors_no_internet": "No internet connection. Please check your connection.",
+    "errors_unexpected": "An unexpected error occurred. Please try again.",
+    "errors_internal_server_error": "Internal server error. Please try again later."
+  },
+  "validation": {
+    "please_enter_phone": "Please enter phone",
+    "invalid_phone": "Your phone is not valid"
+ },
+ 
+  "settings": {
+    "title": "Settings",
+    "change_language": "Change Language",
+    "logout": "Logout",
+    "delete_account": "Delete Account"
+  },
+
+  "dialogs": {
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "change_language": {
+      "title": "Change Language",
+      "message": "Changing the language will restart the app. Do you want to continue?",
+      "confirm": "Confirm"
+    },
+
+    "logout": {
+      "title": "Logout",
+      "message": "Are you sure you want to log out?",
+      "confirm": "Logout"
+    },
+
+    "delete_account": {
+      "title": "Delete Account",
+      "message": "Your account and all your data will be permanently deleted. This action cannot be undone.",
+      "confirm": "Delete Permanently"
+    }
+  },
+
+  "checkout":{
+    "checkout": "Checkout",
+    "payment_method": "Payment Method",
+    "delivery_address": "Delivery Address",
+    "cash_on_delivery": "Cash on Delivery",
+    "pay_when_your_order_arrives": "Pay when your order arrives",
+    "pay_securely_with_your_card": "Pay securely with your card",
+    "credit_debit_card": "Credit / Debit Card",
+    "place_order": "Place Order"
+  },
+
+  "auth": {
+    "get_started": "Get Started Now With ",
+    "app_name": "Konoz!",
+    "subtitle": "Discover the best products from around the world",
+    "phone_number": "Phone Number",
+    "phone_hint": "01x xxxxxxxx",
+    "login": "Login",
+    "or_login_with": "Or Login with",
+    "phone_required": "Please enter your phone number",
+    "phone_invalid": "Invalid phone number"
+  },
+
+  "community": {
+    "app_bar_title": "Our Community",
+    "header_title": "Join Our Community",
+    "header_subtitle": "Follow us on social media\nto get all the latest updates first",
+    "facebook": {
+      "title": "Facebook",
+      "subtitle": "Follow our page for the latest news"
+    },
+    "instagram": {
+      "title": "Instagram",
+      "subtitle": "Check out our photos and daily stories"
+    },
+    "whatsapp": {
+      "title": "WhatsApp",
+      "subtitle": "Contact us directly"
+    },
+    "tiktok": {
+      "title": "TikTok",
+      "subtitle": "Watch our videos"
+    }
+  },
+
+  "faq": {
+    "app_bar_title": "FAQ",
+    "header_title": "How can we help?",
+    "header_subtitle": "Browse the frequently asked questions, or contact us for more help",
+    "q1": { "question": "How do I create an account?", "answer": "Write the answer here..." },
+    "q2": { "question": "How do I track my order?", "answer": "Write the answer here..." },
+    "q3": { "question": "What payment methods are available?", "answer": "Write the answer here..." },
+    "q4": { "question": "How do I contact support?", "answer": "Write the answer here..." },
+    "q5": { "question": "How do I return a product?", "answer": "Write the answer here..." },
+    "q6": { "question": "Do you deliver to all governorates?", "answer": "Write the answer here..." }
+  }
+}

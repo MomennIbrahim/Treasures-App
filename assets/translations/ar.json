@@ -1,0 +1,161 @@
+{
+    "general": {
+        "add_to_cart":  "اضافة الى السلة"  ,
+        "search_hint": "ابحث عن عطر...",
+        "undo": "الغاء",
+        "show_details": "اظهار التفاصيل",
+        "product_added_to_cart" : "تمت إضافة المنتج إلى عربة التسوق، اضغط للانتقال إلى العربة"
+    },
+    "layout": {
+        "home": "الرئيسية",
+        "collections": "الفئات",
+        "cart": "السلة",
+        "me": "أنا"
+    },
+    
+    "home": {
+        "a_better_mood_starts_with_konooz": "مزاج أفضل يبدأ مع كنوز",
+        "exclusive_offers": "عروض حصرية 🔥",
+        "currently_trending": "الأكثر رواجًا حاليًا",
+        "best_selling": "الأكثر مبيعًا",
+        "packages": "الباقات"
+    },
+
+    "collections": {
+        "featured_collections":  "مجموعات مميزة",
+        "featured_collections_description": "اكتشف العطر الذي يتحدث عنه الجميع - جريء، مميز، ومصمم ليكون عطرك المميز."
+    },
+
+    "me": {
+        "personal_data": "بيانات شخصية",
+        "orders": "الطلبات",
+        "favorites": "المفضلة",
+        "faq": "الأسئلة الشائعة",
+        "community": "المجتمع",
+        "settings": "الإعدادات",
+        "help_hint": "لا تتردد في السؤال، نحن مستعدون لمساعدتك",
+        "logout": "تسجيل الخروج",
+        "delivery_addresses": "عناوين التوصيل"
+    },
+
+    "product_details":{
+        "longevity": "الثبات",
+        "sillage": "الفوحان",
+        "description": "الوصف",
+        "how_to_use": "طريقة الأستخدام",
+        "notes": "المكونات",
+        "details": "التفاصيل",
+        "reviews": "التقييمات",
+        "top_notes": "المكونات العليا",
+        "heart_notes": "قلب العطر",
+        "base_notes": "المكونات الأساسية"
+    },
+
+     "cart":{
+        "proceed_to_buy": "المتابعة للشراء",
+        "items": "المنتجات",
+        "summary_order": "ملخص الطلب",
+        "coast": "السعر",
+        "shipping": "الشحن",
+        "tax": "الضريبة",
+        "discount": "الخصم",
+        "total": "الأجمالي"
+    },
+    
+    "errors": {
+    "errors_timeout": "انتهت مهلة الاتصال. حاول مرة أخرى.",
+    "errors_no_internet": "لا يوجد اتصال بالإنترنت. يرجى التحقق من اتصالك.",
+    "errors_unexpected": "حدث خطأ غير متوقع. حاول مرة أخرى.",
+    "errors_internal_server_error": "حدث خطأ في الخادم. حاول مرة أخرى لاحقًا."
+  },
+
+  "validation": {
+    "please_enter_phone": "من فضلك ادخل رقم الهاتف",
+    "invalid_phone": "رقم الهاتف غير صحيح"
+  },
+
+  "settings": {
+    "title": "الإعدادات",
+    "change_language": "تغيير اللغة",
+    "logout": "تسجيل الخروج",
+    "delete_account": "حذف الحساب"
+  },
+
+  "dialogs": {
+    "cancel": "إلغاء",
+    "confirm": "موافق",
+    "change_language": {
+      "title": "تغيير اللغة",
+      "message": "تغيير اللغة سيؤدي لإعادة فتح التطبيق، هل تريد المتابعة؟",
+      "confirm": "موافق"
+    },
+
+    "logout": {
+      "title": "تسجيل الخروج",
+      "message": "هل أنت متأكد من رغبتك في تسجيل الخروج؟",
+      "confirm": "تسجيل الخروج"
+    },
+
+    "delete_account": {
+      "title": "حذف الحساب",
+      "message": "سيتم حذف حسابك وكل بياناتك بشكل نهائي ولا يمكن التراجع عن هذا الإجراء.",
+      "confirm": "حذف الحساب"
+    }
+  },
+
+  "checkout":{
+    "checkout": "الدفع",
+    "payment_method": "طريقة الدفع",
+    "delivery_address": "عنوان التوصيل",
+    "cash_on_delivery": "الدفع عند الاستلام",
+    "pay_when_your_order_arrives": "ادفع عند وصول طلبك",
+    "pay_securely_with_your_card": "ادفع بأمان باستخدام بطاقتك",
+    "credit_debit_card": "بطاقة ائتمان / بطاقة خصم",
+    "place_order": "تأكيد الطلب"
+  },
+  
+  "auth": {
+    "get_started": "ابدأ الآن مع ",
+    "app_name": "كنوز!",
+    "subtitle": "اكتشف أفضل المنتجات من حول العالم",
+    "phone_number": "رقم الهاتف",
+    "phone_hint": "01x xxxxxxxx",
+    "login": "تسجيل الدخول",
+    "or_login_with": "أو سجل الدخول باستخدام",
+    "phone_required": "من فضلك أدخل رقم الهاتف",
+    "phone_invalid": "رقم الهاتف غير صحيح"
+  },
+
+  "community": {
+    "app_bar_title": "مجتمعنا",
+    "header_title": "انضم لمجتمعنا",
+    "header_subtitle": "تابعنا على منصات التواصل الاجتماعي\nعشان توصلك كل الجديد أول بأول",
+    "facebook": {
+      "title": "فيسبوك",
+      "subtitle": "تابع صفحتنا وشارك بآخر الأخبار"
+    },
+    "instagram": {
+      "title": "انستجرام",
+      "subtitle": "شوف صورنا وقصصنا اليومية"
+    },
+    "whatsapp": {
+      "title": "واتساب",
+      "subtitle": "تواصل معانا مباشرة"
+    },
+    "tiktok": {
+      "title": "تيك توك",
+      "subtitle": "شوف الفيديوهات بتاعتنا"
+    }
+  },
+  "faq": {
+    "app_bar_title": "الأسئلة الشائعة",
+    "header_title": "إزاي نقدر نساعدك؟",
+    "header_subtitle": "دور في الأسئلة الشائعة، ولو محتاج مساعدة أكتر تواصل معانا",
+    "q1": { "question": "إزاي أعمل حساب؟", "answer": "اكتب الإجابة هنا..." },
+    "q2": { "question": "إزاي أتابع طلبي؟", "answer": "اكتب الإجابة هنا..." },
+    "q3": { "question": "طرق الدفع المتاحة إيه؟", "answer": "اكتب الإجابة هنا..." },
+    "q4": { "question": "إزاي أتواصل مع الدعم؟", "answer": "اكتب الإجابة هنا..." },
+    "q5": { "question": "إزاي أرجع منتج؟", "answer": "اكتب الإجابة هنا..." },
+    "q6": { "question": "هل التوصيل بيوصل لكل المحافظات؟", "answer": "اكتب الإجابة هنا..." }
+  }
+}

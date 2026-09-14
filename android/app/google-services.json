@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1068605269082",
+    "project_id": "treasures-cf8a2",
+    "storage_bucket": "treasures-cf8a2.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1068605269082:android:d14c8cda4abcfa1c8ea463",
+        "android_client_info": {
+          "package_name": "com.konoz.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBvALn9q9WzPbDZD8vFpL8CbLQDq76nBf0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

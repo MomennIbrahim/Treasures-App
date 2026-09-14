@@ -1,0 +1,17 @@
+default_platform(:android)
+
+platform :android do
+  desc "Distribute a new version to firebase distribution"
+  lane :distribute do
+      sh "flutter clean"
+      sh "flutter build apk"
+     firebase_app_distribution(
+  app: "1:1068605269082:android:d14c8cda4abcfa1c8ea463",
+  firebase_cli_token: ENV["FIREBASE_TOKEN"],
+  android_artifact_type: "APK",
+  android_artifact_path: "../build/app/outputs/flutter-apk/app-release.apk",
+  testers: "badralhussini1999@gmail.com,ibrahimmomen179@gmail.com,islamay124@gmail.com",
+  release_notes: "New CI/CD Version (Konoz App), Build Number: 1, First Release"
+)
+  end
+end
