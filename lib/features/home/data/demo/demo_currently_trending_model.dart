@@ -22,6 +22,7 @@ class DemoCurrentlyTrendingData {
         defaultPrice: '500',
         defaultDiscountPrice: "350 EGP",
         defaultDiscountPercentage: "35%",
+        isFavorite: false,
         sizes: [
           ProductSizeModel(
             id: 1,
@@ -66,6 +67,7 @@ class DemoCurrentlyTrendingData {
         defaultDiscountPrice: "350 EGP",
         defaultDiscountPercentage: "35%",
         inStock: true,
+        isFavorite: false,
         sizes: [
           ProductSizeModel(
             id: 1,
@@ -108,6 +110,7 @@ class DemoCurrentlyTrendingData {
         rating: '4.6',
         reviewCount: '87',
         inStock: true,
+        isFavorite: false,
         sizes: [
           ProductSizeModel(
             id: 1,
@@ -152,6 +155,7 @@ class DemoCurrentlyTrendingData {
         rating: '4.8',
         reviewCount: '176',
         inStock: true,
+        isFavorite: false,
         sizes: [
           ProductSizeModel(
             id: 1,

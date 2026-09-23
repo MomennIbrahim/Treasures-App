@@ -15,7 +15,7 @@ class ProductItemModel {
   final String defaultPrice;
   final String? defaultDiscountPrice;
   final String? defaultDiscountPercentage;
-
+  final bool isFavorite;
   final List<ProductSizeModel> sizes;
 
   const ProductItemModel({
@@ -30,6 +30,7 @@ class ProductItemModel {
     required this.defaultPrice,
     this.defaultDiscountPrice,
     this.defaultDiscountPercentage,
+    required this.isFavorite,
     required this.sizes,
   });
 
@@ -45,6 +46,7 @@ class ProductItemModel {
       inStock: true,
       defaultSize: '-',
       defaultPrice: '0',
+      isFavorite: false,
       sizes: [],
     );
   }
@@ -63,6 +65,7 @@ class ProductItemModel {
       defaultDiscountPrice: json['default_discount_price']?.toString(),
       defaultDiscountPercentage: json['default_discount_percentage']
           ?.toString(),
+      isFavorite: json['is_favorite'] == 1,
       sizes: (json['sizes'] as List<dynamic>? ?? [])
           .map((e) => ProductSizeModel.fromJson(e as Map<String, dynamic>))
           .toList(),

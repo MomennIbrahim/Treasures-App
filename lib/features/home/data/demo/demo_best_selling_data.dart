@@ -21,6 +21,8 @@ class DemoBestSellingData {
         defaultPrice: '750',
         defaultDiscountPrice: '525',
         defaultDiscountPercentage: '30%',
+                isFavorite: false,
+
         sizes: [
           ProductSizeModel(
             id: 1,
@@ -64,6 +66,8 @@ class DemoBestSellingData {
         defaultPrice: '900',
         defaultDiscountPrice: '675',
         defaultDiscountPercentage: '25%',
+                isFavorite: false,
+
         sizes: [
           ProductSizeModel(
             id: 1,
@@ -105,6 +109,8 @@ class DemoBestSellingData {
         inStock: true,
         defaultSize: '50ml',
         defaultPrice: '1350',
+                isFavorite: false,
+
         sizes: [
           ProductSizeModel(
             id: 1,
@@ -148,6 +154,8 @@ class DemoBestSellingData {
         defaultPrice: '720',
         defaultDiscountPrice: '480',
         defaultDiscountPercentage: '33%',
+                isFavorite: false,
+
         sizes: [
           ProductSizeModel(
             id: 1,

@@ -21,6 +21,7 @@ class DemoCollectionProductsData {
         defaultPrice: '650',
         defaultDiscountPrice: '520',
         defaultDiscountPercentage: '20%',
+        isFavorite: false,
         sizes: [
           ProductSizeModel(
             id: 2,
@@ -64,6 +65,8 @@ class DemoCollectionProductsData {
         defaultPrice: '620',
         defaultDiscountPrice: '480',
         defaultDiscountPercentage: '22%',
+        isFavorite: false,
+
         sizes: [
           ProductSizeModel(
             id: 2,
@@ -98,6 +101,8 @@ class DemoCollectionProductsData {
         defaultPrice: '620',
         defaultDiscountPrice: '480',
         defaultDiscountPercentage: '22%',
+        isFavorite: false,
+
         sizes: [
           ProductSizeModel(
             id: 2,
