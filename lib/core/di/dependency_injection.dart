@@ -73,7 +73,7 @@ Future<void> setupGetIt() async {
     () => BestSellingCubit(getIt()),
   );
   getIt.registerLazySingleton<CurrentlyTrendingCubit>(
-    () => CurrentlyTrendingCubit(),
+    () => CurrentlyTrendingCubit(getIt()),
   );
   getIt.registerLazySingleton<PackagesCubit>(() => PackagesCubit());
 

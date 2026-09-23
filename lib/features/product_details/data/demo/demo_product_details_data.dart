@@ -6,9 +6,9 @@ class DemoProductDetailsData {
     name: 'Burberry Her',
 
     images: [
-      'https://i.pinimg.com/736x/cd/78/f8/cd78f82c6f052162af45b1b2fead67fc.jpg',
-      'https://i.pinimg.com/736x/21/21/02/212102f4ba55638278c66c234e546fb0.jpg',
-      'https://i.pinimg.com/1200x/6f/38/b9/6f38b9344e3e1d74ea3427b2365c4860.jpg',
+      'https://scontent.fcai19-9.fna.fbcdn.net/v/t39.30808-6/817540417_1627542162410767_2812856740189757927_n.jpg?stp=dst-jpg_tt6&cstp=mx1024x1280&ctp=s1024x1280&_nc_cat=111&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeFluVNgKwr7UEDm7Z_Eb7bMo6M8Vka0PVyjozxWRrQ9XPcmMnpVVpbKEvFRV416EmptHpM_L5Y1ao2kiswrC06U&_nc_ohc=GWWbZmhLix4Q7kNvwFgto8Q&_nc_oc=AdoF_QtA6T0iLoVjDOFrcXYDj62Hasi_DZuTSkpuwP1US1QZPGCX_OQkFIyu7ydn7PQ&_nc_zt=23&_nc_ht=scontent.fcai19-9.fna&_nc_gid=vwlY66EcymynXR_6uTu02w&_nc_ss=7b2a8&oh=00_AQL3T4cLnH4EuGRWO4UW6bTdrjH24RoznYVviQ-fQFHNqQ&oe=6AB9B393',
+      'https://scontent.fcai19-9.fna.fbcdn.net/v/t39.30808-6/785081684_1607215434443440_5722923215070030998_n.jpg?stp=dst-jpg_tt6&cstp=mx1149x1369&ctp=s1149x1369&_nc_cat=109&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeHtKTmJTclfYv_5Ques8_EhsU-TPp5Atr6xT5M-nkC2vqXwQyAmj3n20Grl79lcVEUFPptQssj9GcjaZZ79SIkr&_nc_ohc=AMgRKdvVOkoQ7kNvwG4Iq3i&_nc_oc=AdpXo8ktyGPgvSsdm9gnx0pOQ6znm-KoSQ7Ou0ELP13VI6wW6wDD_EIPSkYAbQ4WCQQ&_nc_zt=23&_nc_ht=scontent.fcai19-9.fna&_nc_gid=AdMa9ebRMeK9BuNB3RaY6A&_nc_ss=7b2a8&oh=00_AQKhl5_OKl8Q67tFjijKI1Z-R3Nx56lK6oVq38zjtZY8PQ&oe=6AB9C888',
+      'https://scontent.fcai19-9.fna.fbcdn.net/v/t39.30808-6/793869179_1615926706905646_7048662102310041467_n.jpg?stp=dst-jpg_tt6&cstp=mx1536x1024&ctp=s1536x1024&_nc_cat=109&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=833d8c&_nc_eui2=AeEH1ea9tmm3c7BJsQxzn6k2qAHJ-OobCF6oAcn46hsIXsKOSkd9cAV70-1C2hYXPKlUq4rR-vSOO8QS64WuhJkI&_nc_ohc=tcDa8LsuP44Q7kNvwFG0Vuj&_nc_oc=AdoE-M4-2I7mhVV79LnFe4KOBwEfQGsDhvQKnLClXUq4FoMXCk0hfs0oPhPynCPrJOg&_nc_zt=23&_nc_ht=scontent.fcai19-9.fna&_nc_gid=_ofYl3NiYMl-wmYaGfulPg&_nc_ss=7b2a8&oh=00_AQKESbH5QeGw2H05UlqlqXaEgQD0gGrSyFUBQJcdazS7Rw&oe=6AB99B95',
     ],
 
     sizes: [

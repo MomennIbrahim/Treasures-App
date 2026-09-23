@@ -24,7 +24,8 @@ class BestSellingItem extends StatelessWidget {
   });
 
   bool get _hasDiscount =>
-      product.defaultDiscountPrice != null && product.defaultDiscountPrice!.isNotEmpty;
+      product.defaultDiscountPrice != null &&
+      product.defaultDiscountPrice!.isNotEmpty;
 
   @override
   Widget build(BuildContext context) {
@@ -107,7 +108,9 @@ class BestSellingItem extends StatelessWidget {
 
                           if (_hasDiscount &&
                               product.defaultDiscountPercentage != null &&
-                              product.defaultDiscountPercentage!.isNotEmpty) ...[
+                              product
+                                  .defaultDiscountPercentage!
+                                  .isNotEmpty) ...[
                             4.horizontalSpace,
                             Container(
                               padding: paddingSymmetric(4, 1),
@@ -167,7 +170,7 @@ class BestSellingItem extends StatelessWidget {
 
                             Flexible(
                               child: Text(
-                                '${product.defaultPrice} L.E',
+                                product.defaultPrice,
                                 overflow: TextOverflow.ellipsis,
                                 maxLines: 1,
                                 style: AppTextStyles.text12Regular.copyWith(
@@ -185,7 +188,7 @@ class BestSellingItem extends StatelessWidget {
                       Padding(
                         padding: paddingHorizontal(8),
                         child: Text(
-                          '${product.defaultPrice} L.E',
+                          product.defaultPrice,
                           style: AppTextStyles.text12Bold.copyWith(
                             color: AppColors.white,
                           ),

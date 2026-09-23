@@ -68,4 +68,24 @@ class ProductItemModel {
           .toList(),
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'name': name,
+      'description': description,
+      'image': image,
+      'rating': rating,
+      'review_count': reviewCount,
+      'in_stock': inStock,
+      'default_size': defaultSize,
+      'default_price': defaultPrice,
+      'default_discount_price': defaultDiscountPrice,
+      'default_discount_percentage': defaultDiscountPercentage,
+      'is_favorite': isFavorite,
+      'is_best_seller': true,
+      'is_currently_trending': true,
+      'sizes': sizes.map((e) => e.toJson()).toList(),
+    };
+  }
 }

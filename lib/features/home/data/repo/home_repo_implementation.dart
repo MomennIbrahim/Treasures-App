@@ -83,7 +83,7 @@ class HomeRepoImplementation extends HomeRepo {
       final data = await _firestoreService.getCollection(
         path: 'products',
         filters: [const QueryFilter(field: 'is_currently_trending', isEqualTo: true)],
-        orderByField: 'createdAt',
+      //  orderByField: 'createdAt',
         descending: true,
       );
 

@@ -41,7 +41,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
           if (state.isFailure) {
             AppToast.show(
               context,
-              message: "Something went wrong",
+              message: LocaleKeys.errors_errors_unexpected.tr(),
               type: AppToastType.error,
             );
           }
