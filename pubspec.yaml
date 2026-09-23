@@ -74,6 +74,7 @@ dependencies:
 
   # Firebase
   firebase_core: ^4.15.0
+  cloud_firestore: ^6.10.0
   
   # A Dart package that helps to implement value based equality without needing to explicitly override == and hashCode.
   equatable: ^2.1.0

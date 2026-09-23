@@ -20,28 +20,36 @@ class BannerData {
   final String image;
   final String title;
   final String subtitle;
-  final String buttonLabel;
 
   BannerData({
     required this.image,
     required this.title,
     required this.subtitle,
-    required this.buttonLabel,
   });
 
-  // Empty data model
-  BannerData.empty()
-    : image = 'asd.png',
-      title = 'Fake Title',
-      subtitle = 'Fake Subtitle',
-      buttonLabel = 'Fake Button Label';
+  static List<BannerData> emptyList() => [
+    BannerData(
+      image: 'asd.png',
+      title: 'Fake Title',
+      subtitle: 'Fake Subtitle',
+    ),
+    BannerData(
+      image: 'asd.png',
+      title: 'Fake Title',
+      subtitle: 'Fake Subtitle',
+    ),
+    BannerData(
+      image: 'asd.png',
+      title: 'Fake Title',
+      subtitle: 'Fake Subtitle',
+    ),
+  ];
 
   factory BannerData.fromJson(Map<String, dynamic> json) {
     return BannerData(
       image: json['image'],
       title: json['title'],
       subtitle: json['subtitle'],
-      buttonLabel: json['buttonLabel'],
     );
   }
 }

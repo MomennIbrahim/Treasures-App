@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -7,7 +9,7 @@ import 'package:konoz/core/theme/app_shimmer.dart';
 import 'package:konoz/core/theme/app_text_style.dart';
 import 'package:konoz/core/widgets/app_slider.dart';
 import 'package:konoz/core/widgets/app_toast.dart';
-import 'package:konoz/features/home/data/demo/demo_banners_data.dart';
+import 'package:konoz/features/home/data/model/banners_model.dart';
 import 'package:konoz/features/home/presentation/controllers/banners_cubit/banners_cubit.dart';
 import 'package:konoz/generated/locale_keys.g.dart';
 import 'package:skeletonizer/skeletonizer.dart';
@@ -39,21 +41,22 @@ class _HomeOffersSectionState extends State<HomeOffersSection> {
                 message: state.failure?.getAllError() ?? "Something went wrong",
                 type: AppToastType.error,
               );
+              log(state.failure?.getAllError() ?? "");
             }
           },
           builder: (context, state) {
-            final bool isLoading = state.isLoading || state.isInitial;
+            final bool isLoading = state.isLoading;
 
-            final bannersList = isLoading
-                ? DemoBannersData.banners.bannersData ?? []
-                : state.banners?.bannersData ?? [];
+            final bannersList = state.banners?.bannersData ?? [];
 
             if (bannersList.isEmpty && !isLoading) {
-              return SizedBox.shrink();
+              return const SizedBox.shrink();
             }
 
+            final displayBanners = isLoading ? BannerData.emptyList() : bannersList;
+
             return Skeletonizer(
-            effect: AppShimmer.effect(context),
+              effect: AppShimmer.effect(context),
               enabled: isLoading,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -64,13 +67,12 @@ class _HomeOffersSectionState extends State<HomeOffersSection> {
                   ),
                   10.verticalSpace,
                   AppSlider(
-                    items: bannersList
-                        .map(
+                    items: displayBanners.map(
                           (e) => ImageBannerItem(
                             imagePath: e.image,
                             title: e.title,
                             subtitle: e.subtitle,
-                            buttonLabel: e.buttonLabel,
+                            buttonLabel: "Explore Now",
                             onPressed: () {},
                           ),
                         )

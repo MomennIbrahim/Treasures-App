@@ -1,11 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:konoz/core/networking/api_service.dart';
-import 'package:konoz/features/collection_products/data/repo/collection_products_repo.dart';
-import 'package:konoz/features/collection_products/data/repo/collection_products_repo_implmentation.dart';
 import 'package:konoz/features/collection_products/presentation/controllers/collection_products/collection_products_cubit.dart';
-import 'package:konoz/features/collections/data/repo/collections_repo.dart';
-import 'package:konoz/features/collections/data/repo/collections_repo_implementation.dart';
 import 'package:konoz/features/collections/presentation/controllers/collections/collections_cubit.dart';
 import 'package:konoz/features/home/data/repo/home_repo.dart';
 import 'package:konoz/features/home/data/repo/home_repo_implementation.dart';
@@ -15,8 +12,6 @@ import 'package:konoz/features/home/presentation/controllers/currently_trending/
 import 'package:konoz/features/home/presentation/controllers/packages_cubit.dart';
 import 'package:konoz/features/layout/presentation/controller/layout_cubit.dart';
 import 'package:konoz/features/personal_data/presentation/controllers/addresses/addresses_cubit.dart';
-import 'package:konoz/features/product_details/data/repo/product_details_repo.dart';
-import 'package:konoz/features/product_details/data/repo/product_details_repo_implmentation.dart';
 import 'package:konoz/features/product_details/presentation/controllers/product_details/product_details_cubit.dart';
 
 final getIt = GetIt.instance;
@@ -26,8 +21,9 @@ Future<void> setupGetIt() async {
   getIt.registerLazySingleton<Dio>(() => Dio());
 
   /// Api Service
-  getIt.registerLazySingleton<ApiService>(() => ApiService(getIt<Dio>()));
-  
+  getIt.registerLazySingleton<FirestoreService>(
+    () => FirestoreService(FirebaseFirestore.instance),
+  );
 
   /*
   /// Location
@@ -41,20 +37,20 @@ Future<void> setupGetIt() async {
   /// All Repositories ====>
 
   getIt.registerLazySingleton<HomeRepo>(
-    () => HomeRepoImplementation(getIt<ApiService>()),
+    () => HomeRepoImplementation(getIt<FirestoreService>()),
   );
 
-  getIt.registerLazySingleton<CollectionsRepo>(
-    () => CollectionsRepoImplementation(getIt<ApiService>()),
-  );
+  // getIt.registerLazySingleton<CollectionsRepo>(
+  //   () => CollectionsRepoImplementation(getIt<FirestoreService>()),
+  // );
 
-  getIt.registerLazySingleton<ProductDetailsRepo>(
-    () => ProductDetailsRepoImplementation(getIt<ApiService>()),
-  );
+  // getIt.registerLazySingleton<ProductDetailsRepo>(
+  //   () => ProductDetailsRepoImplementation(getIt<FirestoreService>()),
+  // );
 
-  getIt.registerLazySingleton<CollectionProductsRepo>(
-    () => CollectionProductsRepoImplementation(getIt<ApiService>()),
-  );
+  // getIt.registerLazySingleton<CollectionProductsRepo>(
+  //   () => CollectionProductsRepoImplementation(getIt<FirestoreService>()),
+  // );
   /*
   // Profile Repository
   getIt.registerLazySingleton<ProfileRepo>(
@@ -70,7 +66,7 @@ Future<void> setupGetIt() async {
   getIt.registerFactory<LayoutCubit>(() => LayoutCubit());
 
   // Home Cubits
-  getIt.registerLazySingleton<BannersCubit>(() => BannersCubit());
+  getIt.registerLazySingleton<BannersCubit>(() => BannersCubit(getIt()));
   getIt.registerLazySingleton<BestSellingCubit>(() => BestSellingCubit());
   getIt.registerLazySingleton<CurrentlyTrendingCubit>(
     () => CurrentlyTrendingCubit(),
@@ -91,5 +87,5 @@ Future<void> setupGetIt() async {
   );
 
   // Address Cubit
-   getIt.registerFactory<AddressesCubit>(() => AddressesCubit());
+  getIt.registerFactory<AddressesCubit>(() => AddressesCubit());
 }

@@ -1,167 +1,127 @@
-import 'package:dio/dio.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-class ApiService {
-  final Dio _dio;
+class FirestoreService {
+  final FirebaseFirestore _firestore;
 
-  ApiService(this._dio) {
-    _initDio();
-  }
+  FirestoreService(this._firestore);
 
-  void _initDio() {
-    _dio.options = BaseOptions(
-      baseUrl: "",
-      receiveDataWhenStatusError: true,
-      followRedirects: false,
-      connectTimeout: const Duration(minutes: 1),
-      receiveTimeout: const Duration(minutes: 1),
-      sendTimeout: const Duration(minutes: 1),
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      },
-    );
-
-    //  _addInterceptors();
-  }
-
-  // void _addInterceptors() {
-  //   _dio.interceptors.addAll([
-  //     InterceptorsWrapper(
-  //       onRequest: (options, handler) async {
-  //         final token = await SecureCache.getData(key: SecureStorageKeys.token);
-
-  //         final context = NavigationService.navigatorKey.currentContext;
-  //         final lang =
-  //             EasyLocalization.of(
-  //               context!.mounted ? context : context,
-  //             )?.currentLocale?.languageCode ??
-  //             'ar';
-
-  //         options.headers['Accept-Language'] = lang;
-  //         if (token != null) options.headers['Authorization'] = 'Bearer $token';
-
-  //         return handler.next(options);
-  //       },
-  //       onError: (error, handler) async {
-  //         if (error.response?.statusCode == 401) {
-  //           await SecureCache.removeData(key: SecureStorageKeys.token);
-  //           final context = NavigationService.navigatorKey.currentContext;
-  //           if (context != null && context.mounted) {
-  //             AppToast.showWarning(
-  //               context: context,
-  //               title: LocaleKeys.session_expired_session_expired.tr(),
-  //               description:
-  //                   "${LocaleKeys.session_expired_session_expired_desc.tr()}\n${LocaleKeys.session_expired_login.tr()}",
-  //             );
-  //           }
-
-  //           await Future.delayed(const Duration(seconds: 2));
-  //           NavigationService.navigateToLogin();
-  //         }
-  //         return handler.next(error);
-  //       },
-  //     ),
-  //     if (kDebugMode)
-  //       PrettyDioLogger(
-  //         requestHeader: true,
-  //         requestBody: true,
-  //         responseHeader: true,
-  //         request: true,
-  //       ),
-  //   ]);
-  // }
-
-  Future<dynamic> postData({
-    required String endPoint,
-    Map<String, dynamic>? query,
-    Map<String, dynamic>? data,
+  /// يجيب كل المستندات في collection، مع فلاتر وترتيب اختياريين
+  Future<List<Map<String, dynamic>>> getCollection({
+    required String path,
+    List<QueryFilter>? filters,
+    String? orderByField,
+    bool descending = false,
+    int? limit,
   }) async {
-    final response = await _dio.post(
-      endPoint,
-      queryParameters: query,
-      data: data,
-      options: Options(
-        contentType: data is FormData
-            ? 'multipart/form-data'
-            : 'application/json',
-      ),
-    );
-    return response.data;
+    Query<Map<String, dynamic>> query = _firestore.collection(path);
+
+    if (filters != null) {
+      for (final filter in filters) {
+        query = filter.apply(query);
+      }
+    }
+
+    if (orderByField != null) {
+      query = query.orderBy(orderByField, descending: descending);
+    }
+
+    if (limit != null) {
+      query = query.limit(limit);
+    }
+
+    final snapshot = await query.get();
+    return snapshot.docs
+        .map((doc) => {'id': doc.id, ...doc.data()})
+        .toList();
   }
 
-  Future<dynamic> postFormData({
-    required String endPoint,
-    Map<String, dynamic>? query,
-    required FormData data,
+  /// يجيب مستند واحد بالـ id
+  Future<Map<String, dynamic>?> getDocument({
+    required String path,
+    required String id,
   }) async {
-    final response = await _dio.post(
-      endPoint,
-      queryParameters: query,
-      data: data,
-      options: Options(contentType: 'multipart/form-data'),
-    );
-    return response.data;
+    final doc = await _firestore.collection(path).doc(id).get();
+    if (!doc.exists) return null;
+    return {'id': doc.id, ...?doc.data()};
   }
 
-  Future<dynamic> getData({
-    required String endPoint,
-    Map<String, dynamic>? query,
-    Map<String, dynamic>? data,
+  /// يضيف مستند جديد، بيرجع الـ id بتاعه
+  Future<String> addDocument({
+    required String path,
+    required Map<String, dynamic> data,
   }) async {
-    final response = await _dio.get(
-      endPoint,
-      queryParameters: query,
-      data: data,
-    );
-    return response.data;
+    final ref = await _firestore.collection(path).add(data);
+    return ref.id;
   }
 
-  Future<dynamic> patchData({
-    required String endPoint,
-    Map<String, dynamic>? query,
-    dynamic data,
+  /// يعدل مستند موجود
+  Future<void> updateDocument({
+    required String path,
+    required String id,
+    required Map<String, dynamic> data,
   }) async {
-    final response = await _dio.patch(
-      endPoint,
-      queryParameters: query,
-      data: data,
-      options: Options(
-        contentType: data is FormData
-            ? 'multipart/form-data'
-            : 'application/json',
-      ),
-    );
-    return response.data;
+    await _firestore.collection(path).doc(id).update(data);
   }
 
-  Future<dynamic> putData({
-    required String endPoint,
-    Map<String, dynamic>? query,
-    dynamic data,
+  /// يمسح مستند
+  Future<void> deleteDocument({
+    required String path,
+    required String id,
   }) async {
-    final response = await _dio.put(
-      endPoint,
-      queryParameters: query,
-      data: data,
-      options: Options(
-        contentType: data is FormData
-            ? 'multipart/form-data'
-            : 'application/json',
-      ),
-    );
-    return response.data;
+    await _firestore.collection(path).doc(id).delete();
   }
 
-  Future<dynamic> deleteData({
-    required String endPoint,
-    Map<String, dynamic>? query,
-    dynamic data,
-  }) async {
-    final response = await _dio.delete(
-      endPoint,
-      queryParameters: query,
-      data: data,
-    );
-    return response.data;
+  /// stream لمتابعة تحديثات collection لحظيًا (مفيد للسلة أو الإشعارات)
+  Stream<List<Map<String, dynamic>>> streamCollection({
+    required String path,
+    List<QueryFilter>? filters,
+    String? orderByField,
+    bool descending = false,
+  }) {
+    Query<Map<String, dynamic>> query = _firestore.collection(path);
+
+    if (filters != null) {
+      for (final filter in filters) {
+        query = filter.apply(query);
+      }
+    }
+
+    if (orderByField != null) {
+      query = query.orderBy(orderByField, descending: descending);
+    }
+
+    return query.snapshots().map(
+          (snapshot) => snapshot.docs
+              .map((doc) => {'id': doc.id, ...doc.data()})
+              .toList(),
+        );
+  }
+}
+
+/// يمثل شرط where واحد، عشان نقدر نمرر أكتر من شرط بسهولة
+class QueryFilter {
+  final String field;
+  final dynamic isEqualTo;
+  final dynamic isGreaterThan;
+  final dynamic isLessThan;
+
+  const QueryFilter({
+    required this.field,
+    this.isEqualTo,
+    this.isGreaterThan,
+    this.isLessThan,
+  });
+
+  Query<Map<String, dynamic>> apply(Query<Map<String, dynamic>> query) {
+    if (isEqualTo != null) {
+      query = query.where(field, isEqualTo: isEqualTo);
+    }
+    if (isGreaterThan != null) {
+      query = query.where(field, isGreaterThan: isGreaterThan);
+    }
+    if (isLessThan != null) {
+      query = query.where(field, isLessThan: isLessThan);
+    }
+    return query;
   }
 }

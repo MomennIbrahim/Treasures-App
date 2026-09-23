@@ -2,36 +2,28 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:konoz/core/cubits/safe_cubit.dart';
 import 'package:konoz/core/error/app_failure.dart';
-import 'package:konoz/features/home/data/demo/demo_banners_data.dart';
 import 'package:konoz/features/home/data/model/banners_model.dart';
+import 'package:konoz/features/home/data/repo/home_repo.dart';
 
 part 'banners_state.dart';
 
 class BannersCubit extends SafeCubit<BannersState> {
-  // final HomeRepo _homeRepo  ;
-  BannersCubit() : super(BannersState());
+  final HomeRepo _homeRepo;
+  BannersCubit(this._homeRepo)
+    : super(BannersState(status: BannersStatus.initial));
 
   Future<void> getBanners() async {
     emit(state.copyWith(status: BannersStatus.loading));
 
-    await Future.delayed(const Duration(seconds: 2));
+    final result = await _homeRepo.getBanners();
 
-    emit(
-      state.copyWith(
-        status: BannersStatus.success,
-        banners: DemoBannersData.banners,
+    result.fold(
+      (failure) => emit(
+        state.copyWith(status: BannersStatus.failure, failure: failure),
+      ),
+      (banners) => emit(
+        state.copyWith(status: BannersStatus.success, banners: banners),
       ),
     );
-
-    // ============================
-    // Real API
-    // ============================
-
-    // final result = await _homeRepo.getBanners();
-
-    // result.fold(
-    //   (failure) => emit(HomeFailure(failure.getAllError())),
-    //   (banners) => emit(HomeSuccess(banners: banners)),
-    // );
   }
 }

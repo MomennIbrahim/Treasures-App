@@ -43,17 +43,19 @@ class AppToast {
         children: [
           HugeIcon(icon: config.icon, size: 16.sp, color: AppColors.white),
           8.horizontalSpace,
-          GestureDetector(
-            onTap: () {
-              onTap?.call();
-              removeToast(); // يقفل التوست فورًا لما يدوس، من غير ما يستنى الـ duration
-            },
-            child: Text(
-              message,
-              style: AppTextStyles.text12Bold.copyWith(
-                color: AppColors.white,
-                decoration: onTap != null ? TextDecoration.underline : null,
-                decorationColor: AppColors.white,
+          Expanded(
+            child: GestureDetector(
+              onTap: () {
+                onTap?.call();
+                removeToast(); // يقفل التوست فورًا لما يدوس، من غير ما يستنى الـ duration
+              },
+              child: Text(
+                message,
+                style: AppTextStyles.text12Bold.copyWith(
+                  color: AppColors.white,
+                  decoration: onTap != null ? TextDecoration.underline : null,
+                  decorationColor: AppColors.white,
+                ),
               ),
             ),
           ),
