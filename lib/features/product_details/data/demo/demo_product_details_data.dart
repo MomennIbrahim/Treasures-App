@@ -13,7 +13,7 @@ class DemoProductDetailsData {
 
     sizes: [
       ProductSizeModel(
-        id: 1,
+        id: "1",
         value: 30,
         unit: 'ml',
         priceWithDiscount: "800",
@@ -22,7 +22,7 @@ class DemoProductDetailsData {
         stock: 15,
       ),
       ProductSizeModel(
-        id: 2,
+        id: "2",
         value: 50,
         unit: 'ml',
         priceWithDiscount: "1200",
@@ -31,7 +31,7 @@ class DemoProductDetailsData {
         stock: 10,
       ),
       ProductSizeModel(
-        id: 3,
+        id: "3",
         value: 100,
         unit: 'ml',
         priceWithDiscount: "2000",

@@ -12,6 +12,8 @@ import 'package:konoz/features/home/presentation/controllers/currently_trending/
 import 'package:konoz/features/home/presentation/controllers/packages_cubit.dart';
 import 'package:konoz/features/layout/presentation/controller/layout_cubit.dart';
 import 'package:konoz/features/personal_data/presentation/controllers/addresses/addresses_cubit.dart';
+import 'package:konoz/features/product_details/data/repo/product_details_repo.dart';
+import 'package:konoz/features/product_details/data/repo/product_details_repo_implmentation.dart';
 import 'package:konoz/features/product_details/presentation/controllers/product_details/product_details_cubit.dart';
 
 final getIt = GetIt.instance;
@@ -44,9 +46,9 @@ Future<void> setupGetIt() async {
   //   () => CollectionsRepoImplementation(getIt<FirestoreService>()),
   // );
 
-  // getIt.registerLazySingleton<ProductDetailsRepo>(
-  //   () => ProductDetailsRepoImplementation(getIt<FirestoreService>()),
-  // );
+  getIt.registerLazySingleton<ProductDetailsRepo>(
+    () => ProductDetailsRepoImplementation(getIt<FirestoreService>()),
+  );
 
   // getIt.registerLazySingleton<CollectionProductsRepo>(
   //   () => CollectionProductsRepoImplementation(getIt<FirestoreService>()),
@@ -67,7 +69,9 @@ Future<void> setupGetIt() async {
 
   // Home Cubits
   getIt.registerLazySingleton<BannersCubit>(() => BannersCubit(getIt()));
-  getIt.registerLazySingleton<BestSellingCubit>(() => BestSellingCubit());
+  getIt.registerLazySingleton<BestSellingCubit>(
+    () => BestSellingCubit(getIt()),
+  );
   getIt.registerLazySingleton<CurrentlyTrendingCubit>(
     () => CurrentlyTrendingCubit(),
   );

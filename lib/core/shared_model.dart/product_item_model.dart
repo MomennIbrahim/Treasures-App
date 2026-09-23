@@ -1,16 +1,13 @@
 import 'package:konoz/features/product_details/data/model/product_details_model.dart';
 
 class ProductItemModel {
-  final int id;
+  final String id;
   final String name;
   final String description;
   final String image;
-
   final String rating;
   final String reviewCount;
-
   final bool inStock;
-
   final String defaultSize;
   final String defaultPrice;
   final String? defaultDiscountPrice;
@@ -36,7 +33,7 @@ class ProductItemModel {
 
   factory ProductItemModel.empty() {
     return const ProductItemModel(
-      id: 0,
+      id: "1",
       name: 'placeholder name',
       description: 'placeholder description text here',
       image:
@@ -53,7 +50,7 @@ class ProductItemModel {
 
   factory ProductItemModel.fromJson(Map<String, dynamic> json) {
     return ProductItemModel(
-      id: json['id'] as int,
+      id: json['id'] as String,
       name: json['name'] as String,
       description: json['description'] as String,
       image: json['image'] as String,

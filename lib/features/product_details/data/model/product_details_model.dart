@@ -86,7 +86,7 @@ class ProductDetailsModel extends Equatable {
 // ─────────────────────────────────────────────
 
 class ProductSizeModel extends Equatable {
-  final int id;
+  final String id;
   final int value;
   final String unit;
   final String priceWithDiscount;
@@ -106,13 +106,12 @@ class ProductSizeModel extends Equatable {
 
   factory ProductSizeModel.fromJson(Map<String, dynamic> json) {
     return ProductSizeModel(
-      id: json['id'] as int,
+      id: json['id'] as String,
       value: json['value'] as int,
       unit: json['unit'] as String? ?? 'ml',
-      priceWithDiscount: (json['price_without_discount'] as num).toString(),
-      priceWithoutDiscount: (json['price_without_discount'] as num?)
-          ?.toString(),
-      discountPercentage: (json['discount_percentage'] as num?)?.toString(),
+      priceWithDiscount: (json['price_with_discount']).toString(),
+      priceWithoutDiscount: (json['price_without_discount'])?.toString(),
+      discountPercentage: (json['discount_percentage'])?.toString(),
       stock: json['stock'] as int? ?? 0,
     );
   }

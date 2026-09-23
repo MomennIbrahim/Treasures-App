@@ -9,7 +9,7 @@ class DemoCollectionProductsData {
     message: 'Collection Products',
     products: [
       ProductItemModel(
-        id: 10,
+        id: "10",
         name: 'Oud Al Sultan',
         description: 'A rich and long-lasting oriental oud.',
         image:
@@ -24,25 +24,7 @@ class DemoCollectionProductsData {
         isFavorite: false,
         sizes: [
           ProductSizeModel(
-            id: 2,
-            unit: 'ml',
-            value: 50,
-            priceWithoutDiscount: '500',
-            priceWithDiscount: '350EGP',
-            discountPercentage: '18%',
-            stock: 13,
-          ),
-          ProductSizeModel(
-            id: 2,
-            unit: 'ml',
-            value: 50,
-            priceWithoutDiscount: '500',
-            priceWithDiscount: '350EGP',
-            discountPercentage: '18%',
-            stock: 13,
-          ),
-          ProductSizeModel(
-            id: 2,
+            id: "10",
             unit: 'ml',
             value: 50,
             priceWithoutDiscount: '500',
@@ -53,7 +35,7 @@ class DemoCollectionProductsData {
         ],
       ),
       ProductItemModel(
-        id: 11,
+        id: "11",
         name: 'Royal Musk',
         description: 'A warm musky scent suitable for all occasions.',
         image:
@@ -69,16 +51,7 @@ class DemoCollectionProductsData {
 
         sizes: [
           ProductSizeModel(
-            id: 2,
-            unit: 'ml',
-            value: 50,
-            priceWithoutDiscount: '500',
-            priceWithDiscount: '350EGP',
-            discountPercentage: '18%',
-            stock: 13,
-          ),
-          ProductSizeModel(
-            id: 2,
+            id: "2",
             unit: 'ml',
             value: 50,
             priceWithoutDiscount: '500',
@@ -89,7 +62,7 @@ class DemoCollectionProductsData {
         ],
       ),
       ProductItemModel(
-        id: 12,
+        id: "12",
         name: 'Amber Nights',
         description: 'A deep amber fragrance with woody undertones.',
         image:
@@ -105,7 +78,7 @@ class DemoCollectionProductsData {
 
         sizes: [
           ProductSizeModel(
-            id: 2,
+            id: "3",
             unit: 'ml',
             value: 50,
             priceWithoutDiscount: '500',
@@ -113,17 +86,9 @@ class DemoCollectionProductsData {
             discountPercentage: '18%',
             stock: 13,
           ),
+
           ProductSizeModel(
-            id: 2,
-            unit: 'ml',
-            value: 50,
-            priceWithoutDiscount: '500',
-            priceWithDiscount: '350EGP',
-            discountPercentage: '18%',
-            stock: 13,
-          ),
-          ProductSizeModel(
-            id: 2,
+            id: "22",
             unit: 'ml',
             value: 50,
             priceWithoutDiscount: '500',

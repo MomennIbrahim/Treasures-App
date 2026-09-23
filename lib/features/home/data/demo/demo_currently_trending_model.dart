@@ -9,7 +9,7 @@ class DemoCurrentlyTrendingData {
     message: 'Currently Trending',
     products: [
       ProductItemModel(
-        id: 5,
+        id: "5",
         name: 'Bleu de Chanel',
         description: 'An elegant and fresh fragrance for men.',
         image:
@@ -25,16 +25,7 @@ class DemoCurrentlyTrendingData {
         isFavorite: false,
         sizes: [
           ProductSizeModel(
-            id: 1,
-            value: 30,
-            unit: 'ml',
-            priceWithDiscount: "800",
-            priceWithoutDiscount: "1000",
-            discountPercentage: "20%",
-            stock: 15,
-          ),
-          ProductSizeModel(
-            id: 2,
+            id: "2",
             value: 30,
             unit: 'ml',
             priceWithDiscount: "800",
@@ -43,19 +34,10 @@ class DemoCurrentlyTrendingData {
 
             stock: 15,
           ),
-          ProductSizeModel(
-            id: 3,
-            value: 30,
-            unit: 'ml',
-            priceWithDiscount: "800",
-            priceWithoutDiscount: "1000",
-            discountPercentage: "20%",
-            stock: 15,
-          ),
         ],
       ),
       ProductItemModel(
-        id: 6,
+        id: "6",
         name: 'YSL Y',
         description: 'A fresh and modern fragrance with a bold character.',
         image:
@@ -68,39 +50,11 @@ class DemoCurrentlyTrendingData {
         defaultDiscountPercentage: "35%",
         inStock: true,
         isFavorite: false,
-        sizes: [
-          ProductSizeModel(
-            id: 1,
-            value: 30,
-            unit: 'ml',
-            priceWithDiscount: "800",
-            priceWithoutDiscount: "1000",
-            discountPercentage: "20%",
-            stock: 15,
-          ),
-          ProductSizeModel(
-            id: 1,
-            value: 30,
-            unit: 'ml',
-            priceWithDiscount: "800",
-            priceWithoutDiscount: "1000",
-            discountPercentage: "20%",
-            stock: 15,
-          ),
-          ProductSizeModel(
-            id: 1,
-            value: 30,
-            unit: 'ml',
-            priceWithDiscount: "800",
-            priceWithoutDiscount: "1000",
-            discountPercentage: "20%",
-            stock: 15,
-          ),
-        ],
+        sizes: [],
         defaultSize: '50ml',
       ),
       ProductItemModel(
-        id: 7,
+        id: "7",
         defaultSize: '50ml',
         name: 'Armani Code',
         description: 'A sophisticated and warm fragrance.',
@@ -113,25 +67,7 @@ class DemoCurrentlyTrendingData {
         isFavorite: false,
         sizes: [
           ProductSizeModel(
-            id: 1,
-            value: 30,
-            unit: 'ml',
-            priceWithDiscount: "800",
-            priceWithoutDiscount: "1000",
-            discountPercentage: "20%",
-            stock: 15,
-          ),
-          ProductSizeModel(
-            id: 1,
-            value: 30,
-            unit: 'ml',
-            priceWithDiscount: "800",
-            priceWithoutDiscount: "1000",
-            discountPercentage: "20%",
-            stock: 15,
-          ),
-          ProductSizeModel(
-            id: 1,
+            id: "1",
             value: 30,
             unit: 'ml',
             priceWithDiscount: "800",
@@ -146,7 +82,7 @@ class DemoCurrentlyTrendingData {
       ),
       ProductItemModel(
         defaultSize: '50ml',
-        id: 8,
+        id: "8",
         name: 'Acqua di Gio',
         description: 'A fresh aquatic fragrance with a timeless character.',
         image:
@@ -158,25 +94,7 @@ class DemoCurrentlyTrendingData {
         isFavorite: false,
         sizes: [
           ProductSizeModel(
-            id: 1,
-            value: 30,
-            unit: 'ml',
-            priceWithDiscount: "800",
-            priceWithoutDiscount: "1000",
-            discountPercentage: "20%",
-            stock: 15,
-          ),
-          ProductSizeModel(
-            id: 1,
-            value: 30,
-            unit: 'ml',
-            priceWithDiscount: "800",
-            priceWithoutDiscount: "1000",
-            discountPercentage: "20%",
-            stock: 15,
-          ),
-          ProductSizeModel(
-            id: 1,
+            id: "1",
             value: 30,
             unit: 'ml',
             priceWithDiscount: "800",
