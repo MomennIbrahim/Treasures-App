@@ -24,7 +24,7 @@ class BestSellingItem extends StatelessWidget {
   });
 
   bool get _hasDiscount =>
-      product.discountPrice != null && product.discountPrice!.isNotEmpty;
+      product.defaultDiscountPrice != null && product.defaultDiscountPrice!.isNotEmpty;
 
   @override
   Widget build(BuildContext context) {
@@ -106,8 +106,8 @@ class BestSellingItem extends StatelessWidget {
                           ),
 
                           if (_hasDiscount &&
-                              product.discountPercentage != null &&
-                              product.discountPercentage!.isNotEmpty) ...[
+                              product.defaultDiscountPercentage != null &&
+                              product.defaultDiscountPercentage!.isNotEmpty) ...[
                             4.horizontalSpace,
                             Container(
                               padding: paddingSymmetric(4, 1),
@@ -118,7 +118,7 @@ class BestSellingItem extends StatelessWidget {
                                 borderRadius: AppRadius.br4,
                               ),
                               child: Text(
-                                '${product.discountPercentage}% OFF',
+                                '${product.defaultDiscountPercentage}% OFF',
                                 overflow: TextOverflow.ellipsis,
                                 maxLines: 1,
                                 style: AppTextStyles.text10Regular.copyWith(
@@ -154,7 +154,7 @@ class BestSellingItem extends StatelessWidget {
                           children: [
                             Flexible(
                               child: Text(
-                                '${product.discountPrice} L.E',
+                                '${product.defaultDiscountPrice} L.E',
                                 style: AppTextStyles.text12Bold.copyWith(
                                   color: AppColors.white,
                                 ),
@@ -167,7 +167,7 @@ class BestSellingItem extends StatelessWidget {
 
                             Flexible(
                               child: Text(
-                                '${product.price} L.E',
+                                '${product.defaultPrice} L.E',
                                 overflow: TextOverflow.ellipsis,
                                 maxLines: 1,
                                 style: AppTextStyles.text12Regular.copyWith(
@@ -185,7 +185,7 @@ class BestSellingItem extends StatelessWidget {
                       Padding(
                         padding: paddingHorizontal(8),
                         child: Text(
-                          '${product.price} L.E',
+                          '${product.defaultPrice} L.E',
                           style: AppTextStyles.text12Bold.copyWith(
                             color: AppColors.white,
                           ),

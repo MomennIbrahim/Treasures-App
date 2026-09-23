@@ -44,10 +44,13 @@ class CurrentlyTrendingItem extends StatelessWidget {
                   product.image,
                   height: 145,
                   width: double.infinity,
-                  borderRadius: AppRadius.br16,
+                  borderRadius: AppRadius.only(
+                    topLeft: const Radius.circular(12),
+                    bottomRight: const Radius.circular(12),
+                  ),
                 ),
 
-                if (product.discountPercentage!.isNotEmpty)
+                if (product.defaultDiscountPercentage?.isNotEmpty ?? false)
                   Positioned(
                     top: 4,
                     left: 4,
@@ -57,7 +60,7 @@ class CurrentlyTrendingItem extends StatelessWidget {
                           : AppColors.error700,
                       radius: 12.r,
                       child: Text(
-                        '${product.discountPercentage}%',
+                        '${product.defaultDiscountPercentage}%',
                         style: AppTextStyles.text10Bold,
                       ),
                     ),
@@ -86,7 +89,7 @@ class CurrentlyTrendingItem extends StatelessWidget {
                   Flexible(
                     flex: 2,
                     child: Text(
-                      '${product.discountPrice} L.E',
+                      '${product.defaultDiscountPrice}',
                       style: AppTextStyles.text12Bold,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
@@ -97,7 +100,7 @@ class CurrentlyTrendingItem extends StatelessWidget {
 
                   Flexible(
                     child: Text(
-                      '${product.price} L.E',
+                      product.defaultPrice,
                       overflow: TextOverflow.ellipsis,
                       maxLines: 1,
                       style: AppTextStyles.text12Regular.copyWith(

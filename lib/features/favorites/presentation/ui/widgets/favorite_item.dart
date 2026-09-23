@@ -1,4 +1,3 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
@@ -10,8 +9,6 @@ import 'package:konoz/core/theme/app_colors.dart';
 import 'package:konoz/core/theme/app_radius.dart';
 import 'package:konoz/core/theme/app_text_style.dart';
 import 'package:konoz/core/widgets/app_image.dart';
-import 'package:konoz/core/widgets/app_toast.dart';
-import 'package:konoz/generated/locale_keys.g.dart';
 
 class FavoriteItem extends StatelessWidget {
   final ProductItemModel product;
@@ -46,7 +43,7 @@ class FavoriteItem extends StatelessWidget {
                   borderRadius: AppRadius.br16,
                 ),
 
-                if (product.discountPercentage!.isNotEmpty)
+                if (product.defaultDiscountPercentage!.isNotEmpty)
                   Positioned(
                     top: 4,
                     left: 4,
@@ -56,7 +53,7 @@ class FavoriteItem extends StatelessWidget {
                           : AppColors.error700,
                       radius: 12.r,
                       child: Text(
-                        '${product.discountPercentage}%',
+                        '${product.defaultDiscountPercentage}',
                         style: AppTextStyles.text10Bold,
                       ),
                     ),
@@ -85,7 +82,7 @@ class FavoriteItem extends StatelessWidget {
                   Flexible(
                     flex: 2,
                     child: Text(
-                      '${product.discountPrice} L.E',
+                      '${product.defaultDiscountPrice}',
                       style: AppTextStyles.text12Bold,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
@@ -96,7 +93,7 @@ class FavoriteItem extends StatelessWidget {
 
                   Flexible(
                     child: Text(
-                      '${product.price} L.E',
+                      '${product.defaultDiscountPrice}',
                       overflow: TextOverflow.ellipsis,
                       maxLines: 1,
                       style: AppTextStyles.text12Regular.copyWith(
@@ -128,9 +125,7 @@ class FavoriteItem extends StatelessWidget {
                   ),
                   InkWell(
                     borderRadius: AppRadius.br48,
-                    onTap: () {
-                      
-                    },
+                    onTap: () {},
                     child: CircleAvatar(
                       backgroundColor: isLoading
                           ? Colors.transparent

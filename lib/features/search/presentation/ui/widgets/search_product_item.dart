@@ -22,9 +22,10 @@ class SearchProductItem extends StatelessWidget {
   });
 
   bool get _hasDiscount =>
-      product.discountPrice != null && product.discountPrice!.isNotEmpty;
+      product.defaultDiscountPrice != null && product.defaultDiscountPrice!.isNotEmpty;
 
   @override
+
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => context.push(Routes.productDetails),
@@ -93,7 +94,7 @@ class SearchProductItem extends StatelessWidget {
                     ),
                     2.verticalSpace,
                     Text(
-                      '${_hasDiscount ? product.discountPrice : product.price} L.E',
+                      '${_hasDiscount ? product.defaultDiscountPrice : product.defaultPrice} L.E',
                       style: AppTextStyles.text12Bold,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
@@ -101,7 +102,7 @@ class SearchProductItem extends StatelessWidget {
 
                     if (_hasDiscount)
                       Text(
-                        'menu price: ${product.price} L.E',
+                        'menu price: ${product.defaultPrice} EGP',
                         overflow: TextOverflow.ellipsis,
                         maxLines: 1,
                         style: AppTextStyles.text10Regular.copyWith(
@@ -135,7 +136,7 @@ class SearchProductItem extends StatelessWidget {
                           itemBuilder: (context, index) {
                             return Center(
                               child: Text(
-                                product.sizes[index].size,
+                                product.sizes[index].unit,
                                 style: AppTextStyles.text10Bold.copyWith(
                                   color: Colors.amber,
                                 ),

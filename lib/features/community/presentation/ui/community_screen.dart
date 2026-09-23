@@ -44,6 +44,7 @@ class CommunityScreen extends StatelessWidget {
               Text(
                 LocaleKeys.community_header_title.tr(),
                 style: AppTextStyles.text18Bold,
+                textAlign: TextAlign.center,
               ),
               8.verticalSpace,
               Text(

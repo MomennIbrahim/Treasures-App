@@ -89,17 +89,17 @@ class ProductSizeModel extends Equatable {
   final int id;
   final int value;
   final String unit;
-  final double price;
-  final double? oldPrice;
-  final double? discountPercentage;
+  final String priceWithDiscount;
+  final String? priceWithoutDiscount;
+  final String? discountPercentage;
   final int stock;
 
   const ProductSizeModel({
     required this.id,
     required this.value,
     required this.unit,
-    required this.price,
-    this.oldPrice,
+    required this.priceWithDiscount,
+    this.priceWithoutDiscount,
     this.discountPercentage,
     required this.stock,
   });
@@ -109,9 +109,10 @@ class ProductSizeModel extends Equatable {
       id: json['id'] as int,
       value: json['value'] as int,
       unit: json['unit'] as String? ?? 'ml',
-      price: (json['price'] as num).toDouble(),
-      oldPrice: (json['old_price'] as num?)?.toDouble(),
-      discountPercentage: (json['discount_percentage'] as num?)?.toDouble(),
+      priceWithDiscount: (json['price_without_discount'] as num).toString(),
+      priceWithoutDiscount: (json['price_without_discount'] as num?)
+          ?.toString(),
+      discountPercentage: (json['discount_percentage'] as num?)?.toString(),
       stock: json['stock'] as int? ?? 0,
     );
   }
@@ -121,8 +122,8 @@ class ProductSizeModel extends Equatable {
       'id': id,
       'value': value,
       'unit': unit,
-      'price': price,
-      'old_price': oldPrice,
+      'price': priceWithDiscount,
+      'old_price': priceWithoutDiscount,
       'discount_percentage': discountPercentage,
       'stock': stock,
     };
@@ -137,8 +138,8 @@ class ProductSizeModel extends Equatable {
     id,
     value,
     unit,
-    price,
-    oldPrice,
+    priceWithDiscount,
+    priceWithoutDiscount,
     discountPercentage,
     stock,
   ];
