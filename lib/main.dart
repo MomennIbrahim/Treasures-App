@@ -6,12 +6,16 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:konoz/core/di/dependency_injection.dart';
 import 'package:konoz/core/local_storage/secure_cache.dart';
 import 'package:konoz/treasures_app.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await EasyLocalization.ensureInitialized();
   await Firebase.initializeApp();
+  await Supabase.initialize(
+    url: 'https://supabase.com/dashboard/project/qudwqplkxtxnyzmlidga',
+  );
   await ScreenUtil.ensureScreenSize();
   await AppCache.cacheInit();
   await setupGetIt();

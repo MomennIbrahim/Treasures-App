@@ -72,9 +72,11 @@ dependencies:
   bloc: ^9.0.0
   flutter_bloc: ^9.1.1
 
-  # Firebase
+  # Database
   firebase_core: ^4.15.0
   cloud_firestore: ^6.10.0
+  supabase_flutter: ^2.17.2
+  
   
   # A Dart package that helps to implement value based equality without needing to explicitly override == and hashCode.
   equatable: ^2.1.0

@@ -5,7 +5,8 @@ import 'package:konoz/features/collection_products/presentation/ui/widgets/colle
 import 'package:konoz/features/collection_products/presentation/ui/widgets/tabs_section.dart';
 
 class CollectionProductsScreen extends StatefulWidget {
-  const CollectionProductsScreen({super.key});
+  final String collectionId;
+  const CollectionProductsScreen({super.key, required this.collectionId});
 
   @override
   State<CollectionProductsScreen> createState() =>
@@ -16,7 +17,7 @@ class _CollectionProductsScreenState extends State<CollectionProductsScreen> {
   @override
   void initState() {
     context.read<CollectionProductsCubit>().getCollectionProducts(
-      categoryId: 1,
+      collectionId: widget.collectionId,
     );
     super.initState();
   }

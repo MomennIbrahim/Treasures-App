@@ -145,7 +145,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                       child: Row(
                         children: [
                           Text(
-                            "${product.sizes[0].priceWithDiscount} L.E",
+                            "${product.sizes[0].discountPrice} L.E",
                             style: AppTextStyles.text16Bold,
                           ),
                           16.horizontalSpace,

@@ -11,9 +11,6 @@ import 'package:konoz/features/collection_products/presentation/ui/screens/colle
 import 'package:konoz/features/collections/presentation/controllers/collections/collections_cubit.dart';
 import 'package:konoz/features/collections/presentation/ui/screens/collectoins_screen.dart';
 import 'package:konoz/features/community/presentation/ui/community_screen.dart';
-import 'package:konoz/features/personal_data/presentation/controllers/addresses/addresses_cubit.dart';
-import 'package:konoz/features/personal_data/presentation/ui/screens/personal_data_screen.dart';
-import 'package:konoz/features/personal_data/presentation/ui/widgets/address_picker_screen.dart';
 import 'package:konoz/features/faq/presentation/ui/faq_screen.dart';
 import 'package:konoz/features/favorites/presentation/ui/screens/favorite_screen.dart';
 import 'package:konoz/features/home/presentation/controllers/banners_cubit/banners_cubit.dart';
@@ -23,6 +20,9 @@ import 'package:konoz/features/home/presentation/controllers/packages_cubit.dart
 import 'package:konoz/features/home/presentation/ui/screens/home_screen.dart';
 import 'package:konoz/features/layout/presentation/ui/screens/layout_screen.dart';
 import 'package:konoz/features/orders/presentation/ui/screens/orders_screen.dart';
+import 'package:konoz/features/personal_data/presentation/controllers/addresses/addresses_cubit.dart';
+import 'package:konoz/features/personal_data/presentation/ui/screens/personal_data_screen.dart';
+import 'package:konoz/features/personal_data/presentation/ui/widgets/address_picker_screen.dart';
 import 'package:konoz/features/product_details/presentation/controllers/product_details/product_details_cubit.dart';
 import 'package:konoz/features/product_details/presentation/ui/screens/product_details_screen.dart';
 import 'package:konoz/features/profile/presentation/ui/screens/profile_screen.dart';
@@ -93,20 +93,20 @@ class AppRouter {
                       );
                     },
                     routes: [
-                      GoRoute(
-                        path: Routes.searchResult,
-                        pageBuilder: (context, state) {
-                          return AppPageTransition.fade(
-                            state: state,
-                            child: BlocProvider(
-                              create: (context) =>
-                                  getIt.get<CollectionProductsCubit>()
-                                    ..getCollectionProducts(categoryId: 1),
-                              child: SearchProductsScreen(),
-                            ),
-                          );
-                        },
-                      ),
+                      // GoRoute(
+                      //   path: Routes.searchResult,
+                      //   pageBuilder: (context, state) {
+                      //     return AppPageTransition.fade(
+                      //       state: state,
+                      //       child: BlocProvider(
+                      //         create: (context) =>
+                      //             getIt.get<CollectionProductsCubit>()
+                      //               ..getCollectionProducts(collectionId: 1),
+                      //         child: SearchProductsScreen(),
+                      //       ),
+                      //     );
+                      //   },
+                      // ),
                     ],
                   ),
                 ],
@@ -126,11 +126,12 @@ class AppRouter {
               GoRoute(
                 path: Routes.collectionProducts,
                 pageBuilder: (context, state) {
+                  final collectionId = state.extra as String;
                   return AppPageTransition.fade(
                     state: state,
                     child: BlocProvider(
                       create: (context) => getIt.get<CollectionProductsCubit>(),
-                      child: CollectionProductsScreen(),
+                      child: CollectionProductsScreen(collectionId: collectionId,),
                     ),
                   );
                 },

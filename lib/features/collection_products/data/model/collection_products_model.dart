@@ -5,7 +5,7 @@ class CollectionProductsModel {
   final bool success;
   final String message;
   final List<ProductItemModel> products;
-  final PaginationModel pagination;
+  final PaginationModel? pagination;
 
   const CollectionProductsModel({
     required this.success,

@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:konoz/core/networking/api_service.dart';
+import 'package:konoz/features/collection_products/data/repo/collection_products_repo.dart';
+import 'package:konoz/features/collection_products/data/repo/collection_products_repo_implmentation.dart';
 import 'package:konoz/features/collection_products/presentation/controllers/collection_products/collection_products_cubit.dart';
 import 'package:konoz/features/collections/data/repo/collections_repo.dart';
 import 'package:konoz/features/collections/data/repo/collections_repo_implementation.dart';
@@ -52,9 +54,9 @@ Future<void> setupGetIt() async {
     () => ProductDetailsRepoImplementation(getIt<FirestoreService>()),
   );
 
-  // getIt.registerLazySingleton<CollectionProductsRepo>(
-  //   () => CollectionProductsRepoImplementation(getIt<FirestoreService>()),
-  // );
+  getIt.registerLazySingleton<CollectionProductsRepo>(
+    () => CollectionProductsRepoImplementation(getIt<FirestoreService>()),
+  );
   /*
   // Profile Repository
   getIt.registerLazySingleton<ProfileRepo>(
@@ -91,7 +93,7 @@ Future<void> setupGetIt() async {
 
   // Collection Products Cubit
   getIt.registerFactory<CollectionProductsCubit>(
-    () => CollectionProductsCubit(),
+    () => CollectionProductsCubit(getIt()),
   );
 
   // Address Cubit
