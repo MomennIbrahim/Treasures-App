@@ -89,15 +89,13 @@ class CurrentlyTrendingItem extends StatelessWidget {
                   Flexible(
                     flex: 2,
                     child: Text(
-                      '${product.defaultDiscountPrice}',
+                      '${product.defaultDiscountPrice} EGP',
                       style: AppTextStyles.text12Bold,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
                   ),
-
                   4.horizontalSpace,
-
                   Flexible(
                     child: Text(
                       product.defaultPrice,
@@ -146,14 +144,14 @@ class CurrentlyTrendingItem extends StatelessWidget {
                       backgroundColor: isLoading
                           ? Colors.transparent
                           : AppColors.primary.withValues(alpha: 0.9),
-                      radius: 12.r,
+                      radius: 14.r,
                       child: isLoading
                           ? null
                           : HugeIcon(
                               icon: HugeIcons.strokeRoundedShoppingBagAdd,
                               color: AppColors.white,
-                              size: 13.sp,
-                              strokeWidth: 2.5,
+                              size: 15.sp,
+                              strokeWidth: 2.0,
                             ),
                     ),
                   ),

@@ -14,6 +14,7 @@ class ProductItemModel {
   final String? defaultDiscountPercentage;
   final bool isFavorite;
   final List<ProductSizeModel> sizes;
+  final List<String> images;
 
   const ProductItemModel({
     required this.collectionId,
@@ -29,6 +30,7 @@ class ProductItemModel {
     this.defaultDiscountPercentage,
     required this.isFavorite,
     required this.sizes,
+    required this.images,
   });
 
   factory ProductItemModel.empty() {
@@ -45,6 +47,7 @@ class ProductItemModel {
       defaultPrice: '0',
       isFavorite: false,
       sizes: [],
+      images: [],
     );
   }
 
@@ -66,6 +69,7 @@ class ProductItemModel {
       sizes: (json['sizes'] as List<dynamic>? ?? [])
           .map((e) => ProductSizeModel.fromJson(e as Map<String, dynamic>))
           .toList(),
+      images: (json['images'] as List<dynamic>? ?? []).cast<String>(),
     );
   }
 
@@ -86,6 +90,7 @@ class ProductItemModel {
       'is_best_seller': true,
       'is_currently_trending': true,
       'sizes': sizes.map((e) => e.toJson()).toList(),
+      'images': images
     };
   }
 }

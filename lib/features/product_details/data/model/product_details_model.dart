@@ -122,7 +122,7 @@ class ProductSizeModel extends Equatable {
       'value': value,
       'unit': unit,
       'price': discountPrice,
-      'old_price': price,
+      'discount_price': price,
       'discount_percentage': discountPercentage,
       'stock': inStock,
     };

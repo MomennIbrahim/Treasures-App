@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:konoz/core/helper/app_padding.dart';
 import 'package:konoz/core/shared_model.dart/product_item_model.dart';
-import 'package:konoz/features/home/data/demo/demo_currently_trending_model.dart';
 import 'package:konoz/features/home/presentation/ui/widgets/currently_trending_item.dart';
 
 class CurrentlyTrendingListviewHorizontal extends StatelessWidget {
@@ -18,7 +17,7 @@ class CurrentlyTrendingListviewHorizontal extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final displayProducts = isLoading
-        ? DemoCurrentlyTrendingData.demo.products
+        ? List.generate(3, (_) => ProductItemModel.empty())
         : products;
 
     return SizedBox(

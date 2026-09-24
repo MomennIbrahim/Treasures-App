@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dartz/dartz.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:konoz/core/error/app_failure.dart';
@@ -103,6 +105,8 @@ class HomeRepoImplementation extends HomeRepo {
         message: 'Currently trending fetched successfully',
         products: products,
       );
+
+      log(products[0].images.toString());
 
       return Right(model);
     } on PostgrestException catch (e) {
