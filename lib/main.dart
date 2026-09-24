@@ -14,7 +14,8 @@ void main() async {
   await EasyLocalization.ensureInitialized();
   await Firebase.initializeApp();
   await Supabase.initialize(
-    url: 'https://supabase.com/dashboard/project/qudwqplkxtxnyzmlidga',
+    url: 'https://qudwqplkxtxnyzmlidga.supabase.co',
+    publishableKey: 'sb_publishable_nkIJXORFO2uNnridR-95Rg_N3PyvevM',
   );
   await ScreenUtil.ensureScreenSize();
   await AppCache.cacheInit();

@@ -1,8 +1,7 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:konoz/core/error/app_failure.dart';
-import 'package:konoz/core/networking/api_service.dart';
+import 'package:konoz/core/networking/supabase_db_service.dart';
 import 'package:konoz/core/shared_model.dart/product_item_model.dart';
 import 'package:konoz/features/home/data/model/banners_model.dart';
 import 'package:konoz/features/home/data/model/best_selling_model.dart';
@@ -10,16 +9,17 @@ import 'package:konoz/features/home/data/model/currently_trending_model.dart';
 import 'package:konoz/features/home/data/model/packages_model.dart';
 import 'package:konoz/features/home/data/repo/home_repo.dart';
 import 'package:konoz/generated/locale_keys.g.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class HomeRepoImplementation extends HomeRepo {
-  final FirestoreService _firestoreService;
+  final SupabaseDbService _dbService;
 
-  HomeRepoImplementation(this._firestoreService);
+  HomeRepoImplementation(this._dbService);
 
   @override
   Future<Either<AppFailure, BannersModel>> getBanners() async {
     try {
-      final data = await _firestoreService.getCollection(
+      final data = await _dbService.getCollection(
         path: 'banners',
         filters: [const QueryFilter(field: 'active', isEqualTo: true)],
       );
@@ -30,10 +30,12 @@ class HomeRepoImplementation extends HomeRepo {
         bannersData: banners,
       );
       return Right(model);
-    } on FirebaseException catch (e) {
+    } on PostgrestException catch (e) {
       return Left(
         RemoteServerFailure(
-          e.message ?? LocaleKeys.errors_errors_unexpected.tr(),
+          e.message.isNotEmpty
+              ? e.message
+              : LocaleKeys.errors_errors_unexpected.tr(),
         ),
       );
     } catch (e) {
@@ -46,10 +48,10 @@ class HomeRepoImplementation extends HomeRepo {
     int page = 1,
   }) async {
     try {
-      final data = await _firestoreService.getCollection(
+      final data = await _dbService.getCollection(
         path: 'products',
         filters: [const QueryFilter(field: 'is_best_seller', isEqualTo: true)],
-        //  orderByField: 'createdAt',
+        //  orderByField: 'created_at',
         descending: true,
       );
 
@@ -61,14 +63,16 @@ class HomeRepoImplementation extends HomeRepo {
         success: true,
         message: 'Best selling fetched successfully',
         products: products,
-        pagination: null, // شرح تحت
+        pagination: null,
       );
 
       return Right(model);
-    } on FirebaseException catch (e) {
+    } on PostgrestException catch (e) {
       return Left(
         RemoteServerFailure(
-          e.message ?? LocaleKeys.errors_errors_unexpected.tr(),
+          e.message.isNotEmpty
+              ? e.message
+              : LocaleKeys.errors_errors_unexpected.tr(),
         ),
       );
     } catch (e) {
@@ -81,12 +85,12 @@ class HomeRepoImplementation extends HomeRepo {
     int page = 1,
   }) async {
     try {
-      final data = await _firestoreService.getCollection(
+      final data = await _dbService.getCollection(
         path: 'products',
         filters: [
           const QueryFilter(field: 'is_currently_trending', isEqualTo: true),
         ],
-        //  orderByField: 'createdAt',
+        //  orderByField: 'created_at',
         descending: true,
       );
 
@@ -101,10 +105,12 @@ class HomeRepoImplementation extends HomeRepo {
       );
 
       return Right(model);
-    } on FirebaseException catch (e) {
+    } on PostgrestException catch (e) {
       return Left(
         RemoteServerFailure(
-          e.message ?? LocaleKeys.errors_errors_unexpected.tr(),
+          e.message.isNotEmpty
+              ? e.message
+              : LocaleKeys.errors_errors_unexpected.tr(),
         ),
       );
     } catch (e) {
@@ -115,12 +121,10 @@ class HomeRepoImplementation extends HomeRepo {
   @override
   Future<Either<AppFailure, PackagesModel>> getPackages({int page = 1}) async {
     try {
-      final data = await _firestoreService.getCollection(
+      final data = await _dbService.getCollection(
         path: 'packages',
         descending: true,
-        filters: [
-          const QueryFilter(field: 'is_available', isEqualTo: true),
-        ],
+        filters: [const QueryFilter(field: 'is_available', isEqualTo: true)],
       );
 
       final packages = data
@@ -134,10 +138,12 @@ class HomeRepoImplementation extends HomeRepo {
       );
 
       return Right(packagesModel);
-    } on FirebaseException catch (e) {
+    } on PostgrestException catch (e) {
       return Left(
         RemoteServerFailure(
-          e.message ?? LocaleKeys.errors_errors_unexpected.tr(),
+          e.message.isNotEmpty
+              ? e.message
+              : LocaleKeys.errors_errors_unexpected.tr(),
         ),
       );
     } catch (e) {

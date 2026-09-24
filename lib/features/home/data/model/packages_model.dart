@@ -37,7 +37,7 @@ class PackagesModel {
 }
 
 class PackageItemModel {
-  final String id;
+  final int id;
   final String name;
   final String description;
   final String image;
@@ -61,7 +61,7 @@ class PackageItemModel {
 
   factory PackageItemModel.empty() {
     return const PackageItemModel(
-      id: "0",
+      id: 0,
       name: 'Package Name',
       description: 'Package Description',
       image: 'https://via.placeholder.com/600x600',
@@ -74,7 +74,7 @@ class PackageItemModel {
   }
   factory PackageItemModel.fromJson(Map<String, dynamic> json) {
     return PackageItemModel(
-      id: json['id'] as String? ?? '',
+      id: json['id'] as int? ?? 0,
       name: json['name'] as String? ?? '',
       description: json['description'] as String? ?? '',
       image: json['image'] as String? ?? '',

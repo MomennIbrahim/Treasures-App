@@ -60,7 +60,7 @@ class PackageItem extends StatelessWidget {
 
                   2.verticalSpace,
                   Text(
-                    'Big Sale Up to ${package.discountPercentage}% Off on this package',
+                    'Big Sale Up to ${package.discountPercentage} Off on this package',
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                     style: AppTextStyles.text10Bold.copyWith(
