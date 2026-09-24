@@ -32,7 +32,9 @@ class _CollectionScreenState extends State<CollectionScreen> {
         if (state.isFailure) {
           AppToast.show(
             context,
-            message: "Something went wrong",
+            message:
+                state.failure?.getAllError() ??
+                LocaleKeys.errors_errors_unexpected.tr(),
             type: AppToastType.error,
           );
         }
@@ -48,7 +50,7 @@ class _CollectionScreenState extends State<CollectionScreen> {
 
         return Skeletonizer(
           enabled: isLoading,
-            effect: AppShimmer.effect(context),
+          effect: AppShimmer.effect(context),
           child: CustomScrollView(
             slivers: [
               SliverPadding(

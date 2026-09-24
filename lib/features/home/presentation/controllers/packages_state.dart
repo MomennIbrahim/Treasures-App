@@ -1,12 +1,6 @@
 part of 'packages_cubit.dart';
 
-enum PackagesStatus {
-  initial,
-  loading,
-  loadingMore,
-  success,
-  failure,
-}
+enum PackagesStatus { initial, loading, loadingMore, success, failure }
 
 extension PackagesStatusX on PackagesState {
   bool get isInitial => status == PackagesStatus.initial;
@@ -46,9 +40,5 @@ class PackagesState extends Equatable {
   }
 
   @override
-  List<Object?> get props => [
-        status,
-        packages,
-        failure,
-      ];
+  List<Object?> get props => [status, packages, failure];
 }

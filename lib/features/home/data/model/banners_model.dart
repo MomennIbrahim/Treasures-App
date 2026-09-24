@@ -27,23 +27,14 @@ class BannerData {
     required this.subtitle,
   });
 
-  static List<BannerData> emptyList() => [
-    BannerData(
+  static List<BannerData> emptyList() => List.generate(
+    3,
+    (_) => BannerData(
       image: 'asd.png',
       title: 'Fake Title',
       subtitle: 'Fake Subtitle',
     ),
-    BannerData(
-      image: 'asd.png',
-      title: 'Fake Title',
-      subtitle: 'Fake Subtitle',
-    ),
-    BannerData(
-      image: 'asd.png',
-      title: 'Fake Title',
-      subtitle: 'Fake Subtitle',
-    ),
-  ];
+  );
 
   factory BannerData.fromJson(Map<String, dynamic> json) {
     return BannerData(

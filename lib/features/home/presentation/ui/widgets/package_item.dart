@@ -50,9 +50,7 @@ class PackageItem extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                     style: AppTextStyles.text12Bold,
                   ),
-
                   5.verticalSpace,
-
                   Text(
                     '${package.discountPrice} L.E (${package.size})',
                     style: AppTextStyles.text14Bold.copyWith(

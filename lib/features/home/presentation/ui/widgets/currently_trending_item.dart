@@ -52,15 +52,15 @@ class CurrentlyTrendingItem extends StatelessWidget {
 
                 if (product.defaultDiscountPercentage?.isNotEmpty ?? false)
                   Positioned(
-                    top: 4,
-                    left: 4,
+                    top: 6,
+                    left: 6,
                     child: CircleAvatar(
                       backgroundColor: isLoading
                           ? Colors.transparent
                           : AppColors.error700,
-                      radius: 12.r,
+                      radius: 13.r,
                       child: Text(
-                        '${product.defaultDiscountPercentage}%',
+                        '${product.defaultDiscountPercentage}',
                         style: AppTextStyles.text10Bold,
                       ),
                     ),

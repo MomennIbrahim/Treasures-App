@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -5,6 +7,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:konoz/core/helper/app_padding.dart';
 import 'package:konoz/core/theme/app_shimmer.dart';
 import 'package:konoz/core/theme/app_text_style.dart';
+import 'package:konoz/core/widgets/app_toast.dart';
 import 'package:konoz/features/home/presentation/controllers/packages_cubit.dart';
 import 'package:konoz/features/home/presentation/ui/widgets/packages_list_view.dart';
 import 'package:konoz/generated/locale_keys.g.dart';
@@ -30,9 +33,14 @@ class _PackagesSectionState extends State<PackagesSection> {
       child: BlocConsumer<PackagesCubit, PackagesState>(
         listener: (context, state) {
           if (state.isFailure && state.failure != null) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text(state.failure!.getAllError())),
+            AppToast.show(
+              context,
+              message:
+                  state.failure?.getAllError() ??
+                  LocaleKeys.errors_errors_unexpected.tr(),
+              type: AppToastType.error,
             );
+            log(state.failure?.getAllError() ?? "");
           }
         },
         builder: (context, state) {
