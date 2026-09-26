@@ -1,5 +1,5 @@
 class CollectionsModel {
-  final String id;
+  final int id;
   final String name;
   final String description;
   final String image;
@@ -13,7 +13,7 @@ class CollectionsModel {
 
   factory CollectionsModel.fromJson(Map<String, dynamic> json) {
     return CollectionsModel(
-      id: json['id'] as String,
+      id: json['id'] as int,
       name: json['name'] as String,
       description: json['description'] as String,
       image: json['image'] as String,

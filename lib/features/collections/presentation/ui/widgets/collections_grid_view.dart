@@ -30,7 +30,7 @@ class CollectionsGridView extends StatelessWidget {
               ? collections.isNotEmpty
                     ? collections[index % collections.length]
                     : const CollectionsModel(
-                        id: "0",
+                        id: 1,
                         name: 'Collection',
                         description: '',
                         image:

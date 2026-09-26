@@ -15,7 +15,7 @@ class CollectionProductsCubit extends SafeCubit<CollectionProductsState> {
         const CollectionProductsState(status: CollectionProductsStatus.initial),
       );
 
-  Future<void> getCollectionProducts({required String collectionId}) async {
+  Future<void> getCollectionProducts({required int collectionId}) async {
     emit(state.copyWith(status: CollectionProductsStatus.loading));
     final failureOrCollectionProducts = await _collectionProductsRepo
         .getCollectionProducts(collectionId: collectionId);

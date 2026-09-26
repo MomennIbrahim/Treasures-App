@@ -13,8 +13,7 @@ class CollectionProductsRepoImplementation extends CollectionProductsRepo {
 
   @override
   Future<Either<AppFailure, CollectionProductsModel>> getCollectionProducts({
-    required String collectionId,
-    int page = 1,
+    required int collectionId,
   }) async {
     try {
       final response = await _firestoreService.getCollection(
