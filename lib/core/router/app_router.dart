@@ -126,7 +126,7 @@ class AppRouter {
               GoRoute(
                 path: Routes.collectionProducts,
                 pageBuilder: (context, state) {
-                  final collectionId = state.extra as int;
+                  final collectionId = state.extra as String;
                   return AppPageTransition.fade(
                     state: state,
                     child: BlocProvider(

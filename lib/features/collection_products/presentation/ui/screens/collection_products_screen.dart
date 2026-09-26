@@ -5,7 +5,7 @@ import 'package:konoz/features/collection_products/presentation/ui/widgets/colle
 import 'package:konoz/features/collection_products/presentation/ui/widgets/tabs_section.dart';
 
 class CollectionProductsScreen extends StatefulWidget {
-  final int collectionId;
+  final String collectionId;
   const CollectionProductsScreen({super.key, required this.collectionId});
 
   @override

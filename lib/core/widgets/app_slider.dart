@@ -113,10 +113,8 @@ class _Indicators extends StatelessWidget {
           width: isActive ? 22.w : 7.w,
           height: 7.h,
           decoration: BoxDecoration(
-            color: isActive
-                ? AppColors.primary
-                : AppColors.white.withValues(alpha: 0.35),
-            borderRadius: BorderRadius.circular(3.r),
+            color: isActive ? AppColors.primary : AppColors.neutral500,
+            borderRadius: BorderRadius.circular(5.r),
           ),
         );
       }),

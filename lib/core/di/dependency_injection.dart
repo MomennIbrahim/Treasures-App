@@ -61,7 +61,7 @@ Future<void> setupGetIt() async {
   );
 
   getIt.registerLazySingleton<CollectionProductsRepo>(
-    () => CollectionProductsRepoImplementation(getIt<FirestoreService>()),
+    () => CollectionProductsRepoImplementation(getIt<SupabaseDbService>()),
   );
   /*
   // Profile Repository

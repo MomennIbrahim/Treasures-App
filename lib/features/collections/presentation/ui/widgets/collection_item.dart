@@ -15,7 +15,7 @@ class CollectionItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => context.push(Routes.collectionProducts,extra: collection.id),
+      onTap: () => context.push(Routes.collectionProducts,extra: collection.id.toString()),
       child: ClipRRect(
         borderRadius: AppRadius.br8,
         child: SizedBox(

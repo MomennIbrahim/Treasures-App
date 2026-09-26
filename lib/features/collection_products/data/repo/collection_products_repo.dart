@@ -5,6 +5,6 @@ import 'package:konoz/features/collection_products/data/model/collection_product
 abstract class CollectionProductsRepo {
   // Get Collection Products by Category (paginated)
   Future<Either<AppFailure, CollectionProductsModel>> getCollectionProducts({
-    required int collectionId,
+    required String collectionId,
   });
 }

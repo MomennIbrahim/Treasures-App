@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:konoz/core/helper/app_padding.dart';
 import 'package:konoz/core/shared_model.dart/product_item_model.dart';
 import 'package:konoz/core/theme/app_shimmer.dart';
+import 'package:konoz/core/widgets/app_toast.dart';
 import 'package:konoz/features/collection_products/presentation/controllers/collection_products/collection_products_cubit.dart';
 import 'package:konoz/features/collection_products/presentation/ui/widgets/collection_product_item.dart';
 import 'package:skeletonizer/skeletonizer.dart';
@@ -14,7 +15,12 @@ class CollectionProductsList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<CollectionProductsCubit, CollectionProductsState>(
+    return BlocConsumer<CollectionProductsCubit, CollectionProductsState>(
+      listener: (context, state) {
+        if (state.isFailure && state.failure != null) {
+          AppToast.show(context, message: state.failure?.getAllError() ?? '');
+        }
+      },
       builder: (context, state) {
         final isLoading = state.isLoading;
 
