@@ -107,7 +107,7 @@ class _ProductInformationSectionState extends State<ProductInformationSection> {
         return DescriptionContent(key: key, product: widget.product);
 
       case 1:
-        return HowToUseContent(key: key, howToUse: widget.product.howToUse);
+        return HowToUseContent(key: key, steps: widget.product.howToUse);
 
       case 2:
         return NotesContent(key: key, notes: widget.product.notes);

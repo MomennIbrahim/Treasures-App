@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:equatable/equatable.dart';
 
 class ProductDetailsModel extends Equatable {
@@ -7,9 +9,10 @@ class ProductDetailsModel extends Equatable {
   final List<ProductSizeModel> sizes;
   final String longevity;
   final String sillage;
-  final double rate;
+  final String rate;
+  final String reviewCount;
   final String description;
-  final HowToUseModel? howToUse;
+  final List<String> howToUse;
   final FragranceNotesModel notes;
   final String details;
 
@@ -21,31 +24,86 @@ class ProductDetailsModel extends Equatable {
     required this.longevity,
     required this.sillage,
     required this.rate,
+    required this.reviewCount,
     required this.description,
-    this.howToUse,
+    required this.howToUse,
     required this.notes,
     required this.details,
   });
 
+  // Empty constructor
+  ProductDetailsModel.empty()
+    : id = 0,
+      name = 'Product name here',
+      images = const ['', ''],
+      reviewCount = "1",
+      sizes = const [
+        ProductSizeModel(
+          id: '0',
+          value: '100',
+          unit: 'ml',
+          discountPrice: '000',
+          price: '000',
+
+          discountPercentage: '0',
+          inStock: '1',
+        ),
+        ProductSizeModel(
+          id: '1',
+          value: '50',
+          unit: 'ml',
+          discountPrice: '000',
+          price: '000',
+          discountPercentage: '0',
+          inStock: '1',
+        ),
+      ],
+      longevity = 'Long lasting',
+      sillage = 'Moderate',
+      rate = "0",
+      description = 'Placeholder description text for the loading state',
+      howToUse = const [],
+      notes = FragranceNotesModel.empty(),
+      details = 'Placeholder details text for the loading state';
+
   factory ProductDetailsModel.fromJson(Map<String, dynamic> json) {
+    List<dynamic> asList(dynamic value) {
+      if (value is List) return value;
+      if (value is String && value.trim().isNotEmpty) {
+        try {
+          final decoded = jsonDecode(value);
+          if (decoded is List) return decoded;
+        } catch (_) {}
+      }
+      return [];
+    }
+
+    Map<String, dynamic> asMap(dynamic value) {
+      if (value is Map<String, dynamic>) return value;
+      if (value is String && value.trim().isNotEmpty) {
+        try {
+          final decoded = jsonDecode(value);
+          if (decoded is Map<String, dynamic>) return decoded;
+        } catch (_) {}
+      }
+      return {};
+    }
+
     return ProductDetailsModel(
-      id: json['id'] as int,
-      name: json['name'] as String,
-      images: List<String>.from(json['images'] ?? []),
-      sizes: (json['sizes'] as List<dynamic>? ?? [])
+      id: int.tryParse(json['id'].toString()) ?? 0,
+      name: json['name']?.toString() ?? '',
+      images: asList(json['images']).map((e) => e.toString()).toList(),
+      sizes: asList(json['sizes'])
           .map((e) => ProductSizeModel.fromJson(e as Map<String, dynamic>))
           .toList(),
-      longevity: json['longevity'] as String? ?? '',
-      sillage: json['sillage'] as String? ?? '',
-      rate: (json['rate'] as num?)?.toDouble() ?? 0,
-      description: json['description'] as String? ?? '',
-      howToUse: json['how_to_use'] != null
-          ? HowToUseModel.fromJson(json['how_to_use'] as Map<String, dynamic>)
-          : null,
-      notes: FragranceNotesModel.fromJson(
-        json['notes'] as Map<String, dynamic>? ?? {},
-      ),
-      details: json['details'] as String? ?? '',
+      longevity: json['longevity']?.toString() ?? '',
+      sillage: json['sillage']?.toString() ?? '',
+      rate: json['rating']?.toString() ?? '0',
+      reviewCount: json['review_count']?.toString() ?? '0',
+      description: json['description']?.toString() ?? '',
+      howToUse: asList(json['how_to_use']).map((e) => e.toString()).toList(),
+      notes: FragranceNotesModel.fromJson(asMap(json['notes'])),
+      details: json['details']?.toString() ?? '',
     );
   }
 
@@ -58,8 +116,9 @@ class ProductDetailsModel extends Equatable {
       'longevity': longevity,
       'sillage': sillage,
       'rate': rate,
+      'review_count': reviewCount,
       'description': description,
-      'how_to_use': howToUse?.toJson(),
+      'how_to_use': howToUse,
       'notes': notes.toJson(),
       'details': details,
     };
@@ -74,6 +133,7 @@ class ProductDetailsModel extends Equatable {
     longevity,
     sillage,
     rate,
+    reviewCount,
     description,
     howToUse,
     notes,
@@ -103,16 +163,15 @@ class ProductSizeModel extends Equatable {
     this.discountPercentage,
     required this.inStock,
   });
-
   factory ProductSizeModel.fromJson(Map<String, dynamic> json) {
     return ProductSizeModel(
-      id: json['id'] as String,
-      value: json['value'] as String,
-      unit: json['unit'] as String? ?? 'ml',
-      discountPrice: (json['discount_price']).toString(),
-      price: (json['price'])?.toString(),
-      discountPercentage: (json['discount_percentage'])?.toString(),
-      inStock: json['in_stock'] as String? ?? "0",
+      id: json['id'].toString(),
+      value: json['value'].toString(),
+      unit: json['unit']?.toString() ?? 'ml',
+      discountPrice: (json['discount_price'] ?? json['price'] ?? 0).toString(),
+      price: json['price']?.toString(),
+      discountPercentage: json['discount_percentage']?.toString(),
+      inStock: json['in_stock']?.toString() ?? '0',
     );
   }
 
@@ -121,16 +180,16 @@ class ProductSizeModel extends Equatable {
       'id': id,
       'value': value,
       'unit': unit,
-      'price': discountPrice,
-      'discount_price': price,
+      'price': price, // كانت متبدلة
+      'discount_price': discountPrice,
       'discount_percentage': discountPercentage,
-      'stock': inStock,
+      'in_stock': inStock, // كانت 'stock'
     };
   }
 
-  String get displayName => '$value $unit';
+  bool get isAvailable => (int.tryParse(inStock ?? '0') ?? 0) > 0;
 
-  bool get isAvailable => int.parse(inStock.toString()) > 0;
+  String get displayName => '$value $unit';
 
   @override
   List<Object?> get props => [
@@ -142,31 +201,6 @@ class ProductSizeModel extends Equatable {
     discountPercentage,
     inStock,
   ];
-}
-
-// ─────────────────────────────────────────────
-// How To Use
-// ─────────────────────────────────────────────
-
-class HowToUseModel extends Equatable {
-  final String title;
-  final List<String> steps;
-
-  const HowToUseModel({required this.title, required this.steps});
-
-  factory HowToUseModel.fromJson(Map<String, dynamic> json) {
-    return HowToUseModel(
-      title: json['title'] as String? ?? '',
-      steps: List<String>.from(json['steps'] ?? []),
-    );
-  }
-
-  Map<String, dynamic> toJson() {
-    return {'title': title, 'steps': steps};
-  }
-
-  @override
-  List<Object?> get props => [title, steps];
 }
 
 // ─────────────────────────────────────────────
@@ -183,6 +217,10 @@ class FragranceNotesModel extends Equatable {
     required this.heartNotes,
     required this.baseNotes,
   });
+
+  // Empty
+  factory FragranceNotesModel.empty() =>
+      const FragranceNotesModel(topNotes: [], heartNotes: [], baseNotes: []);
 
   factory FragranceNotesModel.fromJson(Map<String, dynamic> json) {
     return FragranceNotesModel(
@@ -227,11 +265,15 @@ class FragranceNoteModel extends Equatable {
 
   factory FragranceNoteModel.fromJson(Map<String, dynamic> json) {
     return FragranceNoteModel(
-      id: json['id'] as int,
-      name: json['name'] as String,
-      image: json['image'] as String? ?? '',
+      id: json['id'] as int? ?? 0,
+      name: json['name']?.toString() ?? '',
+      image: json['image']?.toString() ?? '',
     );
   }
+
+  // Empty
+  static FragranceNoteModel empty() =>
+      const FragranceNoteModel(id: 0, name: '', image: '');
 
   Map<String, dynamic> toJson() {
     return {'id': id, 'name': name, 'image': image};

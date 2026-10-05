@@ -59,7 +59,7 @@ Widget _buildNotesSection({
           HugeIcon(
             icon: HugeIcons.strokeRoundedNote04,
             size: 16.sp,
-            color: AppColors.white,
+            color: AppColors.primary,
           ),
           6.horizontalSpace,
           Text(title.tr(), style: AppTextStyles.text12Bold),

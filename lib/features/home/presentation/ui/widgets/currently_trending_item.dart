@@ -27,7 +27,10 @@ class CurrentlyTrendingItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     return GestureDetector(
-      onTap: () => context.push("${Routes.home}/${Routes.productDetails}"),
+      onTap: () => context.push(
+        "${Routes.home}/${Routes.productDetails}",
+        extra: product.id,
+      ),
       child: Container(
         width: 140.w,
         decoration: BoxDecoration(

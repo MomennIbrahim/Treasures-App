@@ -36,7 +36,7 @@ class SupabaseDbService {
   /// يجيب صف واحد بالـ id
   Future<Map<String, dynamic>?> getDocument({
     required String path,
-    required String id,
+    required int id,
   }) async {
     final response = await _client
         .from(path)

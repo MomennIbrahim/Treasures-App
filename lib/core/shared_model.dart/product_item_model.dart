@@ -1,6 +1,7 @@
 import 'package:konoz/features/product_details/data/model/product_details_model.dart';
 
 class ProductItemModel {
+  final int id;
   final String collectionId;
   final String name;
   final String description;
@@ -17,6 +18,7 @@ class ProductItemModel {
   final List<String> images;
 
   const ProductItemModel({
+    required this.id,
     required this.collectionId,
     required this.name,
     required this.description,
@@ -35,6 +37,7 @@ class ProductItemModel {
 
   factory ProductItemModel.empty() {
     return const ProductItemModel(
+      id: 0,
       collectionId: "1",
       name: 'placeholder name',
       description: 'placeholder description text here',
@@ -53,6 +56,7 @@ class ProductItemModel {
 
   factory ProductItemModel.fromJson(Map<String, dynamic> json) {
     return ProductItemModel(
+      id: json['id'] as int,
       collectionId: json['collection_id'] as String,
       name: json['name'] as String,
       description: json['description'] as String,
@@ -90,7 +94,7 @@ class ProductItemModel {
       'is_best_seller': true,
       'is_currently_trending': true,
       'sizes': sizes.map((e) => e.toJson()).toList(),
-      'images': images
+      'images': images,
     };
   }
 }

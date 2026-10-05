@@ -10,7 +10,7 @@ import 'package:konoz/core/theme/app_text_style.dart';
 import 'package:konoz/core/widgets/app_button.dart';
 import 'package:konoz/core/widgets/app_toast.dart';
 import 'package:konoz/core/widgets/custom_rating_widget.dart';
-import 'package:konoz/features/product_details/data/demo/demo_product_details_data.dart';
+import 'package:konoz/features/product_details/data/model/product_details_model.dart';
 import 'package:konoz/features/product_details/presentation/controllers/product_details/product_details_cubit.dart';
 import 'package:konoz/features/product_details/presentation/ui/widgets/product_images_and_sizing_section.dart';
 import 'package:konoz/features/product_details/presentation/ui/widgets/product_information_section.dart';
@@ -18,7 +18,8 @@ import 'package:konoz/generated/locale_keys.g.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class ProductDetailsScreen extends StatefulWidget {
-  const ProductDetailsScreen({super.key});
+  final int productId;
+  const ProductDetailsScreen({super.key, required this.productId});
 
   @override
   State<ProductDetailsScreen> createState() => _ProductDetailsScreenState();
@@ -28,8 +29,11 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   @override
   void initState() {
     super.initState();
-
-    context.read<ProductDetailsCubit>().getProductDetails(productId: 1);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<ProductDetailsCubit>().getProductDetails(
+        productId: widget.productId,
+      );
+    });
   }
 
   @override
@@ -49,7 +53,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
         builder: (context, state) {
           final isLoading = state.isLoading || state.isInitial;
 
-          final product = state.product ?? DemoProductDetailsData.product;
+          final product = state.product ?? ProductDetailsModel.empty();
 
           return Skeletonizer(
             enabled: isLoading,
@@ -80,14 +84,16 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                       Row(
                                         children: [
                                           CustomRatingWidget(
-                                            initialRating: product.rate,
+                                            initialRating: double.parse(
+                                              product.rate.toString(),
+                                            ),
                                           ),
                                           2.horizontalSpace,
                                           Flexible(
                                             child: FittedBox(
                                               fit: BoxFit.scaleDown,
                                               child: Text(
-                                                "${product.rate} | 1k ${LocaleKeys.product_details_reviews.tr()}",
+                                                "${product.rate} | ${product.reviewCount} ${LocaleKeys.product_details_reviews.tr()}",
                                                 style: AppTextStyles.text12Bold,
                                               ),
                                             ),
@@ -133,48 +139,78 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                   ],
                 ),
 
-                Positioned(
-                  bottom: 0,
-                  right: 16,
-                  left: 16,
-                  child: Container(
-                    padding: paddingVertical(8),
-                    decoration: BoxDecoration(color: colorScheme.onSecondary),
-                    child: SafeArea(
-                      top: false,
-                      child: Row(
-                        children: [
-                          Text(
-                            "${product.sizes[0].discountPrice} L.E",
-                            style: AppTextStyles.text16Bold,
-                          ),
-                          16.horizontalSpace,
-                          Expanded(
-                            child: AppButton(
-                              label: LocaleKeys.general_add_to_cart.tr(),
-                              onPressed: () {
-                                AppToast.show(
-                                  context,
-                                  message: LocaleKeys
-                                      .general_product_added_to_cart
-                                      .tr(),
-                                  type: AppToastType.success,
-                                  onTap: () {
-                                    context.go(Routes.cart);
-                                  },
-                                );
-                              },
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
+                _addToCartButtonAndPriceWidget(colorScheme, product, context),
               ],
             ),
           );
         },
+      ),
+    );
+  }
+
+  Positioned _addToCartButtonAndPriceWidget(
+    ColorScheme colorScheme,
+    ProductDetailsModel product,
+    BuildContext context,
+  ) {
+    return Positioned(
+      bottom: 0,
+      right: 16,
+      left: 16,
+      child: Container(
+        padding: paddingVertical(8),
+        decoration: BoxDecoration(color: colorScheme.onSecondary),
+        child: SafeArea(
+          top: false,
+          child: Row(
+            children: [
+              BlocBuilder<ProductDetailsCubit, ProductDetailsState>(
+                buildWhen: (previous, current) =>
+                    previous.selectedSize != current.selectedSize ||
+                    previous.product != current.product,
+                builder: (context, state) {
+                  final size = state.selectedSize ?? product.sizes.firstOrNull;
+                  final price = size?.discountPrice ?? size?.price ?? '--';
+
+                  return AnimatedSwitcher(
+                    duration: const Duration(milliseconds: 250),
+                    transitionBuilder: (child, animation) => FadeTransition(
+                      opacity: animation,
+                      child: SlideTransition(
+                        position: Tween<Offset>(
+                          begin: const Offset(0, 0.3),
+                          end: Offset.zero,
+                        ).animate(animation),
+                        child: child,
+                      ),
+                    ),
+                    child: Text(
+                      "$price L.E",
+                      key: ValueKey(price),
+                      style: AppTextStyles.text16Bold,
+                    ),
+                  );
+                },
+              ),
+              16.horizontalSpace,
+              Expanded(
+                child: AppButton(
+                  label: LocaleKeys.general_add_to_cart.tr(),
+                  onPressed: () {
+                    AppToast.show(
+                      context,
+                      message: LocaleKeys.general_product_added_to_cart.tr(),
+                      type: AppToastType.success,
+                      onTap: () {
+                        context.go(Routes.cart);
+                      },
+                    );
+                  },
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }

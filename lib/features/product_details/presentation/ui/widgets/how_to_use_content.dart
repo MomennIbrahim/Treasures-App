@@ -4,23 +4,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:konoz/core/theme/app_colors.dart';
 import 'package:konoz/core/theme/app_text_style.dart';
-import 'package:konoz/features/product_details/data/model/product_details_model.dart';
 import 'package:konoz/generated/locale_keys.g.dart';
 
 class HowToUseContent extends StatelessWidget {
-  final HowToUseModel? howToUse;
+  final List<String> steps;
 
-  const HowToUseContent({super.key, required this.howToUse});
+  const HowToUseContent({super.key, required this.steps});
 
   @override
   Widget build(BuildContext context) {
-    if (howToUse == null || howToUse!.steps.isEmpty) {
+    if (steps.isEmpty) {
       return const SizedBox.shrink();
     }
 
     return FadeInLeft(
       child: Column(
-        key: key,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
@@ -28,7 +26,7 @@ class HowToUseContent extends StatelessWidget {
             style: AppTextStyles.text16Bold,
           ),
           10.verticalSpace,
-          ...howToUse!.steps.asMap().entries.map((entry) {
+          ...steps.asMap().entries.map((entry) {
             return Padding(
               padding: EdgeInsets.only(bottom: 8.h),
               child: Row(
@@ -38,7 +36,7 @@ class HowToUseContent extends StatelessWidget {
                     width: 22.w,
                     height: 22.w,
                     alignment: Alignment.center,
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       color: AppColors.primary,
                       shape: BoxShape.circle,
                     ),

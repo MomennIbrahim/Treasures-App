@@ -26,7 +26,6 @@ import 'package:konoz/features/personal_data/presentation/ui/widgets/address_pic
 import 'package:konoz/features/product_details/presentation/controllers/product_details/product_details_cubit.dart';
 import 'package:konoz/features/product_details/presentation/ui/screens/product_details_screen.dart';
 import 'package:konoz/features/profile/presentation/ui/screens/profile_screen.dart';
-import 'package:konoz/features/search/presentation/ui/screens/search_products_screen.dart';
 import 'package:konoz/features/search/presentation/ui/screens/search_screen.dart';
 import 'package:konoz/features/settings/presentation/ui/screens/settings_screen.dart';
 
@@ -75,11 +74,12 @@ class AppRouter {
                   GoRoute(
                     path: Routes.productDetails,
                     pageBuilder: (context, state) {
+                      final productId = state.extra as int;
                       return AppPageTransition.fade(
                         state: state,
                         child: BlocProvider(
                           create: (context) => getIt.get<ProductDetailsCubit>(),
-                          child: ProductDetailsScreen(),
+                          child: ProductDetailsScreen(productId: productId),
                         ),
                       );
                     },
@@ -131,7 +131,9 @@ class AppRouter {
                     state: state,
                     child: BlocProvider(
                       create: (context) => getIt.get<CollectionProductsCubit>(),
-                      child: CollectionProductsScreen(collectionId: collectionId,),
+                      child: CollectionProductsScreen(
+                        collectionId: collectionId,
+                      ),
                     ),
                   );
                 },
@@ -139,11 +141,12 @@ class AppRouter {
                   GoRoute(
                     path: Routes.productDetails,
                     pageBuilder: (context, state) {
+                      final int productId = state.extra as int;
                       return AppPageTransition.fade(
                         state: state,
                         child: BlocProvider(
                           create: (context) => getIt.get<ProductDetailsCubit>(),
-                          child: ProductDetailsScreen(),
+                          child: ProductDetailsScreen(productId: productId),
                         ),
                       );
                     },

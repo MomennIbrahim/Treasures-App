@@ -1,41 +1,31 @@
 import 'package:dartz/dartz.dart';
-import 'package:dio/dio.dart';
 import 'package:konoz/core/error/app_failure.dart';
-import 'package:konoz/core/networking/api_service.dart';
-import 'package:konoz/features/product_details/data/demo/demo_product_details_data.dart';
+import 'package:konoz/core/networking/supabase_db_service.dart'; // عدّل المسار حسب مكان الملف
 import 'package:konoz/features/product_details/data/model/product_details_model.dart';
 import 'package:konoz/features/product_details/data/repo/product_details_repo.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class ProductDetailsRepoImplementation implements ProductDetailsRepo {
-  final FirestoreService _firestoreService;
-  ProductDetailsRepoImplementation(this._firestoreService);
+  final SupabaseDbService _dbService;
+  ProductDetailsRepoImplementation(this._dbService);
 
   @override
   Future<Either<AppFailure, ProductDetailsModel>> getProductDetails({
     required int productId,
   }) async {
     try {
-      // ============================
-      // Demo
-      // ============================
+      final data = await _dbService.getDocument(
+        path: 'products',
+        id: productId,
+      );
 
-      await Future.delayed(const Duration(seconds: 2));
+      if (data == null) return Left(RemoteServerFailure('Product not found'));
 
-      return const Right(DemoProductDetailsData.product);
+      final model = ProductDetailsModel.fromJson(data);
 
-      // ============================
-      // Real API
-      // ============================
-
-      // final response = await _apiService.getData(
-      //   endPoint: '${EndPoints.productDetails}/$productId',
-      // );
-
-      // final model = ProductDetailsModel.fromJson(response);
-
-      // return Right(model);
-    } on DioException catch (e) {
-      return Left(RemoteServerFailure.fromDioError(e));
+      return Right(model);
+    } on PostgrestException catch (e) {
+      return Left(RemoteServerFailure(e.message));
     } catch (e) {
       return Left(RemoteServerFailure(e.toString()));
     }
