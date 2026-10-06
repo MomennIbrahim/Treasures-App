@@ -21,8 +21,6 @@ class ConfirmLocationButton extends StatelessWidget {
     return showDialog<String>(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: Text(LocaleKeys.personal_data_address_title.tr()),
-        titleTextStyle: AppTextStyles.text14Bold,
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [

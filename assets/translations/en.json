@@ -4,7 +4,8 @@
         "search_hint": "Search for perfumery or fragrances...",
         "undo": "Undo",
         "show_details": "Show Details",
-        "product_added_to_cart" : "Product added to cart, Press to go to cart"
+        "product_added_to_cart" : "Product added to cart, Press to go to cart",
+        "out_of_stock": "Out of stock"
     },
 
     "layout": {

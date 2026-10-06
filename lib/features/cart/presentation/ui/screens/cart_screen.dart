@@ -8,8 +8,8 @@ import 'package:konoz/core/theme/app_colors.dart';
 import 'package:konoz/core/theme/app_text_style.dart';
 import 'package:konoz/core/widgets/app_button.dart';
 import 'package:konoz/core/widgets/app_text_rich.dart';
-import 'package:konoz/features/cart/ui/widgets/cart_items_list.dart';
-import 'package:konoz/features/cart/ui/widgets/summary_order_widget.dart';
+import 'package:konoz/features/cart/presentation/ui/widgets/cart_items_list.dart';
+import 'package:konoz/features/cart/presentation/ui/widgets/summary_order_widget.dart';
 import 'package:konoz/generated/locale_keys.g.dart';
 
 class CartScreen extends StatefulWidget {

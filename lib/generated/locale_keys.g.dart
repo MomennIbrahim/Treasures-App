@@ -8,6 +8,7 @@ abstract class  LocaleKeys {
   static const general_undo = 'general.undo';
   static const general_show_details = 'general.show_details';
   static const general_product_added_to_cart = 'general.product_added_to_cart';
+  static const general_out_of_stock = 'general.out_of_stock';
   static const general = 'general';
   static const layout_home = 'layout.home';
   static const layout_collections = 'layout.collections';

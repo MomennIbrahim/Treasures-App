@@ -4,6 +4,9 @@ import 'package:konoz/features/auth/data/repo/auth_repo.dart';
 import 'package:konoz/features/auth/data/repo/auth_repo_implmentation.dart';
 import 'package:konoz/features/auth/presentation/controllers/send_otp/send_otp_cubit.dart';
 import 'package:konoz/features/auth/presentation/controllers/verify_otp/verify_otp_cubit.dart';
+import 'package:konoz/features/cart/data/repo/cart_repo.dart';
+import 'package:konoz/features/cart/data/repo/cart_repo_implementation.dart';
+import 'package:konoz/features/cart/presentation/controller/cart/cart_cubit.dart';
 import 'package:konoz/features/collection_products/data/repo/collection_products_repo.dart';
 import 'package:konoz/features/collection_products/data/repo/collection_products_repo_implmentation.dart';
 import 'package:konoz/features/collection_products/presentation/controllers/collection_products/collection_products_cubit.dart';
@@ -70,6 +73,8 @@ Future<void> setupGetIt() async {
   getIt.registerLazySingleton<ProfileRepo>(
     () => ProfileRepoImplementation(getIt()),
   );
+  getIt.registerLazySingleton<CartRepo>(() => CartRepoImplementation(getIt()));
+
 
   //ــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــ
 
@@ -111,4 +116,7 @@ Future<void> setupGetIt() async {
 
   // Address Cubit
   getIt.registerFactory<AddressesCubit>(() => AddressesCubit());
+
+  // Cart Cubit
+  getIt.registerLazySingleton<CartCubit>(() => CartCubit(getIt()));
 }

@@ -57,12 +57,13 @@ class SupabaseDbService {
   /// يجيب كل الصفوف من جدول، مع فلاتر وترتيب اختياريين
   Future<List<Map<String, dynamic>>> getCollection({
     required String path, // اسم الجدول (table)
+    String columns = '*',
     List<QueryFilter>? filters,
     String? orderByField,
     bool descending = false,
     int? limit,
   }) async {
-    dynamic query = _client.from(path).select();
+    dynamic query = _client.from(path).select(columns);
 
     if (filters != null) {
       for (final filter in filters) {
@@ -86,10 +87,11 @@ class SupabaseDbService {
   Future<Map<String, dynamic>?> getDocument({
     required String path,
     required int id,
+    String columns = '*', // جديد
   }) async {
     final response = await _client
         .from(path)
-        .select()
+        .select(columns)
         .eq('id', id)
         .maybeSingle();
     return response;

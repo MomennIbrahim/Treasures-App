@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:konoz/core/di/dependency_injection.dart';
 import 'package:konoz/core/router/app_router.dart';
 import 'package:konoz/core/theme/app_theme_data.dart';
+import 'package:konoz/features/cart/presentation/controller/cart/cart_cubit.dart';
 import 'package:konoz/features/layout/presentation/controller/layout_cubit.dart';
 import 'package:konoz/features/profile/presentation/controllers/profile/profile_cubit.dart';
 
@@ -23,6 +24,7 @@ class TreasuresApp extends StatelessWidget {
           providers: [
             BlocProvider(create: (context) => LayoutCubit()),
             BlocProvider.value(value: getIt<ProfileCubit>()..getProfile()),
+            BlocProvider.value(value: getIt<CartCubit>()),
           ],
           child: BlocBuilder<LayoutCubit, LayoutState>(
             builder: (context, state) {

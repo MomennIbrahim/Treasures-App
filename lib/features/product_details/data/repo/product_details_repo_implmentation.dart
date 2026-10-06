@@ -16,6 +16,7 @@ class ProductDetailsRepoImplementation implements ProductDetailsRepo {
     try {
       final data = await _dbService.getDocument(
         path: 'products',
+        columns: '*, product_sizes(*)',
         id: productId,
       );
 

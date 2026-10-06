@@ -2,16 +2,14 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:go_router/go_router.dart';
 import 'package:konoz/core/helper/app_padding.dart';
-import 'package:konoz/core/router/routes.dart';
 import 'package:konoz/core/theme/app_shimmer.dart';
 import 'package:konoz/core/theme/app_text_style.dart';
-import 'package:konoz/core/widgets/app_button.dart';
 import 'package:konoz/core/widgets/app_toast.dart';
 import 'package:konoz/core/widgets/custom_rating_widget.dart';
 import 'package:konoz/features/product_details/data/model/product_details_model.dart';
 import 'package:konoz/features/product_details/presentation/controllers/product_details/product_details_cubit.dart';
+import 'package:konoz/features/product_details/presentation/ui/widgets/add_to_cart_button.dart';
 import 'package:konoz/features/product_details/presentation/ui/widgets/product_images_and_sizing_section.dart';
 import 'package:konoz/features/product_details/presentation/ui/widgets/product_information_section.dart';
 import 'package:konoz/generated/locale_keys.g.dart';
@@ -193,21 +191,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                 },
               ),
               16.horizontalSpace,
-              Expanded(
-                child: AppButton(
-                  label: LocaleKeys.general_add_to_cart.tr(),
-                  onPressed: () {
-                    AppToast.show(
-                      context,
-                      message: LocaleKeys.general_product_added_to_cart.tr(),
-                      type: AppToastType.success,
-                      onTap: () {
-                        context.go(Routes.cart);
-                      },
-                    );
-                  },
-                ),
-              ),
+              AddToCartButton(product: product),
             ],
           ),
         ),

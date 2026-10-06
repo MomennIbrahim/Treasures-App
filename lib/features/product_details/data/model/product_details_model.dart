@@ -2,6 +2,30 @@ import 'dart:convert';
 
 import 'package:equatable/equatable.dart';
 
+List<dynamic> _asList(dynamic value) {
+  if (value is List) return value;
+  if (value is String && value.trim().isNotEmpty) {
+    try {
+      final decoded = jsonDecode(value);
+      if (decoded is List) return decoded;
+    } catch (_) {}
+  }
+  return [];
+}
+
+Map<String, dynamic> _asMap(dynamic value) {
+  if (value is Map<String, dynamic>) return value;
+  if (value is String && value.trim().isNotEmpty) {
+    try {
+      final decoded = jsonDecode(value);
+      if (decoded is Map<String, dynamic>) return decoded;
+    } catch (_) {}
+  }
+  return {};
+}
+
+int _toInt(dynamic v) => int.tryParse(v.toString()) ?? 0;
+
 class ProductDetailsModel extends Equatable {
   final int id;
   final String name;
@@ -31,12 +55,11 @@ class ProductDetailsModel extends Equatable {
     required this.details,
   });
 
-  // Empty constructor
+  // Empty (للـ skeleton وقت التحميل فقط)
   ProductDetailsModel.empty()
     : id = 0,
       name = 'Product name here',
       images = const ['', ''],
-      reviewCount = "1",
       sizes = const [
         ProductSizeModel(
           id: '0',
@@ -44,7 +67,6 @@ class ProductDetailsModel extends Equatable {
           unit: 'ml',
           discountPrice: '000',
           price: '000',
-
           discountPercentage: '0',
           inStock: '1',
         ),
@@ -60,49 +82,37 @@ class ProductDetailsModel extends Equatable {
       ],
       longevity = 'Long lasting',
       sillage = 'Moderate',
-      rate = "0",
+      rate = '0',
+      reviewCount = '1',
       description = 'Placeholder description text for the loading state',
-      howToUse = const [],
+      howToUse = const ['Placeholder step one', 'Placeholder step two'],
       notes = FragranceNotesModel.empty(),
       details = 'Placeholder details text for the loading state';
 
   factory ProductDetailsModel.fromJson(Map<String, dynamic> json) {
-    List<dynamic> asList(dynamic value) {
-      if (value is List) return value;
-      if (value is String && value.trim().isNotEmpty) {
-        try {
-          final decoded = jsonDecode(value);
-          if (decoded is List) return decoded;
-        } catch (_) {}
-      }
-      return [];
-    }
+    // product_sizes (الجدول الجديد) وfallback لـ sizes القديمة لحد ما تمسحها
+    final rawSizes = _asList(json['product_sizes']).isNotEmpty
+        ? _asList(json['product_sizes'])
+        : _asList(json['sizes']);
 
-    Map<String, dynamic> asMap(dynamic value) {
-      if (value is Map<String, dynamic>) return value;
-      if (value is String && value.trim().isNotEmpty) {
-        try {
-          final decoded = jsonDecode(value);
-          if (decoded is Map<String, dynamic>) return decoded;
-        } catch (_) {}
-      }
-      return {};
-    }
+    final sizes =
+        rawSizes
+            .map((e) => ProductSizeModel.fromJson(e as Map<String, dynamic>))
+            .toList()
+          ..sort((a, b) => _toInt(a.id).compareTo(_toInt(b.id)));
 
     return ProductDetailsModel(
-      id: int.tryParse(json['id'].toString()) ?? 0,
+      id: _toInt(json['id']),
       name: json['name']?.toString() ?? '',
-      images: asList(json['images']).map((e) => e.toString()).toList(),
-      sizes: asList(json['sizes'])
-          .map((e) => ProductSizeModel.fromJson(e as Map<String, dynamic>))
-          .toList(),
+      images: _asList(json['images']).map((e) => e.toString()).toList(),
+      sizes: sizes,
       longevity: json['longevity']?.toString() ?? '',
       sillage: json['sillage']?.toString() ?? '',
       rate: json['rating']?.toString() ?? '0',
       reviewCount: json['review_count']?.toString() ?? '0',
       description: json['description']?.toString() ?? '',
-      howToUse: asList(json['how_to_use']).map((e) => e.toString()).toList(),
-      notes: FragranceNotesModel.fromJson(asMap(json['notes'])),
+      howToUse: _asList(json['how_to_use']).map((e) => e.toString()).toList(),
+      notes: FragranceNotesModel.fromJson(_asMap(json['notes'])),
       details: json['details']?.toString() ?? '',
     );
   }
@@ -112,10 +122,10 @@ class ProductDetailsModel extends Equatable {
       'id': id,
       'name': name,
       'images': images,
-      'sizes': sizes.map((e) => e.toJson()).toList(),
+      'product_sizes': sizes.map((e) => e.toJson()).toList(),
       'longevity': longevity,
       'sillage': sillage,
-      'rate': rate,
+      'rating': rate,
       'review_count': reviewCount,
       'description': description,
       'how_to_use': howToUse,
@@ -163,6 +173,7 @@ class ProductSizeModel extends Equatable {
     this.discountPercentage,
     required this.inStock,
   });
+
   factory ProductSizeModel.fromJson(Map<String, dynamic> json) {
     return ProductSizeModel(
       id: json['id'].toString(),
@@ -180,10 +191,10 @@ class ProductSizeModel extends Equatable {
       'id': id,
       'value': value,
       'unit': unit,
-      'price': price, // كانت متبدلة
+      'price': price,
       'discount_price': discountPrice,
       'discount_percentage': discountPercentage,
-      'in_stock': inStock, // كانت 'stock'
+      'in_stock': inStock,
     };
   }
 
@@ -218,21 +229,22 @@ class FragranceNotesModel extends Equatable {
     required this.baseNotes,
   });
 
-  // Empty
-  factory FragranceNotesModel.empty() =>
-      const FragranceNotesModel(topNotes: [], heartNotes: [], baseNotes: []);
+  // Empty (3 عناصر وهمية في كل قائمة عشان الـ skeleton يظهر)
+  factory FragranceNotesModel.empty() => FragranceNotesModel(
+    topNotes: List.filled(3, FragranceNoteModel.empty()),
+    heartNotes: List.filled(3, FragranceNoteModel.empty()),
+    baseNotes: List.filled(3, FragranceNoteModel.empty()),
+  );
 
   factory FragranceNotesModel.fromJson(Map<String, dynamic> json) {
+    List<FragranceNoteModel> parse(dynamic value) => _asList(value)
+        .map((e) => FragranceNoteModel.fromJson(e as Map<String, dynamic>))
+        .toList();
+
     return FragranceNotesModel(
-      topNotes: (json['top_notes'] as List<dynamic>? ?? [])
-          .map((e) => FragranceNoteModel.fromJson(e as Map<String, dynamic>))
-          .toList(),
-      heartNotes: (json['heart_notes'] as List<dynamic>? ?? [])
-          .map((e) => FragranceNoteModel.fromJson(e as Map<String, dynamic>))
-          .toList(),
-      baseNotes: (json['base_notes'] as List<dynamic>? ?? [])
-          .map((e) => FragranceNoteModel.fromJson(e as Map<String, dynamic>))
-          .toList(),
+      topNotes: parse(json['top_notes']),
+      heartNotes: parse(json['heart_notes']),
+      baseNotes: parse(json['base_notes']),
     );
   }
 
@@ -265,7 +277,7 @@ class FragranceNoteModel extends Equatable {
 
   factory FragranceNoteModel.fromJson(Map<String, dynamic> json) {
     return FragranceNoteModel(
-      id: json['id'] as int? ?? 0,
+      id: _toInt(json['id']),
       name: json['name']?.toString() ?? '',
       image: json['image']?.toString() ?? '',
     );
@@ -273,7 +285,7 @@ class FragranceNoteModel extends Equatable {
 
   // Empty
   static FragranceNoteModel empty() =>
-      const FragranceNoteModel(id: 0, name: '', image: '');
+      const FragranceNoteModel(id: 0, name: 'Note', image: '');
 
   Map<String, dynamic> toJson() {
     return {'id': id, 'name': name, 'image': image};

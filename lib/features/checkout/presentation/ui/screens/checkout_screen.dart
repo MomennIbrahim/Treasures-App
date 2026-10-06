@@ -8,7 +8,7 @@ import 'package:konoz/core/theme/app_colors.dart';
 import 'package:konoz/core/theme/app_text_style.dart';
 import 'package:konoz/core/widgets/app_button.dart';
 import 'package:konoz/core/widgets/show_blurred_confirmation_dialog.dart';
-import 'package:konoz/features/cart/ui/widgets/summary_order_widget.dart';
+import 'package:konoz/features/cart/presentation/ui/widgets/summary_order_widget.dart';
 import 'package:konoz/features/checkout/presentation/ui/widgets/address_card.dart';
 import 'package:konoz/features/checkout/presentation/ui/widgets/payment_methods.dart';
 import 'package:konoz/generated/locale_keys.g.dart';
