@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:konoz/core/helper/app_padding.dart';
-import 'package:konoz/features/profile/presentation/controllers/profile_cubit.dart';
+import 'package:konoz/features/profile/presentation/controllers/profile/profile_cubit.dart';
 import 'package:konoz/features/profile/presentation/ui/widgets/profile_tab_widget.dart';
 import 'package:konoz/features/profile/presentation/ui/widgets/user_info_section.dart';
 
@@ -27,18 +27,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       child: Padding(
         padding: paddingAll(16),
         child: CustomScrollView(
-          slivers: [
-            UserInfoSection(),
-            ProfileTabWidget(),
-            // 24.0.sliverHeight,
-            // if (Constance.userToken != null) ...[
-            //   AccountDashboardTilesWidget(),
-            //   24.0.sliverHeight,
-            //   MyAccountWidget(),
-            //   24.0.sliverHeight,
-            // ],
-            // SettingsWidget(),
-          ],
+          slivers: [UserInfoSection(), ProfileTabWidget()],
         ),
       ),
     );

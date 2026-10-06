@@ -170,8 +170,17 @@ class _AppTextFormFieldState extends State<AppTextFormField> {
 
     final firstChar = trimmed.characters.first;
 
-    return RegExp(r'[A-Za-z]').hasMatch(firstChar)
-        ? TextDirection.ltr
-        : TextDirection.rtl;
+    // English
+    if (RegExp(r'[A-Za-z]').hasMatch(firstChar)) {
+      return TextDirection.ltr;
+    }
+
+    // Numbers
+    if (RegExp(r'[0-9]').hasMatch(firstChar)) {
+      return TextDirection.ltr;
+    }
+
+    // Arabic / other RTL text
+    return TextDirection.rtl;
   }
 }

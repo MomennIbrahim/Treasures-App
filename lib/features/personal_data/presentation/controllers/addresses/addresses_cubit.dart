@@ -4,7 +4,6 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:konoz/core/cubits/safe_cubit.dart';
 import 'package:konoz/core/error/app_failure.dart';
 import 'package:konoz/core/services/location_service.dart';
-import 'package:konoz/features/personal_data/data/model/address_model.dart';
 
 part 'addresses_state.dart';
 

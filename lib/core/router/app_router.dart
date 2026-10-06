@@ -27,7 +27,6 @@ import 'package:konoz/features/personal_data/presentation/ui/screens/personal_da
 import 'package:konoz/features/personal_data/presentation/ui/widgets/address_picker_screen.dart';
 import 'package:konoz/features/product_details/presentation/controllers/product_details/product_details_cubit.dart';
 import 'package:konoz/features/product_details/presentation/ui/screens/product_details_screen.dart';
-import 'package:konoz/features/profile/presentation/controllers/profile_cubit.dart';
 import 'package:konoz/features/profile/presentation/ui/screens/profile_screen.dart';
 import 'package:konoz/features/search/presentation/ui/screens/search_screen.dart';
 import 'package:konoz/features/settings/presentation/controllers/logout/logout_cubit.dart';
@@ -191,10 +190,7 @@ class AppRouter {
                 path: Routes.profile,
                 pageBuilder: (context, state) => AppPageTransition.fade(
                   state: state,
-                  child: BlocProvider(
-                    create: (context) => getIt.get<ProfileCubit>(),
-                    child: ProfileScreen(),
-                  ),
+                  child: ProfileScreen(),
                 ),
                 routes: [
                   GoRoute(

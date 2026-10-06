@@ -1,134 +1,100 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hugeicons/hugeicons.dart';
 import 'package:konoz/core/helper/app_padding.dart';
+import 'package:konoz/core/theme/app_colors.dart';
 import 'package:konoz/core/theme/app_radius.dart';
 import 'package:konoz/core/theme/app_text_style.dart';
-import 'package:konoz/core/widgets/show_blurred_confirmation_dialog.dart';
+import 'package:konoz/features/profile/data/model/profile_model.dart';
+import 'package:konoz/generated/locale_keys.g.dart';
 
 class AddresItemWidget extends StatelessWidget {
-  const AddresItemWidget({super.key});
+  final AddressModel address;
+  final VoidCallback? onDelete;
+  final VoidCallback? onSetDefault;
 
-  Future<bool> _confirmDelete(BuildContext context) async {
-    bool confirmed = false;
-
-    await showBlurredConfirmationDialog(
-      context: context,
-      title: 'Delete Address',
-      message: 'Are you sure you want to delete this address?',
-      confirmText: 'Delete',
-      onConfirm: () {
-        confirmed = true;
-      },
-    );
-
-    return confirmed;
-  }
+  const AddresItemWidget({
+    super.key,
+    required this.address,
+    this.onDelete,
+    this.onSetDefault,
+  });
 
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
 
-    const bool isSelected = false;
-    const String title = 'Home';
-    const String address = 'Alexandria, Egypt';
-
-    return Dismissible(
-      key: const ValueKey('address-1'),
-      direction: DismissDirection.horizontal,
-      confirmDismiss: (_) => _confirmDelete(context),
-      onDismissed: (_) {},
-
-      background: _buildDeleteBackground(alignment: Alignment.centerLeft),
-
-      secondaryBackground: _buildDeleteBackground(
-        alignment: Alignment.centerRight,
-      ),
-
-      child: InkWell(
-        onTap: () {},
-        borderRadius: AppRadius.br12,
-        child: Container(
-          width: double.infinity,
-          margin: paddingVertical(4),
-          padding: paddingSymmetric(16, 14),
-          decoration: BoxDecoration(
-            color: isSelected
-                ? colorScheme.primary.withValues(alpha: 0.10)
-                : colorScheme.onSurface.withValues(alpha: 0.05),
-            borderRadius: AppRadius.br12,
-            border: Border.all(
-              color: isSelected
-                  ? colorScheme.primary
-                  : colorScheme.outline.withValues(alpha: 0.2),
-              width: isSelected ? 1.5 : 1,
-            ),
+    return GestureDetector(
+      onTap: address.isDefault ? null : onSetDefault,
+      child: Container(
+        padding: paddingSymmetric(12, 8),
+        decoration: BoxDecoration(
+          color: colorScheme.onSurface.withValues(alpha: 0.05),
+          borderRadius: AppRadius.br12,
+          border: Border.all(
+            color: address.isDefault ? AppColors.primary : Colors.transparent,
+            width: 1.5,
           ),
-          child: Row(
-            children: [
-              Container(
-                padding: paddingAll(8),
-                decoration: BoxDecoration(
-                  color: colorScheme.primary.withValues(alpha: 0.10),
-                  shape: BoxShape.circle,
-                ),
-                child: Icon(
-                  Icons.location_on_outlined,
-                  size: 18.sp,
-                  color: colorScheme.primary,
-                ),
-              ),
-
-              10.horizontalSpace,
-
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
+        ),
+        child: Row(
+          children: [
+            Icon(Icons.location_on_outlined, color: colorScheme.primary),
+            10.horizontalSpace,
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Flexible(
+                        child: Text(
+                          address.title,
+                          style: AppTextStyles.text12Bold,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                      if (address.isDefault) ...[
+                        6.horizontalSpace,
+                        Container(
+                          padding: paddingSymmetric(6, 2),
+                          decoration: BoxDecoration(
+                            color: AppColors.primary.withValues(alpha: 0.12),
+                            borderRadius: AppRadius.br8,
+                          ),
+                          child: Text(
+                            LocaleKeys.personal_data_default.tr(),
+                            style: AppTextStyles.text10Bold.copyWith(
+                              color: AppColors.primary,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ],
+                  ),
+                  if (address.fullAddress.isNotEmpty)
                     Text(
-                      title,
-                      style: AppTextStyles.text12Bold,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    4.verticalSpace,
-                    Text(
-                      address,
+                      address.fullAddress,
                       style: AppTextStyles.text12Regular,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
-                  ],
+                ],
+              ),
+            ),
+            if (onDelete != null)
+              IconButton(
+                onPressed: onDelete,
+                icon: HugeIcon(
+                  icon: HugeIcons.strokeRoundedDelete02,
+                  size: 16.sp,
+                  color: AppColors.error700,
                 ),
               ),
-
-              8.horizontalSpace,
-
-              Icon(
-                isSelected
-                    ? Icons.radio_button_checked
-                    : Icons.radio_button_off,
-                size: 20.sp,
-                color: isSelected
-                    ? colorScheme.primary
-                    : colorScheme.onSurface.withValues(alpha: 0.4),
-              ),
-            ],
-          ),
+          ],
         ),
       ),
-    );
-  }
-
-  Widget _buildDeleteBackground({required Alignment alignment}) {
-    return Container(
-      margin: paddingVertical(4),
-      padding: paddingSymmetric(20, 0),
-      alignment: alignment,
-      decoration: BoxDecoration(
-        color: Colors.red,
-        borderRadius: AppRadius.br12,
-      ),
-      child: const Icon(Icons.delete_outline, color: Colors.white),
     );
   }
 }

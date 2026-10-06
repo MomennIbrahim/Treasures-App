@@ -38,6 +38,33 @@
         "delivery_addresses": "Delivery Addresses"
     },
 
+    "personal_data": {
+      "name": "Name",
+      "email": "Email",
+      "phone": "Phone number",
+      "phone_hint": "Phone number can't be changed",
+      "save": "Save changes",
+      "addresses": "Addresses",
+      "add_address": "Add address",
+      "no_addresses": "No addresses yet",
+      "address_title": "Title (e.g. Home)",
+      "city": "City",
+      "area": "Area",
+      "street": "Street",
+      "building": "Building / Apartment",
+      "required": "This field is required",
+      "invalid_email": "Invalid email address",
+      "profile_updated": "Your data has been updated",
+      "address_added": "Address added",
+      "address_deleted": "Address deleted",
+      "delete_title": "Delete address",
+      "delete_message": "Are you sure you want to delete this address?",
+      "delete_confirm": "Delete",
+      "default": "Default",
+      "confirm_location": "Confirm location",
+      "default_updated": "Default address updated"
+    },
+
     "product_details":{
         "longevity": "Longevity",
         "sillage": "Sillage",

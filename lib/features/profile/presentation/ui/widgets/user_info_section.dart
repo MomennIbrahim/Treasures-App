@@ -8,7 +8,7 @@ import 'package:konoz/core/theme/app_text_style.dart';
 import 'package:konoz/core/widgets/app_image.dart';
 import 'package:konoz/core/widgets/app_toast.dart';
 import 'package:konoz/features/profile/data/model/profile_model.dart';
-import 'package:konoz/features/profile/presentation/controllers/profile_cubit.dart';
+import 'package:konoz/features/profile/presentation/controllers/profile/profile_cubit.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class UserInfoSection extends StatelessWidget {

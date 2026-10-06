@@ -9,13 +9,23 @@ import 'package:konoz/core/theme/app_radius.dart';
 import 'package:konoz/core/theme/app_text_style.dart';
 import 'package:konoz/core/widgets/app_button.dart';
 import 'package:konoz/features/personal_data/presentation/ui/widgets/addresses_list.dart';
+import 'package:konoz/features/profile/data/model/profile_model.dart';
 import 'package:konoz/generated/locale_keys.g.dart';
 
 class AddressesSection extends StatelessWidget {
-  const AddressesSection({super.key});
+  final List<AddressModel> addresses;
+  final bool isLoading;
+
+  const AddressesSection({
+    super.key,
+    required this.addresses,
+    required this.isLoading,
+  });
+
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -25,17 +35,21 @@ class AddressesSection extends StatelessWidget {
             color: colorScheme.onSurface,
           ),
         ),
-
         8.verticalSpace,
-        AddressesList(),
+
+        if (!isLoading && addresses.isEmpty)
+          _buildEmptyState(context)
+        else
+          AddressesList(addresses: addresses, isLoading: isLoading),
+
         8.verticalSpace,
         SafeArea(
           child: AppButton(
-            label: "Add New Address",
-            icon: Icon(Icons.add, color: AppColors.primary),
-            onPressed: () {
-              context.push(Routes.addressPicker);
-            },
+            label: LocaleKeys.personal_data_add_address.tr(),
+            icon: const Icon(Icons.add, color: AppColors.primary),
+            onPressed: isLoading
+                ? null
+                : () => context.push(Routes.addressPicker),
             variant: AppButtonVariant.outlined,
           ),
         ),
@@ -61,7 +75,7 @@ class AddressesSection extends StatelessWidget {
           ),
           8.verticalSpace,
           Text(
-            'No addresses found',
+            LocaleKeys.personal_data_no_addresses.tr(),
             style: AppTextStyles.text12Regular.copyWith(
               color: colorScheme.onSurface.withValues(alpha: 0.6),
             ),

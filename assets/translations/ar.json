@@ -39,6 +39,33 @@
         "delivery_addresses": "عناوين التوصيل"
     },
 
+   "personal_data": {
+      "name": "الاسم",
+      "email": "البريد الإلكتروني",
+      "phone": "رقم الهاتف",
+      "phone_hint": "لا يمكن تغيير رقم الهاتف",
+      "save": "حفظ التغييرات",
+      "addresses": "العناوين",
+      "add_address": "إضافة عنوان",
+      "no_addresses": "لا توجد عناوين بعد",
+      "address_title": "اسم العنوان (مثال: المنزل)",
+      "city": "المدينة",
+      "area": "المنطقة",
+      "street": "الشارع",
+      "building": "المبنى / الشقة",
+      "required": "هذا الحقل مطلوب",
+      "invalid_email": "البريد الإلكتروني غير صحيح",
+      "profile_updated": "تم تحديث بياناتك",
+      "address_added": "تمت إضافة العنوان",
+      "address_deleted": "تم حذف العنوان",
+      "delete_title": "حذف العنوان",
+      "delete_message": "هل أنت متأكد من حذف هذا العنوان؟",
+      "delete_confirm": "حذف",
+      "default": "الأفتراضي",
+      "confirm_location": "تأكيد العنوان",
+      "default_updated": "تم تحديث عنوانك الافتراضي"
+    },
+
     "product_details":{
         "longevity": "الثبات",
         "sillage": "الفوحان",

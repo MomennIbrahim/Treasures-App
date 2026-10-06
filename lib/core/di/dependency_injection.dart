@@ -23,7 +23,7 @@ import 'package:konoz/features/product_details/data/repo/product_details_repo_im
 import 'package:konoz/features/product_details/presentation/controllers/product_details/product_details_cubit.dart';
 import 'package:konoz/features/profile/data/repo/profile_repo.dart';
 import 'package:konoz/features/profile/data/repo/profile_repo_implementation.dart';
-import 'package:konoz/features/profile/presentation/controllers/profile_cubit.dart';
+import 'package:konoz/features/profile/presentation/controllers/profile/profile_cubit.dart';
 import 'package:konoz/features/settings/presentation/controllers/logout/logout_cubit.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -107,7 +107,7 @@ Future<void> setupGetIt() async {
     () => CollectionProductsCubit(getIt()),
   );
 
-  getIt.registerFactory<ProfileCubit>(() => ProfileCubit(getIt()));
+  getIt.registerLazySingleton<ProfileCubit>(() => ProfileCubit(getIt()));
 
   // Address Cubit
   getIt.registerFactory<AddressesCubit>(() => AddressesCubit());
