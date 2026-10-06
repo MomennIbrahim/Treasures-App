@@ -1,110 +1,68 @@
- 
 import 'dart:convert';
 
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-class AppCache {
-  static late SharedPreferences sharedPreferences;
+class SecureCache {
+  static AndroidOptions getAndroidOptions() =>
+      const AndroidOptions(resetOnError: true);
+  static IOSOptions getIOSOptions() =>
+      const IOSOptions(accessibility: KeychainAccessibility.first_unlock);
 
-  static Future<void> cacheInit() async {
-    sharedPreferences = await SharedPreferences.getInstance();
+  static late FlutterSecureStorage flutterSecureStorage;
+
+  static void secureCacheInit() {
+    flutterSecureStorage = FlutterSecureStorage(
+      aOptions: getAndroidOptions(),
+      iOptions: getIOSOptions(),
+    );
   }
 
-  // For simple values
-  static Future<bool> setData({
+  // For simple string values
+  static Future<void> setData({
     required String key,
     required dynamic value,
   }) async {
-    if (value is String) {
-      return await sharedPreferences.setString(key, value);
-    }
-
-    if (value is int) {
-      return await sharedPreferences.setInt(key, value);
-    }
-
-    if (value is double) {
-      return await sharedPreferences.setDouble(key, value);
-    }
-
-    if (value is bool) {
-      return await sharedPreferences.setBool(key, value);
-    }
-
-    throw ArgumentError(
-      'Unsupported value type: ${value.runtimeType}',
+    return await flutterSecureStorage.write(
+      key: key,
+      value: value.toString(),
+      iOptions: const IOSOptions(
+        accessibility: KeychainAccessibility.first_unlock,
+      ),
     );
   }
 
   // For complex objects (Map, List, etc.)
-  static Future<bool> setJsonData({
+  static Future<void> setJsonData({
     required String key,
     required dynamic jsonData,
   }) async {
     final jsonString = jsonEncode(jsonData);
-
-    return await sharedPreferences.setString(
-      key,
-      jsonString,
+    return await flutterSecureStorage.write(
+      key: key,
+      value: jsonString,
+      iOptions: const IOSOptions(
+        accessibility: KeychainAccessibility.first_unlock,
+      ),
     );
   }
 
-  // Get simple String value
-  static String? getData({
-    required String key,
-  }) {
-    return sharedPreferences.getString(key);
+  static Future<String?> getData({required String key}) async {
+    return await flutterSecureStorage.read(key: key);
   }
 
   // Get and decode JSON data
-  static dynamic getJsonData({
-    required String key,
-  }) {
-    final jsonString = sharedPreferences.getString(key);
-
+  static Future<dynamic> getJsonData({required String key}) async {
+    final jsonString = await flutterSecureStorage.read(key: key);
     if (jsonString == null) return null;
-
     return jsonDecode(jsonString);
   }
 
-  // Get int
-  static int? getInt({
-    required String key,
-  }) {
-    return sharedPreferences.getInt(key);
+  static Future removeData({required String key}) async {
+    return await flutterSecureStorage.delete(key: key);
   }
 
-  // Get double
-  static double? getDouble({
-    required String key,
-  }) {
-    return sharedPreferences.getDouble(key);
-  }
-
-  // Get bool
-  static bool? getBool({
-    required String key,
-  }) {
-    return sharedPreferences.getBool(key);
-  }
-
-  // Check if key exists
-  static bool containsKey({
-    required String key,
-  }) {
-    return sharedPreferences.containsKey(key);
-  }
-
-  // Remove specific data
-  static Future<bool> removeData({
-    required String key,
-  }) async {
-    return await sharedPreferences.remove(key);
-  }
-
-  // Remove all cached data
-  static Future<bool> removeAllData() async {
-    return await sharedPreferences.clear();
+  static Future removeAllData() async {
+    // Fixed: removed unused parameter
+    return await flutterSecureStorage.deleteAll();
   }
 }
- 

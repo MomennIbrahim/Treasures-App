@@ -6,6 +6,7 @@
         "show_details": "اظهار التفاصيل",
         "product_added_to_cart" : "تمت إضافة المنتج إلى عربة التسوق، اضغط للانتقال إلى العربة"
     },
+     
     "layout": {
         "home": "الرئيسية",
         "collections": "الفئات",
@@ -66,7 +67,14 @@
     "errors_timeout": "انتهت مهلة الاتصال. حاول مرة أخرى.",
     "errors_no_internet": "لا يوجد اتصال بالإنترنت. يرجى التحقق من اتصالك.",
     "errors_unexpected": "حدث خطأ غير متوقع. حاول مرة أخرى.",
-    "errors_internal_server_error": "حدث خطأ في الخادم. حاول مرة أخرى لاحقًا."
+    "errors_internal_server_error": "حدث خطأ في الخادم. حاول مرة أخرى لاحقًا.",
+    "invalid_otp": "الكود غير صحيح أو منتهي",
+    "too_many_requests": "محاولات كتير، حاول بعد شوية",
+    "invalid_phone": "رقم الهاتف غير صحيح",
+    "sms_failed": "تعذر إرسال الرسالة، حاول مرة أخرى",
+    "unauthorized": "ليس لديك صلاحية",
+    "already_exists": "هذه البيانات موجودة بالفعل",
+    "not_found": "غير موجود"
   },
 
   "validation": {
@@ -123,7 +131,12 @@
     "login": "تسجيل الدخول",
     "or_login_with": "أو سجل الدخول باستخدام",
     "phone_required": "من فضلك أدخل رقم الهاتف",
-    "phone_invalid": "رقم الهاتف غير صحيح"
+    "phone_invalid": "رقم الهاتف غير صحيح",
+    "phone_unavailable": "نحن في فترة الاختبار توجه الي صاحب التطبيق لاتاحة رقم للتسجيل",
+    "otp_title_normal": "أدخل رمز التحقق ",
+    "otp_title_action": "للتأكيد ",
+    "otp_subtitle": "على رقم هاتفك 🔒",
+    "otp_description": "تم إرسال رمز تحقق لمرة واحدة (OTP) إلى رقم هاتفك"
   },
 
   "community": {

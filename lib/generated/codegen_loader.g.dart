@@ -47,7 +47,8 @@ class CodegenLoader extends AssetLoader{
     "community": "Community",
     "settings": "Settings",
     "help_hint": "Fell free to Ask, We Ready to Help",
-    "logout": "Logout"
+    "logout": "Logout",
+    "delivery_addresses": "Delivery Addresses"
   },
   "product_details": {
     "longevity": "Longevity",
@@ -75,7 +76,14 @@ class CodegenLoader extends AssetLoader{
     "errors_timeout": "Connection timed out. Please try again.",
     "errors_no_internet": "No internet connection. Please check your connection.",
     "errors_unexpected": "An unexpected error occurred. Please try again.",
-    "errors_internal_server_error": "Internal server error. Please try again later."
+    "errors_internal_server_error": "Internal server error. Please try again later.",
+    "invalid_otp": "The code is incorrect or has expired",
+    "too_many_requests": "Too many attempts, please try again later",
+    "invalid_phone": "The phone number is invalid",
+    "sms_failed": "Couldn't send the message, please try again",
+    "unauthorized": "You don't have permission",
+    "already_exists": "This data already exists",
+    "not_found": "Not found"
   },
   "validation": {
     "please_enter_phone": "Please enter phone",
@@ -125,7 +133,12 @@ class CodegenLoader extends AssetLoader{
     "login": "Login",
     "or_login_with": "Or Login with",
     "phone_required": "Please enter your phone number",
-    "phone_invalid": "Invalid phone number"
+    "phone_invalid": "Invalid phone number",
+    "phone_unavailable": "We are currently in the testing phase; please contact the app owner to obtain a registration number.",
+    "otp_title_normal": "Enter OTP to ",
+    "otp_title_action": "Verify ",
+    "otp_subtitle": "Your Phone Number 🔒",
+    "otp_description": "A one-time password (OTP) has been sent to your phone number"
   },
   "community": {
     "app_bar_title": "Our Community",
@@ -211,7 +224,8 @@ static const Map<String,dynamic> _ar = {
     "community": "المجتمع",
     "settings": "الإعدادات",
     "help_hint": "لا تتردد في السؤال، نحن مستعدون لمساعدتك",
-    "logout": "تسجيل الخروج"
+    "logout": "تسجيل الخروج",
+    "delivery_addresses": "عناوين التوصيل"
   },
   "product_details": {
     "longevity": "الثبات",
@@ -239,7 +253,14 @@ static const Map<String,dynamic> _ar = {
     "errors_timeout": "انتهت مهلة الاتصال. حاول مرة أخرى.",
     "errors_no_internet": "لا يوجد اتصال بالإنترنت. يرجى التحقق من اتصالك.",
     "errors_unexpected": "حدث خطأ غير متوقع. حاول مرة أخرى.",
-    "errors_internal_server_error": "حدث خطأ في الخادم. حاول مرة أخرى لاحقًا."
+    "errors_internal_server_error": "حدث خطأ في الخادم. حاول مرة أخرى لاحقًا.",
+    "invalid_otp": "الكود غير صحيح أو منتهي",
+    "too_many_requests": "محاولات كتير، حاول بعد شوية",
+    "invalid_phone": "رقم الهاتف غير صحيح",
+    "sms_failed": "تعذر إرسال الرسالة، حاول مرة أخرى",
+    "unauthorized": "ليس لديك صلاحية",
+    "already_exists": "هذه البيانات موجودة بالفعل",
+    "not_found": "غير موجود"
   },
   "validation": {
     "please_enter_phone": "من فضلك ادخل رقم الهاتف",
@@ -289,7 +310,12 @@ static const Map<String,dynamic> _ar = {
     "login": "تسجيل الدخول",
     "or_login_with": "أو سجل الدخول باستخدام",
     "phone_required": "من فضلك أدخل رقم الهاتف",
-    "phone_invalid": "رقم الهاتف غير صحيح"
+    "phone_invalid": "رقم الهاتف غير صحيح",
+    "phone_unavailable": "نحن في فترة الاختبار توجه الي صاحب التطبيق لاتاحة رقم للتسجيل",
+    "otp_title_normal": "أدخل رمز التحقق ",
+    "otp_title_action": "للتأكيد ",
+    "otp_subtitle": "على رقم هاتفك 🔒",
+    "otp_description": "تم إرسال رمز تحقق لمرة واحدة (OTP) إلى رقم هاتفك"
   },
   "community": {
     "app_bar_title": "مجتمعنا",

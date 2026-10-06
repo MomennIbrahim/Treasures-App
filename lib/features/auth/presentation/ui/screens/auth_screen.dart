@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
@@ -8,10 +9,12 @@ import 'package:konoz/core/router/routes.dart';
 import 'package:konoz/core/theme/app_colors.dart';
 import 'package:konoz/core/theme/app_radius.dart';
 import 'package:konoz/core/theme/app_text_style.dart';
-import 'package:konoz/core/widgets/app_button.dart';
 import 'package:konoz/core/widgets/app_image.dart';
 import 'package:konoz/core/widgets/app_text_rich.dart';
 import 'package:konoz/features/auth/presentation/ui/widgets/auth_form.dart';
+import 'package:konoz/features/auth/presentation/ui/widgets/login_button.dart';
+import 'package:konoz/features/auth/presentation/ui/widgets/send_otp_bloc_listener.dart';
+import 'package:konoz/generated/locale_keys.g.dart';
 
 class AuthScreen extends StatefulWidget {
   const AuthScreen({super.key});
@@ -22,11 +25,20 @@ class AuthScreen extends StatefulWidget {
 
 class _AuthScreenState extends State<AuthScreen> {
   late final GlobalKey<FormState> _formKey;
+  late final TextEditingController _phoneController;
 
   @override
   void initState() {
     _formKey = GlobalKey<FormState>();
+    _phoneController = TextEditingController();
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _formKey.currentState?.dispose();
+    _phoneController.dispose();
+    super.dispose();
   }
 
   @override
@@ -69,19 +81,14 @@ class _AuthScreenState extends State<AuthScreen> {
                 style: AppTextStyles.text12Regular,
               ),
               48.verticalSpace,
-              AuthForm(formKey: _formKey),
+              AuthForm(formKey: _formKey, phoneController: _phoneController),
               48.verticalSpace,
-              AppButton(
-                label: "Login",
-                borderRadius: AppRadius.br8,
-                onPressed: () {
-                  if (_formKey.currentState!.validate()) {
-                    context.push(Routes.otp);
-                  }
-                },
-              ),
+              LoginButton(formKey: _formKey, phoneController: _phoneController),
               24.verticalSpace,
-              Text("Or Login with"),
+              Text(
+                LocaleKeys.auth_or_login_with.tr(),
+                style: AppTextStyles.text12Regular,
+              ),
               InkWell(
                 onTap: () => context.go(Routes.home),
                 child: Container(
@@ -98,6 +105,7 @@ class _AuthScreenState extends State<AuthScreen> {
                   ),
                 ),
               ),
+              SendOtpBlocListener(),
             ],
           ),
         ),

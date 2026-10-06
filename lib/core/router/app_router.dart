@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:konoz/core/di/dependency_injection.dart';
+import 'package:konoz/features/auth/presentation/controllers/send_otp/send_otp_cubit.dart';
+import 'package:konoz/features/auth/presentation/controllers/verify_otp/verify_otp_cubit.dart';
 import 'package:konoz/features/auth/presentation/ui/screens/auth_screen.dart';
 import 'package:konoz/features/auth/presentation/ui/screens/otp_screen.dart';
 import 'package:konoz/features/cart/ui/screens/cart_screen.dart';
@@ -27,25 +29,42 @@ import 'package:konoz/features/product_details/presentation/controllers/product_
 import 'package:konoz/features/product_details/presentation/ui/screens/product_details_screen.dart';
 import 'package:konoz/features/profile/presentation/ui/screens/profile_screen.dart';
 import 'package:konoz/features/search/presentation/ui/screens/search_screen.dart';
+import 'package:konoz/features/settings/presentation/controllers/logout/logout_cubit.dart';
 import 'package:konoz/features/settings/presentation/ui/screens/settings_screen.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 import 'routes.dart';
 
 class AppRouter {
   static final GoRouter router = GoRouter(
-    initialLocation: Routes.auth,
+    initialLocation: getIt<SupabaseClient>().auth.currentSession != null
+        ? Routes.home
+        : Routes.auth,
     routes: [
       // Auth Routes
       GoRoute(
         path: Routes.auth,
         pageBuilder: (context, state) {
-          return AppPageTransition.fade(state: state, child: AuthScreen());
+          return AppPageTransition.fade(
+            state: state,
+            child: BlocProvider(
+              create: (context) => getIt.get<SendOtpCubit>(),
+              child: AuthScreen(),
+            ),
+          );
         },
       ),
       GoRoute(
         path: Routes.otp,
         pageBuilder: (context, state) {
-          return AppPageTransition.fade(state: state, child: OtpScreen());
+          final phone = state.extra as String;
+          return AppPageTransition.fade(
+            state: state,
+            child: BlocProvider(
+              create: (context) => getIt.get<VerifyOtpCubit>(),
+              child: OtpScreen(phone: phone),
+            ),
+          );
         },
       ),
 
@@ -206,7 +225,10 @@ class AppRouter {
                     pageBuilder: (context, state) {
                       return AppPageTransition.fade(
                         state: state,
-                        child: SettingsScreen(),
+                        child: BlocProvider(
+                          create: (_) => getIt<LogoutCubit>(),
+                          child: const SettingsScreen(),
+                        ),
                       );
                     },
                   ),

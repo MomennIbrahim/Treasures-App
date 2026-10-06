@@ -5,6 +5,48 @@ class SupabaseDbService {
 
   SupabaseDbService(this._client);
 
+  // ═════════════════════════════════════════════
+  // Auth (Phone OTP)
+  // ═════════════════════════════════════════════
+
+  User? get currentUser => _client.auth.currentUser;
+
+  bool get isLoggedIn => _client.auth.currentSession != null;
+
+  Stream<AuthState> get authStateChanges => _client.auth.onAuthStateChange;
+
+  /// يبعت كود SMS للرقم (وينشئ الحساب لو جديد).
+  /// الرقم لازم بصيغة دولية: +201012345678
+  Future<void> sendOtp({required String phone}) async {
+    await _client.auth.signInWithOtp(phone: phone);
+  }
+
+  /// يتحقق من الكود ويسجل الدخول.
+  Future<AuthResponse> verifyOtp({
+    required String phone,
+    required String token,
+  }) async {
+    return _client.auth.verifyOTP(
+      phone: phone,
+      token: token,
+      type: OtpType.sms,
+    );
+  }
+
+  /// يحفظ الاسم في بيانات اليوزر وفي جدول profiles.
+  Future<void> updateUserName({required String name}) async {
+    await _client.auth.updateUser(UserAttributes(data: {'name': name}));
+
+    final id = currentUser?.id;
+    if (id != null) {
+      await _client.from('profiles').update({'name': name}).eq('id', id);
+    }
+  }
+
+  Future<void> signOut() async {
+    await _client.auth.signOut();
+  }
+
   /// يجيب كل الصفوف من جدول، مع فلاتر وترتيب اختياريين
   Future<List<Map<String, dynamic>>> getCollection({
     required String path, // اسم الجدول (table)

@@ -2,7 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:konoz/core/local_storage/app_cache_keys.dart';
-import 'package:konoz/core/local_storage/secure_cache.dart';
+import 'package:konoz/core/local_storage/app_cache.dart';
 import 'package:konoz/features/layout/presentation/enum/app_nav_item.dart';
 
 part 'layout_state.dart';

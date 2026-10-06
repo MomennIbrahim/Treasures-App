@@ -31,6 +31,7 @@ abstract class  LocaleKeys {
   static const me_settings = 'me.settings';
   static const me_help_hint = 'me.help_hint';
   static const me_logout = 'me.logout';
+  static const me_delivery_addresses = 'me.delivery_addresses';
   static const me = 'me';
   static const product_details_longevity = 'product_details.longevity';
   static const product_details_sillage = 'product_details.sillage';
@@ -56,6 +57,13 @@ abstract class  LocaleKeys {
   static const errors_errors_no_internet = 'errors.errors_no_internet';
   static const errors_errors_unexpected = 'errors.errors_unexpected';
   static const errors_errors_internal_server_error = 'errors.errors_internal_server_error';
+  static const errors_invalid_otp = 'errors.invalid_otp';
+  static const errors_too_many_requests = 'errors.too_many_requests';
+  static const errors_invalid_phone = 'errors.invalid_phone';
+  static const errors_sms_failed = 'errors.sms_failed';
+  static const errors_unauthorized = 'errors.unauthorized';
+  static const errors_already_exists = 'errors.already_exists';
+  static const errors_not_found = 'errors.not_found';
   static const errors = 'errors';
   static const validation_please_enter_phone = 'validation.please_enter_phone';
   static const validation_invalid_phone = 'validation.invalid_phone';
@@ -98,6 +106,11 @@ abstract class  LocaleKeys {
   static const auth_or_login_with = 'auth.or_login_with';
   static const auth_phone_required = 'auth.phone_required';
   static const auth_phone_invalid = 'auth.phone_invalid';
+  static const auth_phone_unavailable = 'auth.phone_unavailable';
+  static const auth_otp_title_normal = 'auth.otp_title_normal';
+  static const auth_otp_title_action = 'auth.otp_title_action';
+  static const auth_otp_subtitle = 'auth.otp_subtitle';
+  static const auth_otp_description = 'auth.otp_description';
   static const auth = 'auth';
   static const community_app_bar_title = 'community.app_bar_title';
   static const community_header_title = 'community.header_title';

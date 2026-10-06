@@ -20,6 +20,7 @@ class AppToast {
     AppToastType type = AppToastType.success,
     AppToastPosition position = AppToastPosition.bottom,
     void Function()? onTap,
+    int second = 3,
   }) {
     final config = _getConfig(type);
     final overlay = Overlay.of(context);
@@ -107,7 +108,7 @@ class AppToast {
 
     overlay.insert(overlayEntry);
 
-    Future.delayed(const Duration(seconds: 3), removeToast);
+    Future.delayed(Duration(seconds: second), removeToast);
   }
 
   static _AppToastConfig _getConfig(AppToastType type) {

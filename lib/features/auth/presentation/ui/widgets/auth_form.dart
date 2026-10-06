@@ -13,14 +13,20 @@ import 'package:konoz/core/widgets/app_text_form_field.dart';
 
 class AuthForm extends StatelessWidget {
   final GlobalKey<FormState> formKey;
+  final TextEditingController phoneController;
 
-  const AuthForm({super.key, required this.formKey});
+  const AuthForm({
+    super.key,
+    required this.formKey,
+    required this.phoneController,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Form(
       key: formKey,
       child: AppTextFormField(
+        controller: phoneController,
         label: "Phone Number",
         hint: "01x xxxxxxxx",
         keyboardType: TextInputType.phone,

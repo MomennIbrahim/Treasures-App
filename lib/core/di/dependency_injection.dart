@@ -1,8 +1,9 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
-import 'package:konoz/core/networking/api_service.dart';
 import 'package:konoz/core/networking/supabase_db_service.dart';
+import 'package:konoz/features/auth/data/repo/auth_repo.dart';
+import 'package:konoz/features/auth/data/repo/auth_repo_implmentation.dart';
+import 'package:konoz/features/auth/presentation/controllers/send_otp/send_otp_cubit.dart';
+import 'package:konoz/features/auth/presentation/controllers/verify_otp/verify_otp_cubit.dart';
 import 'package:konoz/features/collection_products/data/repo/collection_products_repo.dart';
 import 'package:konoz/features/collection_products/data/repo/collection_products_repo_implmentation.dart';
 import 'package:konoz/features/collection_products/presentation/controllers/collection_products/collection_products_cubit.dart';
@@ -20,21 +21,16 @@ import 'package:konoz/features/personal_data/presentation/controllers/addresses/
 import 'package:konoz/features/product_details/data/repo/product_details_repo.dart';
 import 'package:konoz/features/product_details/data/repo/product_details_repo_implmentation.dart';
 import 'package:konoz/features/product_details/presentation/controllers/product_details/product_details_cubit.dart';
+import 'package:konoz/features/settings/presentation/controllers/logout/logout_cubit.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 final getIt = GetIt.instance;
 
 Future<void> setupGetIt() async {
-  /// Dio
-  getIt.registerLazySingleton<Dio>(() => Dio());
-
-  /// Firestore Service
-  getIt.registerLazySingleton<FirestoreService>(
-    () => FirestoreService(FirebaseFirestore.instance),
-  );
+  getIt.registerLazySingleton<SupabaseClient>(() => Supabase.instance.client);
 
   getIt.registerLazySingleton<SupabaseDbService>(
-    () => SupabaseDbService(Supabase.instance.client),
+    () => SupabaseDbService(getIt<SupabaseClient>()),
   );
 
   /*
@@ -47,6 +43,9 @@ Future<void> setupGetIt() async {
   );
 */
   /// All Repositories ====>
+  getIt.registerLazySingleton<AuthRepo>(
+    () => AuthRepoImplmentation(getIt<SupabaseDbService>()),
+  );
 
   getIt.registerLazySingleton<HomeRepo>(
     () => HomeRepoImplementation(getIt<SupabaseDbService>()),
@@ -74,7 +73,11 @@ Future<void> setupGetIt() async {
 
   /// All Cubits ====>
 
-  // Layout Cubits
+  // Auth Cubits
+  getIt.registerFactory<SendOtpCubit>(() => SendOtpCubit(getIt()));
+  getIt.registerFactory<VerifyOtpCubit>(() => VerifyOtpCubit(getIt()));
+  getIt.registerFactory<LogoutCubit>(() => LogoutCubit(getIt()));
+
   getIt.registerFactory<LayoutCubit>(() => LayoutCubit());
 
   // Home Cubits
