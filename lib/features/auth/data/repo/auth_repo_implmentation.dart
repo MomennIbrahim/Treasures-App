@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dartz/dartz.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:konoz/core/error/app_failure.dart';
@@ -40,7 +42,7 @@ class AuthRepoImplmentation implements AuthRepo {
           RemoteServerFailure(LocaleKeys.errors_errors_unexpected.tr()),
         );
       }
-
+      log(user.id);
       return Right(UserModel.fromSupabase(user));
     } on AuthException catch (e) {
       return Left(RemoteServerFailure(_msg(e.message)));
