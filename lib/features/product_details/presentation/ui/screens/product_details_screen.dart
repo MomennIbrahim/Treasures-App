@@ -5,11 +5,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:konoz/core/helper/app_padding.dart';
 import 'package:konoz/core/theme/app_shimmer.dart';
 import 'package:konoz/core/theme/app_text_style.dart';
-import 'package:konoz/core/widgets/app_toast.dart';
 import 'package:konoz/core/widgets/custom_rating_widget.dart';
 import 'package:konoz/features/product_details/data/model/product_details_model.dart';
 import 'package:konoz/features/product_details/presentation/controllers/product_details/product_details_cubit.dart';
 import 'package:konoz/features/product_details/presentation/ui/widgets/add_to_cart_button.dart';
+import 'package:konoz/features/product_details/presentation/ui/widgets/product_details_error_view.dart';
 import 'package:konoz/features/product_details/presentation/ui/widgets/product_images_and_sizing_section.dart';
 import 'package:konoz/features/product_details/presentation/ui/widgets/product_information_section.dart';
 import 'package:konoz/generated/locale_keys.g.dart';
@@ -27,29 +27,28 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      context.read<ProductDetailsCubit>().getProductDetails(
-        productId: widget.productId,
-      );
-    });
+    WidgetsBinding.instance.addPostFrameCallback((_) => _load());
+  }
+
+  void _load() {
+    context.read<ProductDetailsCubit>().getProductDetails(
+      productId: widget.productId,
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     return Scaffold(
-      body: BlocConsumer<ProductDetailsCubit, ProductDetailsState>(
-        listener: (context, state) {
-          if (state.isFailure) {
-            AppToast.show(
-              context,
-              message: LocaleKeys.errors_errors_unexpected.tr(),
-              type: AppToastType.error,
-            );
-          }
-        },
+      body: BlocBuilder<ProductDetailsCubit, ProductDetailsState>(
         builder: (context, state) {
           final isLoading = state.isLoading || state.isInitial;
+
+          // فشل أو product = null بعد التحميل: واجهة خطأ + رجوع + Retry.
+          // (الـ empty() بيتستخدم وقت التحميل بس، مش بيانات وهمية في الفشل)
+          if (!isLoading && state.product == null) {
+            return ProductDetailsErrorView(onRetry: _load);
+          }
 
           final product = state.product ?? ProductDetailsModel.empty();
 
