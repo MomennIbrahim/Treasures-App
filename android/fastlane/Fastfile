@@ -11,7 +11,8 @@ platform :android do
   android_artifact_type: "APK",
   android_artifact_path: "../build/app/outputs/flutter-apk/app-release.apk",
   testers: "badralhussini1999@gmail.com,ibrahimmomen179@gmail.com,islamay124@gmail.com",
-  release_notes: "New CI/CD Version (Konoz App), Build Number: 1, First Release"
+  release_notes: "New CI/CD Version (Konoz App), Build Number: 2, Second Release, Check Cart & Checkout feature. "
 )
   end
 end
+ 
