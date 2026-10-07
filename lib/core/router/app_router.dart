@@ -7,6 +7,7 @@ import 'package:konoz/features/auth/presentation/controllers/verify_otp/verify_o
 import 'package:konoz/features/auth/presentation/ui/screens/auth_screen.dart';
 import 'package:konoz/features/auth/presentation/ui/screens/otp_screen.dart';
 import 'package:konoz/features/cart/presentation/ui/screens/cart_screen.dart';
+import 'package:konoz/features/checkout/presentation/controllers/checkout/checkout_cubit.dart';
 import 'package:konoz/features/checkout/presentation/ui/screens/checkout_screen.dart';
 import 'package:konoz/features/collection_products/presentation/controllers/collection_products/collection_products_cubit.dart';
 import 'package:konoz/features/collection_products/presentation/ui/screens/collection_products_screen.dart';
@@ -260,7 +261,13 @@ class AppRouter {
       GoRoute(
         path: Routes.checkout,
         pageBuilder: (context, state) {
-          return AppPageTransition.fade(state: state, child: CheckoutScreen());
+          return AppPageTransition.fade(
+            state: state,
+            child: BlocProvider(
+              create: (context) => getIt.get<CheckoutCubit>(),
+              child: CheckoutScreen(),
+            ),
+          );
         },
       ),
 

@@ -124,6 +124,11 @@ abstract class  LocaleKeys {
   static const checkout_pay_securely_with_your_card = 'checkout.pay_securely_with_your_card';
   static const checkout_credit_debit_card = 'checkout.credit_debit_card';
   static const checkout_place_order = 'checkout.place_order';
+  static const checkout_change_address = 'checkout.change_address';
+  static const checkout_order_placed_successfully = 'checkout.order_placed_successfully';
+  static const checkout_order_placed_message = 'checkout.order_placed_message';
+  static const checkout_track_order = 'checkout.track_order';
+  static const checkout_continue_shopping = 'checkout.continue_shopping';
   static const checkout = 'checkout';
   static const auth_get_started = 'auth.get_started';
   static const auth_app_name = 'auth.app_name';

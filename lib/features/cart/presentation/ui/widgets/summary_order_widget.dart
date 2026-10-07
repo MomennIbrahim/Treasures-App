@@ -56,11 +56,6 @@ class _SummaryCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            LocaleKeys.cart_summary_order.tr(),
-            style: AppTextStyles.text14Bold,
-          ),
-          10.verticalSpace,
           _buildListTileSummaryOrder(
             title: LocaleKeys.cart_coast,
             value: _fmt(summary.subtotal),

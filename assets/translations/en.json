@@ -148,7 +148,12 @@
     "pay_when_your_order_arrives": "Pay when your order arrives",
     "pay_securely_with_your_card": "Pay securely with your card",
     "credit_debit_card": "Credit / Debit Card",
-    "place_order": "Place Order"
+    "place_order": "Place Order",
+    "change_address": "Change Address",
+    "order_placed_successfully": "Order Placed Successfully",
+    "order_placed_message": "Your order #{0} has been placed successfully.",
+    "track_order": "Track Order",
+    "continue_shopping": "Continue Shopping"
   },
 
   "auth": {

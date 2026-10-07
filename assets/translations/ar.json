@@ -149,7 +149,12 @@
     "pay_when_your_order_arrives": "ادفع عند وصول طلبك",
     "pay_securely_with_your_card": "ادفع بأمان باستخدام بطاقتك",
     "credit_debit_card": "بطاقة ائتمان / بطاقة خصم",
-    "place_order": "تأكيد الطلب"
+    "place_order": "تأكيد الطلب",
+    "change_address": "تغيير العنوان",
+    "order_placed_successfully": "تم تأكيد طلبك بنجاح",
+    "order_placed_message": "تم تأكيد طلبك رقم #{0} بنجاح.",
+    "track_order": "تتبع الطلب",
+    "continue_shopping": "متابعة التسوق"
   },
   
   "auth": {

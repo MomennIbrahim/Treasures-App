@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hugeicons/hugeicons.dart';
@@ -5,9 +6,23 @@ import 'package:konoz/core/helper/app_padding.dart';
 import 'package:konoz/core/theme/app_colors.dart';
 import 'package:konoz/core/theme/app_radius.dart';
 import 'package:konoz/core/theme/app_text_style.dart';
+import 'package:konoz/generated/locale_keys.g.dart';
 
 class AddressCard extends StatelessWidget {
-  const AddressCard({super.key});
+  const AddressCard({
+    super.key,
+    required this.title,
+    required this.fullAddress,
+    required this.name,
+    required this.phone,
+    this.onChange,
+  });
+
+  final String title;
+  final String fullAddress;
+  final String name;
+  final String phone;
+  final VoidCallback? onChange;
 
   @override
   Widget build(BuildContext context) {
@@ -41,22 +56,29 @@ class AddressCard extends StatelessWidget {
                 Row(
                   children: [
                     Expanded(
-                      child: Text('Home', style: AppTextStyles.text14Bold),
+                      child: Text(title, style: AppTextStyles.text14Bold),
                     ),
-                    Text(
-                      'Edit',
-                      style: AppTextStyles.text12Bold.copyWith(
-                        color: AppColors.primary,
+                    if (onChange != null)
+                      InkWell(
+                        onTap: onChange,
+                        child: Text(
+                          LocaleKeys.checkout_change_address.tr(),
+                          style: AppTextStyles.text12Bold.copyWith(
+                            color: AppColors.primary,
+                          ),
+                        ),
                       ),
-                    ),
                   ],
                 ),
                 6.verticalSpace,
-                Text('Momen Ibrahim', style: AppTextStyles.text12Regular),
+                if (name.isNotEmpty)
+                  Text(name, style: AppTextStyles.text12Regular),
                 4.verticalSpace,
-                Text('Alexandria, Egypt', style: AppTextStyles.text12Regular),
-                4.verticalSpace,
-                Text('+20 100 000 0000', style: AppTextStyles.text12Regular),
+                Text(fullAddress, style: AppTextStyles.text12Regular),
+                if (phone.isNotEmpty) ...[
+                  4.verticalSpace,
+                  Text(phone, style: AppTextStyles.text12Regular),
+                ],
               ],
             ),
           ),

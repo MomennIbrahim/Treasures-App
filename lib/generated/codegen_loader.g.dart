@@ -151,7 +151,12 @@ class CodegenLoader extends AssetLoader{
     "pay_when_your_order_arrives": "Pay when your order arrives",
     "pay_securely_with_your_card": "Pay securely with your card",
     "credit_debit_card": "Credit / Debit Card",
-    "place_order": "Place Order"
+    "place_order": "Place Order",
+    "change_address": "Change Address",
+    "order_placed_successfully": "Order Placed Successfully",
+    "order_placed_message": "Your order #{0} has been placed successfully.",
+    "track_order": "Track Order",
+    "continue_shopping": "Continue Shopping"
   },
   "auth": {
     "get_started": "Get Started Now With ",
@@ -357,7 +362,12 @@ static const Map<String,dynamic> _ar = {
     "pay_when_your_order_arrives": "ادفع عند وصول طلبك",
     "pay_securely_with_your_card": "ادفع بأمان باستخدام بطاقتك",
     "credit_debit_card": "بطاقة ائتمان / بطاقة خصم",
-    "place_order": "تأكيد الطلب"
+    "place_order": "تأكيد الطلب",
+    "change_address": "تغيير العنوان",
+    "order_placed_successfully": "تم تأكيد طلبك بنجاح",
+    "order_placed_message": "تم تأكيد طلبك رقم #{0} بنجاح.",
+    "track_order": "تتبع الطلب",
+    "continue_shopping": "متابعة التسوق"
   },
   "auth": {
     "get_started": "ابدأ الآن مع ",
