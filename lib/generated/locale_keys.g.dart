@@ -9,6 +9,7 @@ abstract class  LocaleKeys {
   static const general_show_details = 'general.show_details';
   static const general_product_added_to_cart = 'general.product_added_to_cart';
   static const general_out_of_stock = 'general.out_of_stock';
+  static const general_available = 'general.available';
   static const general = 'general';
   static const layout_home = 'layout.home';
   static const layout_collections = 'layout.collections';
@@ -78,6 +79,7 @@ abstract class  LocaleKeys {
   static const cart_tax = 'cart.tax';
   static const cart_discount = 'cart.discount';
   static const cart_total = 'cart.total';
+  static const cart_empty_cart = 'cart.empty_cart';
   static const cart = 'cart';
   static const errors_errors_timeout = 'errors.errors_timeout';
   static const errors_errors_no_internet = 'errors.errors_no_internet';

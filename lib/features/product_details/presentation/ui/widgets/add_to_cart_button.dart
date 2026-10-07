@@ -22,11 +22,11 @@ class AddToCartButton extends StatelessWidget {
       child: BlocConsumer<CartCubit, CartState>(
         listenWhen: (p, c) => p.actionStatus != c.actionStatus,
         listener: (context, cartState) {
-          if (cartState.isLoading) {
+          if (cartState.actionStatus == CartActionStatus.loading) {
             showLoadingDialog(context);
           }
 
-          if (cartState.isSuccess) {
+          if (cartState.actionStatus == CartActionStatus.success) {
             hideLoadingDialog(context);
             AppToast.show(
               context,

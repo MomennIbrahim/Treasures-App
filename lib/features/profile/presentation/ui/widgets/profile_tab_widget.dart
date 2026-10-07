@@ -38,14 +38,14 @@ class ProfileTabWidget extends StatelessWidget {
                 context.push("${Routes.profile}/${Routes.orders}");
               },
             ),
-            _buildCustomTab(
-              context: context,
-              title: LocaleKeys.me_favorites,
-              icon: HugeIcons.strokeRoundedFavouriteCircle,
-              onTap: () {
-                context.push("${Routes.profile}/${Routes.favorites}");
-              },
-            ),
+            // _buildCustomTab(
+            //   context: context,
+            //   title: LocaleKeys.me_favorites,
+            //   icon: HugeIcons.strokeRoundedFavouriteCircle,
+            //   onTap: () {
+            //     context.push("${Routes.profile}/${Routes.favorites}");
+            //   },
+            // ),
             _buildCustomTab(
               context: context,
               title: LocaleKeys.me_settings,

@@ -47,12 +47,12 @@ class SupabaseDbService {
     await _client.auth.signOut();
   }
 
-  Future<void> callRpc({
-    required String function,
-    Map<String, dynamic>? params,
-  }) async {
-    await _client.rpc(function, params: params);
-  }
+ Future<dynamic> callRpc({
+  required String function,
+  Map<String, dynamic>? params,
+}) async {
+  return await _client.rpc(function, params: params);
+}
 
   /// يجيب كل الصفوف من جدول، مع فلاتر وترتيب اختياريين
   Future<List<Map<String, dynamic>>> getCollection({

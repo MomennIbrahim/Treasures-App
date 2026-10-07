@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hugeicons/hugeicons.dart';
@@ -9,6 +10,7 @@ import 'package:konoz/core/helper/app_padding.dart';
 import 'package:konoz/core/router/routes.dart';
 import 'package:konoz/core/theme/app_radius.dart';
 import 'package:konoz/core/theme/app_text_style.dart';
+import 'package:konoz/features/cart/presentation/controller/cart/cart_cubit.dart';
 import 'package:konoz/generated/locale_keys.g.dart';
 
 class AppBottomNavBar extends StatelessWidget {
@@ -99,22 +101,7 @@ class AppBottomNavBar extends StatelessWidget {
                     ),
 
                     BottomNavigationBarItem(
-                      icon: Badge(
-                        backgroundColor: colorScheme.primary,
-                        largeSize: 10.sp,
-                        label: Text(
-                          '2',
-                          style: AppTextStyles.text10Bold.copyWith(
-                            color: colorScheme.onPrimary,
-                            fontSize: 9,
-                          ),
-                        ),
-                        child: HugeIcon(
-                          icon: HugeIcons.strokeRoundedShoppingBag01,
-                          strokeWidth: 1.5,
-                          size: 18.sp,
-                        ),
-                      ),
+                      icon: const _CartIcon(),
                       label: LocaleKeys.layout_cart.tr(),
                     ),
 
@@ -133,6 +120,40 @@ class AppBottomNavBar extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+/// أيقونة السلة + badge بيتابع CartCubit.count.
+/// BlocSelector بيعمل rebuild للأيقونة دي بس لما العدد يتغير.
+class _CartIcon extends StatelessWidget {
+  const _CartIcon();
+
+  @override
+  Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
+    return BlocSelector<CartCubit, CartState, int>(
+      selector: (state) => state.count,
+      builder: (context, count) {
+        return Badge(
+          isLabelVisible: count > 0,
+          backgroundColor: colorScheme.primary,
+          largeSize: 10.sp,
+          label: Text(
+            count > 99 ? '99+' : '$count',
+            style: AppTextStyles.text10Bold.copyWith(
+              color: colorScheme.onPrimary,
+              fontSize: 9,
+            ),
+          ),
+          child: HugeIcon(
+            icon: HugeIcons.strokeRoundedShoppingBag01,
+            strokeWidth: 1.5,
+            size: 18.sp,
+          ),
+        );
+      },
     );
   }
 }

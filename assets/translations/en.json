@@ -5,7 +5,8 @@
         "undo": "Undo",
         "show_details": "Show Details",
         "product_added_to_cart" : "Product added to cart, Press to go to cart",
-        "out_of_stock": "Out of stock"
+        "out_of_stock": "Out of stock",
+        "available": "Available"
     },
 
     "layout": {
@@ -87,7 +88,8 @@
         "shipping": "Shipping",
         "tax": "Tax",
         "discount": "Discount",
-        "total": "Total"
+        "total": "Total",
+        "empty_cart": "Your cart is empty"
     },
 
     "errors": {

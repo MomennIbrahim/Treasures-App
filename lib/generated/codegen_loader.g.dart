@@ -21,7 +21,8 @@ class CodegenLoader extends AssetLoader{
     "undo": "Undo",
     "show_details": "Show Details",
     "product_added_to_cart": "Product added to cart, Press to go to cart",
-    "out_of_stock": "Out of stock"
+    "out_of_stock": "Out of stock",
+    "available": "Available"
   },
   "layout": {
     "home": "Home",
@@ -97,7 +98,8 @@ class CodegenLoader extends AssetLoader{
     "shipping": "Shipping",
     "tax": "Tax",
     "discount": "Discount",
-    "total": "Total"
+    "total": "Total",
+    "empty_cart": "Your cart is empty"
   },
   "errors": {
     "errors_timeout": "Connection timed out. Please try again.",
@@ -225,7 +227,8 @@ static const Map<String,dynamic> _ar = {
     "undo": "الغاء",
     "show_details": "اظهار التفاصيل",
     "product_added_to_cart": "تمت إضافة المنتج إلى عربة التسوق، اضغط للانتقال إلى العربة",
-    "out_of_stock": "نفذ"
+    "out_of_stock": "نفذ",
+    "available": "متوفر"
   },
   "layout": {
     "home": "الرئيسية",
@@ -301,7 +304,8 @@ static const Map<String,dynamic> _ar = {
     "shipping": "الشحن",
     "tax": "الضريبة",
     "discount": "الخصم",
-    "total": "الأجمالي"
+    "total": "الأجمالي",
+    "empty_cart": "عربة التسوق فارغة"
   },
   "errors": {
     "errors_timeout": "انتهت مهلة الاتصال. حاول مرة أخرى.",
