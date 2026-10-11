@@ -7,7 +7,8 @@
         "show_details": "Show Details",
         "product_added_to_cart" : "Product added to cart, Press to go to cart",
         "out_of_stock": "Out of stock",
-        "available": "Available"
+        "available": "Available",
+        "retry": "Retry"
     },
 
     "layout": {
@@ -26,8 +27,10 @@
 
     "collections": {
         "featured_collections": "FEATURED COLLECTIONS",
-        "featured_collections_description": "Discover the fragrance everyone's talking about - bold, unique, and made to be your signature scent."
-    },
+        "featured_collections_description": "Discover the fragrance everyone's talking about - bold, unique, and made to be your signature scent.",
+        "collections_all": "All perfumes",
+        "no_perfumes_found": "No perfumes found for this collection"
+      },
 
     "me": {
         "personal_data": "Personal Data",

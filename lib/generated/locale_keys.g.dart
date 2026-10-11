@@ -11,6 +11,7 @@ abstract class  LocaleKeys {
   static const general_product_added_to_cart = 'general.product_added_to_cart';
   static const general_out_of_stock = 'general.out_of_stock';
   static const general_available = 'general.available';
+  static const general_retry = 'general.retry';
   static const general = 'general';
   static const layout_home = 'layout.home';
   static const layout_collections = 'layout.collections';
@@ -25,6 +26,8 @@ abstract class  LocaleKeys {
   static const home = 'home';
   static const collections_featured_collections = 'collections.featured_collections';
   static const collections_featured_collections_description = 'collections.featured_collections_description';
+  static const collections_collections_all = 'collections.collections_all';
+  static const collections_no_perfumes_found = 'collections.no_perfumes_found';
   static const collections = 'collections';
   static const me_personal_data = 'me.personal_data';
   static const me_orders = 'me.orders';

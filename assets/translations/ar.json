@@ -7,7 +7,8 @@
         "show_details": "اظهار التفاصيل",
         "product_added_to_cart" : "تمت إضافة المنتج إلى عربة التسوق، اضغط للانتقال إلى العربة",
         "out_of_stock": "نفذ",
-        "available": "متوفر"
+        "available": "متوفر",
+        "retry": "اعادة المحاولة"
     },
      
     "layout": {
@@ -27,8 +28,10 @@
 
     "collections": {
         "featured_collections":  "مجموعات مميزة",
-        "featured_collections_description": "اكتشف العطر الذي يتحدث عنه الجميع - جريء، مميز، ومصمم ليكون عطرك المميز."
-    },
+        "featured_collections_description": "اكتشف العطر الذي يتحدث عنه الجميع - جريء، مميز، ومصمم ليكون عطرك المميز.",
+        "collections_all": "كل المنتجات",
+        "no_perfumes_found": "لا يوجد عطور في هذه الفئه"
+      },
 
     "me": {
         "personal_data": "بيانات شخصية",

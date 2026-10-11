@@ -1,3 +1,4 @@
+import 'package:dartz/dartz.dart' show Either, Left, Right, Unit, unit;
 import 'package:konoz/core/cubits/safe_cubit.dart';
 import 'package:konoz/core/error/app_failure.dart';
 import 'package:konoz/features/cart/data/model/cart_item_model.dart';
@@ -47,8 +48,13 @@ class CartCubit extends SafeCubit<CartState> {
   }
 
   // ───────── إضافة ─────────
-  Future<void> addToCart({required int sizeId, int quantity = 1}) async {
-    if (state.isAdding) return;
+  // ───────── إضافة ─────────
+  // null = الضغطة اتجاهلت لأن فيه إضافة شغالة
+  Future<Either<AppFailure, Unit>?> addToCart({
+    required int sizeId,
+    int quantity = 1,
+  }) async {
+    if (state.isAdding) return null;
     emit(
       state.copyWith(
         actionStatus: CartActionStatus.loading,
@@ -67,7 +73,7 @@ class CartCubit extends SafeCubit<CartState> {
           actionFailure: failure,
         ),
       );
-      return;
+      return Left(failure);
     }
 
     // السلة الحقيقية من السيرفر (الـ items والعدد في request واحد)
@@ -93,6 +99,8 @@ class CartCubit extends SafeCubit<CartState> {
       ),
     );
     _refreshSummary();
+
+    return const Right(unit);
   }
 
   // ───────── تعديل الكمية (optimistic) ─────────

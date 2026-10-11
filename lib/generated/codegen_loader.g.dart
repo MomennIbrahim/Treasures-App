@@ -23,7 +23,8 @@ class CodegenLoader extends AssetLoader{
     "show_details": "Show Details",
     "product_added_to_cart": "Product added to cart, Press to go to cart",
     "out_of_stock": "Out of stock",
-    "available": "Available"
+    "available": "Available",
+    "retry": "Retry"
   },
   "layout": {
     "home": "Home",
@@ -40,7 +41,9 @@ class CodegenLoader extends AssetLoader{
   },
   "collections": {
     "featured_collections": "FEATURED COLLECTIONS",
-    "featured_collections_description": "Discover the fragrance everyone's talking about - bold, unique, and made to be your signature scent."
+    "featured_collections_description": "Discover the fragrance everyone's talking about - bold, unique, and made to be your signature scent.",
+    "collections_all": "All perfumes",
+    "no_perfumes_found": "No perfumes found for this collection"
   },
   "me": {
     "personal_data": "Personal Data",
@@ -235,7 +238,8 @@ static const Map<String,dynamic> _ar = {
     "show_details": "اظهار التفاصيل",
     "product_added_to_cart": "تمت إضافة المنتج إلى عربة التسوق، اضغط للانتقال إلى العربة",
     "out_of_stock": "نفذ",
-    "available": "متوفر"
+    "available": "متوفر",
+    "retry": "اعادة المحاولة"
   },
   "layout": {
     "home": "الرئيسية",
@@ -252,7 +256,9 @@ static const Map<String,dynamic> _ar = {
   },
   "collections": {
     "featured_collections": "مجموعات مميزة",
-    "featured_collections_description": "اكتشف العطر الذي يتحدث عنه الجميع - جريء، مميز، ومصمم ليكون عطرك المميز."
+    "featured_collections_description": "اكتشف العطر الذي يتحدث عنه الجميع - جريء، مميز، ومصمم ليكون عطرك المميز.",
+    "collections_all": "كل المنتجات",
+    "no_perfumes_found": "لا يوجد عطور في هذه الفئه"
   },
   "me": {
     "personal_data": "بيانات شخصية",

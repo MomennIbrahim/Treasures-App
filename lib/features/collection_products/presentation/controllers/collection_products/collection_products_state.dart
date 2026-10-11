@@ -1,11 +1,10 @@
 part of 'collection_products_cubit.dart';
 
-enum CollectionProductsStatus { initial, loading, loadingMore, success, failure }
+enum CollectionProductsStatus { initial, loading, success, failure }
 
 extension CollectionProductsStatusX on CollectionProductsState {
   bool get isInitial => status == CollectionProductsStatus.initial;
   bool get isLoading => status == CollectionProductsStatus.loading;
-  bool get isLoadingMore => status == CollectionProductsStatus.loadingMore;
   bool get isSuccess => status == CollectionProductsStatus.success;
   bool get isFailure => status == CollectionProductsStatus.failure;
 }
@@ -13,40 +12,34 @@ extension CollectionProductsStatusX on CollectionProductsState {
 @immutable
 class CollectionProductsState extends Equatable {
   final CollectionProductsStatus status;
-  final int? selectedCategoryId;
+
+  /// 0 = All، -1 = لسه ما اتحددش
+  final int selectedCollectionId;
   final List<ProductItemModel> products;
-  final PaginationModel? pagination;
   final AppFailure? failure;
 
   const CollectionProductsState({
     this.status = CollectionProductsStatus.initial,
-    this.selectedCategoryId,
+    this.selectedCollectionId = -1,
     this.products = const [],
-    this.pagination,
     this.failure,
   });
 
-  bool get hasReachedMax =>
-      pagination != null && pagination!.currentPage >= pagination!.lastPage;
-
+  // failure بيتصفّر عن قصد
   CollectionProductsState copyWith({
     CollectionProductsStatus? status,
-    int? selectedCategoryId,
+    int? selectedCollectionId,
     List<ProductItemModel>? products,
-    PaginationModel? pagination,
     AppFailure? failure,
-    bool clearFailure = false,
   }) {
     return CollectionProductsState(
       status: status ?? this.status,
-      selectedCategoryId: selectedCategoryId ?? this.selectedCategoryId,
+      selectedCollectionId: selectedCollectionId ?? this.selectedCollectionId,
       products: products ?? this.products,
-      pagination: pagination ?? this.pagination,
-      failure: clearFailure ? null : failure ?? this.failure,
+      failure: failure,
     );
   }
 
   @override
-  List<Object?> get props =>
-      [status, selectedCategoryId, products, pagination, failure];
+  List<Object?> get props => [status, selectedCollectionId, products, failure];
 }

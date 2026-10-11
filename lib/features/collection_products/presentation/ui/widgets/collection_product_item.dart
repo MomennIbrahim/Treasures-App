@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:konoz/core/helper/app_padding.dart';
@@ -12,9 +13,10 @@ import 'package:konoz/core/widgets/app_button.dart';
 import 'package:konoz/core/widgets/app_image.dart';
 import 'package:konoz/core/widgets/app_toast.dart';
 import 'package:konoz/core/widgets/custom_rating_widget.dart';
+import 'package:konoz/features/cart/presentation/controller/cart/cart_cubit.dart';
 import 'package:konoz/generated/locale_keys.g.dart';
 
-class CollectionProductItem extends StatelessWidget {
+class CollectionProductItem extends StatefulWidget {
   final ProductItemModel product;
   final bool isLoading;
 
@@ -24,16 +26,59 @@ class CollectionProductItem extends StatelessWidget {
     required this.isLoading,
   });
 
+  @override
+  State<CollectionProductItem> createState() => _CollectionProductItemState();
+}
+
+class _CollectionProductItemState extends State<CollectionProductItem> {
+  bool _adding = false;
+
+  ProductItemModel get product => widget.product;
+
   bool get _hasDiscount =>
-      product.defaultDiscountPrice != null && product.defaultDiscountPrice!.isNotEmpty;
+      product.defaultDiscountPrice != null &&
+      product.defaultDiscountPrice!.isNotEmpty;
+
+  Future<void> _addToCart() async {
+    final sizeId = product.defaultSizeId;
+    if (sizeId == null || _adding) return;
+
+    setState(() => _adding = true);
+    final res = await context.read<CartCubit>().addToCart(sizeId: sizeId);
+    if (!mounted) return;
+    setState(() => _adding = false);
+    // null = الضغطة اتجاهلت
+    if (res == null) return;
+
+    res.fold(
+      (f) {
+        AppToast.show(
+          context,
+          message: f.getAllError(),
+          type: AppToastType.error,
+        );
+      },
+      (_) {
+        AppToast.show(
+          context,
+          message: LocaleKeys.general_product_added_to_cart.tr(),
+          type: AppToastType.success,
+          onTap: () => context.go(Routes.cart),
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () =>
-          context.push("${Routes.collectionProducts}/${Routes.productDetails}"),
+      onTap: widget.isLoading
+          ? null
+          : () => context.push(
+              '${Routes.collectionProducts}/${Routes.productDetails}',
+              extra: product.id,
+            ),
       child: Container(
-        width: 125.w,
         decoration: BoxDecoration(
           borderRadius: AppRadius.br4,
           color: Colors.white10,
@@ -77,7 +122,6 @@ class CollectionProductItem extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                       style: AppTextStyles.text12Bold,
                     ),
-
                     Row(
                       children: [
                         CustomRatingWidget(
@@ -96,14 +140,12 @@ class CollectionProductItem extends StatelessWidget {
                       ],
                     ),
                     2.verticalSpace,
-
                     Text(
-                      '${_hasDiscount ? product.defaultPrice : product.defaultPrice} L.E',
+                      '${_hasDiscount ? product.defaultDiscountPrice : product.defaultPrice} L.E',
                       style: AppTextStyles.text12Bold,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
-
                     if (_hasDiscount)
                       Text(
                         'menu price: ${product.defaultPrice} L.E',
@@ -116,7 +158,6 @@ class CollectionProductItem extends StatelessWidget {
                           color: AppColors.background,
                         ),
                       ),
-
                     2.verticalSpace,
                     Text(
                       product.inStock ? 'delivery today 6pm' : 'out of stock',
@@ -134,8 +175,7 @@ class CollectionProductItem extends StatelessWidget {
                           physics: const NeverScrollableScrollPhysics(),
                           padding: EdgeInsets.zero,
                           scrollDirection: Axis.horizontal,
-                          separatorBuilder: (context, index) =>
-                              6.horizontalSpace,
+                          separatorBuilder: (_, _) => 6.horizontalSpace,
                           itemCount: product.sizes.length,
                           itemBuilder: (context, index) {
                             return Center(
@@ -149,26 +189,17 @@ class CollectionProductItem extends StatelessWidget {
                           },
                         ),
                       ),
-
                     6.verticalSpace,
                     if (product.inStock)
                       AppButton(
                         label: LocaleKeys.general_add_to_cart.tr(),
                         labelStyle: AppTextStyles.text12Bold,
-                        onPressed: product.inStock
-                            ? () {
-                                AppToast.show(
-                                  context,
-                                  message: LocaleKeys
-                                      .general_product_added_to_cart
-                                      .tr(),
-                                  type: AppToastType.success,
-                                  onTap: () {
-                                    context.go(Routes.cart);
-                                  },
-                                );
-                              }
-                            : null,
+                        onPressed:
+                            (_adding ||
+                                widget.isLoading ||
+                                product.defaultSizeId == null)
+                            ? null
+                            : _addToCart,
                         height: 30,
                       ),
                   ],

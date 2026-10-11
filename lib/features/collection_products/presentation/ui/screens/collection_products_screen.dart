@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:konoz/features/collection_products/presentation/controllers/collection_products/collection_products_cubit.dart';
 import 'package:konoz/features/collection_products/presentation/ui/widgets/collection_products_list.dart';
 import 'package:konoz/features/collection_products/presentation/ui/widgets/tabs_section.dart';
+import 'package:konoz/features/collections/presentation/controllers/collections/collections_cubit.dart';
 
 class CollectionProductsScreen extends StatefulWidget {
   final String collectionId;
@@ -16,10 +17,12 @@ class CollectionProductsScreen extends StatefulWidget {
 class _CollectionProductsScreenState extends State<CollectionProductsScreen> {
   @override
   void initState() {
-    context.read<CollectionProductsCubit>().getCollectionProducts(
-      collectionId: widget.collectionId,
-    );
     super.initState();
+    // للتابات (بتتخطى لو متحملة)
+    context.read<CollectionsCubit>().getCollections();
+    context.read<CollectionProductsCubit>().selectCollection(
+      int.tryParse(widget.collectionId) ?? 0,
+    );
   }
 
   @override
@@ -27,8 +30,8 @@ class _CollectionProductsScreenState extends State<CollectionProductsScreen> {
     return Scaffold(
       body: CustomScrollView(
         slivers: [
-          TabsSection(),
-          CollectionProductsList(),
+          const TabsSection(),
+          const CollectionProductsList(),
           SliverToBoxAdapter(
             child: SafeArea(top: false, child: SizedBox.shrink()),
           ),

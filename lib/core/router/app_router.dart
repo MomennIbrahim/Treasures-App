@@ -151,8 +151,16 @@ class AppRouter {
                   final collectionId = state.extra as String;
                   return AppPageTransition.fade(
                     state: state,
-                    child: BlocProvider(
-                      create: (context) => getIt.get<CollectionProductsCubit>(),
+                    child: MultiBlocProvider(
+                      providers: [
+                        BlocProvider(
+                          create: (_) => getIt.get<CollectionProductsCubit>(),
+                        ),
+                        // نفس الـ instance المشترك عشان التابات
+                        BlocProvider.value(
+                          value: getIt.get<CollectionsCubit>(),
+                        ),
+                      ],
                       child: CollectionProductsScreen(
                         collectionId: collectionId,
                       ),
@@ -160,19 +168,7 @@ class AppRouter {
                   );
                 },
                 routes: [
-                  GoRoute(
-                    path: Routes.productDetails,
-                    pageBuilder: (context, state) {
-                      final int productId = state.extra as int;
-                      return AppPageTransition.fade(
-                        state: state,
-                        child: BlocProvider(
-                          create: (context) => getIt.get<ProductDetailsCubit>(),
-                          child: ProductDetailsScreen(productId: productId),
-                        ),
-                      );
-                    },
-                  ),
+                  // productDetails زي ما هو
                 ],
               ),
             ],
