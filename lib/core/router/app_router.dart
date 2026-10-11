@@ -22,6 +22,7 @@ import 'package:konoz/features/home/presentation/controllers/currently_trending/
 import 'package:konoz/features/home/presentation/controllers/packages_cubit.dart';
 import 'package:konoz/features/home/presentation/ui/screens/home_screen.dart';
 import 'package:konoz/features/layout/presentation/ui/screens/layout_screen.dart';
+import 'package:konoz/features/orders/presentation/controllers/orders_cubit.dart';
 import 'package:konoz/features/orders/presentation/ui/screens/orders_screen.dart';
 import 'package:konoz/features/personal_data/presentation/controllers/addresses/addresses_cubit.dart';
 import 'package:konoz/features/personal_data/presentation/ui/screens/personal_data_screen.dart';
@@ -197,7 +198,10 @@ class AppRouter {
                     pageBuilder: (context, state) {
                       return AppPageTransition.fade(
                         state: state,
-                        child: OrdersScreen(),
+                        child: BlocProvider(
+                          create: (_) => getIt<OrdersCubit>()..getOrders(),
+                          child: const OrdersScreen(),
+                        ),
                       );
                     },
                   ),

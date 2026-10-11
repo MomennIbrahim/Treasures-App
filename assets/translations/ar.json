@@ -209,5 +209,23 @@
     "q4": { "question": "إزاي أتواصل مع الدعم؟", "answer": "اكتب الإجابة هنا..." },
     "q5": { "question": "إزاي أرجع منتج؟", "answer": "اكتب الإجابة هنا..." },
     "q6": { "question": "هل التوصيل بيوصل لكل المحافظات؟", "answer": "اكتب الإجابة هنا..." }
+  },
+
+  "orders": {
+    "title": "طلباتك",
+    "search_hint": "ابحث في كل الطلبات",
+    "filter_last_30_days": "آخر 30 يوم",
+    "filter_last_3_months": "آخر 3 شهور",
+    "history_last_30_days": "السجل لآخر 30 يوم",
+    "history_last_3_months": "السجل لآخر 3 شهور",
+    "history_year": "سجل {}",
+    "empty": "لسه معندكش طلبات",
+    "order_number": "طلب #{}",
+    "more_items": "+{} كمان",
+    "status_pending": "تم استلام طلبك",
+    "status_confirmed": "تم تأكيد الطلب",
+    "status_shipped": "في الطريق إليك",
+    "status_delivered": "تم التوصيل",
+    "status_cancelled": "تم الإلغاء"
   }
 }

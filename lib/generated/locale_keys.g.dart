@@ -187,5 +187,21 @@ abstract class  LocaleKeys {
   static const faq_q6_answer = 'faq.q6.answer';
   static const faq_q6 = 'faq.q6';
   static const faq = 'faq';
+  static const orders_title = 'orders.title';
+  static const orders_search_hint = 'orders.search_hint';
+  static const orders_filter_last_30_days = 'orders.filter_last_30_days';
+  static const orders_filter_last_3_months = 'orders.filter_last_3_months';
+  static const orders_history_last_30_days = 'orders.history_last_30_days';
+  static const orders_history_last_3_months = 'orders.history_last_3_months';
+  static const orders_history_year = 'orders.history_year';
+  static const orders_empty = 'orders.empty';
+  static const orders_order_number = 'orders.order_number';
+  static const orders_more_items = 'orders.more_items';
+  static const orders_status_pending = 'orders.status_pending';
+  static const orders_status_confirmed = 'orders.status_confirmed';
+  static const orders_status_shipped = 'orders.status_shipped';
+  static const orders_status_delivered = 'orders.status_delivered';
+  static const orders_status_cancelled = 'orders.status_cancelled';
+  static const orders = 'orders';
 
 }

@@ -227,6 +227,23 @@ class CodegenLoader extends AssetLoader{
       "question": "Do you deliver to all governorates?",
       "answer": "Write the answer here..."
     }
+  },
+  "orders": {
+    "title": "Your Orders",
+    "search_hint": "Search on all orders",
+    "filter_last_30_days": "Last 30 Days",
+    "filter_last_3_months": "Last 3 Months",
+    "history_last_30_days": "History last 30 days",
+    "history_last_3_months": "History last 3 months",
+    "history_year": "History {}",
+    "empty": "You have no orders yet",
+    "order_number": "Order #{}",
+    "more_items": "+{} more",
+    "status_pending": "Order has been placed",
+    "status_confirmed": "Order confirmed",
+    "status_shipped": "Out for delivery",
+    "status_delivered": "Delivered",
+    "status_cancelled": "Cancelled"
   }
 };
 static const Map<String,dynamic> _ar = {
@@ -442,6 +459,23 @@ static const Map<String,dynamic> _ar = {
       "question": "هل التوصيل بيوصل لكل المحافظات؟",
       "answer": "اكتب الإجابة هنا..."
     }
+  },
+  "orders": {
+    "title": "طلباتك",
+    "search_hint": "ابحث في كل الطلبات",
+    "filter_last_30_days": "آخر 30 يوم",
+    "filter_last_3_months": "آخر 3 شهور",
+    "history_last_30_days": "السجل لآخر 30 يوم",
+    "history_last_3_months": "السجل لآخر 3 شهور",
+    "history_year": "سجل {}",
+    "empty": "لسه معندكش طلبات",
+    "order_number": "طلب #{}",
+    "more_items": "+{} كمان",
+    "status_pending": "تم استلام طلبك",
+    "status_confirmed": "تم تأكيد الطلب",
+    "status_shipped": "في الطريق إليك",
+    "status_delivered": "تم التوصيل",
+    "status_cancelled": "تم الإلغاء"
   }
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"en": _en, "ar": _ar};
