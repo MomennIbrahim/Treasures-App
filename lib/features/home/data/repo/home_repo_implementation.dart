@@ -58,7 +58,7 @@ class HomeRepoImplementation extends HomeRepo {
       );
 
       final products = data
-          .map((json) => ProductItemModel.fromJson(json))
+          .map((json) => ProductItemModel.fromSupabase(json))
           .toList();
 
       final model = BestSellingModel(
@@ -97,7 +97,7 @@ class HomeRepoImplementation extends HomeRepo {
       );
 
       final products = data
-          .map((json) => ProductItemModel.fromJson(json))
+          .map((json) => ProductItemModel.fromSupabase(json))
           .toList();
 
       final model = CurrentlyTrendingModel(

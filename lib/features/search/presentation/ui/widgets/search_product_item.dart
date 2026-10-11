@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:konoz/core/helper/app_padding.dart';
@@ -10,8 +11,9 @@ import 'package:konoz/core/theme/app_text_style.dart';
 import 'package:konoz/core/widgets/app_button.dart';
 import 'package:konoz/core/widgets/app_image.dart';
 import 'package:konoz/core/widgets/custom_rating_widget.dart';
-
-class SearchProductItem extends StatelessWidget {
+import 'package:konoz/features/cart/presentation/controller/cart/cart_cubit.dart';
+ 
+class SearchProductItem extends StatefulWidget {
   final ProductItemModel product;
   final bool isLoading;
 
@@ -21,21 +23,43 @@ class SearchProductItem extends StatelessWidget {
     required this.isLoading,
   });
 
+  @override
+  State<SearchProductItem> createState() => _SearchProductItemState();
+}
+
+class _SearchProductItemState extends State<SearchProductItem> {
+  bool _adding = false;
+
+  ProductItemModel get product => widget.product;
+
   bool get _hasDiscount =>
-      product.defaultDiscountPrice != null && product.defaultDiscountPrice!.isNotEmpty;
+      product.defaultDiscountPrice != null &&
+      product.defaultDiscountPrice!.isNotEmpty;
+
+  Future<void> _addToCart() async {
+    final sizeId = product.defaultSizeId;
+    if (sizeId == null || _adding) return;
+    setState(() => _adding = true);
+    await context.read<CartCubit>().addToCart(sizeId: sizeId);
+    if (mounted) setState(() => _adding = false);
+  }
 
   @override
-
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => context.push(Routes.productDetails),
+      onTap: widget.isLoading
+          ? null
+          : () => context.push(
+              '${Routes.home}/${Routes.productDetails}',
+              extra: product.id,
+            ),
       child: Container(
-        width: 125.w,
         decoration: BoxDecoration(
           borderRadius: AppRadius.br4,
           color: Colors.white10,
         ),
         child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Stack(
               children: [
@@ -74,7 +98,6 @@ class SearchProductItem extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                       style: AppTextStyles.text12Bold,
                     ),
-
                     Row(
                       children: [
                         CustomRatingWidget(
@@ -99,7 +122,6 @@ class SearchProductItem extends StatelessWidget {
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
-
                     if (_hasDiscount)
                       Text(
                         'menu price: ${product.defaultPrice} EGP',
@@ -112,7 +134,6 @@ class SearchProductItem extends StatelessWidget {
                           color: AppColors.background,
                         ),
                       ),
-
                     2.verticalSpace,
                     Text(
                       product.inStock ? 'delivery today 6pm' : 'out of stock',
@@ -130,8 +151,7 @@ class SearchProductItem extends StatelessWidget {
                           physics: const NeverScrollableScrollPhysics(),
                           padding: EdgeInsets.zero,
                           scrollDirection: Axis.horizontal,
-                          separatorBuilder: (context, index) =>
-                              6.horizontalSpace,
+                          separatorBuilder: (_, _) => 6.horizontalSpace,
                           itemCount: product.sizes.length,
                           itemBuilder: (context, index) {
                             return Center(
@@ -145,13 +165,16 @@ class SearchProductItem extends StatelessWidget {
                           },
                         ),
                       ),
-
                     6.verticalSpace,
                     if (product.inStock)
                       AppButton(
-                        label: product.inStock ? "Add to cart" : "Notify me",
+                        label: "Add to cart",
                         labelStyle: AppTextStyles.text12Bold,
-                        onPressed: product.inStock ? () {} : null,
+                        onPressed: (_adding ||
+                                widget.isLoading ||
+                                product.defaultSizeId == null)
+                            ? null
+                            : _addToCart,
                         height: 30,
                       ),
                   ],

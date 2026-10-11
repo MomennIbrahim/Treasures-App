@@ -47,12 +47,12 @@ class SupabaseDbService {
     await _client.auth.signOut();
   }
 
- Future<dynamic> callRpc({
-  required String function,
-  Map<String, dynamic>? params,
-}) async {
-  return await _client.rpc(function, params: params);
-}
+  Future<dynamic> callRpc({
+    required String function,
+    Map<String, dynamic>? params,
+  }) async {
+    return await _client.rpc(function, params: params);
+  }
 
   /// يجيب كل الصفوف من جدول، مع فلاتر وترتيب اختياريين
   Future<List<Map<String, dynamic>>> getCollection({
@@ -142,6 +142,25 @@ class SupabaseDbService {
         : filteredStream;
 
     return finalStream;
+  }
+
+  Future<List<Map<String, dynamic>>> searchCollection({
+    required String path,
+    required String field,
+    required String query,
+    String columns = '*',
+    int limit = 30,
+  }) async {
+    final escaped = query
+        .replaceAll(r'\', r'\\')
+        .replaceAll('%', r'\%')
+        .replaceAll('_', r'\_');
+    final res = await _client
+        .from(path)
+        .select(columns)
+        .ilike(field, '%$escaped%')
+        .limit(limit);
+    return List<Map<String, dynamic>>.from(res);
   }
 }
 

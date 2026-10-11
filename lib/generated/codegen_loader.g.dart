@@ -18,6 +18,7 @@ class CodegenLoader extends AssetLoader{
   "general": {
     "add_to_cart": "Add to cart",
     "search_hint": "Search for perfumery or fragrances...",
+    "search_no_results": "No search results",
     "undo": "Undo",
     "show_details": "Show Details",
     "product_added_to_cart": "Product added to cart, Press to go to cart",
@@ -229,6 +230,7 @@ static const Map<String,dynamic> _ar = {
   "general": {
     "add_to_cart": "اضافة الى السلة",
     "search_hint": "ابحث عن عطر...",
+    "search_no_results": "لا توجد نتائج بحث",
     "undo": "الغاء",
     "show_details": "اظهار التفاصيل",
     "product_added_to_cart": "تمت إضافة المنتج إلى عربة التسوق، اضغط للانتقال إلى العربة",

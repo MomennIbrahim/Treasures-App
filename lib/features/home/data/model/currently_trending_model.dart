@@ -22,7 +22,7 @@ class CurrentlyTrendingModel {
           ? []
           : (json['data'] as List)
                 .map(
-                  (e) => ProductItemModel.fromJson(e as Map<String, dynamic>),
+                  (e) => ProductItemModel.fromSupabase(e as Map<String, dynamic>),
                 )
                 .toList(),
       pagination: json['pagination'] == null

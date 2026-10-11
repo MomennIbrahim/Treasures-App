@@ -10,6 +10,7 @@ class AppTextFormField extends StatefulWidget {
   final String? label;
   final String? Function(String?)? validator;
   final void Function(String)? onChanged;
+  final void Function(String)? onFieldSubmitted;
   final VoidCallback? onTap;
   final TextInputType? keyboardType;
   final int? maxLines;
@@ -31,6 +32,7 @@ class AppTextFormField extends StatefulWidget {
     this.label,
     this.validator,
     this.onChanged,
+    this.onFieldSubmitted,
     this.onTap,
     this.keyboardType,
     this.maxLines,
@@ -140,6 +142,8 @@ class _AppTextFormFieldState extends State<AppTextFormField> {
 
               widget.onChanged?.call(value);
             },
+
+            onFieldSubmitted: widget.onFieldSubmitted,
 
             decoration: InputDecoration(
               hintText: widget.hint,

@@ -19,7 +19,7 @@ class CollectionProductsModel {
       success: json['success'] as bool,
       message: json['message'] as String,
       products: (json['products'] as List<dynamic>? ?? [])
-          .map((e) => ProductItemModel.fromJson(e as Map<String, dynamic>))
+          .map((e) => ProductItemModel.fromSupabase(e as Map<String, dynamic>))
           .toList(),
       pagination: PaginationModel.fromJson(
         json['pagination'] as Map<String, dynamic>,

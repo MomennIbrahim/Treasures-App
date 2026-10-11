@@ -28,7 +28,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) => _load());
-  }
+  } 
 
   void _load() {
     context.read<ProductDetailsCubit>().getProductDetails(

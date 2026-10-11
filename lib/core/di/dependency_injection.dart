@@ -30,6 +30,9 @@ import 'package:konoz/features/product_details/presentation/controllers/product_
 import 'package:konoz/features/profile/data/repo/profile_repo.dart';
 import 'package:konoz/features/profile/data/repo/profile_repo_implementation.dart';
 import 'package:konoz/features/profile/presentation/controllers/profile/profile_cubit.dart';
+import 'package:konoz/features/search/data/repo/search_repo.dart';
+import 'package:konoz/features/search/data/repo/search_repo_implmentation.dart';
+import 'package:konoz/features/search/presentation/controllers/search/search_cubit.dart';
 import 'package:konoz/features/settings/presentation/controllers/logout/logout_cubit.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -81,6 +84,12 @@ Future<void> setupGetIt() async {
   getIt.registerFactory<CheckoutRepo>(
     () => CheckoutRepoImplementation(getIt()),
   );
+
+  // Search Repository
+  getIt.registerLazySingleton<SearchRepo>(
+    () => SearchRepoImplementation(getIt()),
+  );
+
   //ــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــ
 
   /// All Cubits ====>
@@ -129,4 +138,7 @@ Future<void> setupGetIt() async {
   getIt.registerFactory<CheckoutCubit>(
     () => CheckoutCubit(getIt(), getIt<CartCubit>()),
   );
+
+  // Search Cubit
+  getIt.registerFactory<SearchCubit>(() => SearchCubit(getIt()));
 }

@@ -30,7 +30,10 @@ class BestSellingItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => context.push("${Routes.home}/${Routes.productDetails}"),
+      onTap: () => context.push(
+        "${Routes.home}/${Routes.productDetails}",
+        extra: product.id,
+      ),
       child: SizedBox(
         width: 160.w,
         height: 200.h,

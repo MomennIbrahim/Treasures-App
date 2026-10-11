@@ -2,6 +2,7 @@
     "general": {
         "add_to_cart":  "اضافة الى السلة"  ,
         "search_hint": "ابحث عن عطر...",
+        "search_no_results": "لا توجد نتائج بحث",
         "undo": "الغاء",
         "show_details": "اظهار التفاصيل",
         "product_added_to_cart" : "تمت إضافة المنتج إلى عربة التسوق، اضغط للانتقال إلى العربة",

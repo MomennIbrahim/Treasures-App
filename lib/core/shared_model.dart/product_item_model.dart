@@ -9,6 +9,7 @@ class ProductItemModel {
   final String rating;
   final String reviewCount;
   final bool inStock;
+  final int? defaultSizeId;
   final String defaultSize;
   final String defaultPrice;
   final String? defaultDiscountPrice;
@@ -26,6 +27,7 @@ class ProductItemModel {
     required this.rating,
     required this.reviewCount,
     required this.inStock,
+    this.defaultSizeId,
     required this.defaultSize,
     required this.defaultPrice,
     this.defaultDiscountPrice,
@@ -54,26 +56,46 @@ class ProductItemModel {
     );
   }
 
-  factory ProductItemModel.fromJson(Map<String, dynamic> json) {
+  factory ProductItemModel.fromSupabase(Map<String, dynamic> json) {
+    final images = (json['images'] is List)
+        ? (json['images'] as List).map((e) => e.toString()).toList()
+        : <String>[];
+
+    final sizes =
+        ((json['product_sizes'] as List?) ?? [])
+            .map((e) => ProductSizeModel.fromJson(e as Map<String, dynamic>))
+            .toList()
+          ..sort(
+            (a, b) =>
+                (int.tryParse(a.id) ?? 0).compareTo(int.tryParse(b.id) ?? 0),
+          );
+
+    // المقاس الافتراضي: أول مقاس متاح، وإلا أول مقاس
+    final def = sizes.isEmpty
+        ? null
+        : sizes.firstWhere((s) => s.isAvailable, orElse: () => sizes.first);
+
+    final price = double.tryParse(def?.price ?? '') ?? 0;
+    final disc = double.tryParse(def?.discountPrice ?? '') ?? 0;
+    final hasDiscount = disc > 0 && disc < price;
+
     return ProductItemModel(
-      id: json['id'] as int,
-      collectionId: json['collection_id'] as String,
-      name: json['name'] as String,
-      description: json['description'] as String,
-      image: json['image'] as String,
-      rating: json['rating'].toString(),
-      reviewCount: json['review_count'].toString(),
-      inStock: json['in_stock'] == 1,
-      defaultSize: json['default_size'].toString(),
-      defaultPrice: json['default_price'].toString(),
-      defaultDiscountPrice: json['default_discount_price']?.toString(),
-      defaultDiscountPercentage: json['default_discount_percentage']
-          ?.toString(),
-      isFavorite: json['is_favorite'] == 1,
-      sizes: (json['sizes'] as List<dynamic>? ?? [])
-          .map((e) => ProductSizeModel.fromJson(e as Map<String, dynamic>))
-          .toList(),
-      images: (json['images'] as List<dynamic>? ?? []).cast<String>(),
+      id: int.tryParse(json['id'].toString()) ?? 0,
+      collectionId: json['collection_id']?.toString() ?? '',
+      name: json['name']?.toString() ?? '',
+      description: json['description']?.toString() ?? '',
+      image: images.isNotEmpty ? images.first : '',
+      rating: json['rating']?.toString() ?? '0',
+      reviewCount: json['review_count']?.toString() ?? '0',
+      inStock: sizes.any((s) => s.isAvailable),
+      defaultSize: def?.displayName ?? '-',
+      defaultPrice: (price > 0 ? def!.price : def?.discountPrice) ?? '0',
+      defaultDiscountPrice: hasDiscount ? def!.discountPrice : null,
+      defaultDiscountPercentage: hasDiscount ? def!.discountPercentage : null,
+      isFavorite: false,
+      sizes: sizes,
+      images: images,
+      defaultSizeId: int.tryParse(def?.id ?? ''),
     );
   }
 

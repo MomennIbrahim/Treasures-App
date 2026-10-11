@@ -24,7 +24,7 @@ class CollectionProductsRepoImplementation extends CollectionProductsRepo {
       );
 
       final collectionProducts = response
-          .map((json) => ProductItemModel.fromJson(json))
+          .map((json) => ProductItemModel.fromSupabase(json))
           .toList();
 
       final packagesModel = CollectionProductsModel(
