@@ -38,6 +38,7 @@ abstract class  LocaleKeys {
   static const me_help_hint = 'me.help_hint';
   static const me_logout = 'me.logout';
   static const me_delivery_addresses = 'me.delivery_addresses';
+  static const me_hi = 'me.hi';
   static const me = 'me';
   static const personal_data_name = 'personal_data.name';
   static const personal_data_email = 'personal_data.email';

@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -9,6 +10,7 @@ import 'package:konoz/core/widgets/app_image.dart';
 import 'package:konoz/core/widgets/app_toast.dart';
 import 'package:konoz/features/profile/data/model/profile_model.dart';
 import 'package:konoz/features/profile/presentation/controllers/profile/profile_cubit.dart';
+import 'package:konoz/generated/locale_keys.g.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class UserInfoSection extends StatelessWidget {
@@ -63,7 +65,7 @@ class UserInfoSection extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Hi, $displayName',
+                          '${LocaleKeys.me_hi.tr()}, $displayName',
                           style: AppTextStyles.text16Bold,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,

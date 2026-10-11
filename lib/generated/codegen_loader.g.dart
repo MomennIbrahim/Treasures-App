@@ -54,7 +54,8 @@ class CodegenLoader extends AssetLoader{
     "settings": "Settings",
     "help_hint": "Fell free to Ask, We Ready to Help",
     "logout": "Logout",
-    "delivery_addresses": "Delivery Addresses"
+    "delivery_addresses": "Delivery Addresses",
+    "hi": "Hi"
   },
   "personal_data": {
     "name": "Name",
@@ -286,7 +287,8 @@ static const Map<String,dynamic> _ar = {
     "settings": "الإعدادات",
     "help_hint": "لا تتردد في السؤال، نحن مستعدون لمساعدتك",
     "logout": "تسجيل الخروج",
-    "delivery_addresses": "عناوين التوصيل"
+    "delivery_addresses": "عناوين التوصيل",
+    "hi": "مرحبا"
   },
   "personal_data": {
     "name": "الاسم",

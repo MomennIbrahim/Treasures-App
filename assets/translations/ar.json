@@ -42,7 +42,8 @@
         "settings": "الإعدادات",
         "help_hint": "لا تتردد في السؤال، نحن مستعدون لمساعدتك",
         "logout": "تسجيل الخروج",
-        "delivery_addresses": "عناوين التوصيل"
+        "delivery_addresses": "عناوين التوصيل",
+        "hi": "مرحبا"
     },
 
    "personal_data": {

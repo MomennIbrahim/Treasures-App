@@ -41,7 +41,8 @@
         "settings": "Settings",
         "help_hint": "Fell free to Ask, We Ready to Help",
         "logout": "Logout",
-        "delivery_addresses": "Delivery Addresses"
+        "delivery_addresses": "Delivery Addresses",
+        "hi": "Hi"
     },
 
     "personal_data": {
