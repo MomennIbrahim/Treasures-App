@@ -161,7 +161,11 @@ class CodegenLoader extends AssetLoader{
     "order_placed_successfully": "Order Placed Successfully",
     "order_placed_message": "Your order #{0} has been placed successfully.",
     "track_order": "Track Order",
-    "continue_shopping": "Continue Shopping"
+    "continue_shopping": "Continue Shopping",
+    "phone_title": "Phone number",
+    "phone_hint": "We need it so the courier can reach you",
+    "phone_save": "Save number",
+    "phone_required": "Please add your phone number first"
   },
   "auth": {
     "get_started": "Get Started Now With ",
@@ -394,7 +398,11 @@ static const Map<String,dynamic> _ar = {
     "order_placed_successfully": "تم تأكيد طلبك بنجاح",
     "order_placed_message": "تم تأكيد طلبك رقم #{0} بنجاح.",
     "track_order": "تتبع الطلب",
-    "continue_shopping": "متابعة التسوق"
+    "continue_shopping": "متابعة التسوق",
+    "phone_title": "رقم الموبايل",
+    "phone_hint": "محتاجينه عشان المندوب يتواصل معاك",
+    "phone_save": "حفظ الرقم",
+    "phone_required": "ضيف رقم موبايلك الأول"
   },
   "auth": {
     "get_started": "ابدأ الآن مع ",

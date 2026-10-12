@@ -1,17 +1,14 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:go_router/go_router.dart';
 import 'package:hugeicons/hugeicons.dart';
-import 'package:konoz/core/constance/images_paths.dart';
 import 'package:konoz/core/helper/app_padding.dart';
-import 'package:konoz/core/router/routes.dart';
 import 'package:konoz/core/theme/app_colors.dart';
-import 'package:konoz/core/theme/app_radius.dart';
 import 'package:konoz/core/theme/app_text_style.dart';
-import 'package:konoz/core/widgets/app_image.dart';
 import 'package:konoz/core/widgets/app_text_rich.dart';
 import 'package:konoz/features/auth/presentation/ui/widgets/auth_form.dart';
+import 'package:konoz/features/auth/presentation/ui/widgets/google_auth_button.dart';
+import 'package:konoz/features/auth/presentation/ui/widgets/google_sign_in_bloc_listener.dart';
 import 'package:konoz/features/auth/presentation/ui/widgets/login_button.dart';
 import 'package:konoz/features/auth/presentation/ui/widgets/send_otp_bloc_listener.dart';
 import 'package:konoz/generated/locale_keys.g.dart';
@@ -89,23 +86,9 @@ class _AuthScreenState extends State<AuthScreen> {
                 LocaleKeys.auth_or_login_with.tr(),
                 style: AppTextStyles.text12Regular,
               ),
-              InkWell(
-                onTap: () => context.go(Routes.home),
-                child: Container(
-                  padding: paddingAll(12),
-                  margin: paddingAll(12),
-                  decoration: BoxDecoration(
-                    color: colorScheme.secondary.withValues(alpha: 0.05),
-                    borderRadius: AppRadius.br12,
-                  ),
-                  child: AppImage.asset(
-                    ImagesPaths.google,
-                    width: 24,
-                    borderRadius: AppRadius.br24,
-                  ),
-                ),
-              ),
+              GoogleAuthButton(),
               SendOtpBlocListener(),
+              GoogleSignInBlocListener(),
             ],
           ),
         ),

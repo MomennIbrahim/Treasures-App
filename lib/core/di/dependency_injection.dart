@@ -2,6 +2,7 @@ import 'package:get_it/get_it.dart';
 import 'package:konoz/core/networking/supabase_db_service.dart';
 import 'package:konoz/features/auth/data/repo/auth_repo.dart';
 import 'package:konoz/features/auth/data/repo/auth_repo_implmentation.dart';
+import 'package:konoz/features/auth/presentation/controllers/google_signin/google_sign_in_cubit.dart';
 import 'package:konoz/features/auth/presentation/controllers/send_otp/send_otp_cubit.dart';
 import 'package:konoz/features/auth/presentation/controllers/verify_otp/verify_otp_cubit.dart';
 import 'package:konoz/features/cart/data/repo/cart_repo.dart';
@@ -105,6 +106,7 @@ Future<void> setupGetIt() async {
   // Auth Cubits
   getIt.registerFactory<SendOtpCubit>(() => SendOtpCubit(getIt()));
   getIt.registerFactory<VerifyOtpCubit>(() => VerifyOtpCubit(getIt()));
+  getIt.registerFactory<GoogleSignInCubit>(() => GoogleSignInCubit(getIt()));
   getIt.registerFactory<LogoutCubit>(() => LogoutCubit(getIt()));
 
   getIt.registerFactory<LayoutCubit>(() => LayoutCubit());

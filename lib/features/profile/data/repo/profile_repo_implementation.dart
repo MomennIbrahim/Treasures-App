@@ -118,4 +118,19 @@ class ProfileRepoImplementation implements ProfileRepo {
     }
     return id;
   }
+
+  @override
+  Future<Either<AppFailure, Unit>> updatePhone({required String phone}) async {
+    try {
+      final id = _db.currentUser!.id;
+      await _db.updateDocument(
+        path: 'profiles',
+        id: id,
+        data: {'phone': phone},
+      );
+      return const Right(unit);
+    } catch (e) {
+      return Left(RemoteServerFailure.from(e));
+    }
+  }
 }

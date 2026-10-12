@@ -158,7 +158,11 @@
     "order_placed_successfully": "Order Placed Successfully",
     "order_placed_message": "Your order #{0} has been placed successfully.",
     "track_order": "Track Order",
-    "continue_shopping": "Continue Shopping"
+    "continue_shopping": "Continue Shopping",
+    "phone_title": "Phone number",
+    "phone_hint": "We need it so the courier can reach you",
+    "phone_save": "Save number",
+    "phone_required": "Please add your phone number first"
   },
 
   "auth": {

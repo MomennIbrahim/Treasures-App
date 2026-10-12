@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:dartz/dartz.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:konoz/core/constance/app_keys.dart';
 import 'package:konoz/core/error/app_failure.dart';
 import 'package:konoz/core/networking/supabase_db_service.dart';
 import 'package:konoz/features/auth/data/model/user_model.dart';
@@ -13,6 +14,26 @@ class AuthRepoImplmentation implements AuthRepo {
   final SupabaseDbService _dbService;
 
   AuthRepoImplmentation(this._dbService);
+
+  @override
+  Future<Either<AppFailure, UserModel?>> signInWithGoogle() async {
+    try {
+      final response = await _dbService.signInWithGoogle(
+        webClientId: AppKeys.googleWebClientId,
+        iosClientId: AppKeys.googleIosClientId,
+      );
+      if (response == null) return const Right(null);
+      final user = response.user;
+      if (user == null) {
+        return Left(
+          RemoteServerFailure(LocaleKeys.errors_errors_unexpected.tr()),
+        );
+      }
+      return Right(UserModel.fromSupabase(user));
+    } catch (e) {
+      return Left(RemoteServerFailure.from(e));
+    }
+  }
 
   String _msg(String message) =>
       message.isNotEmpty ? message : LocaleKeys.errors_errors_unexpected.tr();

@@ -17,15 +17,17 @@ class ProfileModel extends Equatable {
     required this.addresses,
   });
 
+
   ProfileModel copyWith({
     String? name,
     String? email,
     List<AddressModel>? addresses,
+    String? phone,
   }) {
     return ProfileModel(
       id: id,
       name: name ?? this.name,
-      phone: phone,
+      phone: phone?? this.phone,
       email: email ?? this.email,
       avatarUrl: avatarUrl,
       addresses: addresses ?? this.addresses,

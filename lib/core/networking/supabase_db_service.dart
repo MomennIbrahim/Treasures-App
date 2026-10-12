@@ -1,9 +1,51 @@
+import 'dart:io';
+
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class SupabaseDbService {
   final SupabaseClient _client;
 
   SupabaseDbService(this._client);
+
+  // ═════════════════════════════════════════════
+  // Auth (Google)
+  // ═════════════════════════════════════════════
+  // جوه الكلاس
+  bool _googleReady = false;
+
+  /// null = اليوزر قفل نافذة الاختيار (مش خطأ)
+  Future<AuthResponse?> signInWithGoogle({
+    required String webClientId,
+    String? iosClientId,
+  }) async {
+    final google = GoogleSignIn.instance;
+    if (!_googleReady) {
+      await google.initialize(
+        clientId: Platform.isIOS ? iosClientId : null,
+        serverClientId: webClientId,
+      );
+      _googleReady = true;
+    }
+
+    final GoogleSignInAccount account;
+    try {
+      account = await google.authenticate();
+    } on GoogleSignInException catch (e) {
+      if (e.code == GoogleSignInExceptionCode.canceled) return null;
+      rethrow;
+    }
+
+    final idToken = account.authentication.idToken;
+    if (idToken == null) {
+      throw const AuthException('No ID token from Google');
+    }
+
+    return _client.auth.signInWithIdToken(
+      provider: OAuthProvider.google,
+      idToken: idToken,
+    );
+  }
 
   // ═════════════════════════════════════════════
   // Auth (Phone OTP)
@@ -44,6 +86,9 @@ class SupabaseDbService {
   }
 
   Future<void> signOut() async {
+    try {
+      await GoogleSignIn.instance.signOut();
+    } catch (_) {}
     await _client.auth.signOut();
   }
 

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:konoz/core/di/dependency_injection.dart';
+import 'package:konoz/features/auth/presentation/controllers/google_signin/google_sign_in_cubit.dart';
 import 'package:konoz/features/auth/presentation/controllers/send_otp/send_otp_cubit.dart';
 import 'package:konoz/features/auth/presentation/controllers/verify_otp/verify_otp_cubit.dart';
 import 'package:konoz/features/auth/presentation/ui/screens/auth_screen.dart';
@@ -51,8 +52,11 @@ class AppRouter {
         pageBuilder: (context, state) {
           return AppPageTransition.fade(
             state: state,
-            child: BlocProvider(
-              create: (context) => getIt.get<SendOtpCubit>(),
+            child: MultiBlocProvider(
+              providers: [
+                BlocProvider(create: (_) => getIt.get<SendOtpCubit>()),
+                BlocProvider(create: (_) => getIt.get<GoogleSignInCubit>()),
+              ],
               child: AuthScreen(),
             ),
           );

@@ -159,7 +159,11 @@
     "order_placed_successfully": "تم تأكيد طلبك بنجاح",
     "order_placed_message": "تم تأكيد طلبك رقم #{0} بنجاح.",
     "track_order": "تتبع الطلب",
-    "continue_shopping": "متابعة التسوق"
+    "continue_shopping": "متابعة التسوق",
+    "phone_title": "رقم الموبايل",
+    "phone_hint": "محتاجينه عشان المندوب يتواصل معاك",
+    "phone_save": "حفظ الرقم",
+    "phone_required": "ضيف رقم موبايلك الأول"
   },
   
   "auth": {

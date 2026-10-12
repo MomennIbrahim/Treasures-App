@@ -134,6 +134,10 @@ abstract class  LocaleKeys {
   static const checkout_order_placed_message = 'checkout.order_placed_message';
   static const checkout_track_order = 'checkout.track_order';
   static const checkout_continue_shopping = 'checkout.continue_shopping';
+  static const checkout_phone_title = 'checkout.phone_title';
+  static const checkout_phone_hint = 'checkout.phone_hint';
+  static const checkout_phone_save = 'checkout.phone_save';
+  static const checkout_phone_required = 'checkout.phone_required';
   static const checkout = 'checkout';
   static const auth_get_started = 'auth.get_started';
   static const auth_app_name = 'auth.app_name';

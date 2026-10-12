@@ -164,4 +164,32 @@ class ProfileCubit extends SafeCubit<ProfileState> {
       },
     );
   }
+
+  Future<void> updatePhone(String phone) async {
+    
+    final profile = state.profile;
+    if (profile == null) return;
+
+    emit(
+      state.copyWith(
+        actionStatus: ProfileActionStatus.loading,
+        action: ProfileAction.updatePhone,
+      ),
+    );
+    final result = await repo.updatePhone(phone: phone);
+    result.fold(
+      (f) => emit(
+        state.copyWith(
+          actionStatus: ProfileActionStatus.failure,
+          actionFailure: f,
+        ),
+      ),
+      (_) => emit(
+        state.copyWith(
+          actionStatus: ProfileActionStatus.success,
+          profile: profile.copyWith(phone: phone),
+        ),
+      ),
+    );
+  }
 }

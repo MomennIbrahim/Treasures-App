@@ -9,6 +9,7 @@ enum ProfileAction {
   addAddress,
   deleteAddress,
   setDefaultAddress,
+  updatePhone,
 }
 
 extension ProfileStateX on ProfileState {

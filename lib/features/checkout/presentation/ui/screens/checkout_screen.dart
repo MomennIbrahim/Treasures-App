@@ -17,6 +17,7 @@ import 'package:konoz/features/cart/presentation/ui/widgets/summary_order_widget
 import 'package:konoz/features/checkout/data/model/checkout_model.dart';
 import 'package:konoz/features/checkout/presentation/controllers/checkout/checkout_cubit.dart';
 import 'package:konoz/features/checkout/presentation/ui/widgets/checkout_address_section.dart';
+import 'package:konoz/features/checkout/presentation/ui/widgets/checkout_phone_section.dart';
 import 'package:konoz/features/checkout/presentation/ui/widgets/payment_methods_section.dart';
 import 'package:konoz/features/profile/presentation/controllers/profile/profile_cubit.dart';
 import 'package:konoz/generated/locale_keys.g.dart';
@@ -67,6 +68,7 @@ class CheckoutScreen extends StatelessWidget {
                     _sectionTitle(LocaleKeys.checkout_delivery_address),
                     10.verticalSpace,
                     const CheckoutAddressSection(),
+                    const CheckoutPhoneSection(),
                     24.verticalSpace,
                     const PaymentMethodSection(),
                     24.verticalSpace,
@@ -124,6 +126,14 @@ class CheckoutScreen extends StatelessWidget {
       AppToast.show(
         context,
         message: 'checkout.select_address'.tr(),
+        type: AppToastType.error,
+      );
+      return;
+    }
+    if ((profile?.phone ?? '').trim().isEmpty) {
+      AppToast.show(
+        context,
+        message: LocaleKeys.checkout_phone_required.tr(),
         type: AppToastType.error,
       );
       return;
