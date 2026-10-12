@@ -52,8 +52,9 @@ class HomeRepoImplementation extends HomeRepo {
     try {
       final data = await _dbService.getCollection(
         path: 'products',
+        columns: '*, product_sizes(*)',
         filters: [const QueryFilter(field: 'is_best_seller', isEqualTo: true)],
-        //  orderByField: 'created_at',
+        orderByField: 'id',
         descending: true,
       );
 
@@ -69,14 +70,6 @@ class HomeRepoImplementation extends HomeRepo {
       );
 
       return Right(model);
-    } on PostgrestException catch (e) {
-      return Left(
-        RemoteServerFailure(
-          e.message.isNotEmpty
-              ? e.message
-              : LocaleKeys.errors_errors_unexpected.tr(),
-        ),
-      );
     } catch (e) {
       return Left(RemoteServerFailure(e.toString()));
     }
@@ -89,10 +82,11 @@ class HomeRepoImplementation extends HomeRepo {
     try {
       final data = await _dbService.getCollection(
         path: 'products',
+        columns: '*, product_sizes(*)',
         filters: [
           const QueryFilter(field: 'is_currently_trending', isEqualTo: true),
         ],
-        //  orderByField: 'created_at',
+        orderByField: 'id',
         descending: true,
       );
 
@@ -106,17 +100,8 @@ class HomeRepoImplementation extends HomeRepo {
         products: products,
       );
 
-      log(products[0].images.toString());
-
+ 
       return Right(model);
-    } on PostgrestException catch (e) {
-      return Left(
-        RemoteServerFailure(
-          e.message.isNotEmpty
-              ? e.message
-              : LocaleKeys.errors_errors_unexpected.tr(),
-        ),
-      );
     } catch (e) {
       return Left(RemoteServerFailure(e.toString()));
     }

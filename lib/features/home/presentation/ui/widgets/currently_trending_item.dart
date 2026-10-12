@@ -108,7 +108,7 @@ class CurrentlyTrendingItem extends StatelessWidget {
                         decoration: TextDecoration.lineThrough,
                         decorationColor: AppColors.primary,
                         decorationThickness: 1.8,
-                        color: AppColors.background,
+                        color: colorScheme.onSurfaceVariant.withAlpha(150),
                       ),
                     ),
                   ),

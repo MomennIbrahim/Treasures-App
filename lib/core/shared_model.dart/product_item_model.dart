@@ -40,7 +40,7 @@ class ProductItemModel {
   factory ProductItemModel.empty() {
     return const ProductItemModel(
       id: 0,
-      collectionId: "1",
+      collectionId: '1',
       name: 'placeholder name',
       description: 'placeholder description text here',
       image:
@@ -57,50 +57,96 @@ class ProductItemModel {
   }
 
   factory ProductItemModel.fromSupabase(Map<String, dynamic> json) {
-    final images = (json['images'] is List)
-        ? (json['images'] as List).map((e) => e.toString()).toList()
+    final rawImages = json['images'];
+
+    final images = rawImages is List
+        ? rawImages.map((item) => item.toString()).toList()
         : <String>[];
 
+    final rawSizes = json['product_sizes'];
+
     final sizes =
-        ((json['product_sizes'] as List?) ?? [])
-            .map((e) => ProductSizeModel.fromJson(e as Map<String, dynamic>))
+        (rawSizes is List ? rawSizes : [])
+            .whereType<Map>()
+            .map(
+              (item) =>
+                  ProductSizeModel.fromJson(Map<String, dynamic>.from(item)),
+            )
             .toList()
           ..sort(
             (a, b) =>
                 (int.tryParse(a.id) ?? 0).compareTo(int.tryParse(b.id) ?? 0),
           );
 
-    // المقاس الافتراضي: أول مقاس متاح، وإلا أول مقاس
-    final def = sizes.isEmpty
+    // أول مقاس متاح، أو أول مقاس لو كل المقاسات غير متاحة.
+    final ProductSizeModel? defaultSize = sizes.isEmpty
         ? null
-        : sizes.firstWhere((s) => s.isAvailable, orElse: () => sizes.first);
+        : sizes.firstWhere(
+            (size) => size.isAvailable,
+            orElse: () => sizes.first,
+          );
 
-    final price = double.tryParse(def?.price ?? '') ?? 0;
-    final disc = double.tryParse(def?.discountPrice ?? '') ?? 0;
-    final hasDiscount = disc > 0 && disc < price;
+    final originalPrice = _parsePrice(defaultSize?.price);
+    final discountedPrice = _parsePrice(defaultSize?.discountPrice);
+
+    final hasDiscount =
+        originalPrice != null &&
+        discountedPrice != null &&
+        discountedPrice > 0 &&
+        discountedPrice < originalPrice;
+
+    final displayedPrice = originalPrice ?? discountedPrice ?? 0;
 
     return ProductItemModel(
-      id: int.tryParse(json['id'].toString()) ?? 0,
+      id: int.tryParse(json['id']?.toString() ?? '') ?? 0,
       collectionId: json['collection_id']?.toString() ?? '',
       name: json['name']?.toString() ?? '',
       description: json['description']?.toString() ?? '',
       image: images.isNotEmpty ? images.first : '',
       rating: json['rating']?.toString() ?? '0',
       reviewCount: json['review_count']?.toString() ?? '0',
-      inStock: sizes.any((s) => s.isAvailable),
-      defaultSize: def?.displayName ?? '-',
-      defaultPrice: (price > 0 ? def!.price : def?.discountPrice) ?? '0',
-      defaultDiscountPrice: hasDiscount ? def!.discountPrice : null,
-      defaultDiscountPercentage: hasDiscount ? def!.discountPercentage : null,
+      inStock: sizes.any((size) => size.isAvailable),
+      defaultSizeId: int.tryParse(defaultSize?.id ?? ''),
+      defaultSize: defaultSize?.displayName ?? '-',
+      defaultPrice: _formatPrice(displayedPrice),
+      defaultDiscountPrice: hasDiscount ? _formatPrice(discountedPrice) : null,
+      defaultDiscountPercentage: hasDiscount
+          ? (defaultSize?.discountPercentage ??
+                _calculateDiscountPercentage(originalPrice, discountedPrice))
+          : null,
       isFavorite: false,
       sizes: sizes,
       images: images,
-      defaultSizeId: int.tryParse(def?.id ?? ''),
     );
+  }
+
+  static double? _parsePrice(String? value) {
+    if (value == null || value.trim().isEmpty) {
+      return null;
+    }
+
+    return double.tryParse(value.trim());
+  }
+
+  static String _formatPrice(double value) {
+    return value == value.roundToDouble()
+        ? value.toInt().toString()
+        : value.toString();
+  }
+
+  static String _calculateDiscountPercentage(
+    double originalPrice,
+    double discountedPrice,
+  ) {
+    final percentage =
+        ((originalPrice - discountedPrice) / originalPrice) * 100;
+
+    return percentage.round().toString();
   }
 
   Map<String, dynamic> toJson() {
     return {
+      'id': id,
       'collection_id': collectionId,
       'name': name,
       'description': description,
@@ -108,14 +154,13 @@ class ProductItemModel {
       'rating': rating,
       'review_count': reviewCount,
       'in_stock': inStock,
+      'default_size_id': defaultSizeId,
       'default_size': defaultSize,
       'default_price': defaultPrice,
       'default_discount_price': defaultDiscountPrice,
       'default_discount_percentage': defaultDiscountPercentage,
       'is_favorite': isFavorite,
-      'is_best_seller': true,
-      'is_currently_trending': true,
-      'sizes': sizes.map((e) => e.toJson()).toList(),
+      'sizes': sizes.map((item) => item.toJson()).toList(),
       'images': images,
     };
   }

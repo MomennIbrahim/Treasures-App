@@ -104,7 +104,7 @@ class CodegenLoader extends AssetLoader{
     "tax": "Tax",
     "discount": "Discount",
     "total": "Total",
-    "empty_cart": "Your cart is empty"
+    "empty_cart": "Your shopping cart is currently empty, You can start browsing products to add items to your cart"
   },
   "errors": {
     "errors_timeout": "Connection timed out. Please try again.",
@@ -341,7 +341,7 @@ static const Map<String,dynamic> _ar = {
     "tax": "الضريبة",
     "discount": "الخصم",
     "total": "الأجمالي",
-    "empty_cart": "عربة التسوق فارغة"
+    "empty_cart": "عربة التسوق الخاصة بك فارغة حالياً. يمكنك البدء بتصفح المنتجات لإضافة عناصر إلى العربة."
   },
   "errors": {
     "errors_timeout": "انتهت مهلة الاتصال. حاول مرة أخرى.",

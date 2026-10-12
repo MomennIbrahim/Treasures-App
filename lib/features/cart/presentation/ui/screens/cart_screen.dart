@@ -42,26 +42,28 @@ class _CartScreenState extends State<CartScreen> {
 
           child: CustomScrollView(
             slivers: [
-              CartTotalHeader(onShowDetails: _scrollToSummary),
-              SliverPadding(
-                padding: paddingVertical(16),
-                sliver: SliverAppBar(
-                  pinned: true,
-                  backgroundColor: Colors.transparent,
-                  toolbarHeight: 42.5.h,
-                  flexibleSpace: FlexibleSpaceBar(
-                    background: AppButton(
-                      label:
-                          "${LocaleKeys.cart_proceed_to_buy.tr()} ($cartCount ${LocaleKeys.cart_items.tr()})",
-                      labelStyle: AppTextStyles.text12Bold,
-                      icon: Icon(Icons.arrow_forward),
-                      onPressed: () {
-                        context.push(Routes.checkout);
-                      },
+              if (cartCount != 0) ...[
+                CartTotalHeader(onShowDetails: _scrollToSummary),
+                SliverPadding(
+                  padding: paddingVertical(16),
+                  sliver: SliverAppBar(
+                    pinned: true,
+                    backgroundColor: Colors.transparent,
+                    toolbarHeight: 42.5.h,
+                    flexibleSpace: FlexibleSpaceBar(
+                      background: AppButton(
+                        label:
+                            "${LocaleKeys.cart_proceed_to_buy.tr()} ($cartCount ${LocaleKeys.cart_items.tr()})",
+                        labelStyle: AppTextStyles.text12Bold,
+                        icon: Icon(Icons.arrow_forward),
+                        onPressed: () {
+                          context.push(Routes.checkout);
+                        },
+                      ),
                     ),
                   ),
                 ),
-              ),
+              ],
               CartItemsList(),
               SliverToBoxAdapter(child: SummaryOrderWidget(key: _summaryKey)),
 

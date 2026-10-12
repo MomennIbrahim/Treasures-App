@@ -94,7 +94,7 @@
         "tax": "Tax",
         "discount": "Discount",
         "total": "Total",
-        "empty_cart": "Your cart is empty"
+        "empty_cart": "Your shopping cart is currently empty, You can start browsing products to add items to your cart"
     },
 
     "errors": {

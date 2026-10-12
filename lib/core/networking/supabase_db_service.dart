@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -15,16 +13,10 @@ class SupabaseDbService {
   bool _googleReady = false;
 
   /// null = اليوزر قفل نافذة الاختيار (مش خطأ)
-  Future<AuthResponse?> signInWithGoogle({
-    required String webClientId,
-    String? iosClientId,
-  }) async {
+  Future<AuthResponse?> signInWithGoogle({required String webClientId}) async {
     final google = GoogleSignIn.instance;
     if (!_googleReady) {
-      await google.initialize(
-        clientId: Platform.isIOS ? iosClientId : null,
-        serverClientId: webClientId,
-      );
+      await google.initialize(serverClientId: webClientId);
       _googleReady = true;
     }
 

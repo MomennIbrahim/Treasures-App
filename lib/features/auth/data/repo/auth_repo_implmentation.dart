@@ -20,8 +20,7 @@ class AuthRepoImplmentation implements AuthRepo {
     try {
       final response = await _dbService.signInWithGoogle(
         webClientId: AppKeys.googleWebClientId,
-        iosClientId: AppKeys.googleIosClientId,
-      );
+       );
       if (response == null) return const Right(null);
       final user = response.user;
       if (user == null) {
