@@ -28,7 +28,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) => _load());
-  } 
+  }
 
   void _load() {
     context.read<ProductDetailsCubit>().getProductDetails(
@@ -69,6 +69,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                             Row(
                               children: [
                                 Expanded(
+                                  flex: 2,
                                   child: Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
@@ -101,19 +102,22 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                   ),
                                 ),
                                 8.horizontalSpace,
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      "${LocaleKeys.product_details_longevity.tr()}: ${product.longevity}",
-                                      style: AppTextStyles.text12Regular,
-                                    ),
-                                    6.verticalSpace,
-                                    Text(
-                                      "${LocaleKeys.product_details_sillage.tr()}: ${product.sillage}",
-                                      style: AppTextStyles.text12Regular,
-                                    ),
-                                  ],
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        "${LocaleKeys.product_details_longevity.tr()}: ${product.longevity}",
+                                        style: AppTextStyles.text12Regular,
+                                      ),
+                                      6.verticalSpace,
+                                      Text(
+                                        "${LocaleKeys.product_details_sillage.tr()}: ${product.sillage}",
+                                        style: AppTextStyles.text12Regular,
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ],
                             ),

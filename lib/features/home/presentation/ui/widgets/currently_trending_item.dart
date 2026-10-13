@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hugeicons/hugeicons.dart';
@@ -10,10 +11,12 @@ import 'package:konoz/core/theme/app_colors.dart';
 import 'package:konoz/core/theme/app_radius.dart';
 import 'package:konoz/core/theme/app_text_style.dart';
 import 'package:konoz/core/widgets/app_image.dart';
+import 'package:konoz/core/widgets/app_loading.dart';
 import 'package:konoz/core/widgets/app_toast.dart';
+import 'package:konoz/features/cart/presentation/controller/cart/cart_cubit.dart';
 import 'package:konoz/generated/locale_keys.g.dart';
 
-class CurrentlyTrendingItem extends StatelessWidget {
+class CurrentlyTrendingItem extends StatefulWidget {
   final ProductItemModel product;
   final bool isLoading;
 
@@ -22,6 +25,46 @@ class CurrentlyTrendingItem extends StatelessWidget {
     required this.product,
     required this.isLoading,
   });
+
+  @override
+  State<CurrentlyTrendingItem> createState() => _CurrentlyTrendingItemState();
+}
+
+class _CurrentlyTrendingItemState extends State<CurrentlyTrendingItem> {
+  bool _adding = false;
+
+  ProductItemModel get product => widget.product;
+  bool get isLoading => widget.isLoading;
+
+  Future<void> _addToCart() async {
+    final sizeId = product.defaultSizeId;
+    if (isLoading || _adding || sizeId == null) return;
+
+    setState(() => _adding = true);
+    final res = await context.read<CartCubit>().addToCart(sizeId: sizeId);
+    if (!mounted) return;
+    setState(() => _adding = false);
+
+    if (res == null) return; // الضغطة اتجاهلت (فيه إضافة شغالة)
+
+    res.fold(
+      (failure) {
+        AppToast.show(
+          context,
+          message: failure.message, // عدّلها لو اسم الحقل عندك مختلف
+          type: AppToastType.error,
+        );
+      },
+      (_) {
+        AppToast.show(
+          context,
+          message: LocaleKeys.general_product_added_to_cart.tr(),
+          type: AppToastType.success,
+          onTap: () => context.go(Routes.cart),
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -133,23 +176,21 @@ class CurrentlyTrendingItem extends StatelessWidget {
                   ),
                   InkWell(
                     borderRadius: AppRadius.br48,
-                    onTap: () {
-                      AppToast.show(
-                        context,
-                        message: LocaleKeys.general_product_added_to_cart.tr(),
-                        type: AppToastType.success,
-                        onTap: () {
-                          context.go(Routes.cart);
-                        },
-                      );
-                    },
+                    onTap:
+                        (isLoading || _adding || product.defaultSizeId == null)
+                        ? null
+                        : _addToCart,
                     child: CircleAvatar(
                       backgroundColor: isLoading
                           ? Colors.transparent
-                          : AppColors.primary.withValues(alpha: 0.9),
+                          : AppColors.primary.withValues(
+                              alpha: product.defaultSizeId == null ? 0.4 : 0.9,
+                            ),
                       radius: 14.r,
                       child: isLoading
                           ? null
+                          : _adding
+                          ? AppLoading(size: 15.sp, color: AppColors.white)
                           : HugeIcon(
                               icon: HugeIcons.strokeRoundedShoppingBagAdd,
                               color: AppColors.white,

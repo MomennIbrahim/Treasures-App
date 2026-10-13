@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:konoz/core/helper/app_padding.dart';
-import 'package:konoz/core/theme/app_colors.dart';
 import 'package:konoz/core/widgets/app_slider.dart';
 import 'package:konoz/core/widgets/custom_back_icon.dart';
 import 'package:konoz/features/product_details/data/model/product_details_model.dart';
@@ -90,18 +89,6 @@ class ProductImagesAndSizingSection extends StatelessWidget {
                     ),
                     child: CustomBackIcon(),
                   ),
-                ),
-              ),
-              PositionedDirectional(
-                end: 16.w,
-                bottom: 32.h,
-                child: Container(
-                  padding: paddingAll(8),
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: AppColors.lightWhite,
-                  ),
-                  child: Icon(Icons.favorite, color: AppColors.white),
                 ),
               ),
             ],

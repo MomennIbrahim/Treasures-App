@@ -4,14 +4,16 @@ import 'package:konoz/core/theme/app_colors.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class AppLoading extends StatelessWidget {
-  const AppLoading({super.key});
+  final Color color;
+  final double size;
+  const AppLoading({super.key , this.color = AppColors.primary,this.size = 30});
 
   @override
   Widget build(BuildContext context) {
     return Center(
       child: LoadingAnimationWidget.hexagonDots(
-        color: AppColors.primary,
-        size: 30.sp,
+        color: color,
+        size: size.sp,
       ),
     );
   }
