@@ -2,11 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:konoz/core/di/dependency_injection.dart';
-import 'package:konoz/features/auth/presentation/controllers/google_signin/google_sign_in_cubit.dart';
-import 'package:konoz/features/auth/presentation/controllers/send_otp/send_otp_cubit.dart';
-import 'package:konoz/features/auth/presentation/controllers/verify_otp/verify_otp_cubit.dart';
-import 'package:konoz/features/auth/presentation/ui/screens/auth_screen.dart';
-import 'package:konoz/features/auth/presentation/ui/screens/otp_screen.dart';
 import 'package:konoz/features/auth/presentation/ui/widgets/auth_gate.dart';
 import 'package:konoz/features/cart/presentation/ui/screens/cart_screen.dart';
 import 'package:konoz/features/checkout/presentation/controllers/checkout/checkout_cubit.dart';
@@ -40,7 +35,6 @@ import 'package:konoz/features/settings/presentation/ui/screens/settings_screen.
 
 import 'routes.dart';
 
- 
 class AppRouter {
   static final GoRouter router = GoRouter(
     redirect: (context, state) => null,
@@ -75,7 +69,6 @@ class AppRouter {
       //     );
       //   },
       // ),
-
       StatefulShellRoute.indexedStack(
         builder: (context, state, navigationShell) {
           return LayoutScreen(navigationShell: navigationShell);
@@ -173,7 +166,19 @@ class AppRouter {
                   );
                 },
                 routes: [
-                  // productDetails زي ما هو
+                  GoRoute(
+                    path: Routes.productDetails,
+                    pageBuilder: (context, state) {
+                      final productId = state.extra as int;
+                      return AppPageTransition.fade(
+                        state: state,
+                        child: BlocProvider(
+                          create: (context) => getIt.get<ProductDetailsCubit>(),
+                          child: ProductDetailsScreen(productId: productId),
+                        ),
+                      );
+                    },
+                  ),
                 ],
               ),
             ],
@@ -183,7 +188,8 @@ class AppRouter {
             routes: [
               GoRoute(
                 path: Routes.cart,
-                builder: (context, state) => AuthGate(child: const CartScreen()),
+                builder: (context, state) =>
+                    AuthGate(child: const CartScreen()),
               ),
             ],
           ),
@@ -194,7 +200,7 @@ class AppRouter {
                 path: Routes.profile,
                 pageBuilder: (context, state) => AppPageTransition.fade(
                   state: state,
-                  child: const AuthGate(child: ProfileScreen(),),
+                  child: const AuthGate(child: ProfileScreen()),
                 ),
                 routes: [
                   GoRoute(

@@ -1,11 +1,10 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hugeicons/hugeicons.dart';
 import 'package:konoz/core/helper/app_padding.dart';
-import 'package:konoz/core/helper/require_login.dart';
+import 'package:konoz/core/helper/cart_helper.dart';
 import 'package:konoz/core/router/routes.dart';
 import 'package:konoz/core/shared_model.dart/product_item_model.dart';
 import 'package:konoz/core/theme/app_colors.dart';
@@ -13,8 +12,6 @@ import 'package:konoz/core/theme/app_radius.dart';
 import 'package:konoz/core/theme/app_text_style.dart';
 import 'package:konoz/core/widgets/app_image.dart';
 import 'package:konoz/core/widgets/app_loading.dart';
-import 'package:konoz/core/widgets/app_toast.dart';
-import 'package:konoz/features/cart/presentation/controller/cart/cart_cubit.dart';
 import 'package:konoz/generated/locale_keys.g.dart';
 
 class BestSellingItem extends StatefulWidget {
@@ -43,33 +40,19 @@ class _BestSellingItemState extends State<BestSellingItem> {
 
   Future<void> _addToCart() async {
     final sizeId = product.defaultSizeId;
+
     if (isLoading || _adding || sizeId == null) return;
 
-    if (!await requireLogin(context)) return; // جديد
-    if (!mounted) return;
-
-    setState(() => _adding = true);
-    final res = await context.read<CartCubit>().addToCart(sizeId: sizeId);
-    if (!mounted) return;
-    setState(() => _adding = false);
-
-    if (res == null) return; // الضغطة اتجاهلت (فيه إضافة شغالة)
-
-    res.fold(
-      (failure) {
-        AppToast.show(
-          context,
-          message: failure.message, // عدّلها لو اسم الحقل عندك مختلف
-          type: AppToastType.error,
-        );
+    await addProductToCart(
+      context: context,
+      sizeId: sizeId,
+      onLoadingStart: () {
+        if (!mounted) return;
+        setState(() => _adding = true);
       },
-      (_) {
-        AppToast.show(
-          context,
-          message: LocaleKeys.general_product_added_to_cart.tr(),
-          type: AppToastType.success,
-          onTap: () => context.go(Routes.cart),
-        );
+      onLoadingEnd: () {
+        if (!mounted) return;
+        setState(() => _adding = false);
       },
     );
   }

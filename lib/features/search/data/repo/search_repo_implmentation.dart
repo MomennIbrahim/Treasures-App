@@ -1,5 +1,7 @@
 import 'package:dartz/dartz.dart';
+import 'package:flutter/foundation.dart';
 import 'package:konoz/core/error/app_failure.dart';
+import 'package:konoz/core/helper/require_login.dart';
 import 'package:konoz/core/networking/supabase_db_service.dart';
 import 'package:konoz/core/shared_model.dart/product_item_model.dart';
 import 'package:konoz/features/search/data/repo/search_repo.dart';
@@ -47,15 +49,23 @@ class SearchRepoImplementation implements SearchRepo {
         params: {'p_query': query.trim(), 'p_limit': 6},
       );
       return ((res as List?) ?? [])
-          .map((e) => (e as Map)['term'].toString())
+          .map((e) {
+            if (e is! Map) return e?.toString();
+            // العمود اسمه suggestion، وfallback لـ term لو اتغيّر تاني
+            return (e['suggestion'] ?? e['term'])?.toString();
+          })
+          .whereType<String>()
+          .where((s) => s.trim().isNotEmpty)
           .toList();
-    } catch (_) {
+    } catch (e) {
+      if (kDebugMode) debugPrint('getSuggestions error: $e');
       return []; // الاقتراحات مش لازم تظهر خطأ
     }
   }
 
   @override
   Future<void> logSearch(String query) async {
+    if (!isLoggedIn) return; // الزائر مبيتسجلش بحثه، ومفيش request ملوش لازمة
     try {
       await _db.callRpc(function: 'log_search', params: {'p_term': query});
     } catch (_) {
