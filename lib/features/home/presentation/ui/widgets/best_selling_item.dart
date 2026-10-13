@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hugeicons/hugeicons.dart';
 import 'package:konoz/core/helper/app_padding.dart';
+import 'package:konoz/core/helper/require_login.dart';
 import 'package:konoz/core/router/routes.dart';
 import 'package:konoz/core/shared_model.dart/product_item_model.dart';
 import 'package:konoz/core/theme/app_colors.dart';
@@ -43,6 +44,9 @@ class _BestSellingItemState extends State<BestSellingItem> {
   Future<void> _addToCart() async {
     final sizeId = product.defaultSizeId;
     if (isLoading || _adding || sizeId == null) return;
+
+    if (!await requireLogin(context)) return; // جديد
+    if (!mounted) return;
 
     setState(() => _adding = true);
     final res = await context.read<CartCubit>().addToCart(sizeId: sizeId);

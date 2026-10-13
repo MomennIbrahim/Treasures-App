@@ -5,13 +5,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hugeicons/hugeicons.dart';
 import 'package:konoz/core/helper/app_padding.dart';
+import 'package:konoz/core/helper/require_login.dart';
 import 'package:konoz/core/router/routes.dart';
 import 'package:konoz/core/shared_model.dart/product_item_model.dart';
 import 'package:konoz/core/theme/app_colors.dart';
 import 'package:konoz/core/theme/app_radius.dart';
 import 'package:konoz/core/theme/app_text_style.dart';
 import 'package:konoz/core/widgets/app_image.dart';
-import 'package:konoz/core/widgets/app_loading.dart';
 import 'package:konoz/core/widgets/app_toast.dart';
 import 'package:konoz/features/cart/presentation/controller/cart/cart_cubit.dart';
 import 'package:konoz/generated/locale_keys.g.dart';
@@ -39,6 +39,10 @@ class _CurrentlyTrendingItemState extends State<CurrentlyTrendingItem> {
   Future<void> _addToCart() async {
     final sizeId = product.defaultSizeId;
     if (isLoading || _adding || sizeId == null) return;
+
+    // لو مش مسجل دخول بيفتح الـ LoginSheet، وبيكمّل لو نجح اللوجين
+    if (!await requireLogin(context)) return;
+    if (!mounted) return;
 
     setState(() => _adding = true);
     final res = await context.read<CartCubit>().addToCart(sizeId: sizeId);
@@ -190,7 +194,14 @@ class _CurrentlyTrendingItemState extends State<CurrentlyTrendingItem> {
                       child: isLoading
                           ? null
                           : _adding
-                          ? AppLoading(size: 15.sp, color: AppColors.white)
+                          ? SizedBox(
+                              width: 12.r,
+                              height: 12.r,
+                              child: const CircularProgressIndicator(
+                                strokeWidth: 2,
+                                color: AppColors.white,
+                              ),
+                            )
                           : HugeIcon(
                               icon: HugeIcons.strokeRoundedShoppingBagAdd,
                               color: AppColors.white,

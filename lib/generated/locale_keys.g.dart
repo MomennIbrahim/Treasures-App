@@ -12,6 +12,10 @@ abstract class  LocaleKeys {
   static const general_out_of_stock = 'general.out_of_stock';
   static const general_available = 'general.available';
   static const general_retry = 'general.retry';
+  static const general_login_required_title = 'general.login_required_title';
+  static const general_login_required_message = 'general.login_required_message';
+  static const general_cancel = 'general.cancel';
+  static const general_hide = 'general.hide';
   static const general = 'general';
   static const layout_home = 'layout.home';
   static const layout_collections = 'layout.collections';

@@ -8,7 +8,11 @@
         "product_added_to_cart" : "تمت إضافة المنتج إلى عربة التسوق، اضغط للانتقال إلى العربة",
         "out_of_stock": "نفذ",
         "available": "متوفر",
-        "retry": "اعادة المحاولة"
+        "retry": "اعادة المحاولة",
+        "login_required_title": "تسجيل الدخول مطلوب",
+        "login_required_message": "يجب عليك تسجيل الدخول للوصول لهذه الصفحة",
+        "cancel" : "الغاء",
+        "hide" : "اغلق"
     },
      
     "layout": {

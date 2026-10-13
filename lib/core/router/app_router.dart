@@ -7,6 +7,7 @@ import 'package:konoz/features/auth/presentation/controllers/send_otp/send_otp_c
 import 'package:konoz/features/auth/presentation/controllers/verify_otp/verify_otp_cubit.dart';
 import 'package:konoz/features/auth/presentation/ui/screens/auth_screen.dart';
 import 'package:konoz/features/auth/presentation/ui/screens/otp_screen.dart';
+import 'package:konoz/features/auth/presentation/ui/widgets/auth_gate.dart';
 import 'package:konoz/features/cart/presentation/ui/screens/cart_screen.dart';
 import 'package:konoz/features/checkout/presentation/controllers/checkout/checkout_cubit.dart';
 import 'package:konoz/features/checkout/presentation/ui/screens/checkout_screen.dart';
@@ -36,45 +37,44 @@ import 'package:konoz/features/search/presentation/ui/screens/search_products_sc
 import 'package:konoz/features/search/presentation/ui/screens/search_screen.dart';
 import 'package:konoz/features/settings/presentation/controllers/logout/logout_cubit.dart';
 import 'package:konoz/features/settings/presentation/ui/screens/settings_screen.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 import 'routes.dart';
 
+ 
 class AppRouter {
   static final GoRouter router = GoRouter(
-    initialLocation: getIt<SupabaseClient>().auth.currentSession != null
-        ? Routes.home
-        : Routes.auth,
+    redirect: (context, state) => null,
+    initialLocation: Routes.home,
     routes: [
       // Auth Routes
-      GoRoute(
-        path: Routes.auth,
-        pageBuilder: (context, state) {
-          return AppPageTransition.fade(
-            state: state,
-            child: MultiBlocProvider(
-              providers: [
-                BlocProvider(create: (_) => getIt.get<SendOtpCubit>()),
-                BlocProvider(create: (_) => getIt.get<GoogleSignInCubit>()),
-              ],
-              child: AuthScreen(),
-            ),
-          );
-        },
-      ),
-      GoRoute(
-        path: Routes.otp,
-        pageBuilder: (context, state) {
-          final phone = state.extra as String;
-          return AppPageTransition.fade(
-            state: state,
-            child: BlocProvider(
-              create: (context) => getIt.get<VerifyOtpCubit>(),
-              child: OtpScreen(phone: phone),
-            ),
-          );
-        },
-      ),
+      // GoRoute(
+      //   path: Routes.auth,
+      //   pageBuilder: (context, state) {
+      //     return AppPageTransition.fade(
+      //       state: state,
+      //       child: MultiBlocProvider(
+      //         providers: [
+      //           BlocProvider(create: (_) => getIt.get<SendOtpCubit>()),
+      //           BlocProvider(create: (_) => getIt.get<GoogleSignInCubit>()),
+      //         ],
+      //         child: AuthScreen(),
+      //       ),
+      //     );
+      //   },
+      // ),
+      // GoRoute(
+      //   path: Routes.otp,
+      //   pageBuilder: (context, state) {
+      //     final phone = state.extra as String;
+      //     return AppPageTransition.fade(
+      //       state: state,
+      //       child: BlocProvider(
+      //         create: (context) => getIt.get<VerifyOtpCubit>(),
+      //         child: OtpScreen(phone: phone),
+      //       ),
+      //     );
+      //   },
+      // ),
 
       StatefulShellRoute.indexedStack(
         builder: (context, state, navigationShell) {
@@ -183,7 +183,7 @@ class AppRouter {
             routes: [
               GoRoute(
                 path: Routes.cart,
-                builder: (context, state) => const CartScreen(),
+                builder: (context, state) => AuthGate(child: const CartScreen()),
               ),
             ],
           ),
@@ -194,7 +194,7 @@ class AppRouter {
                 path: Routes.profile,
                 pageBuilder: (context, state) => AppPageTransition.fade(
                   state: state,
-                  child: ProfileScreen(),
+                  child: const AuthGate(child: ProfileScreen(),),
                 ),
                 routes: [
                   GoRoute(

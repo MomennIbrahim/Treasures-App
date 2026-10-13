@@ -1,98 +1,98 @@
-import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:hugeicons/hugeicons.dart';
-import 'package:konoz/core/helper/app_padding.dart';
-import 'package:konoz/core/theme/app_colors.dart';
-import 'package:konoz/core/theme/app_text_style.dart';
-import 'package:konoz/core/widgets/app_text_rich.dart';
-import 'package:konoz/features/auth/presentation/ui/widgets/auth_form.dart';
-import 'package:konoz/features/auth/presentation/ui/widgets/google_auth_button.dart';
-import 'package:konoz/features/auth/presentation/ui/widgets/google_sign_in_bloc_listener.dart';
-import 'package:konoz/features/auth/presentation/ui/widgets/login_button.dart';
-import 'package:konoz/features/auth/presentation/ui/widgets/send_otp_bloc_listener.dart';
-import 'package:konoz/generated/locale_keys.g.dart';
+// import 'package:easy_localization/easy_localization.dart';
+// import 'package:flutter/material.dart';
+// import 'package:flutter_screenutil/flutter_screenutil.dart';
+// import 'package:hugeicons/hugeicons.dart';
+// import 'package:konoz/core/helper/app_padding.dart';
+// import 'package:konoz/core/theme/app_colors.dart';
+// import 'package:konoz/core/theme/app_text_style.dart';
+// import 'package:konoz/core/widgets/app_text_rich.dart';
+// import 'package:konoz/features/auth/presentation/ui/widgets/auth_form.dart';
+// import 'package:konoz/features/auth/presentation/ui/widgets/google_auth_button.dart';
+// import 'package:konoz/features/auth/presentation/ui/widgets/google_sign_in_bloc_listener.dart';
+// import 'package:konoz/features/auth/presentation/ui/widgets/login_button.dart';
+// import 'package:konoz/features/auth/presentation/ui/widgets/send_otp_bloc_listener.dart';
+// import 'package:konoz/generated/locale_keys.g.dart';
 
-class AuthScreen extends StatefulWidget {
-  const AuthScreen({super.key});
+// class AuthScreen extends StatefulWidget {
+//   const AuthScreen({super.key});
 
-  @override
-  State<AuthScreen> createState() => _AuthScreenState();
-}
+//   @override
+//   State<AuthScreen> createState() => _AuthScreenState();
+// }
 
-class _AuthScreenState extends State<AuthScreen> {
-  late final GlobalKey<FormState> _formKey;
-  late final TextEditingController _phoneController;
+// class _AuthScreenState extends State<AuthScreen> {
+//   late final GlobalKey<FormState> _formKey;
+//   late final TextEditingController _phoneController;
 
-  @override
-  void initState() {
-    _formKey = GlobalKey<FormState>();
-    _phoneController = TextEditingController();
-    super.initState();
-  }
+//   @override
+//   void initState() {
+//     _formKey = GlobalKey<FormState>();
+//     _phoneController = TextEditingController();
+//     super.initState();
+//   }
 
-  @override
-  void dispose() {
-    _formKey.currentState?.dispose();
-    _phoneController.dispose();
-    super.dispose();
-  }
+//   @override
+//   void dispose() {
+//     _formKey.currentState?.dispose();
+//     _phoneController.dispose();
+//     super.dispose();
+//   }
 
-  @override
-  Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
-    return Scaffold(
-      body: SafeArea(
-        child: SingleChildScrollView(
-          padding: paddingHorizontal(16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              50.verticalSpace,
-              Container(
-                height: 45.h,
-                width: 45.w,
-                padding: paddingAll(12),
-                margin: paddingOnly(bottom: 10),
-                decoration: BoxDecoration(
-                  color: AppColors.primary,
-                  shape: BoxShape.circle,
-                ),
-                child: HugeIcon(
-                  icon: HugeIcons.strokeRoundedUserCheck01,
-                  color: AppColors.white,
-                  strokeWidth: 2,
-                ),
-              ),
-              AppRichText(
-                normalText: "Get Started Now With ",
-                normalStyle: AppTextStyles.text18Bold,
-                actionText: "Konoz!",
-                actionStyle: AppTextStyles.text18Bold.copyWith(
-                  color: AppColors.primary,
-                ),
-              ),
-              4.verticalSpace,
-              Text(
-                "Discover the best products from around the world",
-                style: AppTextStyles.text12Regular,
-              ),
-              48.verticalSpace,
-              AuthForm(formKey: _formKey, phoneController: _phoneController),
-              48.verticalSpace,
-              LoginButton(formKey: _formKey, phoneController: _phoneController),
-              24.verticalSpace,
-              Text(
-                LocaleKeys.auth_or_login_with.tr(),
-                style: AppTextStyles.text12Regular,
-              ),
-              GoogleAuthButton(),
-              SendOtpBlocListener(),
-              GoogleSignInBlocListener(),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     final colorScheme = Theme.of(context).colorScheme;
+//     return Scaffold(
+//       body: SafeArea(
+//         child: SingleChildScrollView(
+//           padding: paddingHorizontal(16),
+//           child: Column(
+//             crossAxisAlignment: CrossAxisAlignment.center,
+//             children: [
+//               50.verticalSpace,
+//               Container(
+//                 height: 45.h,
+//                 width: 45.w,
+//                 padding: paddingAll(12),
+//                 margin: paddingOnly(bottom: 10),
+//                 decoration: BoxDecoration(
+//                   color: AppColors.primary,
+//                   shape: BoxShape.circle,
+//                 ),
+//                 child: HugeIcon(
+//                   icon: HugeIcons.strokeRoundedUserCheck01,
+//                   color: AppColors.white,
+//                   strokeWidth: 2,
+//                 ),
+//               ),
+//               AppRichText(
+//                 normalText: "Get Started Now With ",
+//                 normalStyle: AppTextStyles.text18Bold,
+//                 actionText: "Konoz!",
+//                 actionStyle: AppTextStyles.text18Bold.copyWith(
+//                   color: AppColors.primary,
+//                 ),
+//               ),
+//               4.verticalSpace,
+//               Text(
+//                 "Discover the best products from around the world",
+//                 style: AppTextStyles.text12Regular,
+//               ),
+//               48.verticalSpace,
+//               AuthForm(formKey: _formKey, phoneController: _phoneController),
+//               48.verticalSpace,
+//               LoginButton(formKey: _formKey, phoneController: _phoneController),
+//               24.verticalSpace,
+//               Text(
+//                 LocaleKeys.auth_or_login_with.tr(),
+//                 style: AppTextStyles.text12Regular,
+//               ),
+//               GoogleAuthButton(),
+//               SendOtpBlocListener(),
+//               GoogleSignInBlocListener(),
+//             ],
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+// }

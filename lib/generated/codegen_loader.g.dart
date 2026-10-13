@@ -24,7 +24,11 @@ class CodegenLoader extends AssetLoader{
     "product_added_to_cart": "Product added to cart, Press to go to cart",
     "out_of_stock": "Out of stock",
     "available": "Available",
-    "retry": "Retry"
+    "retry": "Retry",
+    "login_required_title": "Login Required",
+    "login_required_message": "You must be logged in to access this page",
+    "cancel": "Cancel",
+    "hide": "Hide"
   },
   "layout": {
     "home": "Home",
@@ -261,7 +265,11 @@ static const Map<String,dynamic> _ar = {
     "product_added_to_cart": "تمت إضافة المنتج إلى عربة التسوق، اضغط للانتقال إلى العربة",
     "out_of_stock": "نفذ",
     "available": "متوفر",
-    "retry": "اعادة المحاولة"
+    "retry": "اعادة المحاولة",
+    "login_required_title": "تسجيل الدخول مطلوب",
+    "login_required_message": "يجب عليك تسجيل الدخول للوصول لهذه الصفحة",
+    "cancel": "الغاء",
+    "hide": "اغلق"
   },
   "layout": {
     "home": "الرئيسية",

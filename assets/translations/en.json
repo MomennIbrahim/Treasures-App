@@ -8,7 +8,11 @@
         "product_added_to_cart" : "Product added to cart, Press to go to cart",
         "out_of_stock": "Out of stock",
         "available": "Available",
-        "retry": "Retry"
+        "retry": "Retry",
+        "login_required_title": "Login Required",
+        "login_required_message": "You must be logged in to access this page",
+        "cancel" : "Cancel",
+        "hide" : "Hide"
     },
 
     "layout": {

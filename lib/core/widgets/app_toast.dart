@@ -18,7 +18,7 @@ class AppToast {
     BuildContext context, {
     required String message,
     AppToastType type = AppToastType.success,
-    AppToastPosition position = AppToastPosition.bottom,
+    AppToastPosition position = AppToastPosition.top,
     void Function()? onTap,
     int second = 3,
   }) {
@@ -64,7 +64,7 @@ class AppToast {
           GestureDetector(
             onTap: removeToast,
             child: Text(
-              LocaleKeys.general_undo.tr(),
+              LocaleKeys.general_hide.tr(),
               style: AppTextStyles.text10Bold.copyWith(
                 decoration: TextDecoration.underline,
                 color: AppColors.black,

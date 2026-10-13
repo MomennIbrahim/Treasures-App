@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:konoz/core/helper/require_login.dart';
 import 'package:konoz/core/router/routes.dart';
 import 'package:konoz/core/widgets/app_button.dart';
 import 'package:konoz/core/widgets/app_toast.dart';
@@ -16,11 +17,19 @@ class AddToCartButton extends StatelessWidget {
   final ProductDetailsModel product;
   const AddToCartButton({super.key, required this.product});
 
+  Future<void> _add(BuildContext context, int sizeId) async {
+    // لو مش مسجل دخول بيفتح الـ LoginSheet، وبيكمّل لو نجح اللوجين
+    if (!await requireLogin(context)) return;
+    if (!context.mounted) return;
+    context.read<CartCubit>().addToCart(sizeId: sizeId);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Expanded(
       child: BlocConsumer<CartCubit, CartState>(
-        listenWhen: (p, c) => p.actionStatus != c.actionStatus,
+        listenWhen: (p, c) =>
+            p.actionStatus != c.actionStatus && c.action == CartAction.add,
         listener: (context, cartState) {
           if (cartState.actionStatus == CartActionStatus.loading) {
             showLoadingDialog(context);
@@ -59,11 +68,7 @@ class AddToCartButton extends StatelessWidget {
             label: size != null && !size.isAvailable
                 ? LocaleKeys.general_out_of_stock.tr()
                 : LocaleKeys.general_add_to_cart.tr(),
-            onPressed: canAdd
-                ? () => context.read<CartCubit>().addToCart(
-                    sizeId: int.parse(size.id),
-                  )
-                : null,
+            onPressed: canAdd ? () => _add(context, int.parse(size.id)) : null,
           );
         },
       ),

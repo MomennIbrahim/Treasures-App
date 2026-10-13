@@ -1,9 +1,11 @@
 import 'package:dartz/dartz.dart' show Either, Left, Right, Unit, unit;
 import 'package:konoz/core/cubits/safe_cubit.dart';
+import 'package:konoz/core/di/dependency_injection.dart';
 import 'package:konoz/core/error/app_failure.dart';
 import 'package:konoz/features/cart/data/model/cart_item_model.dart';
 import 'package:konoz/features/cart/data/model/cart_summary_model.dart';
 import 'package:konoz/features/cart/data/repo/cart_repo.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 part 'cart_state.dart';
 
@@ -16,6 +18,7 @@ class CartCubit extends SafeCubit<CartState> {
 
   // ───────── badge ─────────
   Future<void> loadCount() async {
+    if (getIt<SupabaseClient>().auth.currentSession == null) return;
     final result = await _repo.getCartCount();
     result.fold((_) {}, (count) => emit(state.copyWith(count: count)));
   }
