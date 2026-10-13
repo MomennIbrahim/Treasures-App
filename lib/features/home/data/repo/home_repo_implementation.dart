@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:dartz/dartz.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:konoz/core/error/app_failure.dart';
@@ -100,7 +98,6 @@ class HomeRepoImplementation extends HomeRepo {
         products: products,
       );
 
- 
       return Right(model);
     } catch (e) {
       return Left(RemoteServerFailure(e.toString()));

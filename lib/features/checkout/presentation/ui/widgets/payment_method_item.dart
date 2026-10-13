@@ -62,15 +62,12 @@ class PaymentMethodItem extends StatelessWidget {
               ),
             ),
 
-            Radio<int>(
-              value: index,
+            RadioGroup<int>(
               groupValue: selectedIndex,
-              activeColor: AppColors.primary,
               onChanged: (value) {
-                if (value != null) {
-                  onTap(value);
-                }
+                if (value != null) onTap(value);
               },
+              child: Radio<int>(value: index, activeColor: AppColors.primary),
             ),
           ],
         ),

@@ -93,7 +93,7 @@ class _LoginSheetState extends State<LoginSheet> {
                   duration: const Duration(milliseconds: 250),
                   layoutBuilder: (current, previous) => Stack(
                     alignment: Alignment.topCenter,
-                    children: [...previous, if (current != null) current],
+                    children: [...previous, ?current],
                   ),
                   child: _phone == null
                       ? _PhoneStep(

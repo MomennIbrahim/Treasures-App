@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:konoz/core/helper/app_padding.dart';
-import 'package:konoz/core/helper/format_egyption_number.dart';
 import 'package:konoz/core/theme/app_text_style.dart';
 import 'package:konoz/core/validation/egyption_phone_validator.dart';
 import 'package:konoz/core/widgets/app_button.dart';
@@ -28,17 +27,17 @@ class _CheckoutPhoneSectionState extends State<CheckoutPhoneSection> {
     super.dispose();
   }
 
- void _save() {
-  final raw = _controller.text.trim();
-  final error = validateEgyptianPhone(raw);
-  if (error != null) {
-    AppToast.show(context, message: error, type: AppToastType.error);
-    return;
+  void _save() {
+    final raw = _controller.text.trim();
+    final error = validateEgyptianPhone(raw);
+    if (error != null) {
+      AppToast.show(context, message: error, type: AppToastType.error);
+      return;
+    }
+    FocusScope.of(context).unfocus();
+    // 01069528769 → 201069528769 (نفس شكل التخزين الحالي في profiles)
+    context.read<ProfileCubit>().updatePhone('20${raw.substring(1)}');
   }
-  FocusScope.of(context).unfocus();
-  // 01069528769 → 201069528769 (نفس شكل التخزين الحالي في profiles)
-  context.read<ProfileCubit>().updatePhone('20${raw.substring(1)}');
-}
 
   @override
   Widget build(BuildContext context) {
