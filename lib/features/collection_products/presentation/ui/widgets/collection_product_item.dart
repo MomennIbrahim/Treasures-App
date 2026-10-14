@@ -168,7 +168,7 @@ class _CollectionProductItemState extends State<CollectionProductItem> {
                           itemBuilder: (context, index) {
                             return Center(
                               child: Text(
-                                product.sizes[index].unit,
+                                ' ${product.sizes[index].value} ${product.sizes[index].unit}',
                                 style: AppTextStyles.text10Bold.copyWith(
                                   color: Colors.amber,
                                 ),
