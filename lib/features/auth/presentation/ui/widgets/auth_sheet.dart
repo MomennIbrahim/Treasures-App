@@ -13,7 +13,6 @@ import 'package:konoz/features/auth/presentation/controllers/google_signin/googl
 import 'package:konoz/features/auth/presentation/controllers/send_otp/send_otp_cubit.dart';
 import 'package:konoz/features/auth/presentation/controllers/verify_otp/verify_otp_cubit.dart';
 import 'package:konoz/features/auth/presentation/ui/widgets/auth_form.dart';
-import 'package:konoz/features/auth/presentation/ui/widgets/google_auth_button.dart';
 import 'package:konoz/features/auth/presentation/ui/widgets/google_sign_in_bloc_listener.dart';
 import 'package:konoz/features/auth/presentation/ui/widgets/login_button.dart';
 import 'package:konoz/features/auth/presentation/ui/widgets/send_otp_bloc_listener.dart';
@@ -36,6 +35,7 @@ Future<bool> showLoginSheet(BuildContext context) async {
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.vertical(top: Radius.circular(24.r)),
     ),
+    constraints: const BoxConstraints(maxWidth: double.infinity),
     builder: (_) => const LoginSheet(),
   );
   return result ?? false;
@@ -175,7 +175,7 @@ class _PhoneStep extends StatelessWidget {
           LocaleKeys.auth_or_login_with.tr(),
           style: AppTextStyles.text12Regular,
         ),
-        GoogleAuthButton(),
+        //  GoogleAuthButton(),
       ],
     );
   }
