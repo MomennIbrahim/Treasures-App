@@ -8,4 +8,5 @@ abstract class ImagesPaths {
   static const String tiktok = "assets/images/tiktok.png";
   static const String whatsapp = "assets/images/whatsapp.png";
   static const String emptyShopping = "assets/images/empty_shopping.png";
+  static const String luckyWheel = "assets/images/lucky_wheel.png";
 }

@@ -236,5 +236,17 @@
     "status_shipped": "في الطريق إليك",
     "status_delivered": "تم التوصيل",
     "status_cancelled": "تم الإلغاء"
-  }
+  },
+   "spin": {
+  "title": "لف واكسب",
+  "spin_button": "لف العجلة",
+  "spinning": "بتلف...",
+  "last_result": "آخر نتيجة",
+  "result_title": "🎉 النتيجة",
+  "you_won": "مبروك! كسبت: {}",
+  "better_luck": "حظ أوفر المرة الجاية!",
+  "ok": "تمام",
+  "free_spin": "لفة مجانية",
+  "event_banner": "إيفنت لف واكسب بدأ! لف العجلة واكسب جوايز مفاجأة، متفوتش الفرصة!"
+ }
 }

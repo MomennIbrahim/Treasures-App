@@ -32,6 +32,7 @@ import 'package:konoz/features/search/presentation/ui/screens/search_products_sc
 import 'package:konoz/features/search/presentation/ui/screens/search_screen.dart';
 import 'package:konoz/features/settings/presentation/controllers/logout/logout_cubit.dart';
 import 'package:konoz/features/settings/presentation/ui/screens/settings_screen.dart';
+import 'package:konoz/features/spin/presentation/screens/spin_screen.dart';
 
 import 'routes.dart';
 
@@ -40,6 +41,12 @@ class AppRouter {
     redirect: (context, state) => null,
     initialLocation: Routes.home,
     routes: [
+      GoRoute(
+        path: Routes.spin,
+        pageBuilder: (context, state) {
+          return AppPageTransition.fade(state: state, child: SpinWheelScreen(brandName: 'كـــنـــوز',));
+        },
+      ),
       // Auth Routes
       // GoRoute(
       //   path: Routes.auth,

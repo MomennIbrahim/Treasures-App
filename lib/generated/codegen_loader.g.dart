@@ -253,6 +253,18 @@ class CodegenLoader extends AssetLoader{
     "status_shipped": "Out for delivery",
     "status_delivered": "Delivered",
     "status_cancelled": "Cancelled"
+  },
+  "spin": {
+    "title": "Spin To Win",
+    "spin_button": "Spin the Wheel",
+    "spinning": "Spinning...",
+    "last_result": "Last result",
+    "result_title": "🎉 Result",
+    "you_won": "Congrats! You won: {}",
+    "better_luck": "Better luck next time!",
+    "ok": "OK",
+    "free_spin": "Free Spin",
+    "event_banner": "Spin to Win Event is live! Spin the wheel for a chance to win exciting prizes. Don't miss out!"
   }
 };
 static const Map<String,dynamic> _ar = {
@@ -494,6 +506,18 @@ static const Map<String,dynamic> _ar = {
     "status_shipped": "في الطريق إليك",
     "status_delivered": "تم التوصيل",
     "status_cancelled": "تم الإلغاء"
+  },
+  "spin": {
+    "title": "لف واكسب",
+    "spin_button": "لف العجلة",
+    "spinning": "بتلف...",
+    "last_result": "آخر نتيجة",
+    "result_title": "🎉 النتيجة",
+    "you_won": "مبروك! كسبت: {}",
+    "better_luck": "حظ أوفر المرة الجاية!",
+    "ok": "تمام",
+    "free_spin": "لفة مجانية",
+    "event_banner": "إيفنت لف واكسب بدأ! لف العجلة واكسب جوايز مفاجأة، متفوتش الفرصة!"
   }
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"en": _en, "ar": _ar};

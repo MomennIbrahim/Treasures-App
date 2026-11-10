@@ -18,4 +18,5 @@ class Routes {
   static const String checkout = '/checkout';
   static const String community = 'community';
   static const String faq = 'faq';
+  static const String spin = '/spin';
 }

@@ -212,5 +212,16 @@ abstract class  LocaleKeys {
   static const orders_status_delivered = 'orders.status_delivered';
   static const orders_status_cancelled = 'orders.status_cancelled';
   static const orders = 'orders';
+  static const spin_title = 'spin.title';
+  static const spin_spin_button = 'spin.spin_button';
+  static const spin_spinning = 'spin.spinning';
+  static const spin_last_result = 'spin.last_result';
+  static const spin_result_title = 'spin.result_title';
+  static const spin_you_won = 'spin.you_won';
+  static const spin_better_luck = 'spin.better_luck';
+  static const spin_ok = 'spin.ok';
+  static const spin_free_spin = 'spin.free_spin';
+  static const spin_event_banner = 'spin.event_banner';
+  static const spin = 'spin';
 
 }
