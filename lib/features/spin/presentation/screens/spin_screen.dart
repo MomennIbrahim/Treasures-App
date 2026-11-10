@@ -132,7 +132,6 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
         title: Text(LocaleKeys.spin_title.tr()),
         centerTitle: true,
         backgroundColor: Colors.transparent,
-        foregroundColor: Colors.white,
       ),
       body: Center(
         child: Column(

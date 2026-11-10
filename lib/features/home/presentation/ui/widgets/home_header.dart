@@ -68,7 +68,7 @@ class _HomeHeaderState extends State<HomeHeader> {
                     child: BouncingText(
                       _messages[_currentIndex],
                       style: AppTextStyles.text14Bold.copyWith(
-                        color: AppColors.white,
+                        color: colorScheme.onSurface,
                       ),
                       highlightColor: AppColors.primary, // أو أي لون تحبه
                       interval: const Duration(seconds: 6),
