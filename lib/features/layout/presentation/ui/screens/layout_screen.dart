@@ -24,6 +24,7 @@ class LayoutScreen extends StatelessWidget {
     final isSearchScreen = currentPath.contains(Routes.search);
     final isCommunityScreen = currentPath.contains(Routes.community);
     final isFaqScreen = currentPath.contains(Routes.faq);
+    final isPackageDetails = currentPath.contains(Routes.packageDetails);
 
     final hideSearchBar =
         isOrdersScreen ||
@@ -33,7 +34,8 @@ class LayoutScreen extends StatelessWidget {
         isProductDetailsScreen ||
         isCommunityScreen ||
         isFaqScreen ||
-        isPersonalDataScreen;
+        isPersonalDataScreen ||
+        isPackageDetails;
 
     return SafeArea(
       top: false,

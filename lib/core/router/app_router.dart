@@ -23,6 +23,8 @@ import 'package:konoz/features/layout/presentation/ui/screens/layout_screen.dart
 import 'package:konoz/features/offer_products/presentation/ui/screens/offer_products_screen.dart';
 import 'package:konoz/features/orders/presentation/controllers/orders_cubit.dart';
 import 'package:konoz/features/orders/presentation/ui/screens/orders_screen.dart';
+import 'package:konoz/features/package_details/data/model/package_details_model.dart';
+import 'package:konoz/features/package_details/ui/screens/package_details_screen.dart';
 import 'package:konoz/features/personal_data/presentation/controllers/addresses/addresses_cubit.dart';
 import 'package:konoz/features/personal_data/presentation/ui/screens/personal_data_screen.dart';
 import 'package:konoz/features/personal_data/presentation/ui/widgets/address_picker_screen.dart';
@@ -116,7 +118,6 @@ class AppRouter {
                       );
                     },
                   ),
-                  // push('${Routes.home}/${Routes.offerProducts}', extra: products)
                   GoRoute(
                     path: Routes.offerProducts,
                     pageBuilder: (context, state) {
@@ -127,6 +128,15 @@ class AppRouter {
                         child: OfferProductsScreen(products: products),
                       );
                     },
+                  ),
+                  GoRoute(
+                    path: Routes.packageDetails,
+                    pageBuilder: (context, state) => AppPageTransition.fade(
+                      state: state,
+                      child: PackageDetailsScreen(
+                        package: state.extra as PackageDetailsModel?,
+                      ),
+                    ),
                   ),
                   ShellRoute(
                     builder: (context, state, child) => BlocProvider(

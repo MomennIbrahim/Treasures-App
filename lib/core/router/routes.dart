@@ -19,5 +19,6 @@ class Routes {
   static const String community = 'community';
   static const String faq = 'faq';
   static const String offerProducts = 'offer-products';
+  static const String packageDetails = 'package-details';
   static const String spin = '/spin';
 }
