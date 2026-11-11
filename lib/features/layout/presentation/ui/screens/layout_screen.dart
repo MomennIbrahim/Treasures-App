@@ -52,7 +52,8 @@ class LayoutScreen extends StatelessWidget {
             : AppSearchBar(
                 showBackIcon:
                     currentPath == Routes.collectionProducts ||
-                    currentPath.contains(Routes.favorites),
+                    currentPath.contains(Routes.favorites) ||
+                    currentPath.contains(Routes.offerProducts),
               ),
         extendBody: true,
         body: navigationShell,

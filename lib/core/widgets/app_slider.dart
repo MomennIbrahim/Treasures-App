@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:konoz/core/helper/app_padding.dart';
 import 'package:konoz/core/theme/app_colors.dart';
+import 'package:konoz/core/theme/app_radius.dart';
 import 'package:konoz/features/home/presentation/ui/widgets/banner_Item.dart';
 
 class AppSlider extends StatefulWidget {
@@ -114,7 +115,7 @@ class _Indicators extends StatelessWidget {
           height: 7.h,
           decoration: BoxDecoration(
             color: isActive ? AppColors.primary : AppColors.neutral500,
-            borderRadius: BorderRadius.circular(5.r),
+            borderRadius: AppRadius.br8,
           ),
         );
       }),

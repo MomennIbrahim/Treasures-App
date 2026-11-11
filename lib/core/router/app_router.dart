@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:konoz/core/di/dependency_injection.dart';
+import 'package:konoz/core/shared_model.dart/product_item_model.dart';
 import 'package:konoz/features/auth/presentation/ui/widgets/auth_gate.dart';
 import 'package:konoz/features/cart/presentation/ui/screens/cart_screen.dart';
 import 'package:konoz/features/checkout/presentation/controllers/checkout/checkout_cubit.dart';
@@ -19,6 +20,7 @@ import 'package:konoz/features/home/presentation/controllers/currently_trending/
 import 'package:konoz/features/home/presentation/controllers/packages_cubit.dart';
 import 'package:konoz/features/home/presentation/ui/screens/home_screen.dart';
 import 'package:konoz/features/layout/presentation/ui/screens/layout_screen.dart';
+import 'package:konoz/features/offer_products/presentation/ui/screens/offer_products_screen.dart';
 import 'package:konoz/features/orders/presentation/controllers/orders_cubit.dart';
 import 'package:konoz/features/orders/presentation/ui/screens/orders_screen.dart';
 import 'package:konoz/features/personal_data/presentation/controllers/addresses/addresses_cubit.dart';
@@ -44,7 +46,10 @@ class AppRouter {
       GoRoute(
         path: Routes.spin,
         pageBuilder: (context, state) {
-          return AppPageTransition.fade(state: state, child: SpinWheelScreen(brandName: 'كـــنـــوز',));
+          return AppPageTransition.fade(
+            state: state,
+            child: SpinWheelScreen(brandName: 'كـــنـــوز'),
+          );
         },
       ),
       // Auth Routes
@@ -108,6 +113,18 @@ class AppRouter {
                           create: (context) => getIt.get<ProductDetailsCubit>(),
                           child: ProductDetailsScreen(productId: productId),
                         ),
+                      );
+                    },
+                  ),
+                  // push('${Routes.home}/${Routes.offerProducts}', extra: products)
+                  GoRoute(
+                    path: Routes.offerProducts,
+                    pageBuilder: (context, state) {
+                      final products =
+                          state.extra as List<ProductItemModel>? ?? const [];
+                      return AppPageTransition.fade(
+                        state: state,
+                        child: OfferProductsScreen(products: products),
                       );
                     },
                   ),

@@ -1,7 +1,9 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:konoz/core/helper/app_padding.dart';
+import 'package:konoz/core/router/routes.dart';
 import 'package:konoz/core/theme/app_radius.dart';
 import 'package:konoz/core/theme/app_text_style.dart';
 import 'package:konoz/core/widgets/app_image.dart';
@@ -34,89 +36,94 @@ class BannerItem extends StatelessWidget {
 
     return ClipRRect(
       borderRadius: AppRadius.br12,
-      child: SizedBox(
-        height: height.h,
-        width: double.infinity,
-        child: Stack(
-          fit: StackFit.expand,
-          children: [
-            ZoomIn(
-              child: AppImage.cachedNetwork(
-                imagePath,
-                fit: boxFit ?? BoxFit.cover,
-              ),
-            ),
-
-            if (showInfo)
-              DecoratedBox(
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [
-                      Colors.transparent,
-                      Colors.black.withValues(alpha: 0.55),
-                    ],
-                  ),
+      child: GestureDetector(
+        onTap: () => context.push('${Routes.home}/${Routes.offerProducts}'),
+        child: SizedBox(
+          height: height.h,
+          width: double.infinity,
+          child: Stack(
+            fit: StackFit.expand,
+            children: [
+              ZoomIn(
+                child: AppImage.cachedNetwork(
+                  imagePath,
+                  fit: boxFit ?? BoxFit.cover,
                 ),
               ),
 
-            if (showInfo)
-              Positioned(
-                bottom: 0,
-                left: 0,
-                right: 0,
-                child: Padding(
-                  padding: paddingAll(16),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SlideInLeft(
-                        child: Text(
-                          title,
-                          style: AppTextStyles.text14Bold.copyWith(
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
+              if (showInfo)
+                DecoratedBox(
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [
+                        Colors.transparent,
+                        Colors.black.withValues(alpha: 0.55),
+                      ],
+                    ),
+                  ),
+                ),
 
-                      SlideInLeft(
-                        delay: const Duration(milliseconds: 200),
-                        child: Text(
-                          subtitle,
-                          style: AppTextStyles.text12Regular.copyWith(
-                            color: Colors.white.withValues(alpha: 0.9),
-                          ),
-                        ),
-                      ),
-
-                      12.verticalSpace,
-
-                      SlideInLeft(
-                        delay: const Duration(milliseconds: 250),
-                        child: GestureDetector(
-                          onTap: onPressed,
-                          child: Container(
-                            padding: paddingSymmetric(16, 8),
-                            decoration: BoxDecoration(
-                              color: colorScheme.primary,
-                              borderRadius: AppRadius.br24,
+              if (showInfo)
+                Positioned(
+                  bottom: 0,
+                  left: 0,
+                  right: 0,
+                  child: Padding(
+                    padding: paddingAll(16),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SlideInLeft(
+                          child: Text(
+                            title,
+                            style: AppTextStyles.text14Bold.copyWith(
+                              color: Colors.white,
                             ),
-                            child: Text(
-                              buttonLabel,
-                              style: AppTextStyles.text12Bold.copyWith(
-                                color: colorScheme.onPrimary,
+                          ),
+                        ),
+
+                        SlideInLeft(
+                          delay: const Duration(milliseconds: 200),
+                          child: Text(
+                            subtitle,
+                            style: AppTextStyles.text12Regular.copyWith(
+                              color: Colors.white.withValues(alpha: 0.9),
+                            ),
+                          ),
+                        ),
+
+                        12.verticalSpace,
+
+                        SlideInLeft(
+                          delay: const Duration(milliseconds: 250),
+                          child: GestureDetector(
+                            onTap: () => context.push(
+                              '${Routes.home}/${Routes.offerProducts}',
+                            ),
+                            child: Container(
+                              padding: paddingSymmetric(16, 8),
+                              decoration: BoxDecoration(
+                                color: colorScheme.primary,
+                                borderRadius: AppRadius.br24,
+                              ),
+                              child: Text(
+                                buttonLabel,
+                                style: AppTextStyles.text12Bold.copyWith(
+                                  color: colorScheme.onPrimary,
+                                ),
                               ),
                             ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
-              ),
-          ],
+            ],
+          ),
         ),
       ),
     );
