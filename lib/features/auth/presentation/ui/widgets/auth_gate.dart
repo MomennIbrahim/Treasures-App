@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hugeicons/hugeicons.dart';
 import 'package:konoz/core/di/dependency_injection.dart';
@@ -7,9 +8,8 @@ import 'package:konoz/core/helper/app_padding.dart';
 import 'package:konoz/core/theme/app_colors.dart';
 import 'package:konoz/core/theme/app_text_style.dart';
 import 'package:konoz/features/auth/presentation/ui/widgets/auth_sheet.dart';
+import 'package:konoz/features/profile/presentation/controllers/profile/profile_cubit.dart';
 import 'package:konoz/generated/locale_keys.g.dart';
-import 'package:supabase_flutter/supabase_flutter.dart'
-    show AuthState, SupabaseClient;
 
 class AuthGate extends StatelessWidget {
   final Widget child;
@@ -18,11 +18,10 @@ class AuthGate extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final auth = getIt<SupabaseClient>().auth;
-    return StreamBuilder<AuthState>(
-      stream: auth.onAuthStateChange,
-      builder: (context, _) {
-        return auth.currentSession != null ? child : const LoginRequiredView();
+    return BlocBuilder<ProfileCubit, ProfileState>(
+      buildWhen: (p, c) => p.isGuest != c.isGuest,
+      builder: (context, state) {
+        return state.isGuest ? const LoginRequiredView() : child;
       },
     );
   }
@@ -30,6 +29,12 @@ class AuthGate extends StatelessWidget {
 
 class LoginRequiredView extends StatelessWidget {
   const LoginRequiredView({super.key});
+
+  Future<void> _login(BuildContext context) async {
+    final user = await showRegisterSheet(context);
+    // _onSuccess في الشيت بينادي getProfile، بس نأكد هنا كمان
+    if (user != null) getIt<ProfileCubit>().getProfile();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -76,7 +81,7 @@ class LoginRequiredView extends StatelessWidget {
                       foregroundColor: AppColors.white,
                       padding: EdgeInsets.symmetric(vertical: 14.h),
                     ),
-                    onPressed: () => showRegisterSheet(context),
+                    onPressed: () => _login(context),
                     child: Text(LocaleKeys.auth_login.tr()),
                   ),
                 ),

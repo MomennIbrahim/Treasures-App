@@ -1,195 +1,130 @@
+import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
+import 'package:konoz/core/constance/app_keys.dart';
 import 'package:konoz/core/cubits/safe_cubit.dart';
 import 'package:konoz/core/error/app_failure.dart';
+import 'package:konoz/core/local_storage/session_storage.dart';
 import 'package:konoz/features/profile/data/model/profile_model.dart';
 import 'package:konoz/features/profile/data/repo/profile_repo.dart';
 
 part 'profile_state.dart';
 
 class ProfileCubit extends SafeCubit<ProfileState> {
-  final ProfileRepo repo;
-  ProfileCubit(this.repo) : super(const ProfileState());
+  final ProfileRepo _repo;
+  ProfileCubit(this._repo) : super(const ProfileState());
 
-  Future<void> getProfile() async {
-    emit(state.copyWith(status: ProfileStatus.loading));
-    final result = await repo.getProfile();
-    result.fold(
-      (f) => emit(state.copyWith(status: ProfileStatus.failure, failure: f)),
-      (p) => emit(state.copyWith(status: ProfileStatus.success, profile: p)),
+  bool get _hasToken => AppConstance.userToken != null;
+
+  /// [silent] = true: تحديث هادي من غير skeleton (لو فيه بيانات قديمة)
+  Future<void> getProfile({bool silent = false}) async {
+    if (!_hasToken) {
+      emit(const ProfileState(status: ProfileStatus.guest));
+      return;
+    }
+    if (state.isLoading) return;
+
+    final showLoading = !silent || state.profile == null;
+    if (showLoading) emit(state.copyWith(status: ProfileStatus.loading));
+
+    final res = await _repo.getProfile();
+
+    await res.fold(
+      (failure) async {
+        // التوكن منتهي: الجلسة خلصت
+        if (failure is RemoteServerFailure && failure.statusCode == 401) {
+          await SessionStorage.clear();
+          emit(const ProfileState(status: ProfileStatus.guest));
+          return;
+        }
+        if (showLoading) {
+          emit(state.copyWith(status: ProfileStatus.failure, failure: failure));
+        }
+      },
+      (profile) async =>
+          emit(state.copyWith(status: ProfileStatus.success, profile: profile)),
     );
   }
 
-  Future<void> updateProfile({
-    required String name,
-    required String email,
-  }) async {
-    final profile = state.profile;
-    if (profile == null) return;
+  Future<void> updateProfile({required String name}) => _run(
+    ProfileAction.updateProfile,
+    () => _repo.updateProfile(name: name),
+    onSuccess: () => state.profile?.copyWith(name: name),
+  );
 
-    emit(
-      state.copyWith(
-        actionStatus: ProfileActionStatus.loading,
-        action: ProfileAction.updateProfile,
-      ),
-    );
-    final result = await repo.updateProfile(name: name, email: email);
-    result.fold(
-      (f) => emit(
-        state.copyWith(
-          actionStatus: ProfileActionStatus.failure,
-          actionFailure: f,
-        ),
-      ),
-      (_) => emit(
-        state.copyWith(
-          actionStatus: ProfileActionStatus.success,
-          profile: profile.copyWith(name: name, email: email),
-        ),
-      ),
-    );
-  }
+  Future<void> updatePhone(String phone) => _run(
+    ProfileAction.updatePhone,
+    () => _repo.updatePhone(phone: phone),
+    onSuccess: () => state.profile?.copyWith(phone: phone),
+  );
 
   Future<void> addAddress({
     required String title,
     required String fullAddress,
     required double lat,
     required double lng,
-  }) async {
-    final profile = state.profile;
-    if (profile == null) return;
-
-    emit(
-      state.copyWith(
-        actionStatus: ProfileActionStatus.loading,
-        action: ProfileAction.addAddress,
-      ),
-    );
-    final result = await repo.addAddress(
+  }) => _run(ProfileAction.addAddress, () async {
+    final res = await _repo.addAddress(
       title: title,
       fullAddress: fullAddress,
       lat: lat,
       lng: lng,
-      isDefault: profile.addresses.isEmpty,
+      // أول عنوان بيبقى الافتراضي
+      isDefault: (state.profile?.addresses ?? const []).isEmpty,
     );
-    result.fold(
-      (f) => emit(
-        state.copyWith(
-          actionStatus: ProfileActionStatus.failure,
-          actionFailure: f,
-        ),
-      ),
-      (address) => emit(
-        state.copyWith(
-          actionStatus: ProfileActionStatus.success,
-          profile: profile.copyWith(addresses: [...profile.addresses, address]),
-        ),
-      ),
-    );
-  }
+    return res.map((_) => unit);
+  }, reload: true);
 
-  Future<void> deleteAddress(int id) async {
-    final profile = state.profile;
-    if (profile == null) return;
+  Future<void> deleteAddress(int id) => _run(
+    ProfileAction.deleteAddress,
+    () => _repo.deleteAddress(id: id),
+    reload: true, // السيرفر/الـ trigger ممكن يغيّر الافتراضي
+  );
 
+  Future<void> setDefaultAddress(int id) => _run(
+    ProfileAction.setDefaultAddress,
+    () => _repo.setDefaultAddress(id: id),
+    onSuccess: () => state.profile?.copyWith(
+      addresses: [
+        for (final a in state.profile!.addresses)
+          a.copyWith(isDefault: a.id == id),
+      ],
+    ),
+  );
+
+  Future<void> _run(
+    ProfileAction action,
+    Future<Either<AppFailure, Unit>> Function() call, {
+    ProfileModel? Function()? onSuccess,
+    bool reload = false,
+  }) async {
+    if (state.isActionLoading) return;
     emit(
-      state.copyWith(
-        actionStatus: ProfileActionStatus.loading,
-        action: ProfileAction.deleteAddress,
-      ),
+      state.copyWith(actionStatus: ProfileActionStatus.loading, action: action),
     );
 
-    final result = await repo.deleteAddress(id: id);
-    result.fold(
-      (f) => emit(
+    final res = await call();
+
+    res.fold(
+      (failure) => emit(
         state.copyWith(
           actionStatus: ProfileActionStatus.failure,
-          actionFailure: f,
+          action: action,
+          actionFailure: failure,
         ),
       ),
       (_) {
-        final deleted = profile.addresses.firstWhere((a) => a.id == id);
-        var remaining = profile.addresses.where((a) => a.id != id).toList();
-
-        // لو المحذوف كان الافتراضي، أول عنوان متبقي بيبقى الافتراضي
-        if (deleted.isDefault && remaining.isNotEmpty) {
-          remaining = [
-            remaining.first.copyWith(isDefault: true),
-            ...remaining.skip(1),
-          ];
-        }
-
         emit(
           state.copyWith(
             actionStatus: ProfileActionStatus.success,
-            profile: profile.copyWith(addresses: remaining),
+            action: action,
+            profile: onSuccess?.call(),
           ),
         );
+        if (reload) getProfile(silent: true);
       },
     );
   }
 
-  Future<void> setDefaultAddress(int id) async {
-    final profile = state.profile;
-    if (profile == null) return;
-
-    emit(
-      state.copyWith(
-        actionStatus: ProfileActionStatus.loading,
-        action: ProfileAction.setDefaultAddress,
-      ),
-    );
-
-    final result = await repo.setDefaultAddress(id: id);
-    result.fold(
-      (f) => emit(
-        state.copyWith(
-          actionStatus: ProfileActionStatus.failure,
-          actionFailure: f,
-        ),
-      ),
-      (_) {
-        final updated =
-            profile.addresses
-                .map((a) => a.copyWith(isDefault: a.id == id))
-                .toList()
-              // الافتراضي يطلع أول القايمة
-              ..sort((a, b) => (b.isDefault ? 1 : 0) - (a.isDefault ? 1 : 0));
-
-        emit(
-          state.copyWith(
-            actionStatus: ProfileActionStatus.success,
-            profile: profile.copyWith(addresses: updated),
-          ),
-        );
-      },
-    );
-  }
-
-  Future<void> updatePhone(String phone) async {
-    
-    final profile = state.profile;
-    if (profile == null) return;
-
-    emit(
-      state.copyWith(
-        actionStatus: ProfileActionStatus.loading,
-        action: ProfileAction.updatePhone,
-      ),
-    );
-    final result = await repo.updatePhone(phone: phone);
-    result.fold(
-      (f) => emit(
-        state.copyWith(
-          actionStatus: ProfileActionStatus.failure,
-          actionFailure: f,
-        ),
-      ),
-      (_) => emit(
-        state.copyWith(
-          actionStatus: ProfileActionStatus.success,
-          profile: profile.copyWith(phone: phone),
-        ),
-      ),
-    );
-  }
+  /// عند الـ logout: بيرجّع حالة الضيف (مختلفة عن initial فبتعمل emit فعلًا)
+  void clear() => emit(const ProfileState(status: ProfileStatus.guest));
 }

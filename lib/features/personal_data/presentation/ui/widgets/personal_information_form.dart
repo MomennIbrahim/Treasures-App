@@ -1,6 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:konoz/core/widgets/app_button.dart';
@@ -27,14 +26,12 @@ class PersonalInformationForm extends StatefulWidget {
 class _PersonalInformationFormState extends State<PersonalInformationForm> {
   final _formKey = GlobalKey<FormState>();
   late final TextEditingController _name;
-  late final TextEditingController _email;
   late final TextEditingController _phone;
 
   @override
   void initState() {
     super.initState();
     _name = TextEditingController(text: widget.profile.name);
-    _email = TextEditingController(text: widget.profile.email);
     _phone = TextEditingController(text: widget.profile.phone);
   }
 
@@ -44,7 +41,6 @@ class _PersonalInformationFormState extends State<PersonalInformationForm> {
     // لما الداتا الحقيقية توصل بعد الـ skeleton (الـ id بيتغير من '' لقيمة)
     if (oldWidget.profile.id != widget.profile.id) {
       _name.text = widget.profile.name;
-      _email.text = widget.profile.email;
       _phone.text = widget.profile.phone;
     }
   }
@@ -52,7 +48,6 @@ class _PersonalInformationFormState extends State<PersonalInformationForm> {
   @override
   void dispose() {
     _name.dispose();
-    _email.dispose();
     _phone.dispose();
     super.dispose();
   }
@@ -60,10 +55,7 @@ class _PersonalInformationFormState extends State<PersonalInformationForm> {
   void _save() {
     if (!_formKey.currentState!.validate()) return;
     FocusScope.of(context).unfocus();
-    context.read<ProfileCubit>().updateProfile(
-      name: _name.text.trim(),
-      email: _email.text.trim(),
-    );
+    context.read<ProfileCubit>().updateProfile(name: _name.text.trim());
   }
 
   @override
@@ -93,22 +85,7 @@ class _PersonalInformationFormState extends State<PersonalInformationForm> {
             hint: LocaleKeys.auth_phone_hint.tr(),
             keyboardType: TextInputType.phone,
           ),
-          16.verticalSpace,
 
-          AppTextFormField(
-            controller: _email,
-            label: LocaleKeys.personal_data_email.tr(),
-            hint: 'name@example.com',
-            keyboardType: TextInputType.emailAddress,
-            textInputAction: TextInputAction.done,
-            inputFormatters: [FilteringTextInputFormatter.deny(RegExp(r'\s'))],
-            validator: (v) {
-              final value = v?.trim() ?? '';
-              if (value.isEmpty) return null; // الإيميل اختياري
-              final ok = RegExp(r'^[^@\s]+@[^@\s]+\.[^@\s]+$').hasMatch(value);
-              return ok ? null : LocaleKeys.personal_data_invalid_email.tr();
-            },
-          ),
           24.verticalSpace,
 
           AppButton(

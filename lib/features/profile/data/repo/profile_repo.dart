@@ -7,8 +7,7 @@ abstract class ProfileRepo {
 
   Future<Either<AppFailure, Unit>> updateProfile({
     required String name,
-    required String email,
-  });
+   });
 
   Future<Either<AppFailure, AddressModel>> addAddress({
     required String title,

@@ -1,15 +1,15 @@
 part of 'profile_cubit.dart';
 
-enum ProfileStatus { initial, loading, success, failure }
+enum ProfileStatus { initial, loading, success, failure, guest }
 
 enum ProfileActionStatus { idle, loading, success, failure }
 
 enum ProfileAction {
   updateProfile,
+  updatePhone,
   addAddress,
   deleteAddress,
   setDefaultAddress,
-  updatePhone,
 }
 
 extension ProfileStateX on ProfileState {
@@ -17,6 +17,11 @@ extension ProfileStateX on ProfileState {
   bool get isLoading => status == ProfileStatus.loading;
   bool get isSuccess => status == ProfileStatus.success;
   bool get isFailure => status == ProfileStatus.failure;
+  bool get isGuest => status == ProfileStatus.guest;
+
+  bool get isActionLoading => actionStatus == ProfileActionStatus.loading;
+  bool get isActionSuccess => actionStatus == ProfileActionStatus.success;
+  bool get isActionFailure => actionStatus == ProfileActionStatus.failure;
 }
 
 class ProfileState extends Equatable {
@@ -36,6 +41,7 @@ class ProfileState extends Equatable {
     this.actionFailure,
   });
 
+  // failure و actionFailure بيتصفّروا عن قصد
   ProfileState copyWith({
     ProfileStatus? status,
     AppFailure? failure,

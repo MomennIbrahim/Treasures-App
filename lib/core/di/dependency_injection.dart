@@ -98,7 +98,7 @@ Future<void> setupGetIt() async {
 
   // Profile Repository
   getIt.registerLazySingleton<ProfileRepo>(
-    () => ProfileRepoImplementation(getIt()),
+    () => ProfileRepoImplementation(getIt<ApiService>(),getIt<SupabaseDbService>()),
   );
   getIt.registerLazySingleton<CartRepo>(() => CartRepoImplementation(getIt()));
 

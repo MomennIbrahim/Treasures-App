@@ -8,6 +8,7 @@ import 'package:konoz/core/di/dependency_injection.dart';
 import 'package:konoz/core/helper/bloc_observe.dart';
 import 'package:konoz/core/local_storage/app_cache.dart';
 import 'package:konoz/core/local_storage/secure_cache.dart';
+import 'package:konoz/core/local_storage/session_storage.dart';
 import 'package:konoz/treasures_app.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -23,6 +24,7 @@ void main() async {
   );
   await AppCache.cacheInit();
   SecureCache.secureCacheInit();
+  await SessionStorage.load();
 
   await setupGetIt();
   Bloc.observer = MyBlocObserver();

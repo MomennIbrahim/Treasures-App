@@ -5,6 +5,7 @@ abstract class AppConstance {
       '596635557629-gmojvr26ufjuqt7o8g4qj0im60qj7d1a.apps.googleusercontent.com';
 
   static String? userToken;
+  static String? refreshToken;
   static String? currentLanguage;
   static String? userId;
 }

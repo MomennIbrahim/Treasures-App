@@ -13,7 +13,6 @@ import 'package:konoz/features/auth/presentation/controllers/register_otp/regist
 import 'package:konoz/features/auth/presentation/ui/widgets/auth_bloc_listener.dart';
 import 'package:konoz/features/auth/presentation/ui/widgets/auth_form.dart';
 import 'package:konoz/features/auth/presentation/ui/widgets/auth_submit_button.dart';
-import 'package:konoz/features/cart/presentation/controller/cart/cart_cubit.dart';
 import 'package:konoz/features/profile/presentation/controllers/profile/profile_cubit.dart';
 
 /// بيرجّع بيانات اليوزر لو سجّل دخول/حساب، و null لو قفل الشيت.
@@ -66,7 +65,7 @@ class _RegisterSheetState extends State<RegisterSheet> {
 
   void _onSuccess(AuthResponseModel auth) {
     getIt<ProfileCubit>().getProfile();
-    getIt<CartCubit>().loadCount();
+    //  getIt<CartCubit>().loadCount();
     if (!mounted) return;
     Navigator.of(context, rootNavigator: true).pop(auth.user);
   }

@@ -2,6 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:konoz/core/cubits/safe_cubit.dart';
 import 'package:konoz/core/error/app_failure.dart';
 import 'package:konoz/core/helper/format_egyption_number.dart';
+import 'package:konoz/core/local_storage/session_storage.dart';
 import 'package:konoz/features/auth/data/model/user_model.dart';
 import 'package:konoz/features/auth/data/repo/auth_repo.dart';
 
@@ -31,8 +32,10 @@ class RegisterCubit extends SafeCubit<RegisterState> {
       (failure) => emit(
         state.copyWith(status: RegisterStatus.failure, failure: failure),
       ),
-      (auth) =>
-          emit(state.copyWith(status: RegisterStatus.success, auth: auth)),
+      (auth) async {
+        await SessionStorage.save(auth);
+        emit(state.copyWith(status: RegisterStatus.success, auth: auth));
+      },
     );
   }
 }

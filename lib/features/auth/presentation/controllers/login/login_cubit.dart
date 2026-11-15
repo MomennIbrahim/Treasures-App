@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
-import 'package:konoz/core/constance/app_keys.dart';
 import 'package:konoz/core/cubits/safe_cubit.dart';
 import 'package:konoz/core/error/app_failure.dart';
+import 'package:konoz/core/local_storage/session_storage.dart';
 import 'package:konoz/core/validation/egyption_phone_validator.dart';
 import 'package:konoz/features/auth/data/model/user_model.dart';
 import 'package:konoz/features/auth/data/repo/auth_repo.dart';
@@ -21,16 +21,14 @@ class LoginCubit extends SafeCubit<LoginState> {
     emit(state.copyWith(status: LoginStatus.loading));
 
     final res = await _repo.login(
-      phone: toApiPhone(rawPhone), // من auth_validators.dart
+      phone: toApiPhone(rawPhone),
       password: password,
     );
-
-    res.fold(
-      (failure) =>
+    await res.fold<Future<void>>(
+      (failure) async =>
           emit(state.copyWith(status: LoginStatus.failure, failure: failure)),
-      (auth) {
-        AppConstance.userToken = auth.token;
-        // احفظ refreshToken و auth.user.id هنا برضه (Secure Storage)
+      (auth) async {
+        await SessionStorage.save(auth);
         emit(state.copyWith(status: LoginStatus.success, auth: auth));
       },
     );

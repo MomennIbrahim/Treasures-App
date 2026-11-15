@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:hugeicons/hugeicons.dart';
 import 'package:konoz/core/helper/app_padding.dart';
 import 'package:konoz/core/helper/launch_service.dart';
+import 'package:konoz/core/helper/require_login.dart'; // عدّل المسار
 import 'package:konoz/core/router/routes.dart';
 import 'package:konoz/core/theme/app_radius.dart';
 import 'package:konoz/core/theme/app_text_style.dart';
@@ -12,6 +13,12 @@ import 'package:konoz/generated/locale_keys.g.dart';
 
 class ProfileTabWidget extends StatelessWidget {
   const ProfileTabWidget({super.key});
+
+  Future<void> _openProtected(BuildContext context, String path) async {
+    if (!await requireLogin(context)) return;
+    if (!context.mounted) return;
+    context.push(path);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,37 +33,28 @@ class ProfileTabWidget extends StatelessWidget {
               context: context,
               title: LocaleKeys.me_personal_data,
               icon: HugeIcons.strokeRoundedUser03,
-              onTap: () {
-                context.push("${Routes.profile}/${Routes.personalData}");
-              },
+              onTap: () => _openProtected(
+                context,
+                "${Routes.profile}/${Routes.personalData}",
+              ),
             ),
             _buildCustomTab(
               context: context,
               title: LocaleKeys.me_orders,
               icon: HugeIcons.strokeRoundedDeliveryBox01,
-              onTap: () {
-                context.push("${Routes.profile}/${Routes.orders}");
-              },
+              onTap: () => _openProtected(
+                context,
+                "${Routes.profile}/${Routes.orders}",
+              ),
             ),
-            // _buildCustomTab(
-            //   context: context,
-            //   title: LocaleKeys.me_favorites,
-            //   icon: HugeIcons.strokeRoundedFavouriteCircle,
-            //   onTap: () {
-            //     context.push("${Routes.profile}/${Routes.favorites}");
-            //   },
-            // ),
             _buildCustomTab(
               context: context,
               title: LocaleKeys.me_settings,
               icon: HugeIcons.strokeRoundedSettings02,
-              onTap: () {
-                context.push("${Routes.profile}/${Routes.settings}");
-              },
+              onTap: () =>
+                  context.push("${Routes.profile}/${Routes.settings}"),
             ),
-
             Divider(color: colorScheme.outline.withValues(alpha: 0.5)),
-
             _buildCustomTab(
               context: context,
               title: LocaleKeys.me_faq,
@@ -67,11 +65,9 @@ class ProfileTabWidget extends StatelessWidget {
               context: context,
               title: LocaleKeys.me_community,
               icon: HugeIcons.strokeRoundedUserGroup,
-              onTap: () {
-                context.push("${Routes.profile}/${Routes.community}");
-              },
+              onTap: () =>
+                  context.push("${Routes.profile}/${Routes.community}"),
             ),
-
             InkWell(
               onTap: () => LaunchService.call("+201211814372"),
               child: Container(
@@ -138,9 +134,7 @@ class ProfileTabWidget extends StatelessWidget {
                 size: 18.sp,
               ),
             ),
-
             6.horizontalSpace,
-
             Expanded(
               child: Text(
                 title.tr(),
@@ -149,7 +143,6 @@ class ProfileTabWidget extends StatelessWidget {
                 ),
               ),
             ),
-
             Container(
               padding: paddingAll(6),
               margin: paddingVertical(8),
