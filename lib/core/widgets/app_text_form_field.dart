@@ -21,6 +21,7 @@ class AppTextFormField extends StatefulWidget {
   final bool enabled;
   final FocusNode? focusNode;
   final String? initialValue;
+  final bool obscureText;
   final TextInputAction? textInputAction;
   final List<TextInputFormatter>? inputFormatters;
   final TextDirection? fixedTextDirection;
@@ -43,6 +44,7 @@ class AppTextFormField extends StatefulWidget {
     this.enabled = true,
     this.focusNode,
     this.initialValue,
+    this.obscureText = false,
     this.textInputAction,
     this.inputFormatters,
     this.fixedTextDirection,
@@ -107,6 +109,7 @@ class _AppTextFormFieldState extends State<AppTextFormField> {
         Directionality(
           textDirection: effectiveDirection,
           child: TextFormField(
+            obscureText: widget.obscureText,
             controller: widget.controller,
             focusNode: widget.focusNode,
             validator: widget.validator,
@@ -114,8 +117,8 @@ class _AppTextFormFieldState extends State<AppTextFormField> {
             readOnly: widget.readOnly,
             enabled: widget.enabled,
             keyboardType: widget.keyboardType,
-            maxLines: widget.maxLines,
-            minLines: widget.minLines,
+            maxLines: widget.obscureText ? 1 : widget.maxLines,
+            minLines: widget.obscureText ? 1 : widget.minLines,
             inputFormatters: widget.inputFormatters,
             initialValue: widget.controller == null
                 ? widget.initialValue

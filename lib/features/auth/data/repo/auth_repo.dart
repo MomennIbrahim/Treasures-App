@@ -3,14 +3,15 @@ import 'package:konoz/core/error/app_failure.dart';
 import 'package:konoz/features/auth/data/model/user_model.dart';
 
 abstract class AuthRepo {
-  Future<Either<AppFailure, UserModel?>> signInWithGoogle();
-  /// الخطوة 1: يبعت كود SMS
-  Future<Either<AppFailure, Unit>> sendOtp({required String phone});
-
-  /// الخطوة 2: يتحقق من الكود ويسجل الدخول
-  Future<Either<AppFailure, UserModel>> verifyOtp({
+  Future<Either<AppFailure, AuthResponseModel>> register({
     required String phone,
-    required String code,
+    required String name,
+    required String password,
+  });
+
+  Future<Either<AppFailure, AuthResponseModel>> login({
+    required String phone,
+    required String password,
   });
 
   Future<Either<AppFailure, Unit>> updateName({required String name});

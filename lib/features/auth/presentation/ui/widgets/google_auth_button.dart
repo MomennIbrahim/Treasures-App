@@ -17,7 +17,7 @@ class GoogleAuthButton extends StatelessWidget {
       builder: (context, loading) => InkWell(
         onTap: loading
             ? null
-            : () => context.read<GoogleSignInCubit>().signIn(),
+            : (){},
         child: Container(
           padding: paddingAll(12),
           margin: paddingAll(12),

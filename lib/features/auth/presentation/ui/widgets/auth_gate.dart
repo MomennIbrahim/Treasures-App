@@ -7,11 +7,10 @@ import 'package:konoz/core/helper/app_padding.dart';
 import 'package:konoz/core/theme/app_colors.dart';
 import 'package:konoz/core/theme/app_text_style.dart';
 import 'package:konoz/features/auth/presentation/ui/widgets/auth_sheet.dart';
- import 'package:konoz/generated/locale_keys.g.dart';
+import 'package:konoz/generated/locale_keys.g.dart';
 import 'package:supabase_flutter/supabase_flutter.dart'
     show AuthState, SupabaseClient;
 
- 
 class AuthGate extends StatelessWidget {
   final Widget child;
 
@@ -77,7 +76,7 @@ class LoginRequiredView extends StatelessWidget {
                       foregroundColor: AppColors.white,
                       padding: EdgeInsets.symmetric(vertical: 14.h),
                     ),
-                    onPressed: () => showLoginSheet(context),
+                    onPressed: () => showRegisterSheet(context),
                     child: Text(LocaleKeys.auth_login.tr()),
                   ),
                 ),

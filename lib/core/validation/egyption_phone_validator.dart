@@ -11,3 +11,6 @@ String? validateEgyptianPhone(String? value) {
   }
   return null;
 }
+
+/// 01069528769 -> 201069528769 (الشكل اللي الـ API بيخزنه)
+String toApiPhone(String raw) => '20${raw.trim().substring(1)}';

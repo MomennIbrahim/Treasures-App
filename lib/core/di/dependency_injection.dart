@@ -7,8 +7,8 @@ import 'package:konoz/core/networking/supabase_db_service.dart';
 import 'package:konoz/features/auth/data/repo/auth_repo.dart';
 import 'package:konoz/features/auth/data/repo/auth_repo_implmentation.dart';
 import 'package:konoz/features/auth/presentation/controllers/google_signin/google_sign_in_cubit.dart';
-import 'package:konoz/features/auth/presentation/controllers/send_otp/send_otp_cubit.dart';
-import 'package:konoz/features/auth/presentation/controllers/verify_otp/verify_otp_cubit.dart';
+import 'package:konoz/features/auth/presentation/controllers/register_otp/register_cubit.dart';
+import 'package:konoz/features/auth/presentation/controllers/login/login_cubit.dart';
 import 'package:konoz/features/cart/data/repo/cart_repo.dart';
 import 'package:konoz/features/cart/data/repo/cart_repo_implementation.dart';
 import 'package:konoz/features/cart/presentation/controller/cart/cart_cubit.dart';
@@ -17,7 +17,7 @@ import 'package:konoz/features/checkout/data/repo/checkout_rpo.dart';
 import 'package:konoz/features/checkout/presentation/controllers/checkout/checkout_cubit.dart';
 import 'package:konoz/features/collection_products/data/repo/collection_products_repo.dart';
 import 'package:konoz/features/collection_products/data/repo/collection_products_repo_implmentation.dart';
- import 'package:konoz/features/collection_products/presentation/controllers/collection_products/collection_products_cubit.dart';
+import 'package:konoz/features/collection_products/presentation/controllers/collection_products/collection_products_cubit.dart';
 import 'package:konoz/features/collections/data/repo/collections_repo.dart';
 import 'package:konoz/features/collections/data/repo/collections_repo_implementation.dart';
 import 'package:konoz/features/collections/presentation/controllers/collections/collections_cubit.dart';
@@ -75,7 +75,7 @@ Future<void> setupGetIt() async {
 */
   /// All Repositories ====>
   getIt.registerLazySingleton<AuthRepo>(
-    () => AuthRepoImplmentation(getIt<SupabaseDbService>()),
+    () => AuthRepoImplmentation(getIt<ApiService>()),
   );
 
   // ── على الـ API ──
@@ -121,11 +121,10 @@ Future<void> setupGetIt() async {
   /// All Cubits ====>
 
   // Auth Cubits
-  getIt.registerFactory<SendOtpCubit>(() => SendOtpCubit(getIt()));
-  getIt.registerFactory<VerifyOtpCubit>(() => VerifyOtpCubit(getIt()));
+  getIt.registerFactory<RegisterCubit>(() => RegisterCubit(getIt()));
   getIt.registerFactory<GoogleSignInCubit>(() => GoogleSignInCubit(getIt()));
   getIt.registerFactory<LogoutCubit>(() => LogoutCubit(getIt()));
-
+  getIt.registerFactory<LoginCubit>(() => LoginCubit(getIt()));
   getIt.registerFactory<LayoutCubit>(() => LayoutCubit());
 
   // Home Cubits
