@@ -11,7 +11,6 @@ import 'package:konoz/core/widgets/app_image.dart';
 class BannerItem extends StatelessWidget {
   final String imagePath;
   final String title;
-  final String subtitle;
   final String buttonLabel;
   final VoidCallback onPressed;
   final double height;
@@ -22,7 +21,7 @@ class BannerItem extends StatelessWidget {
     super.key,
     required this.imagePath,
     required this.title,
-    required this.subtitle,
+
     required this.buttonLabel,
     required this.onPressed,
     this.height = 170,
@@ -84,19 +83,7 @@ class BannerItem extends StatelessWidget {
                             ),
                           ),
                         ),
-
-                        SlideInLeft(
-                          delay: const Duration(milliseconds: 200),
-                          child: Text(
-                            subtitle,
-                            style: AppTextStyles.text12Regular.copyWith(
-                              color: Colors.white.withValues(alpha: 0.9),
-                            ),
-                          ),
-                        ),
-
                         12.verticalSpace,
-
                         SlideInLeft(
                           delay: const Duration(milliseconds: 250),
                           child: GestureDetector(

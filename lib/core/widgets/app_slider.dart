@@ -78,7 +78,6 @@ class _AppSliderState extends State<AppSlider> {
                 boxFit: widget.fit,
                 imagePath: item.imagePath,
                 title: item.title,
-                subtitle: item.subtitle,
                 buttonLabel: item.buttonLabel,
                 onPressed: item.onPressed,
                 height: widget.height,

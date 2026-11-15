@@ -2,44 +2,39 @@ part of 'collection_products_cubit.dart';
 
 enum CollectionProductsStatus { initial, loading, success, failure }
 
-extension CollectionProductsStatusX on CollectionProductsState {
-  bool get isInitial => status == CollectionProductsStatus.initial;
-  bool get isLoading => status == CollectionProductsStatus.loading;
-  bool get isSuccess => status == CollectionProductsStatus.success;
-  bool get isFailure => status == CollectionProductsStatus.failure;
-}
-
-@immutable
 class CollectionProductsState extends Equatable {
+  /// '' يعني All. غير كده id المجموعة النصي زي "oud".
+  final String selectedCollectionId;
   final CollectionProductsStatus status;
-
-  /// 0 = All، -1 = لسه ما اتحددش
-  final int selectedCollectionId;
   final List<ProductItemModel> products;
   final AppFailure? failure;
 
   const CollectionProductsState({
+    this.selectedCollectionId = '',
     this.status = CollectionProductsStatus.initial,
-    this.selectedCollectionId = -1,
     this.products = const [],
     this.failure,
   });
 
-  // failure بيتصفّر عن قصد
+  bool get isInitial => status == CollectionProductsStatus.initial;
+  bool get isLoading => status == CollectionProductsStatus.loading;
+  bool get isSuccess => status == CollectionProductsStatus.success;
+  bool get isFailure => status == CollectionProductsStatus.failure;
+
   CollectionProductsState copyWith({
+    String? selectedCollectionId,
     CollectionProductsStatus? status,
-    int? selectedCollectionId,
     List<ProductItemModel>? products,
     AppFailure? failure,
   }) {
     return CollectionProductsState(
-      status: status ?? this.status,
       selectedCollectionId: selectedCollectionId ?? this.selectedCollectionId,
+      status: status ?? this.status,
       products: products ?? this.products,
-      failure: failure,
+      failure: failure ?? this.failure,
     );
   }
 
   @override
-  List<Object?> get props => [status, selectedCollectionId, products, failure];
+  List<Object?> get props => [selectedCollectionId, status, products, failure];
 }

@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
@@ -15,7 +14,10 @@ class CollectionItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => context.push(Routes.collectionProducts,extra: collection.id.toString()),
+      onTap: () => context.push(
+        Routes.collectionProducts,
+        extra: collection.id.toString(),
+      ),
       child: ClipRRect(
         borderRadius: AppRadius.br8,
         child: SizedBox(
@@ -24,10 +26,6 @@ class CollectionItem extends StatelessWidget {
           child: Stack(
             fit: StackFit.expand,
             children: [
-              Image(
-                fit: BoxFit.cover,
-                image: CachedNetworkImageProvider(collection.image),
-              ),
               DecoratedBox(
                 decoration: BoxDecoration(
                   color: Colors.black.withValues(alpha: 0.4),

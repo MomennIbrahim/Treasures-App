@@ -6,6 +6,7 @@ import 'package:konoz/features/collection_products/presentation/ui/widgets/tabs_
 import 'package:konoz/features/collections/presentation/controllers/collections/collections_cubit.dart';
 
 class CollectionProductsScreen extends StatefulWidget {
+  /// id المجموعة النصي (زي "oud")، أو '' لعرض All.
   final String collectionId;
   const CollectionProductsScreen({super.key, required this.collectionId});
 
@@ -20,9 +21,10 @@ class _CollectionProductsScreenState extends State<CollectionProductsScreen> {
     super.initState();
     // للتابات (بتتخطى لو متحملة)
     context.read<CollectionsCubit>().getCollections();
-    context.read<CollectionProductsCubit>().selectCollection(
-      int.tryParse(widget.collectionId) ?? 0,
-    );
+
+    // '0' كانت بتعني All في النسخة القديمة، فبنحولها لـ '' احتياطًا.
+    final id = widget.collectionId == '0' ? '' : widget.collectionId;
+    context.read<CollectionProductsCubit>().selectCollection(id);
   }
 
   @override
@@ -32,7 +34,7 @@ class _CollectionProductsScreenState extends State<CollectionProductsScreen> {
         slivers: [
           const TabsSection(),
           const CollectionProductsList(),
-          SliverToBoxAdapter(
+          const SliverToBoxAdapter(
             child: SafeArea(top: false, child: SizedBox.shrink()),
           ),
         ],

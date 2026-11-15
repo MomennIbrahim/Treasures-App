@@ -14,22 +14,29 @@ class CurrentlyTrendingModel {
     this.pagination,
   });
 
+  /// الرد من GET /trending:
+  /// { "data": { "id": "trending", "name": "...", "products": [ ... ] } }
   factory CurrentlyTrendingModel.fromJson(Map<String, dynamic> json) {
+    final data = json['data'];
+    final rawProducts = data is Map
+        ? data['products']
+        : data; // لو رجعت قائمة مباشرة
+
     return CurrentlyTrendingModel(
-      success: json['success'],
-      message: json['message'],
-      products: json['data'] == null
-          ? []
-          : (json['data'] as List)
-                .map(
-                  (e) => ProductItemModel.fromSupabase(e as Map<String, dynamic>),
-                )
-                .toList(),
-      pagination: json['pagination'] == null
-          ? null
-          : PaginationModel.fromJson(
+      success: json['success'] as bool? ?? json['succeeded'] as bool?,
+      message: json['message'] as String?,
+      products: rawProducts is List
+          ? rawProducts
+                .whereType<Map<String, dynamic>>()
+                .map(ProductItemModel.fromApi)
+                .toList()
+          : const [],
+      // الـ API مفيهاش pagination.
+      pagination: json['pagination'] is Map<String, dynamic>
+          ? PaginationModel.fromJson(
               json['pagination'] as Map<String, dynamic>,
-            ),
+            )
+          : null,
     );
   }
 }

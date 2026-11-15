@@ -1,20 +1,16 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:konoz/core/helper/app_padding.dart';
-import 'package:konoz/core/helper/cart_helper.dart';
 import 'package:konoz/core/router/routes.dart';
 import 'package:konoz/core/shared_model.dart/product_item_model.dart';
 import 'package:konoz/core/theme/app_colors.dart';
 import 'package:konoz/core/theme/app_radius.dart';
 import 'package:konoz/core/theme/app_text_style.dart';
-import 'package:konoz/core/widgets/app_button.dart';
 import 'package:konoz/core/widgets/app_image.dart';
 import 'package:konoz/core/widgets/custom_rating_widget.dart';
-import 'package:konoz/generated/locale_keys.g.dart';
 
-class CollectionProductItem extends StatefulWidget {
+class CollectionProductItem extends StatelessWidget {
   final ProductItemModel product;
   final bool isLoading;
 
@@ -24,43 +20,24 @@ class CollectionProductItem extends StatefulWidget {
     required this.isLoading,
   });
 
-  @override
-  State<CollectionProductItem> createState() => _CollectionProductItemState();
-}
-
-class _CollectionProductItemState extends State<CollectionProductItem> {
-  bool _adding = false;
-
-  ProductItemModel get product => widget.product;
-
-  bool get _hasDiscount =>
-      product.defaultDiscountPrice != null &&
-      product.defaultDiscountPrice!.isNotEmpty;
-  bool get isLoading => widget.isLoading;
-
-  Future<void> _addToCart() async {
-    final sizeId = product.defaultSizeId;
-
-    if (isLoading || _adding || sizeId == null) return;
-
-    await addProductToCart(
-      context: context,
-      sizeId: sizeId,
-      onLoadingStart: () {
-        if (!mounted) return;
-        setState(() => _adding = true);
-      },
-      onLoadingEnd: () {
-        if (!mounted) return;
-        setState(() => _adding = false);
-      },
+  /// المقاس اللي بيتعرض سعره في البطاقة: الأرخص بعد الخصم (نفس from_price).
+  ProductSizeModel? get _displaySize {
+    if (product.sizes.isEmpty) return null;
+    return product.sizes.reduce(
+      (a, b) => b.priceAfter < a.priceAfter ? b : a,
     );
   }
 
+  bool get _inStock => product.sizes.any((size) => size.isSellable);
+
   @override
   Widget build(BuildContext context) {
+    final size = _displaySize;
+    final hasDiscount = size?.hasDiscount ?? false;
+    final priceAfter = size?.priceAfter ?? product.fromPrice;
+
     return GestureDetector(
-      onTap: widget.isLoading
+      onTap: isLoading
           ? null
           : () => context.push(
               '${Routes.collectionProducts}/${Routes.productDetails}',
@@ -76,14 +53,14 @@ class _CollectionProductItemState extends State<CollectionProductItem> {
             Stack(
               children: [
                 AppImage.cachedNetwork(
-                  product.image,
+                  product.image ?? "",
                   width: 130,
                   borderRadius: AppRadius.only(
                     topLeft: const Radius.circular(4),
                     bottomLeft: const Radius.circular(4),
                   ),
                 ),
-                if (_hasDiscount)
+                if (hasDiscount)
                   Positioned(
                     top: 4,
                     left: 4,
@@ -113,13 +90,13 @@ class _CollectionProductItemState extends State<CollectionProductItem> {
                     Row(
                       children: [
                         CustomRatingWidget(
-                          initialRating: double.tryParse(product.rating) ?? 0,
+                          initialRating: product.rating,
                           width: 12,
                         ),
                         2.horizontalSpace,
                         Expanded(
                           child: Text(
-                            '${product.rating} (${product.reviewCount})',
+                            '${product.rating.toStringAsFixed(1)} (${product.reviews})',
                             style: AppTextStyles.text10Regular,
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
@@ -129,14 +106,14 @@ class _CollectionProductItemState extends State<CollectionProductItem> {
                     ),
                     2.verticalSpace,
                     Text(
-                      '${_hasDiscount ? product.defaultDiscountPrice : product.defaultPrice} L.E',
+                      '$priceAfter L.E',
                       style: AppTextStyles.text12Bold,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
-                    if (_hasDiscount)
+                    if (hasDiscount)
                       Text(
-                        'menu price: ${product.defaultPrice} L.E',
+                        'menu price: ${size!.price} L.E',
                         overflow: TextOverflow.ellipsis,
                         maxLines: 1,
                         style: AppTextStyles.text10Regular.copyWith(
@@ -148,9 +125,9 @@ class _CollectionProductItemState extends State<CollectionProductItem> {
                       ),
                     2.verticalSpace,
                     Text(
-                      product.inStock ? 'delivery today 6pm' : 'out of stock',
+                      _inStock ? 'delivery today 6pm' : 'out of stock',
                       style: AppTextStyles.text12Bold.copyWith(
-                        color: product.inStock
+                        color: _inStock
                             ? AppColors.success800
                             : AppColors.error700,
                       ),
@@ -168,7 +145,7 @@ class _CollectionProductItemState extends State<CollectionProductItem> {
                           itemBuilder: (context, index) {
                             return Center(
                               child: Text(
-                                ' ${product.sizes[index].value} ${product.sizes[index].unit}',
+                                product.sizes[index].label,
                                 style: AppTextStyles.text10Bold.copyWith(
                                   color: Colors.amber,
                                 ),
@@ -176,19 +153,6 @@ class _CollectionProductItemState extends State<CollectionProductItem> {
                             );
                           },
                         ),
-                      ),
-                    6.verticalSpace,
-                    if (product.inStock)
-                      AppButton(
-                        label: LocaleKeys.general_add_to_cart.tr(),
-                        labelStyle: AppTextStyles.text12Bold,
-                        onPressed:
-                            (_adding ||
-                                widget.isLoading ||
-                                product.defaultSizeId == null)
-                            ? null
-                            : _addToCart,
-                        height: 30,
                       ),
                   ],
                 ),

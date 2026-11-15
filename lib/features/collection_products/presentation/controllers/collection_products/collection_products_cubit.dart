@@ -11,11 +11,11 @@ class CollectionProductsCubit extends SafeCubit<CollectionProductsState> {
   final CollectionProductsRepo _repo;
   CollectionProductsCubit(this._repo) : super(const CollectionProductsState());
 
-  final Map<int, List<ProductItemModel>> _cache = {};
+  final Map<String, List<ProductItemModel>> _cache = {};
   int _requestId = 0;
 
-  /// id = 0 يعني All
-  Future<void> selectCollection(int id, {bool force = false}) async {
+  /// id = '' (فاضي) يعني All. غير كده هو id المجموعة النصي زي "oud".
+  Future<void> selectCollection(String id, {bool force = false}) async {
     if (!force &&
         id == state.selectedCollectionId &&
         (state.isSuccess || state.isLoading)) {
@@ -45,7 +45,7 @@ class CollectionProductsCubit extends SafeCubit<CollectionProductsState> {
     );
 
     final res = await _repo.getCollectionProducts(
-      collectionId: id == 0 ? null : id,
+      collectionId: id.isEmpty ? null : id,
     );
     if (reqId != _requestId || isClosed) return;
 

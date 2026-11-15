@@ -16,12 +16,13 @@ class TabsSection extends StatefulWidget {
 }
 
 class _TabsSectionState extends State<TabsSection> {
-  final Map<int, GlobalKey> _keys = {};
-  int? _lastScrolled;
+  /// '' = All، غير كده id المجموعة النصي زي "oud".
+  final Map<String, GlobalKey> _keys = {};
+  String? _lastScrolled;
 
-  GlobalKey _keyFor(int id) => _keys.putIfAbsent(id, GlobalKey.new);
+  GlobalKey _keyFor(String id) => _keys.putIfAbsent(id, GlobalKey.new);
 
-  void _scrollTo(int id) {
+  void _scrollTo(String id) {
     if (_lastScrolled == id) return;
     _lastScrolled = id;
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -53,9 +54,9 @@ class _TabsSectionState extends State<TabsSection> {
         background: BlocBuilder<CollectionsCubit, CollectionsState>(
           buildWhen: (p, c) => p.collections != c.collections,
           builder: (context, collectionsState) {
-            // التاب الأول: All (id = 0)، وبعدها الكولكشنز
-            final tabs = <({int id, String name})>[
-              (id: 0, name: LocaleKeys.collections_collections_all.tr()),
+            // التاب الأول: All (id = '')، وبعدها الكولكشنز
+            final tabs = <({String id, String name})>[
+              (id: '', name: LocaleKeys.collections_collections_all.tr()),
               for (final c in collectionsState.collections)
                 (id: c.id, name: c.name),
             ];
@@ -65,7 +66,7 @@ class _TabsSectionState extends State<TabsSection> {
                   p.selectedCollectionId != c.selectedCollectionId,
               builder: (context, state) {
                 final selectedId = state.selectedCollectionId;
-                if (selectedId >= 0) _scrollTo(selectedId);
+                _scrollTo(selectedId);
 
                 return SingleChildScrollView(
                   scrollDirection: Axis.horizontal,

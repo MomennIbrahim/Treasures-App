@@ -21,7 +21,7 @@ class SearchRepoImplementation implements SearchRepo {
         query: query.trim(),
         columns: '*, product_sizes(*)',
       );
-      return Right(rows.map(ProductItemModel.fromSupabase).toList());
+      return Right(rows.map(ProductItemModel.fromJson).toList());
     } catch (e) {
       return Left(RemoteServerFailure.from(e));
     }

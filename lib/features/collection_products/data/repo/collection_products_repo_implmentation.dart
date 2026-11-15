@@ -1,30 +1,47 @@
 import 'package:dartz/dartz.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'package:konoz/core/error/app_exception.dart';
 import 'package:konoz/core/error/app_failure.dart';
-import 'package:konoz/core/networking/supabase_db_service.dart';
+ import 'package:konoz/core/networking/api_service.dart';
+import 'package:konoz/core/networking/endpoints.dart';
 import 'package:konoz/core/shared_model.dart/product_item_model.dart';
 import 'package:konoz/features/collection_products/data/repo/collection_products_repo.dart';
+import 'package:konoz/generated/locale_keys.g.dart';
 
 class CollectionProductsRepoImplementation implements CollectionProductsRepo {
-  final SupabaseDbService _db;
-  CollectionProductsRepoImplementation(this._db);
+  final ApiService _apiService;
+  CollectionProductsRepoImplementation(this._apiService);
 
   @override
   Future<Either<AppFailure, List<ProductItemModel>>> getCollectionProducts({
-    int? collectionId,
+    String? collectionId,
   }) async {
     try {
-      final rows = await _db.getCollection(
-        path: 'products',
-        columns: '*, product_sizes(*)',
-        filters: collectionId == null
-            ? null
-            : [QueryFilter(field: 'collection_id', isEqualTo: collectionId)],
-        orderByField: 'id',
-        descending: false,
+      final res = await _apiService.getData(
+        endPoint: EndPoint.products,
+        query: collectionId == null ? null : {'collection': collectionId},
       );
-      return Right(rows.map(ProductItemModel.fromSupabase).toList());
+
+      final body = res.data;
+      final data = body is Map ? body['data'] : null;
+      final products = data is List
+          ? data
+                .whereType<Map<String, dynamic>>()
+                .map(ProductItemModel.fromApi)
+                .toList()
+          : <ProductItemModel>[];
+
+      return Right(products);
+    } on AppException catch (e) {
+      return Left(
+        RemoteServerFailure(
+          e.message.isNotEmpty
+              ? e.message
+              : LocaleKeys.errors_errors_unexpected.tr(),
+        ),
+      );
     } catch (e) {
-      return Left(RemoteServerFailure.from(e));
+      return Left(RemoteServerFailure(e.toString()));
     }
   }
 }

@@ -19,8 +19,8 @@ class AuthRepoImplmentation implements AuthRepo {
   Future<Either<AppFailure, UserModel?>> signInWithGoogle() async {
     try {
       final response = await _dbService.signInWithGoogle(
-        webClientId: AppKeys.googleWebClientId,
-       );
+        webClientId: AppConstance.googleWebClientId,
+      );
       if (response == null) return const Right(null);
       final user = response.user;
       if (user == null) {

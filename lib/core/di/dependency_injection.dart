@@ -1,4 +1,8 @@
+import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
+import 'package:konoz/core/networking/api_service.dart';
+import 'package:konoz/core/networking/connectivity_service.dart';
 import 'package:konoz/core/networking/supabase_db_service.dart';
 import 'package:konoz/features/auth/data/repo/auth_repo.dart';
 import 'package:konoz/features/auth/data/repo/auth_repo_implmentation.dart';
@@ -13,7 +17,7 @@ import 'package:konoz/features/checkout/data/repo/checkout_rpo.dart';
 import 'package:konoz/features/checkout/presentation/controllers/checkout/checkout_cubit.dart';
 import 'package:konoz/features/collection_products/data/repo/collection_products_repo.dart';
 import 'package:konoz/features/collection_products/data/repo/collection_products_repo_implmentation.dart';
-import 'package:konoz/features/collection_products/presentation/controllers/collection_products/collection_products_cubit.dart';
+ import 'package:konoz/features/collection_products/presentation/controllers/collection_products/collection_products_cubit.dart';
 import 'package:konoz/features/collections/data/repo/collections_repo.dart';
 import 'package:konoz/features/collections/data/repo/collections_repo_implementation.dart';
 import 'package:konoz/features/collections/presentation/controllers/collections/collections_cubit.dart';
@@ -43,10 +47,21 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 final getIt = GetIt.instance;
 
 Future<void> setupGetIt() async {
+  // ───────────── Supabase (للـ repos اللي لسه ما اتحولتش) ─────────────
   getIt.registerLazySingleton<SupabaseClient>(() => Supabase.instance.client);
 
   getIt.registerLazySingleton<SupabaseDbService>(
     () => SupabaseDbService(getIt<SupabaseClient>()),
+  );
+
+  // ───────────── Networking (Laravel API) ─────────────
+  getIt.registerLazySingleton<Dio>(() => Dio());
+  getIt.registerLazySingleton<Connectivity>(() => Connectivity());
+  getIt.registerLazySingleton<ConnectivityService>(
+    () => ConnectivityService(getIt<Connectivity>()),
+  );
+  getIt.registerLazySingleton<ApiService>(
+    () => ApiService(getIt<Dio>(), getIt<ConnectivityService>()),
   );
 
   /*
@@ -63,20 +78,22 @@ Future<void> setupGetIt() async {
     () => AuthRepoImplmentation(getIt<SupabaseDbService>()),
   );
 
+  // ── على الـ API ──
   getIt.registerLazySingleton<HomeRepo>(
-    () => HomeRepoImplementation(getIt<SupabaseDbService>()),
+    () => HomeRepoImplementation(getIt<ApiService>()),
   );
 
   getIt.registerLazySingleton<CollectionsRepo>(
-    () => CollectionsRepoImplementation(getIt<SupabaseDbService>()),
-  );
-
-  getIt.registerLazySingleton<ProductDetailsRepo>(
-    () => ProductDetailsRepoImplementation(getIt<SupabaseDbService>()),
+    () => CollectionsRepoImplementation(getIt<ApiService>()),
   );
 
   getIt.registerLazySingleton<CollectionProductsRepo>(
-    () => CollectionProductsRepoImplementation(getIt<SupabaseDbService>()),
+    () => CollectionProductsRepoImplementation(getIt<ApiService>()),
+  );
+
+  // ── لسه على Supabase ──
+  getIt.registerLazySingleton<ProductDetailsRepo>(
+    () => ProductDetailsRepoImplementation(getIt<SupabaseDbService>()),
   );
 
   // Profile Repository

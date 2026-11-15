@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:konoz/core/di/dependency_injection.dart';
-import 'package:konoz/core/shared_model.dart/product_item_model.dart';
 import 'package:konoz/features/auth/presentation/ui/widgets/auth_gate.dart';
 import 'package:konoz/features/cart/presentation/ui/screens/cart_screen.dart';
 import 'package:konoz/features/checkout/presentation/controllers/checkout/checkout_cubit.dart';
@@ -13,14 +12,12 @@ import 'package:konoz/features/collections/presentation/controllers/collections/
 import 'package:konoz/features/collections/presentation/ui/screens/collectoins_screen.dart';
 import 'package:konoz/features/community/presentation/ui/community_screen.dart';
 import 'package:konoz/features/faq/presentation/ui/faq_screen.dart';
-import 'package:konoz/features/favorites/presentation/ui/screens/favorite_screen.dart';
 import 'package:konoz/features/home/presentation/controllers/banners_cubit/banners_cubit.dart';
 import 'package:konoz/features/home/presentation/controllers/best_selling/best_selling_cubit.dart';
 import 'package:konoz/features/home/presentation/controllers/currently_trending/currently_trending_cubit.dart';
 import 'package:konoz/features/home/presentation/controllers/packages_cubit.dart';
 import 'package:konoz/features/home/presentation/ui/screens/home_screen.dart';
 import 'package:konoz/features/layout/presentation/ui/screens/layout_screen.dart';
-import 'package:konoz/features/offer_products/presentation/ui/screens/offer_products_screen.dart';
 import 'package:konoz/features/orders/presentation/controllers/orders_cubit.dart';
 import 'package:konoz/features/orders/presentation/ui/screens/orders_screen.dart';
 import 'package:konoz/features/package_details/data/model/package_details_model.dart';
@@ -118,17 +115,17 @@ class AppRouter {
                       );
                     },
                   ),
-                  GoRoute(
-                    path: Routes.offerProducts,
-                    pageBuilder: (context, state) {
-                      final products =
-                          state.extra as List<ProductItemModel>? ?? const [];
-                      return AppPageTransition.fade(
-                        state: state,
-                        child: OfferProductsScreen(products: products),
-                      );
-                    },
-                  ),
+                  // GoRoute(
+                  //   path: Routes.offerProducts,
+                  //   pageBuilder: (context, state) {
+                  //     final products =
+                  //         state.extra as List<ProductItemModel>? ?? const [];
+                  //     return AppPageTransition.fade(
+                  //       state: state,
+                  //       child: OfferProductsScreen(products: products),
+                  //     );
+                  //   },
+                  // ),
                   GoRoute(
                     path: Routes.packageDetails,
                     pageBuilder: (context, state) => AppPageTransition.fade(
@@ -258,15 +255,15 @@ class AppRouter {
                       );
                     },
                   ),
-                  GoRoute(
-                    path: Routes.favorites,
-                    pageBuilder: (context, state) {
-                      return AppPageTransition.fade(
-                        state: state,
-                        child: FavoriteScreen(),
-                      );
-                    },
-                  ),
+                  // GoRoute(
+                  //   path: Routes.favorites,
+                  //   pageBuilder: (context, state) {
+                  //     return AppPageTransition.fade(
+                  //       state: state,
+                  //       child: FavoriteScreen(),
+                  //     );
+                  //   },
+                  // ),
                   GoRoute(
                     path: Routes.settings,
                     pageBuilder: (context, state) {

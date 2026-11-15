@@ -14,16 +14,25 @@ class CollectionProductsModel {
     required this.pagination,
   });
 
+  /// الرد من GET /products: { "data": [ ... ] }
   factory CollectionProductsModel.fromJson(Map<String, dynamic> json) {
+    final data = json['data'] ?? json['products'];
+
     return CollectionProductsModel(
-      success: json['success'] as bool,
-      message: json['message'] as String,
-      products: (json['products'] as List<dynamic>? ?? [])
-          .map((e) => ProductItemModel.fromSupabase(e as Map<String, dynamic>))
-          .toList(),
-      pagination: PaginationModel.fromJson(
-        json['pagination'] as Map<String, dynamic>,
-      ),
+      success: json['success'] as bool? ?? json['succeeded'] as bool? ?? true,
+      message: json['message'] as String? ?? '',
+      products: data is List
+          ? data
+                .whereType<Map<String, dynamic>>()
+                .map(ProductItemModel.fromApi)
+                .toList()
+          : const [],
+      // الـ API مفيهاش pagination.
+      pagination: json['pagination'] is Map<String, dynamic>
+          ? PaginationModel.fromJson(
+              json['pagination'] as Map<String, dynamic>,
+            )
+          : null,
     );
   }
 }

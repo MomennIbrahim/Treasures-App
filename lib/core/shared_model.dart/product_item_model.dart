@@ -1,167 +1,137 @@
-import 'package:konoz/features/product_details/data/model/product_details_model.dart';
-
+/// بطاقة المنتج المختصرة، بترجع من:
+/// /trending و /top-sellers و /products و داخل /products/{id}
 class ProductItemModel {
-  final int id;
-  final String collectionId;
+  final String id;
   final String name;
-  final String description;
-  final String image;
-  final String rating;
-  final String reviewCount;
-  final bool inStock;
-  final int? defaultSizeId;
-  final String defaultSize;
-  final String defaultPrice;
-  final String? defaultDiscountPrice;
-  final String? defaultDiscountPercentage;
-  final bool isFavorite;
+  final String collectionId;
+  final String collection;
+  final double rating;
+  final int reviews;
+  final String longevity;
+  final String sillage;
+  final String? image;
+  final int fromPrice;
   final List<ProductSizeModel> sizes;
-  final List<String> images;
 
   const ProductItemModel({
     required this.id,
-    required this.collectionId,
     required this.name,
-    required this.description,
-    required this.image,
+    required this.collectionId,
+    required this.collection,
     required this.rating,
-    required this.reviewCount,
-    required this.inStock,
-    this.defaultSizeId,
-    required this.defaultSize,
-    required this.defaultPrice,
-    this.defaultDiscountPrice,
-    this.defaultDiscountPercentage,
-    required this.isFavorite,
+    required this.reviews,
+    required this.longevity,
+    required this.sillage,
+    required this.image,
+    required this.fromPrice,
     required this.sizes,
-    required this.images,
   });
 
-  factory ProductItemModel.empty() {
-    return const ProductItemModel(
-      id: 0,
-      collectionId: '1',
-      name: 'placeholder name',
-      description: 'placeholder description text here',
-      image:
-          'https://i.pinimg.com/736x/91/46/b1/9146b1806b9cc89d22d12ccb987e0d5a.jpg',
-      rating: '0.0',
-      reviewCount: '00',
-      inStock: true,
-      defaultSize: '-',
-      defaultPrice: '0',
-      isFavorite: false,
-      sizes: [],
-      images: [],
-    );
-  }
-
-  factory ProductItemModel.fromSupabase(Map<String, dynamic> json) {
-    final rawImages = json['images'];
-
-    final images = rawImages is List
-        ? rawImages.map((item) => item.toString()).toList()
-        : <String>[];
-
-    final rawSizes = json['product_sizes'];
-
-    final sizes =
-        (rawSizes is List ? rawSizes : [])
-            .whereType<Map>()
-            .map(
-              (item) =>
-                  ProductSizeModel.fromJson(Map<String, dynamic>.from(item)),
-            )
-            .toList()
-          ..sort(
-            (a, b) =>
-                (int.tryParse(a.id) ?? 0).compareTo(int.tryParse(b.id) ?? 0),
-          );
-
-    // أول مقاس متاح، أو أول مقاس لو كل المقاسات غير متاحة.
-    final ProductSizeModel? defaultSize = sizes.isEmpty
-        ? null
-        : sizes.firstWhere(
-            (size) => size.isAvailable,
-            orElse: () => sizes.first,
-          );
-
-    final originalPrice = _parsePrice(defaultSize?.price);
-    final discountedPrice = _parsePrice(defaultSize?.discountPrice);
-
-    final hasDiscount =
-        originalPrice != null &&
-        discountedPrice != null &&
-        discountedPrice > 0 &&
-        discountedPrice < originalPrice;
-
-    final displayedPrice = originalPrice ?? discountedPrice ?? 0;
+  factory ProductItemModel.fromApi(Map<String, dynamic> json) {
+    final sizes = (json['sizes'] as List? ?? const [])
+        .whereType<Map<String, dynamic>>()
+        .map(ProductSizeModel.fromJson)
+        .toList();
 
     return ProductItemModel(
-      id: int.tryParse(json['id']?.toString() ?? '') ?? 0,
-      collectionId: json['collection_id']?.toString() ?? '',
+      id: json['id']?.toString() ?? '',
       name: json['name']?.toString() ?? '',
-      description: json['description']?.toString() ?? '',
-      image: images.isNotEmpty ? images.first : '',
-      rating: json['rating']?.toString() ?? '0',
-      reviewCount: json['review_count']?.toString() ?? '0',
-      inStock: sizes.any((size) => size.isAvailable),
-      defaultSizeId: int.tryParse(defaultSize?.id ?? ''),
-      defaultSize: defaultSize?.displayName ?? '-',
-      defaultPrice: _formatPrice(displayedPrice),
-      defaultDiscountPrice: hasDiscount ? _formatPrice(discountedPrice) : null,
-      defaultDiscountPercentage: hasDiscount
-          ? (defaultSize?.discountPercentage ??
-                _calculateDiscountPercentage(originalPrice, discountedPrice))
-          : null,
-      isFavorite: false,
+      collectionId: json['collection_id']?.toString() ?? '',
+      collection: json['collection']?.toString() ?? '',
+      rating: _toDouble(json['rating']),
+      reviews: _toInt(json['reviews']),
+      longevity: json['longevity']?.toString() ?? '',
+      sillage: json['sillage']?.toString() ?? '',
+      image: json['image']?.toString(),
+      fromPrice: _toInt(json['from_price']),
       sizes: sizes,
-      images: images,
     );
   }
 
-  static double? _parsePrice(String? value) {
-    if (value == null || value.trim().isEmpty) {
-      return null;
+  factory ProductItemModel.fromJson(Map<String, dynamic> json) =>
+      ProductItemModel.fromApi(json);
+
+  /// بيانات وهمية للـ Skeletonizer. النصوص بطول معقول عشان شكل الـ skeleton
+  /// يطلع قريب من الشكل الحقيقي.
+  factory ProductItemModel.empty() => const ProductItemModel(
+        id: '',
+        name: 'Product name here',
+        collectionId: '',
+        collection: 'Collection',
+        rating: 0,
+        reviews: 0,
+        longevity: '12+',
+        sillage: 'High',
+        image: null,
+        fromPrice: 999,
+        sizes: [
+          ProductSizeModel(
+            label: '50 ml',
+            price: 999,
+            discountPercent: 0,
+            priceAfter: 999,
+            quantity: 1,
+            status: 'available',
+          ),
+        ],
+      );
+
+  /// أول مقاس متاح للبيع، أو null لو كله خلص.
+  ProductSizeModel? get firstAvailableSize {
+    for (final size in sizes) {
+      if (size.isSellable) return size;
     }
-
-    return double.tryParse(value.trim());
+    return null;
   }
 
-  static String _formatPrice(double value) {
-    return value == value.roundToDouble()
-        ? value.toInt().toString()
-        : value.toString();
+  /// فيه أي مقاس عليه خصم؟
+  bool get hasDiscount => sizes.any((size) => size.discountPercent > 0);
+
+  /// كل المقاسات خلصت.
+  bool get isOutOfStock => sizes.isNotEmpty && firstAvailableSize == null;
+
+  static int _toInt(dynamic value) =>
+      value is num ? value.toInt() : int.tryParse('$value') ?? 0;
+
+  static double _toDouble(dynamic value) =>
+      value is num ? value.toDouble() : double.tryParse('$value') ?? 0;
+}
+
+/// مقاس واحد للمنتج. label مثل "50 ml" وهو نفس القيمة اللي بتتبعت للسلة.
+class ProductSizeModel {
+  final String label;
+  final int price;
+  final int discountPercent;
+  final int priceAfter;
+  final int quantity;
+
+  /// available | one_last | last_few | out_of_stock | soon
+  final String status;
+
+  const ProductSizeModel({
+    required this.label,
+    required this.price,
+    required this.discountPercent,
+    required this.priceAfter,
+    required this.quantity,
+    required this.status,
+  });
+
+  factory ProductSizeModel.fromJson(Map<String, dynamic> json) {
+    return ProductSizeModel(
+      label: json['label']?.toString() ?? '',
+      price: ProductItemModel._toInt(json['price']),
+      discountPercent: ProductItemModel._toInt(json['discount_percent']),
+      priceAfter: ProductItemModel._toInt(json['price_after']),
+      quantity: ProductItemModel._toInt(json['quantity']),
+      status: json['status']?.toString() ?? '',
+    );
   }
 
-  static String _calculateDiscountPercentage(
-    double originalPrice,
-    double discountedPrice,
-  ) {
-    final percentage =
-        ((originalPrice - discountedPrice) / originalPrice) * 100;
+  /// قابل للبيع: أي حالة غير out_of_stock و soon.
+  /// (السيرفر بيرجع last_few في الرد الفعلي، والتوثيق كاتبها few_last.)
+  bool get isSellable =>
+      quantity > 0 && status != 'out_of_stock' && status != 'soon';
 
-    return percentage.round().toString();
-  }
-
-  Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'collection_id': collectionId,
-      'name': name,
-      'description': description,
-      'image': image,
-      'rating': rating,
-      'review_count': reviewCount,
-      'in_stock': inStock,
-      'default_size_id': defaultSizeId,
-      'default_size': defaultSize,
-      'default_price': defaultPrice,
-      'default_discount_price': defaultDiscountPrice,
-      'default_discount_percentage': defaultDiscountPercentage,
-      'is_favorite': isFavorite,
-      'sizes': sizes.map((item) => item.toJson()).toList(),
-      'images': images,
-    };
-  }
+  bool get hasDiscount => discountPercent > 0;
 }
