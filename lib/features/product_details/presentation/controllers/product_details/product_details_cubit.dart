@@ -13,7 +13,7 @@ class ProductDetailsCubit extends SafeCubit<ProductDetailsState> {
   ProductDetailsCubit(this._productDetailsRepo)
     : super(const ProductDetailsState());
 
-  Future<void> getProductDetails({required int productId}) async {
+  Future<void> getProductDetails({required String productId}) async {
     emit(state.copyWith(status: ProductDetailsStatus.loading, failure: null));
 
     final result = await _productDetailsRepo.getProductDetails(

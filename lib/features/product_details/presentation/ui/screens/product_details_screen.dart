@@ -16,7 +16,7 @@ import 'package:konoz/generated/locale_keys.g.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class ProductDetailsScreen extends StatefulWidget {
-  final int productId;
+  final String productId;
   const ProductDetailsScreen({super.key, required this.productId});
 
   @override

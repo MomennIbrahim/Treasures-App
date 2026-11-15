@@ -116,8 +116,9 @@ class ProductImagesAndSizingSection extends StatelessWidget {
                   itemBuilder: (context, index) {
                     final size = productDetails.sizes[index];
 
-                    final isSelected = state.selectedSize?.id == size.id;
-
+                    final isSelected =
+                        state.selectedSize?.displayName == size.displayName;
+                        
                     return FadeInRight(
                       from: 30,
                       delay: Duration(milliseconds: 150 + index * 80),

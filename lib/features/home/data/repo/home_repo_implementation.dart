@@ -34,7 +34,7 @@ class HomeRepoImplementation extends HomeRepo {
         ),
       );
     } catch (e) {
-      return Left(_toFailure(e));
+      return Left(toFailure(e));
     }
   }
 
@@ -59,7 +59,7 @@ class HomeRepoImplementation extends HomeRepo {
         ),
       );
     } catch (e) {
-      return Left(_toFailure(e));
+      return Left(toFailure(e));
     }
   }
 
@@ -82,7 +82,7 @@ class HomeRepoImplementation extends HomeRepo {
         ),
       );
     } catch (e) {
-      return Left(_toFailure(e));
+      return Left(toFailure(e));
     }
   }
 
@@ -103,10 +103,12 @@ class HomeRepoImplementation extends HomeRepo {
         ),
       );
     } catch (e) {
-      return Left(_toFailure(e));
+      return Left(toFailure(e));
     }
   }
 
+
+}
   // ───────────────────────────── Helpers ─────────────────────────────
 
   /// الرد بشكل { "data": [ ... ] }
@@ -124,7 +126,7 @@ class HomeRepoImplementation extends HomeRepo {
     return products.whereType<Map<String, dynamic>>().toList();
   }
 
-  AppFailure _toFailure(Object error) {
+  AppFailure toFailure(Object error) {
     if (error is AppException) {
       return RemoteServerFailure(
         error.message.isNotEmpty
@@ -134,4 +136,3 @@ class HomeRepoImplementation extends HomeRepo {
     }
     return RemoteServerFailure(error.toString());
   }
-}

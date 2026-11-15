@@ -105,7 +105,7 @@ class AppRouter {
                   GoRoute(
                     path: Routes.productDetails,
                     pageBuilder: (context, state) {
-                      final productId = state.extra as int;
+                      final productId = state.extra as String;
                       return AppPageTransition.fade(
                         state: state,
                         child: BlocProvider(
@@ -200,7 +200,7 @@ class AppRouter {
                   GoRoute(
                     path: Routes.productDetails,
                     pageBuilder: (context, state) {
-                      final productId = state.extra as int;
+                      final productId = state.extra as String;
                       return AppPageTransition.fade(
                         state: state,
                         child: BlocProvider(

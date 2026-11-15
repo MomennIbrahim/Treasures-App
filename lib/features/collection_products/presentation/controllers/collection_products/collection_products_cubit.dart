@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter/material.dart';
 import 'package:konoz/core/cubits/safe_cubit.dart';
 import 'package:konoz/core/error/app_failure.dart';
 import 'package:konoz/core/shared_model.dart/product_item_model.dart';

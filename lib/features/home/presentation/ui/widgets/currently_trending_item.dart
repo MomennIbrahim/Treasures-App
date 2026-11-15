@@ -22,9 +22,7 @@ class CurrentlyTrendingItem extends StatelessWidget {
   /// المقاس اللي بيتعرض سعره في البطاقة: الأرخص بعد الخصم (نفس from_price).
   ProductSizeModel? get _displaySize {
     if (product.sizes.isEmpty) return null;
-    return product.sizes.reduce(
-      (a, b) => b.priceAfter < a.priceAfter ? b : a,
-    );
+    return product.sizes.reduce((a, b) => b.priceAfter < a.priceAfter ? b : a);
   }
 
   @override
@@ -54,7 +52,7 @@ class CurrentlyTrendingItem extends StatelessWidget {
             Stack(
               children: [
                 AppImage.cachedNetwork(
-                  product.image??"",
+                  product.image ?? "",
                   height: 145,
                   width: double.infinity,
                   borderRadius: AppRadius.only(
@@ -80,9 +78,7 @@ class CurrentlyTrendingItem extends StatelessWidget {
                   ),
               ],
             ),
-
             6.verticalSpace,
-
             Padding(
               padding: paddingHorizontal(8),
               child: Text(
@@ -92,9 +88,16 @@ class CurrentlyTrendingItem extends StatelessWidget {
                 style: AppTextStyles.text12Bold,
               ),
             ),
-
+            Padding(
+              padding: paddingHorizontal(8),
+              child: Text(
+                product.collection,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: AppTextStyles.text10Regular,
+              ),
+            ),
             2.verticalSpace,
-
             Padding(
               padding: paddingHorizontal(8),
               child: Row(

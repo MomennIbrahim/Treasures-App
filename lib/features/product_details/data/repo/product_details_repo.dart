@@ -4,6 +4,6 @@ import 'package:konoz/features/product_details/data/model/product_details_model.
 
 abstract class ProductDetailsRepo {
   Future<Either<AppFailure, ProductDetailsModel>> getProductDetails({
-    required int productId,
+    required String productId,
   });
 }

@@ -53,7 +53,9 @@ class _HomeOffersSectionState extends State<HomeOffersSection> {
               return const SizedBox.shrink();
             }
 
-            final displayBanners = isLoading ? BannerData.emptyList() : bannersList;
+            final displayBanners = isLoading
+                ? BannerData.emptyList()
+                : bannersList;
 
             return Skeletonizer(
               effect: AppShimmer.effect(context),
@@ -67,7 +69,8 @@ class _HomeOffersSectionState extends State<HomeOffersSection> {
                   ),
                   10.verticalSpace,
                   AppSlider(
-                    items: displayBanners.map(
+                    items: displayBanners
+                        .map(
                           (e) => ImageBannerItem(
                             imagePath: e.image,
                             title: e.title,

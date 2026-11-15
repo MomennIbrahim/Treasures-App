@@ -90,7 +90,7 @@ class BestSellingItem extends StatelessWidget {
                               decoration: BoxDecoration(
                                 color: isLoading
                                     ? Colors.transparent
-                                    : AppColors.primary,
+                                    : AppColors.error700,
                                 borderRadius: AppRadius.br4,
                               ),
                               child: Text(
@@ -166,7 +166,7 @@ class BestSellingItem extends StatelessWidget {
                         decoration: BoxDecoration(
                           color: isLoading
                               ? Colors.transparent
-                              : AppColors.error700,
+                              : AppColors.primary,
                           borderRadius: AppRadius.only(
                             bottomLeft: const Radius.circular(12),
                           ),

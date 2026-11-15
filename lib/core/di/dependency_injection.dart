@@ -93,7 +93,7 @@ Future<void> setupGetIt() async {
 
   // ── لسه على Supabase ──
   getIt.registerLazySingleton<ProductDetailsRepo>(
-    () => ProductDetailsRepoImplementation(getIt<SupabaseDbService>()),
+    () => ProductDetailsRepoImplementation(getIt<ApiService>()),
   );
 
   // Profile Repository
