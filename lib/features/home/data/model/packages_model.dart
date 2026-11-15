@@ -1,3 +1,4 @@
+
 import 'package:konoz/core/shared_model.dart/pagination_model.dart';
 
 class PackagesModel {
@@ -20,69 +21,94 @@ class PackagesModel {
     return PackagesModel(
       success: json['success'],
       message: json['message'],
-      packages: json['data'] == null
-          ? []
-          : (json['data'] as List)
-                .map(
-                  (e) => PackageItemModel.fromJson(e as Map<String, dynamic>),
-                )
-                .toList(),
-      // pagination: json['pagination'] == null
-      //     ? null
-      //     : PaginationModel.fromJson(
-      //         json['pagination'] as Map<String, dynamic>,
-      //       ),
+      packages: (json['data'] as List? ?? [])
+          .map(
+            (e) => PackageItemModel.fromJson(
+              e as Map<String, dynamic>,
+            ),
+          )
+          .toList(),
     );
   }
 }
 
 class PackageItemModel {
-  final int id;
+  final String id;
   final String name;
-  final String description;
-  final String image;
   final String price;
-  final String discountPrice;
-  final String discountPercentage;
-  final String size;
-  final bool isAvailable;
+  final List<PackageProductModel> items;
 
   const PackageItemModel({
     required this.id,
     required this.name,
-    required this.description,
-    required this.image,
     required this.price,
-    required this.discountPrice,
-    required this.discountPercentage,
-    required this.size,
-    required this.isAvailable,
+    required this.items,
   });
 
   factory PackageItemModel.empty() {
-    return const PackageItemModel(
-      id: 0,
+    return PackageItemModel(
+      id: '',
       name: 'Package Name',
-      description: 'Package Description',
-      image: 'https://via.placeholder.com/600x600',
-      price: '1000',
-      discountPrice: '750',
-      discountPercentage: '25%',
-      size: '3 × 50ml',
-      isAvailable: true,
+      price: '370',
+      items: [
+        PackageProductModel.empty(),
+        PackageProductModel.empty(),
+      ],
     );
   }
+
   factory PackageItemModel.fromJson(Map<String, dynamic> json) {
     return PackageItemModel(
-      id: json['id'] as int? ?? 0,
-      name: json['name'] as String? ?? '',
-      description: json['description'] as String? ?? '',
-      image: json['image'] as String? ?? '',
+      id: json['id']?.toString() ?? '',
+      name: json['name'] ?? '',
       price: json['price']?.toString() ?? '0',
-      discountPrice: json['discount_price']?.toString() ?? '0',
-      discountPercentage: json['discount_percentage']?.toString() ?? '0%',
-      size: json['size']?.toString() ?? '',
-      isAvailable: json['is_available'] == true,
+      items: (json['items'] as List? ?? [])
+          .map(
+            (e) => PackageProductModel.fromJson(
+              e as Map<String, dynamic>,
+            ),
+          )
+          .toList(),
+    );
+  }
+}
+
+class PackageProductModel {
+  final String productId;
+  final String name;
+  final String image;
+  final String quantity;
+  final String price;
+  final String total;
+
+  const PackageProductModel({
+    required this.productId,
+    required this.name,
+    required this.image,
+    required this.quantity,
+    required this.price,
+    required this.total,
+  });
+
+  factory PackageProductModel.empty() {
+    return const PackageProductModel(
+      productId: '',
+      name: 'Product Name',
+      image: '',
+      quantity: '1',
+      price: '0',
+      total: '0',
+    );
+  }
+
+  factory PackageProductModel.fromJson(Map<String, dynamic> json) {
+    return PackageProductModel(
+      productId: json['product_id']?.toString() ?? '',
+      name: json['name'] ?? '',
+      image: json['image'] ?? '',
+      quantity: json['quantity']?.toString() ?? '0',
+      price: json['price']?.toString() ?? '0',
+      total: json['total']?.toString() ?? '0',
     );
   }
 }

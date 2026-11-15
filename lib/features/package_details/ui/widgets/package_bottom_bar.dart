@@ -48,7 +48,6 @@ class PackageBottomBar extends StatelessWidget {
               16.horizontalSpace,
               Expanded(
                 child: FilledButton(
-                  // TODO: الإضافة للسلة (السلة دلوقتي بتدعم size_id بس)
                   onPressed: () {},
                   child: const Text('Add to cart'),
                 ),

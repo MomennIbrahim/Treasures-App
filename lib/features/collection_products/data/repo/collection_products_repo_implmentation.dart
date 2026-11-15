@@ -1,12 +1,9 @@
 import 'package:dartz/dartz.dart';
-import 'package:easy_localization/easy_localization.dart';
-import 'package:konoz/core/error/app_exception.dart';
 import 'package:konoz/core/error/app_failure.dart';
- import 'package:konoz/core/networking/api_service.dart';
+import 'package:konoz/core/networking/api_service.dart';
 import 'package:konoz/core/networking/endpoints.dart';
 import 'package:konoz/core/shared_model.dart/product_item_model.dart';
 import 'package:konoz/features/collection_products/data/repo/collection_products_repo.dart';
-import 'package:konoz/generated/locale_keys.g.dart';
 
 class CollectionProductsRepoImplementation implements CollectionProductsRepo {
   final ApiService _apiService;
@@ -32,14 +29,6 @@ class CollectionProductsRepoImplementation implements CollectionProductsRepo {
           : <ProductItemModel>[];
 
       return Right(products);
-    } on AppException catch (e) {
-      return Left(
-        RemoteServerFailure(
-          e.message.isNotEmpty
-              ? e.message
-              : LocaleKeys.errors_errors_unexpected.tr(),
-        ),
-      );
     } catch (e) {
       return Left(RemoteServerFailure(e.toString()));
     }

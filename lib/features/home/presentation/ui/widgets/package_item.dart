@@ -21,6 +21,11 @@ class PackageItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
+
+    final image = package.items.isNotEmpty ? package.items.first.image : '';
+
+    final productsCount = package.items.length;
+
     return GestureDetector(
       onTap: () => context.push('${Routes.home}/${Routes.packageDetails}'),
       child: Container(
@@ -33,7 +38,7 @@ class PackageItem extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             AppImage.cachedNetwork(
-              package.image,
+              image,
               height: 160,
               width: 150,
               borderRadius: AppRadius.only(
@@ -54,30 +59,37 @@ class PackageItem extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                       style: AppTextStyles.text12Bold,
                     ),
-                    5.verticalSpace,
+
+                    8.verticalSpace,
+
                     Text(
-                      '${package.discountPrice} L.E (${package.size})',
+                      '${package.price} L.E',
                       style: AppTextStyles.text14Bold.copyWith(
                         color: Colors.amber,
                       ),
                     ),
 
-                    2.verticalSpace,
+                    6.verticalSpace,
+
                     Text(
-                      'Big Sale Up to ${package.discountPercentage} Off on this package',
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
+                      '$productsCount Products Included',
                       style: AppTextStyles.text10Bold.copyWith(
                         color: Colors.amber,
                       ),
                     ),
-                    2.verticalSpace,
 
-                    Text(
-                      package.description,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: AppTextStyles.text10Bold.copyWith(),
+                    6.verticalSpace,
+
+                    ...package.items.map(
+                      (item) => Padding(
+                        padding: EdgeInsets.only(bottom: 4.h),
+                        child: Text(
+                          '${item.quantity} × ${item.name}',
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: AppTextStyles.text10Bold,
+                        ),
+                      ),
                     ),
                   ],
                 ),
