@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -9,12 +8,12 @@ import 'package:konoz/core/widgets/app_toast.dart';
 import 'package:konoz/features/cart/presentation/controller/cart/cart_cubit.dart';
 import 'package:konoz/generated/locale_keys.g.dart';
 
-// Add the imports for CartCubit, requireLogin,
-// AppToast, Routes, and LocaleKeys from your project.
-
+/// [productId] هو الـ id النصي (ULID) و[size] هو الـ label زي ما السيرفر عايزه
+/// (`"30 ml"` / `"50 ml"` / `"100 ml"`) — يعني `ProductSizeModel.label`.
 Future<void> addProductToCart({
   required BuildContext context,
-  required int sizeId,
+  required String productId,
+  required String size,
   required VoidCallback onLoadingStart,
   required VoidCallback onLoadingEnd,
 }) async {
@@ -29,7 +28,8 @@ Future<void> addProductToCart({
   try {
     // 3. Add product to cart
     final res = await context.read<CartCubit>().addToCart(
-      sizeId: sizeId,
+      productId: productId,
+      size: size,
     );
 
     if (!context.mounted || res == null) return;

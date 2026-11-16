@@ -24,7 +24,7 @@ class UserInfoSection extends StatelessWidget {
 
     return SliverToBoxAdapter(
       child: BlocConsumer<ProfileCubit, ProfileState>(
-        listenWhen: (p, c) => p.status != c.status && c.isFailure,
+        listenWhen: (p, c) => p.status != c.status && c.isFailure ,
         listener: (context, state) {
           AppToast.show(
             context,

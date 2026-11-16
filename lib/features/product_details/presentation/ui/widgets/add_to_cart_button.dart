@@ -1,6 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:konoz/core/helper/require_login.dart';
@@ -17,11 +16,15 @@ class AddToCartButton extends StatelessWidget {
   final ProductDetailsModel product;
   const AddToCartButton({super.key, required this.product});
 
-  Future<void> _add(BuildContext context, int sizeId) async {
+  /// [size] لازم يكون الـ label اللي السيرفر عايزه: "30 ml" / "50 ml" / "100 ml"
+  Future<void> _add(BuildContext context, String size) async {
     // لو مش مسجل دخول بيفتح الـ LoginSheet، وبيكمّل لو نجح اللوجين
     if (!await requireLogin(context)) return;
     if (!context.mounted) return;
-    context.read<CartCubit>().addToCart(sizeId: sizeId);
+    context.read<CartCubit>().addToCart(
+      productId: product.id.toString(),
+      size: size,
+    );
   }
 
   @override
@@ -31,25 +34,26 @@ class AddToCartButton extends StatelessWidget {
         listenWhen: (p, c) =>
             p.actionStatus != c.actionStatus && c.action == CartAction.add,
         listener: (context, cartState) {
-          if (cartState.actionStatus == CartActionStatus.loading) {
-            showLoadingDialog(context);
-          }
-
-          if (cartState.actionStatus == CartActionStatus.success) {
-            hideLoadingDialog(context);
-            AppToast.show(
-              context,
-              message: LocaleKeys.general_product_added_to_cart.tr(),
-              type: AppToastType.success,
-              onTap: () => context.go(Routes.cart),
-            );
-          } else if (cartState.isFailure) {
-            hideLoadingDialog(context);
-            AppToast.show(
-              context,
-              message: cartState.failure?.getAllError() ?? '',
-              type: AppToastType.error,
-            );
+          switch (cartState.actionStatus) {
+            case CartActionStatus.loading:
+              showLoadingDialog(context);
+            case CartActionStatus.success:
+              hideLoadingDialog(context);
+              AppToast.show(
+                context,
+                message: LocaleKeys.general_product_added_to_cart.tr(),
+                type: AppToastType.success,
+                onTap: () => context.go(Routes.cart),
+              );
+            case CartActionStatus.failure:
+              hideLoadingDialog(context);
+              AppToast.show(
+                context,
+                message: cartState.actionFailure?.getAllError() ?? '',
+                type: AppToastType.error,
+              );
+            case CartActionStatus.idle:
+              break;
           }
         },
         builder: (context, cartState) {
@@ -68,7 +72,9 @@ class AddToCartButton extends StatelessWidget {
             label: size != null && !size.isAvailable
                 ? LocaleKeys.general_out_of_stock.tr()
                 : LocaleKeys.general_add_to_cart.tr(),
-            onPressed: canAdd ? () => _add(context, int.parse(size.id)) : null,
+            // displayName = "30 ml" في موديل Supabase القديم.
+            // لما تتحول التفاصيل للـ API غيّرها لـ size.label
+            onPressed: canAdd ? () => _add(context, size.displayName) : null,
           );
         },
       ),

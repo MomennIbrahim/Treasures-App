@@ -7,8 +7,8 @@ import 'package:konoz/core/networking/supabase_db_service.dart';
 import 'package:konoz/features/auth/data/repo/auth_repo.dart';
 import 'package:konoz/features/auth/data/repo/auth_repo_implmentation.dart';
 import 'package:konoz/features/auth/presentation/controllers/google_signin/google_sign_in_cubit.dart';
-import 'package:konoz/features/auth/presentation/controllers/register_otp/register_cubit.dart';
 import 'package:konoz/features/auth/presentation/controllers/login/login_cubit.dart';
+import 'package:konoz/features/auth/presentation/controllers/register_otp/register_cubit.dart';
 import 'package:konoz/features/cart/data/repo/cart_repo.dart';
 import 'package:konoz/features/cart/data/repo/cart_repo_implementation.dart';
 import 'package:konoz/features/cart/presentation/controller/cart/cart_cubit.dart';
@@ -98,7 +98,7 @@ Future<void> setupGetIt() async {
 
   // Profile Repository
   getIt.registerLazySingleton<ProfileRepo>(
-    () => ProfileRepoImplementation(getIt<ApiService>(),getIt<SupabaseDbService>()),
+    () => ProfileRepoImplementation(getIt<ApiService>()),
   );
   getIt.registerLazySingleton<CartRepo>(() => CartRepoImplementation(getIt()));
 

@@ -1,99 +1,72 @@
 import 'package:dartz/dartz.dart';
+import 'package:dio/dio.dart' show Response;
+import 'package:konoz/core/error/app_exception.dart';
 import 'package:konoz/core/error/app_failure.dart';
-import 'package:konoz/core/networking/supabase_db_service.dart';
-import 'package:konoz/features/cart/data/model/cart_item_model.dart';
-import 'package:konoz/features/cart/data/model/cart_summary_model.dart';
+import 'package:konoz/core/networking/api_service.dart';
+import 'package:konoz/core/networking/endpoints.dart';
+import 'package:konoz/features/cart/data/model/cart_model.dart';
 import 'package:konoz/features/cart/data/repo/cart_repo.dart';
 
+/// الـ Bearer token بيتضاف تلقائيًا من ApiService، فمفيش userId.
 class CartRepoImplementation implements CartRepo {
-  final SupabaseDbService _db;
-  CartRepoImplementation(this._db);
+  final ApiService _api;
+  CartRepoImplementation(this._api);
 
   @override
-  Future<Either<AppFailure, Unit>> addToCart({
-    required int sizeId,
+  Future<Either<AppFailure, CartModel>> getCart() =>
+      _run(() => _api.getData(endPoint: EndPoint.cart), refetchIfNeeded: false);
+
+  @override
+  Future<Either<AppFailure, CartModel>> addToCart({
+    required String productId,
+    required String size,
     int quantity = 1,
-  }) async {
-    try {
-      await _db.callRpc(
-        function: 'add_to_cart',
-        params: {'p_size_id': sizeId, 'p_quantity': quantity},
-      );
-      return const Right(unit);
-    } catch (e) {
-      return Left(RemoteServerFailure.from(e));
-    }
-  }
+  }) => _run(
+    () => _api.postData(
+      endPoint: EndPoint.cart,
+      data: {'product_id': productId, 'size': size, 'quantity': quantity},
+    ),
+  );
 
   @override
-  Future<Either<AppFailure, int>> getCartCount() async {
-    try {
-      final rows = await _db.getCollection(path: 'cart_items', columns: 'id');
-      return Right(rows.length);
-    } catch (e) {
-      return Left(RemoteServerFailure.from(e));
-    }
-  }
-
-  @override
-  Future<Either<AppFailure, List<CartItemModel>>> getCart() async {
-    try {
-      final rows = await _db.getCollection(
-        path: 'cart_items',
-        columns: '*, product_sizes(*, products(id, name, images))',
-        orderByField: 'created_at',
-      );
-      final items = rows
-          .map((r) => CartItemModel.fromJson(Map<String, dynamic>.from(r)))
-          .toList();
-      return Right(items);
-    } catch (e) {
-      return Left(RemoteServerFailure.from(e));
-    }
-  }
-
-  @override
-  Future<Either<AppFailure, Unit>> updateQuantity({
+  Future<Either<AppFailure, CartModel>> updateQuantity({
     required int itemId,
     required int quantity,
+  }) => _run(
+    () => _api.patchData(
+      endPoint: EndPoint.cartItem(itemId),
+      data: {'quantity': quantity},
+    ),
+  );
+
+  @override
+  Future<Either<AppFailure, CartModel>> removeItem(int itemId) =>
+      _run(() => _api.deleteData(endPoint: EndPoint.cartItem(itemId)));
+
+  // ───────── helpers ─────────
+
+  /// بينفّذ الطلب، ولو الرد مش فيه السلة (مثلًا DELETE رجّع فاضي)
+  /// بيجيبها بـ GET عشان نرجّع دايمًا حالة السيرفر الحقيقية.
+  Future<Either<AppFailure, CartModel>> _run(
+    Future<dynamic> Function() call, {
+    bool refetchIfNeeded = true,
   }) async {
     try {
-      await _db.callRpc(
-        function: 'update_cart_quantity',
-        params: {'p_item_id': itemId, 'p_quantity': quantity},
-      );
-      return const Right(unit);
+      var body = _asMap(await call());
+      if (refetchIfNeeded && (body == null || !CartModel.looksLikeCart(body))) {
+        body = _asMap(await _api.getData(endPoint: EndPoint.cart));
+      }
+      return Right(CartModel.fromApi(body ?? const {}));
+    } on AppException catch (e) {
+      return Left(RemoteServerFailure(e.message));
     } catch (e) {
-      return Left(RemoteServerFailure.from(e));
+      return Left(RemoteServerFailure(e.toString()));
     }
   }
 
-  @override
-  Future<Either<AppFailure, Unit>> removeItem(int itemId) async {
-    try {
-      await _db.deleteDocument(path: 'cart_items', id: itemId.toString());
-      return const Right(unit);
-    } catch (e) {
-      return Left(RemoteServerFailure.from(e));
-    }
-  }
-
-  @override
-  Future<Either<AppFailure, CartSummaryModel>> getSummary({
-    String? coupon,
-  }) async {
-    try {
-      final res = await _db.callRpc(
-        function: 'get_cart_summary',
-        params: {'p_coupon': coupon},
-      );
-      // الـ RPC بترجع jsonb. بنتحمل لو جت Map أو List فيها Map.
-      final raw = res is List && res.isNotEmpty ? res.first : res;
-      return Right(
-        CartSummaryModel.fromJson(Map<String, dynamic>.from(raw as Map)),
-      );
-    } catch (e) {
-      return Left(RemoteServerFailure.from(e));
-    }
+  /// بيقبل Response أو Map مباشرة (حسب ApiService بيرجّع إيه)
+  Map<String, dynamic>? _asMap(dynamic res) {
+    final data = res is Response ? res.data : res;
+    return data is Map ? Map<String, dynamic>.from(data) : null;
   }
 }

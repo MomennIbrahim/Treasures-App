@@ -5,16 +5,17 @@ abstract class EndPoints {
   static const String currentlyTrending = "currently-trending";
   static const String collections = "collections";
   static const String collectionProducts = "collection-products";
-  
 }
+
 /// كنوز · كل مسارات الـ API (الإصدار v1)
 class EndPoint {
   EndPoint._();
 
   /// غيّره بـ: flutter run --dart-define=URL_APP=https://your-domain.com
   /// ملحوظة: على Android emulator استخدم http://10.0.2.2:8000 بدل localhost.
+  // بدل الـ domain الحالي (الـ key الأول غلط، ده اسم الـ define مش الرابط)
   static const String domain = String.fromEnvironment(
-    'https://konoz.valien.tech',
+    'URL_APP',
     defaultValue: 'https://konoz.valien.tech',
   );
 
@@ -75,8 +76,7 @@ class EndPoint {
   static const String promotions = '/promotions';
 
   /// GET
-  static String promotionDetails(int promotionId) =>
-      '/promotions/$promotionId';
+  static String promotionDetails(int promotionId) => '/promotions/$promotionId';
 
   /// POST - customer_id, lines, gifts
   static String promotionQuote(int promotionId) =>
@@ -110,20 +110,18 @@ class EndPoint {
   /// POST - multipart/form-data
   static const String createUser = '/users';
 
-  /// GET
-  static String userDetails(int userId) => '/users/$userId';
-
+  
   /// POST - title, fullAddress, isDefault, lat, lng
   static String userAddresses(int userId) => '/users/$userId/addresses';
 
   // ───────────────────────────── السلة ─────────────────────────────
 
   /// GET عرض السلة / POST إضافة (product_id, size, quantity)
-  static String cart(int userId) => '/users/$userId/cart';
+  static const String cart = '/cart';
 
   /// PATCH تعديل الكمية / DELETE حذف السطر
-  static String cartItem(int userId, int itemId) =>
-      '/users/$userId/cart/$itemId';
+  static String cartItem( int itemId) =>
+      '/cart/$itemId';
 
   // ───────────────────────── الدفع والطلبات ─────────────────────────
 

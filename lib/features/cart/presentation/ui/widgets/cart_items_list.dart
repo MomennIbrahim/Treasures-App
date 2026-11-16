@@ -6,6 +6,7 @@ import 'package:konoz/core/helper/app_padding.dart';
 import 'package:konoz/core/theme/app_colors.dart';
 import 'package:konoz/core/theme/app_radius.dart';
 import 'package:konoz/core/theme/app_text_style.dart';
+import 'package:konoz/core/widgets/app_button.dart';
 import 'package:konoz/core/widgets/app_image.dart';
 import 'package:konoz/features/cart/data/model/cart_item_model.dart';
 import 'package:konoz/features/cart/presentation/controller/cart/cart_cubit.dart';
@@ -148,7 +149,7 @@ class _CartItemCard extends StatelessWidget {
                   ),
                   6.verticalSpace,
                   Text(
-                    '${item.total.toStringAsFixed(0)} L.E',
+                    '${item.total.toStringAsFixed(0)} EGP',
                     style: AppTextStyles.text16Bold,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
@@ -156,7 +157,7 @@ class _CartItemCard extends StatelessWidget {
                   if (item.quantity > 1) ...[
                     4.verticalSpace,
                     Text(
-                      '${item.unitPrice.toStringAsFixed(0)} L.E × ${item.quantity}',
+                      '${item.unitPrice.toStringAsFixed(0)} EGP × ${item.quantity}',
                       style: AppTextStyles.text12Regular,
                     ),
                   ],
@@ -220,7 +221,11 @@ class _ErrorView extends StatelessWidget {
             style: AppTextStyles.text14Regular,
           ),
           12.verticalSpace,
-          TextButton(onPressed: onRetry, child: Text('general.retry'.tr())),
+          AppButton(
+            onPressed: onRetry,
+            label: LocaleKeys.general_retry.tr(),
+            variant: AppButtonVariant.outlined,
+          ),
         ],
       ),
     );

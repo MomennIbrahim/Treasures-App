@@ -1,86 +1,79 @@
 class CartItemModel {
   final int id;
-  final int sizeId;
-  final int productId;
-  final String name;
-  final String image;
-  final String sizeLabel;
+  final String productId; // ULID
+  final String name; // بيجي شامل المقاس: "Vanilla Powder 30 ml"
+  final String image; // '' لو مفيش صورة
   final num unitPrice;
   final int quantity;
   final int inStock;
 
+  /// in_stock | last_few | out_of_stock | soon
+  final String status;
+
   const CartItemModel({
     required this.id,
-    required this.sizeId,
     required this.productId,
     required this.name,
     required this.image,
-    required this.sizeLabel,
     required this.unitPrice,
     required this.quantity,
     required this.inStock,
+    required this.status,
   });
 
-  num get total => unitPrice * quantity;
-  bool get isAvailable => inStock > 0;
-  bool get exceedsStock => quantity > inStock;
-  bool get canIncrease => quantity < inStock;
-
-  /// Row from: select('*, product_sizes(*, products(id, name, images))')
-  factory CartItemModel.fromJson(Map<String, dynamic> json) {
-    final size = _asMap(json['product_sizes']);
-    final product = _asMap(size['products']);
-    final images = _asList(product['images']);
-
-    final price = _toNum(size['price']);
-    final discount = _toNum(size['discount_price']);
-
+  factory CartItemModel.fromApi(Map<String, dynamic> json) {
     return CartItemModel(
       id: _toInt(json['id']),
-      sizeId: _toInt(json['size_id']),
-      productId: _toInt(product['id']),
-      name: product['name']?.toString() ?? '',
-      image: images.isNotEmpty ? images.first.toString() : '',
-      sizeLabel: '${size['value'] ?? ''} ${size['unit'] ?? ''}'.trim(),
-      // السعر بعد الخصم لو موجود، وإلا السعر الأصلي
-      unitPrice: discount > 0 ? discount : price,
-      quantity: _toInt(json['quantity']),
-      inStock: _toInt(size['in_stock']),
+      productId: (json['product_id'] ?? '').toString(),
+      name: (json['name'] ?? '').toString(),
+      image: (json['image'] ?? '').toString(),
+      unitPrice: _toNum(json['price']),
+      quantity: _toInt(json['quantity'], fallback: 1),
+      inStock: _toInt(json['stock']),
+      status: (json['status'] ?? '').toString(),
     );
   }
 
-  CartItemModel copyWith({int? quantity}) => CartItemModel(
-        id: id,
-        sizeId: sizeId,
-        productId: productId,
-        name: name,
-        image: image,
-        sizeLabel: sizeLabel,
-        unitPrice: unitPrice,
-        quantity: quantity ?? this.quantity,
-        inStock: inStock,
-      );
-
-  /// للـ Skeletonizer وقت التحميل فقط
+  /// للـ Skeletonizer
   factory CartItemModel.empty() => const CartItemModel(
-        id: 0,
-        sizeId: 0,
-        productId: 0,
-        name: 'Product name loading',
-        image: '',
-        sizeLabel: '100 ml',
-        unitPrice: 1000,
-        quantity: 1,
-        inStock: 10,
-      );
+    id: 0,
+    productId: '',
+    name: 'Product name 50 ml',
+    image: '',
+    unitPrice: 100,
+    quantity: 1,
+    inStock: 10,
+    status: 'in_stock',
+  );
+
+  static final _sizeRegex = RegExp(
+    r'(\d+(?:\.\d+)?\s*ml)\s*$',
+    caseSensitive: false,
+  );
+
+  /// الـ API مش بيرجّع المقاس لوحده، فبنطلعه من آخر الاسم ("30 ml")
+  String get sizeLabel => _sizeRegex.firstMatch(name)?.group(1) ?? '';
+
+  num get total => unitPrice * quantity;
+
+  bool get isAvailable =>
+      inStock > 0 && status != 'out_of_stock' && status != 'soon';
+  bool get exceedsStock => quantity > inStock;
+  bool get canIncrease => isAvailable && quantity < inStock;
+
+  CartItemModel copyWith({int? quantity}) => CartItemModel(
+    id: id,
+    productId: productId,
+    name: name,
+    image: image,
+    unitPrice: unitPrice,
+    quantity: quantity ?? this.quantity,
+    inStock: inStock,
+    status: status,
+  );
+
+  static int _toInt(dynamic v, {int fallback = 0}) =>
+      v is int ? v : (v is num ? v.toInt() : int.tryParse('$v') ?? fallback);
+
+  static num _toNum(dynamic v) => v is num ? v : (num.tryParse('$v') ?? 0);
 }
-
-Map<String, dynamic> _asMap(dynamic v) =>
-    v is Map ? Map<String, dynamic>.from(v) : <String, dynamic>{};
-
-List _asList(dynamic v) => v is List ? v : const [];
-
-int _toInt(dynamic v) =>
-    v is int ? v : (v is num ? v.toInt() : int.tryParse('$v') ?? 0);
-
-num _toNum(dynamic v) => v is num ? v : (num.tryParse('$v') ?? 0);

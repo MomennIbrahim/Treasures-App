@@ -1,11 +1,11 @@
 import 'package:dartz/dartz.dart' show Either, Left, Right, Unit, unit;
+import 'package:konoz/core/constance/app_keys.dart';
 import 'package:konoz/core/cubits/safe_cubit.dart';
-import 'package:konoz/core/di/dependency_injection.dart';
 import 'package:konoz/core/error/app_failure.dart';
 import 'package:konoz/features/cart/data/model/cart_item_model.dart';
+import 'package:konoz/features/cart/data/model/cart_model.dart';
 import 'package:konoz/features/cart/data/model/cart_summary_model.dart';
 import 'package:konoz/features/cart/data/repo/cart_repo.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 part 'cart_state.dart';
 
@@ -13,14 +13,17 @@ class CartCubit extends SafeCubit<CartState> {
   final CartRepo _repo;
   CartCubit(this._repo) : super(const CartState());
 
-  /// بيتجاهل ردود الملخص القديمة لو اليوزر ضغط +/- بسرعة
-  int _summaryRequest = 0;
+  /// عداد للعمليات (+/-/حذف). آخر عملية بس هي اللي رد السيرفر بتاعها بيتطبق،
+  /// فلو اليوزر ضغط بسرعة مفيش رد قديم يرجّع الكمية لورا.
+  int _mutation = 0;
+
+  bool get _loggedIn => AppConstance.userToken != null;
 
   // ───────── badge ─────────
   Future<void> loadCount() async {
-    if (getIt<SupabaseClient>().auth.currentSession == null) return;
-    final result = await _repo.getCartCount();
-    result.fold((_) {}, (count) => emit(state.copyWith(count: count)));
+    if (!_loggedIn) return;
+    final result = await _repo.getCart();
+    result.fold((_) {}, (cart) => emit(state.copyWith(count: cart.itemCount)));
   }
 
   // ───────── تحميل السلة ─────────
@@ -31,30 +34,20 @@ class CartCubit extends SafeCubit<CartState> {
     }
     final result = await _repo.getCart();
 
-    final ok = result.fold<bool>(
-      (f) {
-        emit(state.copyWith(status: CartStatus.failure, failure: f));
-        return false;
-      },
-      (items) {
-        emit(
-          state.copyWith(
-            status: CartStatus.success,
-            items: items,
-            count: _count(items),
-          ),
-        );
-        return true;
-      },
+    result.fold(
+      (f) => emit(state.copyWith(status: CartStatus.failure, failure: f)),
+      (cart) => emit(_withCart(cart, status: CartStatus.success)),
     );
-    if (ok) await _refreshSummary();
   }
 
-  // ───────── إضافة ─────────
+  /// alias لو في أماكن (زي CheckoutCubit) لسه بتنادي loadCart
+  Future<void> loadCart() => getCart();
+
   // ───────── إضافة ─────────
   // null = الضغطة اتجاهلت لأن فيه إضافة شغالة
   Future<Either<AppFailure, Unit>?> addToCart({
-    required int sizeId,
+    required String productId,
+    required String size,
     int quantity = 1,
   }) async {
     if (state.isAdding) return null;
@@ -65,45 +58,37 @@ class CartCubit extends SafeCubit<CartState> {
       ),
     );
 
-    final result = await _repo.addToCart(sizeId: sizeId, quantity: quantity);
-    final failure = result.fold((f) => f, (_) => null);
-
-    if (failure != null) {
-      emit(
-        state.copyWith(
-          actionStatus: CartActionStatus.failure,
-          action: CartAction.add,
-          actionFailure: failure,
-        ),
-      );
-      return Left(failure);
-    }
-
-    // السلة الحقيقية من السيرفر (الـ items والعدد في request واحد)
-    final cart = await _repo.getCart();
-
-    // emit واحد بس عشان الـ toast ميظهرش مرتين
-    cart.fold(
-      (_) => emit(
-        state.copyWith(
-          status: CartStatus.initial,
-          actionStatus: CartActionStatus.success,
-          action: CartAction.add,
-        ),
-      ),
-      (items) => emit(
-        state.copyWith(
-          status: CartStatus.success,
-          items: items,
-          count: _count(items),
-          actionStatus: CartActionStatus.success,
-          action: CartAction.add,
-        ),
-      ),
+    final result = await _repo.addToCart(
+      productId: productId,
+      size: size,
+      quantity: quantity,
     );
-    _refreshSummary();
 
-    return const Right(unit);
+    return result.fold<Either<AppFailure, Unit>>(
+      (f) {
+        emit(
+          state.copyWith(
+            actionStatus: CartActionStatus.failure,
+            action: CartAction.add,
+            actionFailure: f,
+          ),
+        );
+        return Left(f);
+      },
+      (cart) {
+        _mutation++;
+        // emit واحد بس عشان الـ toast ميظهرش مرتين
+        emit(
+          _withCart(
+            cart,
+            status: CartStatus.success,
+            actionStatus: CartActionStatus.success,
+            action: CartAction.add,
+          ),
+        );
+        return const Right(unit);
+      },
+    );
   }
 
   // ───────── تعديل الكمية (optimistic) ─────────
@@ -111,6 +96,7 @@ class CartCubit extends SafeCubit<CartState> {
     if (newQty < 1) return removeItem(item);
     if (newQty > item.inStock) return; // الزرار المفروض معطّل أصلًا
 
+    final seq = ++_mutation;
     final old = state.items;
     final updated = [
       for (final i in old) i.id == item.id ? i.copyWith(quantity: newQty) : i,
@@ -128,31 +114,12 @@ class CartCubit extends SafeCubit<CartState> {
       itemId: item.id,
       quantity: newQty,
     );
-    result.fold(
-      // رجّع القيمة القديمة
-      (f) => emit(
-        state.copyWith(
-          items: old,
-          count: _count(old),
-          actionStatus: CartActionStatus.failure,
-          action: CartAction.update,
-          actionFailure: f,
-        ),
-      ),
-      (_) {
-        emit(
-          state.copyWith(
-            actionStatus: CartActionStatus.success,
-            action: CartAction.update,
-          ),
-        );
-        _refreshSummary();
-      },
-    );
+    _applyMutationResult(result, seq, old, CartAction.update);
   }
 
   // ───────── حذف (optimistic) ─────────
   Future<void> removeItem(CartItemModel item) async {
+    final seq = ++_mutation;
     final old = state.items;
     final updated = old.where((i) => i.id != item.id).toList();
     emit(
@@ -165,40 +132,72 @@ class CartCubit extends SafeCubit<CartState> {
     );
 
     final result = await _repo.removeItem(item.id);
+    _applyMutationResult(result, seq, old, CartAction.remove);
+  }
+
+  // ───────── مشترك بين التعديل والحذف ─────────
+  void _applyMutationResult(
+    Either<AppFailure, CartModel> result,
+    int seq,
+    List<CartItemModel> old,
+    CartAction action,
+  ) {
+    final isLatest = seq == _mutation;
     result.fold(
-      (f) => emit(
-        state.copyWith(
-          items: old,
-          count: _count(old),
-          actionStatus: CartActionStatus.failure,
-          action: CartAction.remove,
-          actionFailure: f,
-        ),
-      ),
-      (_) {
+      (f) {
         emit(
           state.copyWith(
-            actionStatus: CartActionStatus.success,
-            action: CartAction.remove,
+            // نرجّع القديم بس لو مفيش عملية أحدث بعدها
+            items: isLatest ? old : null,
+            count: isLatest ? _count(old) : null,
+            actionStatus: CartActionStatus.failure,
+            action: action,
+            actionFailure: f,
           ),
         );
-        _refreshSummary();
+      },
+      (cart) {
+        if (isLatest) {
+          emit(
+            _withCart(
+              cart,
+              actionStatus: CartActionStatus.success,
+              action: action,
+            ),
+          );
+        } else {
+          // فيه عملية أحدث لسه شغالة؛ رَدّها هو اللي هيحدّث الأرقام
+          emit(
+            state.copyWith(
+              actionStatus: CartActionStatus.success,
+              action: action,
+            ),
+          );
+        }
       },
     );
   }
 
-  // ───────── ملخص الطلب (من السيرفر) ─────────
-  Future<void> _refreshSummary() async {
-    final request = ++_summaryRequest;
-    final result = await _repo.getSummary();
-    if (request != _summaryRequest) return; // رد قديم
-    // لو فشل نسيب آخر ملخص، والـ UI عنده fallback
-    result.fold((_) {}, (summary) => emit(state.copyWith(summary: summary)));
+  /// بيطبّق رد السيرفر (items + count + summary) في emit واحد
+  CartState _withCart(
+    CartModel cart, {
+    CartStatus? status,
+    CartActionStatus? actionStatus,
+    CartAction? action,
+  }) {
+    return state.copyWith(
+      status: status,
+      items: cart.items,
+      count: cart.itemCount,
+      summary: cart.summary,
+      actionStatus: actionStatus,
+      action: action,
+    );
   }
 
   /// عند الـ logout
   void clear() {
-    _summaryRequest++;
+    _mutation++;
     emit(const CartState());
   }
 

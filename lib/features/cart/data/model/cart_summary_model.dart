@@ -1,6 +1,6 @@
 class CartSummaryModel {
   final num subtotal;
-  final num? shipping; // null = لسه مجبناش الأرقام من السيرفر
+  final num? shipping;
   final num? tax;
   final num discount;
   final num? total;
@@ -13,31 +13,32 @@ class CartSummaryModel {
     this.total,
   });
 
-  /// لو total مش موجود نرجع للـ subtotal
-  num get grandTotal => total ?? subtotal;
-
-  factory CartSummaryModel.fromJson(Map<String, dynamic> json) {
+  /// من الـ API: cost / shipping / tax / total
+  factory CartSummaryModel.fromApi(Map<String, dynamic> json) {
     return CartSummaryModel(
-      subtotal: _toNum(json['subtotal']),
-      shipping: _toNum(json['shipping']),
-      tax: _toNum(json['tax']),
-      discount: _toNum(json['discount']),
-      total: _toNum(json['total']),
+      subtotal: _n(json['cost']) ?? 0,
+      shipping: _n(json['shipping']),
+      tax: _n(json['tax']),
+      discount: _n(json['discount']) ?? 0,
+      total: _n(json['total']),
     );
   }
 
-  /// fallback لو فشل جلب الملخص: بنعرض الـ subtotal بس
+  /// fallback لو لسه مفيش رد من السيرفر
   factory CartSummaryModel.fromSubtotal(num subtotal) =>
       CartSummaryModel(subtotal: subtotal);
 
-  /// للـ skeleton وقت التحميل فقط
+  /// للـ Skeletonizer
   factory CartSummaryModel.empty() => const CartSummaryModel(
-        subtotal: 5000,
-        shipping: 35,
-        tax: 500,
-        discount: 0,
-        total: 5535,
-      );
-}
+    subtotal: 100,
+    shipping: 35,
+    tax: 10,
+    discount: 0,
+    total: 145,
+  );
 
-num _toNum(dynamic v) => v is num ? v : (num.tryParse('$v') ?? 0);
+  num get grandTotal =>
+      total ?? (subtotal + (shipping ?? 0) + (tax ?? 0) - discount);
+
+  static num? _n(dynamic v) => v == null ? null : (v is num ? v : num.tryParse('$v'));
+}

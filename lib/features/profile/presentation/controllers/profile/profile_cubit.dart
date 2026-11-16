@@ -16,12 +16,13 @@ class ProfileCubit extends SafeCubit<ProfileState> {
   bool get _hasToken => AppConstance.userToken != null;
 
   /// [silent] = true: تحديث هادي من غير skeleton (لو فيه بيانات قديمة)
-  Future<void> getProfile({bool silent = false}) async {
+  Future<void> getProfile({bool silent = false, bool force = false}) async {
     if (!_hasToken) {
       emit(const ProfileState(status: ProfileStatus.guest));
       return;
     }
     if (state.isLoading) return;
+    if (state.isSuccess && state.profile != null && !force) return;
 
     final showLoading = !silent || state.profile == null;
     if (showLoading) emit(state.copyWith(status: ProfileStatus.loading));
