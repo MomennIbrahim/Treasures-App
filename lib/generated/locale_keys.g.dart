@@ -216,6 +216,9 @@ abstract class  LocaleKeys {
   static const orders_status_delivered = 'orders.status_delivered';
   static const orders_status_cancelled = 'orders.status_cancelled';
   static const orders = 'orders';
+  static const order_details_order_details = 'order_details.order_details';
+  static const order_details_order_date = 'order_details.order_date';
+  static const order_details = 'order_details';
   static const spin_title = 'spin.title';
   static const spin_spin_button = 'spin.spin_button';
   static const spin_spinning = 'spin.spinning';

@@ -233,13 +233,17 @@
     "history_last_3_months": "History last 3 months",
     "history_year": "History {}",
     "empty": "You have no orders yet",
-    "order_number": "Order #{}",
+    "order_number": "Order ID: #{}",
     "more_items": "+{} more",
     "status_pending": "Order has been placed",
     "status_confirmed": "Order confirmed",
     "status_shipped": "Out for delivery",
     "status_delivered": "Delivered",
     "status_cancelled": "Cancelled"
+  },
+  "order_details": {
+    "order_details": "Order details",
+    "order_date": "Order date"
   },
  "spin": {
   "title": "Spin To Win",

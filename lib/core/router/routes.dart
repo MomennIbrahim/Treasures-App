@@ -8,10 +8,11 @@ class Routes {
   static const String cart = '/cart';
   static const String profile = '/profile';
   static const String personalData = 'personal-data';
-  static const String collectionProducts = '/collection_products';
+  static const String collectionProducts = '/collection-products';
   static const String favorites = 'favorites';
   static const String search = 'search';
   static const String orders = 'orders';
+  static const String orderDetails = '/order-details';
   static const String settings = 'settings';
   static const String searchResult = 'search-products';
   static const String addressPicker = '/address-picker';

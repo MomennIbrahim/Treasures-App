@@ -233,7 +233,7 @@
     "history_last_3_months": "السجل لآخر 3 شهور",
     "history_year": "سجل {}",
     "empty": "لسه معندكش طلبات",
-    "order_number": "طلب #{}",
+    "order_number": "طلب رقم #{}",
     "more_items": "+{} كمان",
     "status_pending": "تم استلام طلبك",
     "status_confirmed": "تم تأكيد الطلب",
@@ -241,6 +241,12 @@
     "status_delivered": "تم التوصيل",
     "status_cancelled": "تم الإلغاء"
   },
+
+  "order_details": {
+    "order_details": "تفاصيل الطلب",
+    "order_date": "تاريخ الطلب"
+  },
+
    "spin": {
   "title": "لف واكسب",
   "spin_button": "لف العجلة",

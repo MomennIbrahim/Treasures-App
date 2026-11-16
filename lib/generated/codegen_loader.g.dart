@@ -250,13 +250,17 @@ class CodegenLoader extends AssetLoader{
     "history_last_3_months": "History last 3 months",
     "history_year": "History {}",
     "empty": "You have no orders yet",
-    "order_number": "Order #{}",
+    "order_number": "Order ID: #{}",
     "more_items": "+{} more",
     "status_pending": "Order has been placed",
     "status_confirmed": "Order confirmed",
     "status_shipped": "Out for delivery",
     "status_delivered": "Delivered",
     "status_cancelled": "Cancelled"
+  },
+  "order_details": {
+    "order_details": "Order details",
+    "order_date": "Order date"
   },
   "spin": {
     "title": "Spin To Win",
@@ -507,13 +511,17 @@ static const Map<String,dynamic> _ar = {
     "history_last_3_months": "السجل لآخر 3 شهور",
     "history_year": "سجل {}",
     "empty": "لسه معندكش طلبات",
-    "order_number": "طلب #{}",
+    "order_number": "طلب رقم #{}",
     "more_items": "+{} كمان",
     "status_pending": "تم استلام طلبك",
     "status_confirmed": "تم تأكيد الطلب",
     "status_shipped": "في الطريق إليك",
     "status_delivered": "تم التوصيل",
     "status_cancelled": "تم الإلغاء"
+  },
+  "order_details": {
+    "order_details": "تفاصيل الطلب",
+    "order_date": "تاريخ الطلب"
   },
   "spin": {
     "title": "لف واكسب",

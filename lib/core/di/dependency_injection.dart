@@ -3,7 +3,6 @@ import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:konoz/core/networking/api_service.dart';
 import 'package:konoz/core/networking/connectivity_service.dart';
-import 'package:konoz/core/networking/supabase_db_service.dart';
 import 'package:konoz/features/auth/data/repo/auth_repo.dart';
 import 'package:konoz/features/auth/data/repo/auth_repo_implmentation.dart';
 import 'package:konoz/features/auth/presentation/controllers/google_signin/google_sign_in_cubit.dart';
@@ -12,8 +11,8 @@ import 'package:konoz/features/auth/presentation/controllers/register_otp/regist
 import 'package:konoz/features/cart/data/repo/cart_repo.dart';
 import 'package:konoz/features/cart/data/repo/cart_repo_implementation.dart';
 import 'package:konoz/features/cart/presentation/controller/cart/cart_cubit.dart';
-import 'package:konoz/features/checkout/data/repo/checkout_repo_implementation.dart';
 import 'package:konoz/features/checkout/data/repo/checkout_repo.dart';
+import 'package:konoz/features/checkout/data/repo/checkout_repo_implementation.dart';
 import 'package:konoz/features/checkout/presentation/controllers/checkout/checkout_cubit.dart';
 import 'package:konoz/features/collection_products/data/repo/collection_products_repo.dart';
 import 'package:konoz/features/collection_products/data/repo/collection_products_repo_implmentation.dart';
@@ -28,6 +27,9 @@ import 'package:konoz/features/home/presentation/controllers/best_selling/best_s
 import 'package:konoz/features/home/presentation/controllers/currently_trending/currently_trending_cubit.dart';
 import 'package:konoz/features/home/presentation/controllers/packages_cubit.dart';
 import 'package:konoz/features/layout/presentation/controller/layout_cubit.dart';
+import 'package:konoz/features/order_details/data/repo/order_details_repo.dart';
+import 'package:konoz/features/order_details/data/repo/order_details_repo_implementation.dart';
+import 'package:konoz/features/order_details/presentation/controllers/order_details/order_details_cubit.dart';
 import 'package:konoz/features/orders/data/repo/orders_repo.dart';
 import 'package:konoz/features/orders/data/repo/orders_repo_implementation.dart';
 import 'package:konoz/features/orders/presentation/controllers/orders/orders_cubit.dart';
@@ -116,6 +118,11 @@ Future<void> setupGetIt() async {
     () => OrdersRepoImplementation(getIt()),
   );
 
+  // Orders Repository
+  getIt.registerLazySingleton<OrderDetailsRepo>(
+    () => OrderDetailsRepoImplementation(getIt()),
+  );
+
   //ــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــ
 
   /// All Cubits ====>
@@ -170,4 +177,7 @@ Future<void> setupGetIt() async {
 
   // Orders Cubit
   getIt.registerFactory<OrdersCubit>(() => OrdersCubit(getIt()));
+  
+  // Order Details Cubit
+  getIt.registerFactory<OrderDetailsCubit>(() => OrderDetailsCubit(getIt()));
 }
