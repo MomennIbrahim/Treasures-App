@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:konoz/core/constance/images_paths.dart';
 import 'package:konoz/core/helper/app_padding.dart';
@@ -6,11 +7,24 @@ import 'package:konoz/core/router/routes.dart';
 import 'package:konoz/core/widgets/app_image.dart';
 import 'package:konoz/core/widgets/app_search_bar.dart';
 import 'package:konoz/features/layout/presentation/ui/widgets/app_bottom_nav_bar.dart';
+import 'package:konoz/features/layout/presentation/ui/widgets/spin_icon_widget.dart';
+import 'package:konoz/features/spin/presentation/controllers/spin/spin_cubit.dart';
 
-class LayoutScreen extends StatelessWidget {
+class LayoutScreen extends StatefulWidget {
   final StatefulNavigationShell navigationShell;
 
   const LayoutScreen({super.key, required this.navigationShell});
+
+  @override
+  State<LayoutScreen> createState() => _LayoutScreenState();
+}
+
+class _LayoutScreenState extends State<LayoutScreen> {
+  @override
+  void initState() {
+    context.read<SpinCubit>().getWheel();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,13 +56,7 @@ class LayoutScreen extends StatelessWidget {
       bottom: false,
       child: Scaffold(
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-        floatingActionButton: Padding(
-          padding: paddingOnly(bottom: 16),
-          child: GestureDetector(
-            onTap: () => context.push(Routes.spin),
-            child: AppImage.asset(ImagesPaths.luckyWheel, width: 40),
-          ),
-        ),
+        floatingActionButton: SpinIconWidget(),
         appBar: hideSearchBar
             ? null
             : AppSearchBar(
@@ -58,8 +66,10 @@ class LayoutScreen extends StatelessWidget {
                     currentPath.contains(Routes.offerProducts),
               ),
         extendBody: true,
-        body: navigationShell,
-        bottomNavigationBar: AppBottomNavBar(navigationShell: navigationShell),
+        body: widget.navigationShell,
+        bottomNavigationBar: AppBottomNavBar(
+          navigationShell: widget.navigationShell,
+        ),
       ),
     );
   }

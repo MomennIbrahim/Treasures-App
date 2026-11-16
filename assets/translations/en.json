@@ -12,7 +12,8 @@
         "login_required_title": "Login Required",
         "login_required_message": "You must be logged in to access this page",
         "cancel" : "Cancel",
-        "hide" : "Hide"
+        "hide" : "Hide",
+        "not_available" : "Not Available"
     },
 
     "layout": {
@@ -26,7 +27,8 @@
         "exclusive_offers": "Exclusive Offers 🔥",
         "currently_trending": "Currently Trending",
         "best_selling": "Best Selling",
-        "packages": "Packages"
+        "packages": "Packages",
+        "explore": "Explore"
     },
 
  

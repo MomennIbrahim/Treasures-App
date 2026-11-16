@@ -35,7 +35,8 @@ import 'package:konoz/features/search/presentation/ui/screens/search_products_sc
 import 'package:konoz/features/search/presentation/ui/screens/search_screen.dart';
 import 'package:konoz/features/settings/presentation/controllers/logout/logout_cubit.dart';
 import 'package:konoz/features/settings/presentation/ui/screens/settings_screen.dart';
-import 'package:konoz/features/spin/presentation/screens/spin_screen.dart';
+import 'package:konoz/features/spin/presentation/controllers/spin/spin_cubit.dart';
+import 'package:konoz/features/spin/presentation/ui/screens/spin_screen.dart';
 
 import 'routes.dart';
 
@@ -49,7 +50,10 @@ class AppRouter {
         pageBuilder: (context, state) {
           return AppPageTransition.fade(
             state: state,
-            child: SpinWheelScreen(brandName: 'كـــنـــوز'),
+            child: BlocProvider(
+              create: (context) => getIt.get<SpinCubit>(),
+              child: SpinWheelScreen(),
+            ),
           );
         },
       ),
@@ -84,7 +88,10 @@ class AppRouter {
       // ),
       StatefulShellRoute.indexedStack(
         builder: (context, state, navigationShell) {
-          return LayoutScreen(navigationShell: navigationShell);
+          return BlocProvider(
+            create: (context) => getIt.get<SpinCubit>(),
+            child: LayoutScreen(navigationShell: navigationShell),
+          );
         },
         branches: [
           StatefulShellBranch(

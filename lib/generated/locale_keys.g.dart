@@ -16,6 +16,7 @@ abstract class  LocaleKeys {
   static const general_login_required_message = 'general.login_required_message';
   static const general_cancel = 'general.cancel';
   static const general_hide = 'general.hide';
+  static const general_not_available = 'general.not_available';
   static const general = 'general';
   static const layout_home = 'layout.home';
   static const layout_collections = 'layout.collections';
@@ -27,6 +28,7 @@ abstract class  LocaleKeys {
   static const home_currently_trending = 'home.currently_trending';
   static const home_best_selling = 'home.best_selling';
   static const home_packages = 'home.packages';
+  static const home_explore = 'home.explore';
   static const home = 'home';
   static const collections_featured_collections = 'collections.featured_collections';
   static const collections_featured_collections_description = 'collections.featured_collections_description';

@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -38,10 +36,11 @@ class _HomeOffersSectionState extends State<HomeOffersSection> {
             if (state.isFailure) {
               AppToast.show(
                 context,
-                message: state.failure?.getAllError() ?? "Something went wrong",
+                message:
+                    state.failure?.getAllError() ??
+                    LocaleKeys.errors_errors_unexpected.tr(),
                 type: AppToastType.error,
               );
-              log(state.failure?.getAllError() ?? "");
             }
           },
           builder: (context, state) {
@@ -75,7 +74,7 @@ class _HomeOffersSectionState extends State<HomeOffersSection> {
                             imagePath: e.image,
                             title: e.title,
                             subtitle: e.subtitle,
-                            buttonLabel: "Explore Now",
+                            buttonLabel: LocaleKeys.home_explore.tr(),
                             onPressed: () {},
                           ),
                         )

@@ -28,7 +28,8 @@ class CodegenLoader extends AssetLoader{
     "login_required_title": "Login Required",
     "login_required_message": "You must be logged in to access this page",
     "cancel": "Cancel",
-    "hide": "Hide"
+    "hide": "Hide",
+    "not_available": "Not Available"
   },
   "layout": {
     "home": "Home",
@@ -41,7 +42,8 @@ class CodegenLoader extends AssetLoader{
     "exclusive_offers": "Exclusive Offers 🔥",
     "currently_trending": "Currently Trending",
     "best_selling": "Best Selling",
-    "packages": "Packages"
+    "packages": "Packages",
+    "explore": "Explore"
   },
   "collections": {
     "featured_collections": "FEATURED COLLECTIONS",
@@ -289,7 +291,8 @@ static const Map<String,dynamic> _ar = {
     "login_required_title": "تسجيل الدخول مطلوب",
     "login_required_message": "يجب عليك تسجيل الدخول للوصول لهذه الصفحة",
     "cancel": "الغاء",
-    "hide": "اغلق"
+    "hide": "اغلق",
+    "not_available": "غير متاح الان"
   },
   "layout": {
     "home": "الرئيسية",
@@ -302,7 +305,8 @@ static const Map<String,dynamic> _ar = {
     "exclusive_offers": "عروض حصرية 🔥",
     "currently_trending": "الأكثر رواجًا حاليًا",
     "best_selling": "الأكثر مبيعًا",
-    "packages": "الباقات"
+    "packages": "الباقات",
+    "explore": "اكتشف"
   },
   "collections": {
     "featured_collections": "مجموعات مميزة",

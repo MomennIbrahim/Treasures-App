@@ -12,7 +12,8 @@
         "login_required_title": "تسجيل الدخول مطلوب",
         "login_required_message": "يجب عليك تسجيل الدخول للوصول لهذه الصفحة",
         "cancel" : "الغاء",
-        "hide" : "اغلق"
+        "hide" : "اغلق",
+        "not_available" : "غير متاح الان"
     },
      
     "layout": {
@@ -27,7 +28,8 @@
         "exclusive_offers": "عروض حصرية 🔥",
         "currently_trending": "الأكثر رواجًا حاليًا",
         "best_selling": "الأكثر مبيعًا",
-        "packages": "الباقات"
+        "packages": "الباقات",
+         "explore": "اكتشف"
     },
 
     "collections": {

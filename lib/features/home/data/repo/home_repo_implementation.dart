@@ -82,7 +82,8 @@ class HomeRepoImplementation extends HomeRepo {
         ),
       );
     } catch (e) {
-      return Left(toFailure(e));
+      return Left(
+        toFailure(e));
     }
   }
 

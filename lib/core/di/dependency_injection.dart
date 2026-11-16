@@ -47,6 +47,9 @@ import 'package:konoz/features/search/data/repo/search_repo.dart';
 import 'package:konoz/features/search/data/repo/search_repo_implmentation.dart';
 import 'package:konoz/features/search/presentation/controllers/search/search_cubit.dart';
 import 'package:konoz/features/settings/presentation/controllers/logout/logout_cubit.dart';
+import 'package:konoz/features/spin/data/repo/spin_repo.dart';
+import 'package:konoz/features/spin/data/repo/spin_repo_implementation.dart';
+import 'package:konoz/features/spin/presentation/controllers/spin/spin_cubit.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 final getIt = GetIt.instance;
@@ -131,6 +134,8 @@ Future<void> setupGetIt() async {
     () => PackageDetailsRepoImplementation(getIt()),
   );
 
+  // Spin Repository
+  getIt.registerLazySingleton<SpinRepo>(() => SpinRepoImplementation(getIt()));
   //ــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــ
 
   /// All Cubits ====>
@@ -193,4 +198,7 @@ Future<void> setupGetIt() async {
   getIt.registerFactory<PackageDetailsCubit>(
     () => PackageDetailsCubit(getIt(), getIt<CartCubit>()),
   );
+
+  // Spin Cubit
+  getIt.registerFactory<SpinCubit>(() => SpinCubit(getIt()));
 }
