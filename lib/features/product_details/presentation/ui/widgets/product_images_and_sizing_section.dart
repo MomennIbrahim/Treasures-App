@@ -14,9 +14,7 @@ import 'blurred_images_carousel.dart';
 class ProductImagesAndSizingSection extends StatelessWidget {
   final ProductDetailsModel productDetails;
 
-  /// لازم يطابق الـ tag بتاع الكارت: 'product-image-<productId>'
-  final Object? heroTag;
-
+ 
   /// صورة الكارت: بتتعرض أثناء التحميل بدل الصور الوهمية
   final String? heroImage;
   final bool isLoading;
@@ -24,8 +22,7 @@ class ProductImagesAndSizingSection extends StatelessWidget {
   const ProductImagesAndSizingSection({
     super.key,
     required this.productDetails,
-    this.heroTag,
-    this.heroImage,
+     this.heroImage,
     this.isLoading = false,
   });
 
@@ -43,8 +40,7 @@ class ProductImagesAndSizingSection extends StatelessWidget {
                   images: (isLoading && heroImage != null)
                       ? [heroImage!]
                       : productDetails.images,
-                  heroTag: heroTag,
-                ),
+                 ),
               ),
 
               Positioned(
@@ -118,7 +114,7 @@ class ProductImagesAndSizingSection extends StatelessWidget {
 
                     final isSelected =
                         state.selectedSize?.displayName == size.displayName;
-                        
+
                     return FadeInRight(
                       from: 30,
                       delay: Duration(milliseconds: 150 + index * 80),

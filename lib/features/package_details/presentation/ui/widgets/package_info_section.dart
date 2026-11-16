@@ -1,6 +1,5 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:konoz/core/helper/app_padding.dart';
 import 'package:konoz/core/theme/app_text_style.dart';
 import 'package:konoz/features/package_details/data/model/package_details_model.dart';

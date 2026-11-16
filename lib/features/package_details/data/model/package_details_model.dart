@@ -99,16 +99,17 @@ class PackageDetailsModel extends Equatable {
         .map((e) => PackageProductModel.fromJson(Map<String, dynamic>.from(e)))
         .toList();
 
-    final howToUse = (j['how_to_use'] is List ? j['how_to_use'] as List : const [])
-        .map((e) => e.toString())
-        .where((e) => e.trim().isNotEmpty)
-        .toList();
+    final howToUse =
+        (j['how_to_use'] is List ? j['how_to_use'] as List : const [])
+            .map((e) => e.toString())
+            .where((e) => e.trim().isNotEmpty)
+            .toList();
 
     // صورة الباكدج (لو فيه) وبعدها صور منتجاته. الـ API ساعات بيرجّع image = null
-    final images = <String>[
+    final images = <String>{
       if (_str(j['image']).isNotEmpty) _str(j['image']),
       ...products.map((p) => p.image).where((e) => e.isNotEmpty),
-    ].toSet().toList();
+    }.toList();
 
     return PackageDetailsModel(
       id: _str(j['id']),
@@ -124,6 +125,13 @@ class PackageDetailsModel extends Equatable {
   String get priceLabel => _money(price);
 
   @override
-  List<Object?> get props =>
-      [id, name, description, howToUse, price, images, products];
+  List<Object?> get props => [
+    id,
+    name,
+    description,
+    howToUse,
+    price,
+    images,
+    products,
+  ];
 }

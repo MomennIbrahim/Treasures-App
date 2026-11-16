@@ -17,14 +17,12 @@ class BlurredImagesCarousel extends StatefulWidget {
   final Duration autoScrollDuration;
 
   /// لو اتحدد، أول صورة بتتغلف بـ Hero بالـ tag ده
-  final Object? heroTag;
 
   const BlurredImagesCarousel({
     super.key,
     required this.images,
     this.height = 340,
     this.autoScrollDuration = const Duration(seconds: 10),
-    this.heroTag,
   });
 
   @override
@@ -150,9 +148,6 @@ class _BlurredImagesCarouselState extends State<BlurredImagesCarousel> {
       fit: BoxFit.cover,
       borderRadius: AppRadius.br16,
     );
-    if (i == 0 && widget.heroTag != null) {
-      return Hero(tag: widget.heroTag!, child: image);
-    }
     return image;
   }
 }

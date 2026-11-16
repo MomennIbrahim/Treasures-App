@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:konoz/core/constance/images_paths.dart';
-import 'package:konoz/core/helper/app_padding.dart';
 import 'package:konoz/core/router/routes.dart';
-import 'package:konoz/core/widgets/app_image.dart';
 import 'package:konoz/core/widgets/app_search_bar.dart';
 import 'package:konoz/features/layout/presentation/ui/widgets/app_bottom_nav_bar.dart';
 import 'package:konoz/features/layout/presentation/ui/widgets/spin_icon_widget.dart';
