@@ -33,6 +33,9 @@ import 'package:konoz/features/order_details/presentation/controllers/order_deta
 import 'package:konoz/features/orders/data/repo/orders_repo.dart';
 import 'package:konoz/features/orders/data/repo/orders_repo_implementation.dart';
 import 'package:konoz/features/orders/presentation/controllers/orders/orders_cubit.dart';
+import 'package:konoz/features/package_details/data/repo/package_details_repo.dart';
+import 'package:konoz/features/package_details/data/repo/package_details_repo_implementation.dart';
+import 'package:konoz/features/package_details/presentation/controller/package_details_cubit.dart';
 import 'package:konoz/features/personal_data/presentation/controllers/addresses/addresses_cubit.dart';
 import 'package:konoz/features/product_details/data/repo/product_details_repo.dart';
 import 'package:konoz/features/product_details/data/repo/product_details_repo_implmentation.dart';
@@ -123,6 +126,11 @@ Future<void> setupGetIt() async {
     () => OrderDetailsRepoImplementation(getIt()),
   );
 
+  // Package Details Repository
+  getIt.registerLazySingleton<PackageDetailsRepo>(
+    () => PackageDetailsRepoImplementation(getIt()),
+  );
+
   //ــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــ
 
   /// All Cubits ====>
@@ -177,7 +185,12 @@ Future<void> setupGetIt() async {
 
   // Orders Cubit
   getIt.registerFactory<OrdersCubit>(() => OrdersCubit(getIt()));
-  
+
   // Order Details Cubit
   getIt.registerFactory<OrderDetailsCubit>(() => OrderDetailsCubit(getIt()));
+
+  // Package Details Cubit
+  getIt.registerFactory<PackageDetailsCubit>(
+    () => PackageDetailsCubit(getIt(), getIt<CartCubit>()),
+  );
 }

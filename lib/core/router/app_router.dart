@@ -22,8 +22,8 @@ import 'package:konoz/features/order_details/presentation/controllers/order_deta
 import 'package:konoz/features/order_details/presentation/ui/screens/order_details_screen.dart';
 import 'package:konoz/features/orders/presentation/controllers/orders/orders_cubit.dart';
 import 'package:konoz/features/orders/presentation/ui/screens/orders_screen.dart';
-import 'package:konoz/features/package_details/data/model/package_details_model.dart';
-import 'package:konoz/features/package_details/ui/screens/package_details_screen.dart';
+import 'package:konoz/features/package_details/presentation/controller/package_details_cubit.dart';
+import 'package:konoz/features/package_details/presentation/ui/screens/package_details_screen.dart';
 import 'package:konoz/features/personal_data/presentation/controllers/addresses/addresses_cubit.dart';
 import 'package:konoz/features/personal_data/presentation/ui/screens/personal_data_screen.dart';
 import 'package:konoz/features/personal_data/presentation/ui/widgets/address_picker_screen.dart';
@@ -132,8 +132,11 @@ class AppRouter {
                     path: Routes.packageDetails,
                     pageBuilder: (context, state) => AppPageTransition.fade(
                       state: state,
-                      child: PackageDetailsScreen(
-                        package: state.extra as PackageDetailsModel?,
+                      child: BlocProvider(
+                        create: (context) => getIt<PackageDetailsCubit>(),
+                        child: PackageDetailsScreen(
+                          packageId: state.extra as String,
+                        ),
                       ),
                     ),
                   ),

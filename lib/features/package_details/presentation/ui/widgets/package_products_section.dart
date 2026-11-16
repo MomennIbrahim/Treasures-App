@@ -4,9 +4,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:konoz/core/helper/app_padding.dart';
 import 'package:konoz/core/theme/app_text_style.dart';
 import 'package:konoz/features/package_details/data/model/package_details_model.dart';
-import 'package:konoz/features/package_details/ui/widgets/package_product_card.dart';
- 
-/// المنتجات اللي في الباكدج (3 - 6 حسب الداشبورد).
+import 'package:konoz/features/package_details/presentation/ui/widgets/package_product_card.dart';
+
 class PackageProductsSection extends StatelessWidget {
   final List<PackageProductModel> products;
 
@@ -26,7 +25,7 @@ class PackageProductsSection extends StatelessWidget {
         ),
         10.verticalSpace,
         SizedBox(
-          height: 170.h,
+          height: 150.h,
           child: ListView.separated(
             padding: paddingHorizontal(16),
             scrollDirection: Axis.horizontal,

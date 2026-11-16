@@ -16,11 +16,13 @@ class PackageProductCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => context.push(
-        '${Routes.home}/${Routes.productDetails}',
-        // لازم extra، الراوت بيقراه (من غيره هيكرّاش)
-        //  extra: ProductDetailsArgs(id: product.id, image: product.image),
-      ),
+      onTap: product.id.isEmpty
+          ? null
+          : () => context.push(
+              '${Routes.home}/${Routes.productDetails}',
+              // لازم extra: الراوت بيقراه (من غيره هيكرّاش)
+              extra: product.id,
+            ),
       child: SizedBox(
         width: 110.w,
         child: Column(
@@ -40,7 +42,7 @@ class PackageProductCard extends StatelessWidget {
               style: AppTextStyles.text12Bold,
             ),
             2.verticalSpace,
-            Text(product.sizeLabel, style: AppTextStyles.text10Regular),
+            Text(product.label, style: AppTextStyles.text10Regular),
           ],
         ),
       ),

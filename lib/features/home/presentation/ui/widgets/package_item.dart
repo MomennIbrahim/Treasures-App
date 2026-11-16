@@ -22,12 +22,13 @@ class PackageItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
 
-    final image = package.items.isNotEmpty ? package.items.first.image : '';
-
     final productsCount = package.items.length;
 
     return GestureDetector(
-      onTap: () => context.push('${Routes.home}/${Routes.packageDetails}'),
+      onTap: () => context.push(
+        '${Routes.home}/${Routes.packageDetails}',
+        extra: package.id,
+      ),
       child: Container(
         margin: paddingHorizontal(16),
         decoration: BoxDecoration(
@@ -38,7 +39,7 @@ class PackageItem extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             AppImage.cachedNetwork(
-              image,
+              package.image,
               height: 160,
               width: 150,
               borderRadius: AppRadius.only(

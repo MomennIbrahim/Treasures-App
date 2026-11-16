@@ -36,12 +36,14 @@ class PackageItemModel {
   final String id;
   final String name;
   final String price;
+  final String image;
   final List<PackageProductModel> items;
 
   const PackageItemModel({
     required this.id,
     required this.name,
     required this.price,
+    required this.image,
     required this.items,
   });
 
@@ -50,6 +52,7 @@ class PackageItemModel {
       id: '',
       name: 'Package Name',
       price: '370',
+      image: '',
       items: [
         PackageProductModel.empty(),
         PackageProductModel.empty(),
@@ -61,6 +64,7 @@ class PackageItemModel {
     return PackageItemModel(
       id: json['id']?.toString() ?? '',
       name: json['name'] ?? '',
+      image: json['image'] ?? '',
       price: json['price']?.toString() ?? '0',
       items: (json['items'] as List? ?? [])
           .map(

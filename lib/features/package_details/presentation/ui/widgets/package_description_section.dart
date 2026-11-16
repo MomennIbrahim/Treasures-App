@@ -16,7 +16,7 @@ class PackageDescriptionSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: paddingOnly(left: 16, right: 16, top: 16),
+      padding: paddingOnly(left: 16, right: 16, top: 8),
       child: FadeInUp(
         from: 20,
         delay: const Duration(milliseconds: 200),
@@ -37,12 +37,9 @@ class PackageDescriptionSection extends StatelessWidget {
               ),
               6.verticalSpace,
               for (var i = 0; i < package.howToUse.length; i++)
-                Padding(
-                  padding: paddingOnly(bottom: 4),
-                  child: Text(
-                    '${i + 1}. ${package.howToUse[i]}',
-                    style: AppTextStyles.text12Regular,
-                  ),
+                Text(
+                  '${i + 1}. ${package.howToUse[i]}',
+                  style: AppTextStyles.text12Regular,
                 ),
             ],
           ],

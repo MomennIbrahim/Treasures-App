@@ -1,95 +1,129 @@
-/// منتج جوه الباكدج (بيتعرض كارت صغير).
-class PackageProductModel {
-  final int id;
+import 'package:equatable/equatable.dart';
+
+num _num(dynamic v) => v is num ? v : (num.tryParse('${v ?? ''}') ?? 0);
+String _str(dynamic v) => v?.toString() ?? '';
+Map<String, dynamic> _map(dynamic v) =>
+    v is Map ? Map<String, dynamic>.from(v) : <String, dynamic>{};
+
+String _money(num n) => '${n % 1 == 0 ? n.toInt() : n.toStringAsFixed(2)} EGP';
+
+/// منتج جوه الباكدج (من items في GET /packages/{id})
+class PackageProductModel extends Equatable {
+  final String id; // product_id (ULID)
   final String name;
   final String image;
-  final String sizeLabel; // مثلًا "100 ml"
+  final String size; // "50 ml" ← ده نفس اللي السلة بتستقبله
+  final int quantity;
+  final num price;
+  final num total;
 
   const PackageProductModel({
     required this.id,
     required this.name,
     required this.image,
-    required this.sizeLabel,
+    required this.size,
+    required this.quantity,
+    required this.price,
+    required this.total,
   });
+
+  factory PackageProductModel.fromJson(Map<String, dynamic> j) {
+    final qty = int.tryParse(_str(j['quantity'])) ?? 1;
+    final price = _num(j['price']);
+    return PackageProductModel(
+      id: _str(j['product_id'] ?? j['id']),
+      name: _str(j['name']),
+      image: _str(j['image']),
+      size: _str(j['size']),
+      quantity: qty,
+      price: price,
+      total: j['total'] != null ? _num(j['total']) : price * qty,
+    );
+  }
+
+  /// "50 ml" أو "50 ml ×2"
+  String get label => quantity > 1 ? '$size  ×$quantity' : size;
+
+  @override
+  List<Object?> get props => [id, name, image, size, quantity, price, total];
 }
 
-/// تفاصيل الباكدج: نفس معلومات المنتج من غير sizes ولا notes.
-class PackageDetailsModel {
-  final int id;
+class PackageDetailsModel extends Equatable {
+  final String id;
   final String name;
   final String description;
   final List<String> howToUse;
-  final double rate;
-  final int reviewCount;
-  final String longevity;
-  final String sillage;
   final num price;
-  final num discountPrice; // 0 = مفيش خصم
-  final List<String> images; // صور الباكدج (من الداشبورد)
-  final List<PackageProductModel> products; // 3 - 6 منتجات (متغير)
+  final List<String> images;
+  final List<PackageProductModel> products;
 
   const PackageDetailsModel({
     required this.id,
     required this.name,
     required this.description,
     required this.howToUse,
-    required this.rate,
-    required this.reviewCount,
-    required this.longevity,
-    required this.sillage,
     required this.price,
-    required this.discountPrice,
     required this.images,
     required this.products,
   });
 
-  bool get hasDiscount => discountPrice > 0 && discountPrice < price;
-  num get finalPrice => hasDiscount ? discountPrice : price;
-  int get discountPercent =>
-      hasDiscount ? (((price - discountPrice) / price) * 100).round() : 0;
+  /// للـ skeleton وقت التحميل فقط (images فاضية = placeholder في الهيدر)
+  factory PackageDetailsModel.empty() => PackageDetailsModel(
+    id: '',
+    name: 'Package name goes here',
+    description:
+        'Package description goes here, a couple of lines of text to fill.',
+    howToUse: const ['Spray on pulse points.', 'Keep the bottle away.'],
+    price: 0,
+    images: const [],
+    products: List.generate(
+      3,
+      (i) => PackageProductModel(
+        id: '$i',
+        name: 'Product name',
+        image: '',
+        size: '50 ml',
+        quantity: 1,
+        price: 0,
+        total: 0,
+      ),
+    ),
+  );
 
-  /// داتا مؤقتة لحد ما الـ API يجهز. [itemsCount] من 3 لـ 6.
-  factory PackageDetailsModel.mock({int itemsCount = 5}) {
-    const names = [
-      'Dior Sauvage',
-      'Chanel Bleu',
-      'Tom Ford Oud Wood',
-      'Versace Eros',
-      'Royal Oud',
-      'Musk Al Tahara',
-    ];
-    final count = itemsCount.clamp(3, 6);
+  factory PackageDetailsModel.fromBody(dynamic body) {
+    final root = _map(body);
+    final j = root['data'] is Map ? _map(root['data']) : root;
+
+    final products = (j['items'] is List ? j['items'] as List : const [])
+        .whereType<Map>()
+        .map((e) => PackageProductModel.fromJson(Map<String, dynamic>.from(e)))
+        .toList();
+
+    final howToUse = (j['how_to_use'] is List ? j['how_to_use'] as List : const [])
+        .map((e) => e.toString())
+        .where((e) => e.trim().isNotEmpty)
+        .toList();
+
+    // صورة الباكدج (لو فيه) وبعدها صور منتجاته. الـ API ساعات بيرجّع image = null
+    final images = <String>[
+      if (_str(j['image']).isNotEmpty) _str(j['image']),
+      ...products.map((p) => p.image).where((e) => e.isNotEmpty),
+    ].toSet().toList();
 
     return PackageDetailsModel(
-      id: 1,
-      name: 'Signature Collection',
-      description:
-          'باكدج مختار بعناية يجمع أشهر العطور في مجموعة واحدة بسعر أوفر، '
-          'مناسب كهدية أو لتجربة أكتر من رائحة.',
-      howToUse: const [
-        'رش العطر على نقاط النبض: الرقبة والمعصم.',
-        'ابعد الزجاجة حوالي 15 سم عن الجلد.',
-        'متفركش مكان الرش عشان الرائحة تثبت أكتر.',
-      ],
-      rate: 4.6,
-      reviewCount: 128,
-      longevity: '8 - 10 h',
-      sillage: 'Strong',
-      price: 9800,
-      discountPrice: 7350,
-      images: List.generate(
-        3,
-        (i) => 'https://picsum.photos/seed/package$i/600/600',
-      ),
-      products: List.generate(
-        count,
-        (i) => PackageProductModel(
-          id: 1000 + i,
-          name: names[i],
-          image: 'https://picsum.photos/seed/offer$i/400/400',
-          sizeLabel: '100 ml',
-        ),
-      ),
+      id: _str(j['id']),
+      name: _str(j['name']),
+      description: _str(j['description']),
+      howToUse: howToUse,
+      price: _num(j['price']),
+      images: images,
+      products: products,
     );
   }
+
+  String get priceLabel => _money(price);
+
+  @override
+  List<Object?> get props =>
+      [id, name, description, howToUse, price, images, products];
 }
