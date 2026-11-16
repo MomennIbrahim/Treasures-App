@@ -10,7 +10,6 @@ import 'package:konoz/core/local_storage/app_cache.dart';
 import 'package:konoz/core/local_storage/secure_cache.dart';
 import 'package:konoz/core/local_storage/session_storage.dart';
 import 'package:konoz/treasures_app.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,10 +17,7 @@ void main() async {
 
   await EasyLocalization.ensureInitialized();
   await Firebase.initializeApp();
-  await Supabase.initialize(
-    url: 'https://qudwqplkxtxnyzmlidga.supabase.co',
-    publishableKey: 'sb_publishable_nkIJXORFO2uNnridR-95Rg_N3PyvevM',
-  );
+
   await AppCache.cacheInit();
   SecureCache.secureCacheInit();
   await SessionStorage.load();

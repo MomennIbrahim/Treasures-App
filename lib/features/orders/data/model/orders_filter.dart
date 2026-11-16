@@ -3,15 +3,15 @@ enum OrdersFilter {
   last3Months,
   thisYear;
 
-  ({DateTime from, DateTime? to}) get range {
-    final now = DateTime.now();
+  /// القيمة اللي بتتبعت في ?filter= (null = الافتراضي عند السيرفر: آخر 3 شهور)
+  String? get apiValue {
     switch (this) {
       case OrdersFilter.last30Days:
-        return (from: now.subtract(const Duration(days: 30)), to: null);
+        return 'last_30_days';
       case OrdersFilter.last3Months:
-        return (from: now.subtract(const Duration(days: 90)), to: null);
+        return null;
       case OrdersFilter.thisYear:
-        return (from: DateTime(now.year), to: DateTime(now.year + 1));
+        return 'this_year';
     }
   }
 }

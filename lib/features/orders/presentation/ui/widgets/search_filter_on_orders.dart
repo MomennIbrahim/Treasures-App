@@ -1,4 +1,3 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -7,11 +6,8 @@ import 'package:konoz/core/helper/app_padding.dart';
 import 'package:konoz/core/theme/app_colors.dart';
 import 'package:konoz/core/theme/app_radius.dart';
 import 'package:konoz/core/theme/app_text_style.dart';
-import 'package:konoz/core/widgets/app_text_form_field.dart';
 import 'package:konoz/features/orders/data/model/orders_filter.dart';
-import 'package:konoz/features/orders/presentation/controllers/orders_cubit.dart';
- 
-import 'package:konoz/generated/locale_keys.g.dart';
+import 'package:konoz/features/orders/presentation/controllers/orders/orders_cubit.dart';
 
 class SearchFilterOnOrders extends StatelessWidget {
   const SearchFilterOnOrders({super.key});
@@ -26,22 +22,22 @@ class SearchFilterOnOrders extends StatelessWidget {
       sliver: SliverToBoxAdapter(
         child: Row(
           children: [
-            Expanded(
-              child: AppTextFormField(
-                hint: LocaleKeys.orders_search_hint.tr(),
-                maxLines: 1,
-                onChanged: cubit.onSearchChanged,
-                prefixIcon: Padding(
-                  padding: paddingAll(14),
-                  child: HugeIcon(
-                    icon: HugeIcons.strokeRoundedSearch01,
-                    size: 16.sp,
-                    color: colorScheme.onSurface,
-                  ),
-                ),
-              ),
-            ),
-            8.horizontalSpace,
+            // Expanded(
+            //   child: AppTextFormField(
+            //     hint: LocaleKeys.orders_search_hint.tr(),
+            //     maxLines: 1,
+            //     onChanged: cubit.onSearchChanged,
+            //     prefixIcon: Padding(
+            //       padding: paddingAll(14),
+            //       child: HugeIcon(
+            //         icon: HugeIcons.strokeRoundedSearch01,
+            //         size: 16.sp,
+            //         color: colorScheme.onSurface,
+            //       ),
+            //     ),
+            //   ),
+            // ),
+            //8.horizontalSpace,
             PopupMenuButton<OrdersFilter>(
               onSelected: cubit.setFilter,
               color: colorScheme.surface,

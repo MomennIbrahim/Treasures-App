@@ -1,7 +1,9 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:konoz/core/router/routes.dart';
+import 'package:konoz/core/theme/app_colors.dart';
 import 'package:konoz/core/theme/app_radius.dart';
 import 'package:konoz/core/theme/app_text_style.dart';
 import 'package:konoz/features/collections/data/model/collections_model.dart';
@@ -29,12 +31,18 @@ class CollectionItem extends StatelessWidget {
               DecoratedBox(
                 decoration: BoxDecoration(
                   color: Colors.black.withValues(alpha: 0.4),
+                  image: DecorationImage(
+                    image: CachedNetworkImageProvider(collection.image),
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
               Center(
                 child: Text(
                   collection.name,
-                  style: AppTextStyles.text16Bold.copyWith(color: Colors.white),
+                  style: AppTextStyles.text16Bold.copyWith(
+                    color: AppColors.white,
+                  ),
                   textAlign: TextAlign.center,
                 ),
               ),

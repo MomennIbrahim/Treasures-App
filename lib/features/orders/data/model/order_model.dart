@@ -1,3 +1,4 @@
+// features/orders/data/model/order_model.dart
 import 'package:equatable/equatable.dart';
 
 enum OrderStatus {
@@ -59,11 +60,14 @@ class OrderModel extends Equatable {
     status: OrderStatus.pending,
     total: 0,
     createdAt: DateTime(2026),
-    items: const [OrderItemModel(name: 'Product name here', image: '', quantity: 1)],
+    items: const [
+      OrderItemModel(name: 'Product name here', image: '', quantity: 1),
+    ],
   );
 
   factory OrderModel.fromJson(Map<String, dynamic> json) {
-    final raw = json['order_items'];
+    // الـ API بيرجّع `items`، والـ fallback للشكل القديم
+    final raw = json['items'] ?? json['order_items'];
     final items = (raw is List ? raw : const [])
         .whereType<Map>()
         .map((e) => OrderItemModel.fromJson(Map<String, dynamic>.from(e)))
@@ -85,7 +89,8 @@ class OrderModel extends Equatable {
   String get totalLabel =>
       total % 1 == 0 ? total.toStringAsFixed(0) : total.toStringAsFixed(2);
 
-  String get dateLabel => '${createdAt.day}/${createdAt.month}/${createdAt.year}';
+  String get dateLabel =>
+      '${createdAt.day}/${createdAt.month}/${createdAt.year}';
 
   /// للسيرش: رقم الأوردر أو اسم أي منتج فيه
   bool matches(String query) {

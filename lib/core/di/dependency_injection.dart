@@ -30,7 +30,7 @@ import 'package:konoz/features/home/presentation/controllers/packages_cubit.dart
 import 'package:konoz/features/layout/presentation/controller/layout_cubit.dart';
 import 'package:konoz/features/orders/data/repo/orders_repo.dart';
 import 'package:konoz/features/orders/data/repo/orders_repo_implementation.dart';
-import 'package:konoz/features/orders/presentation/controllers/orders_cubit.dart';
+import 'package:konoz/features/orders/presentation/controllers/orders/orders_cubit.dart';
 import 'package:konoz/features/personal_data/presentation/controllers/addresses/addresses_cubit.dart';
 import 'package:konoz/features/product_details/data/repo/product_details_repo.dart';
 import 'package:konoz/features/product_details/data/repo/product_details_repo_implmentation.dart';
@@ -50,9 +50,9 @@ Future<void> setupGetIt() async {
   // ───────────── Supabase (للـ repos اللي لسه ما اتحولتش) ─────────────
   getIt.registerLazySingleton<SupabaseClient>(() => Supabase.instance.client);
 
-  getIt.registerLazySingleton<SupabaseDbService>(
+  /*getIt.registerLazySingleton<SupabaseDbService>(
     () => SupabaseDbService(getIt<SupabaseClient>()),
-  );
+  );*/
 
   // ───────────── Networking (Laravel API) ─────────────
   getIt.registerLazySingleton<Dio>(() => Dio());

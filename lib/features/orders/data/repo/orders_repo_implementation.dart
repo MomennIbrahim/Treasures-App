@@ -1,41 +1,43 @@
 import 'package:dartz/dartz.dart';
 import 'package:konoz/core/error/app_failure.dart';
-import 'package:konoz/core/networking/supabase_db_service.dart';
+import 'package:konoz/core/networking/api_service.dart';
+import 'package:konoz/core/networking/endpoints.dart';
+// نفس الـ import اللي باقي الـ repos
+import 'package:konoz/features/home/data/repo/home_repo_implementation.dart'
+    show toFailure;
 import 'package:konoz/features/orders/data/model/order_model.dart';
 import 'package:konoz/features/orders/data/model/orders_filter.dart';
 import 'package:konoz/features/orders/data/repo/orders_repo.dart';
 
 class OrdersRepoImplementation implements OrdersRepo {
-  final SupabaseDbService _db;
-  OrdersRepoImplementation(this._db);
+  final ApiService _api;
+  OrdersRepoImplementation(this._api);
 
   @override
   Future<Either<AppFailure, List<OrderModel>>> getOrders({
     required OrdersFilter filter,
   }) async {
     try {
-      final r = filter.range;
-      // الـ RLS بتفلتر لصاحب الأوردر، ومفيش user_id بيتبعت من الـ client
-      final rows = await _db.getCollection(
-        path: 'orders',
-        columns:
-            'id, status, total, created_at, order_items(product_name, image, quantity)',
-        filters: [
-          QueryFilter(
-            field: 'created_at',
-            isGreaterThan: r.from.toUtc().toIso8601String(),
-            isLessThan: r.to?.toUtc().toIso8601String(),
-          ),
-        ],
-        orderByField: 'created_at',
-        descending: true,
-        limit: 100,
+      final res = await _api.getData(
+        endPoint: EndPoint.orders,
+        query: {
+          if (filter.apiValue != null) 'filter': filter.apiValue,
+        },
       );
-      return Right(
-        rows.map((e) => OrderModel.fromJson(Map<String, dynamic>.from(e))).toList(),
-      );
+
+      final body = res.data;
+      final rows = body is Map
+          ? body['data']
+          : body; // بيتحمل لو الرد قايمة مباشرة
+
+      final orders = (rows is List ? rows : const [])
+          .whereType<Map>()
+          .map((e) => OrderModel.fromJson(Map<String, dynamic>.from(e)))
+          .toList();
+
+      return Right(orders);
     } catch (e) {
-      return Left(RemoteServerFailure.from(e));
+      return Left(toFailure(e));
     }
   }
 }
