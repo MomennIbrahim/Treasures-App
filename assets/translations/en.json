@@ -112,7 +112,11 @@
     "sms_failed": "Couldn't send the message, please try again",
     "unauthorized": "You don't have permission",
     "already_exists": "This data already exists",
-    "not_found": "Not found"
+    "not_found": "Not found",
+    "session_expired": "Session expired",
+    "request_cancelled": "The request was cancelled.",
+    "bad_certificate": "Couldn't establish a secure connection. Please try again later.",
+    "cache_error": "A problem occurred with the saved data."
   },
   
   "validation": {

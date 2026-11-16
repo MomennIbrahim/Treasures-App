@@ -13,7 +13,7 @@ import 'package:konoz/features/cart/data/repo/cart_repo.dart';
 import 'package:konoz/features/cart/data/repo/cart_repo_implementation.dart';
 import 'package:konoz/features/cart/presentation/controller/cart/cart_cubit.dart';
 import 'package:konoz/features/checkout/data/repo/checkout_repo_implementation.dart';
-import 'package:konoz/features/checkout/data/repo/checkout_rpo.dart';
+import 'package:konoz/features/checkout/data/repo/checkout_repo.dart';
 import 'package:konoz/features/checkout/presentation/controllers/checkout/checkout_cubit.dart';
 import 'package:konoz/features/collection_products/data/repo/collection_products_repo.dart';
 import 'package:konoz/features/collection_products/data/repo/collection_products_repo_implmentation.dart';

@@ -1,45 +1,61 @@
-// class AddressModel {
-//   final String id;
-//   final double latitude;
-//   final double longitude;
-//   final String formattedAddress;
-//   final String? extraDetails; // شقة 12 عقار 27 مثلاً
-//   final bool isDefault;
+/// عنوان من الـ API: { id, title, fullAddress, isDefault, lat, lng }
+class AddressModel {
+  final int id;
+  final String title;
+  final String fullAddress;
+  final bool isDefault;
+  final double? lat;
+  final double? lng;
 
-//   const AddressModel({
-//     required this.id,
-//     required this.latitude,
-//     required this.longitude,
-//     required this.formattedAddress,
-//     this.extraDetails,
-//     this.isDefault = false,
-//   });
+  const AddressModel({
+    required this.id,
+    required this.title,
+    required this.fullAddress,
+    this.isDefault = false,
+    this.lat,
+    this.lng,
+  });
 
-//   /// النص الكامل اللي هيتعرض: العنوان + التفاصيل لو موجودة
-//   String get displayText {
-//     if (extraDetails == null || extraDetails!.trim().isEmpty) {
-//       return formattedAddress;
-//     }
-//     return '$formattedAddress، $extraDetails';
-//   }
+  factory AddressModel.fromApi(Map<String, dynamic> json) {
+    return AddressModel(
+      id: _toInt(json['id']),
+      title: (json['title'] ?? '').toString(),
+      // بنتحمل كمان شكل Supabase القديم (full_address / is_default)
+      fullAddress: (json['fullAddress'] ?? json['full_address'] ?? '')
+          .toString(),
+      isDefault: _toBool(json['isDefault'] ?? json['is_default']),
+      lat: _toDouble(json['lat']),
+      lng: _toDouble(json['lng']),
+    );
+  }
 
-//   AddressModel copyWith({
-//     String? id,
-//     double? latitude,
-//     double? longitude,
-//     String? formattedAddress,
-//     String? extraDetails,
-//     bool? isDefault,
-//   }) {
-//     return AddressModel(
-//       id: id ?? this.id,
-//       latitude: latitude ?? this.latitude,
-//       longitude: longitude ?? this.longitude,
-//       formattedAddress: formattedAddress ?? this.formattedAddress,
-//       extraDetails: extraDetails ?? this.extraDetails,
-//       isDefault: isDefault ?? this.isDefault,
-//     );
-//   }
+  /// alias للكود القديم (ProfileModel.fromJson)
+  factory AddressModel.fromJson(Map<String, dynamic> json) =>
+      AddressModel.fromApi(json);
 
+  /// للـ Skeletonizer
+  factory AddressModel.empty() => const AddressModel(
+    id: 0,
+    title: 'Home address',
+    fullAddress: 'Street name, area name, city name',
+    isDefault: false,
+  );
 
-// }
+  AddressModel copyWith({bool? isDefault}) => AddressModel(
+    id: id,
+    title: title,
+    fullAddress: fullAddress,
+    isDefault: isDefault ?? this.isDefault,
+    lat: lat,
+    lng: lng,
+  );
+
+  static int _toInt(dynamic v) =>
+      v is int ? v : (v is num ? v.toInt() : int.tryParse('$v') ?? 0);
+
+  static double? _toDouble(dynamic v) =>
+      v == null ? null : (v is num ? v.toDouble() : double.tryParse('$v'));
+
+  static bool _toBool(dynamic v) =>
+      v == true || v == 1 || v == '1' || v == 'true';
+}

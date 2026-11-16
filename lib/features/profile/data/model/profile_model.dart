@@ -17,7 +17,6 @@ class ProfileModel extends Equatable {
     required this.addresses,
   });
 
-
   ProfileModel copyWith({
     String? name,
     String? email,
@@ -27,7 +26,7 @@ class ProfileModel extends Equatable {
     return ProfileModel(
       id: id,
       name: name ?? this.name,
-      phone: phone?? this.phone,
+      phone: phone ?? this.phone,
       email: email ?? this.email,
       avatarUrl: avatarUrl,
       addresses: addresses ?? this.addresses,
@@ -60,7 +59,7 @@ class ProfileModel extends Equatable {
   }
 
   @override
-  List<Object?> get props => [id, name, phone, email, addresses];
+  List<Object?> get props => [id, name, phone, email, avatarUrl, addresses];
 }
 
 class AddressModel extends Equatable {
@@ -89,6 +88,8 @@ class AddressModel extends Equatable {
     lng: lng,
   );
 
+  /// الـ API بيرجّع camelCase (fullAddress / isDefault).
+  /// لسه بنتحمل شكل Supabase القديم (full_address / is_default) احتياطًا.
   factory AddressModel.fromJson(Map<String, dynamic> json) {
     // الأولوية للعنوان النصي من الخريطة، وإلا نجمع الحقول اليدوية
     final manual = [
@@ -97,13 +98,14 @@ class AddressModel extends Equatable {
       json['area'],
       json['city'],
     ].where((e) => e != null && e.toString().trim().isNotEmpty).join(', ');
-    final full = json['full_address']?.toString() ?? '';
+    final full = (json['fullAddress'] ?? json['full_address'])?.toString() ?? '';
+    final def = json['isDefault'] ?? json['is_default'];
 
     return AddressModel(
       id: int.tryParse(json['id'].toString()) ?? 0,
       title: json['title']?.toString() ?? '',
       fullAddress: full.isNotEmpty ? full : manual,
-      isDefault: json['is_default'] == true,
+      isDefault: def == true || def == 1 || def == '1' || def == 'true',
       lat: (json['lat'] as num?)?.toDouble(),
       lng: (json['lng'] as num?)?.toDouble(),
     );

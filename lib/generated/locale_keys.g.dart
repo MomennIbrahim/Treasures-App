@@ -101,6 +101,10 @@ abstract class  LocaleKeys {
   static const errors_unauthorized = 'errors.unauthorized';
   static const errors_already_exists = 'errors.already_exists';
   static const errors_not_found = 'errors.not_found';
+  static const errors_session_expired = 'errors.session_expired';
+  static const errors_request_cancelled = 'errors.request_cancelled';
+  static const errors_bad_certificate = 'errors.bad_certificate';
+  static const errors_cache_error = 'errors.cache_error';
   static const errors = 'errors';
   static const validation_please_enter_phone = 'validation.please_enter_phone';
   static const validation_invalid_phone = 'validation.invalid_phone';

@@ -121,7 +121,11 @@ class CodegenLoader extends AssetLoader{
     "sms_failed": "Couldn't send the message, please try again",
     "unauthorized": "You don't have permission",
     "already_exists": "This data already exists",
-    "not_found": "Not found"
+    "not_found": "Not found",
+    "session_expired": "Session expired",
+    "request_cancelled": "The request was cancelled.",
+    "bad_certificate": "Couldn't establish a secure connection. Please try again later.",
+    "cache_error": "A problem occurred with the saved data."
   },
   "validation": {
     "please_enter_phone": "Please enter phone",
@@ -374,7 +378,11 @@ static const Map<String,dynamic> _ar = {
     "sms_failed": "تعذر إرسال الرسالة، حاول مرة أخرى",
     "unauthorized": "ليس لديك صلاحية",
     "already_exists": "هذه البيانات موجودة بالفعل",
-    "not_found": "غير موجود"
+    "not_found": "غير موجود",
+    "session_expired": "انتهت صلاحية الجلسة",
+    "request_cancelled": "تم إلغاء الطلب.",
+    "bad_certificate": "تعذّر إنشاء اتصال آمن، حاول مرة أخرى لاحقًا.",
+    "cache_error": "حدثت مشكلة في البيانات المحفوظة."
   },
   "validation": {
     "please_enter_phone": "من فضلك ادخل رقم الهاتف",

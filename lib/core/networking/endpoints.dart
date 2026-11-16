@@ -1,13 +1,3 @@
-abstract class EndPoints {
-  static const String baseUrl = "";
-  static const String banner = "banner";
-  static const String bestSelling = "best-selling";
-  static const String currentlyTrending = "currently-trending";
-  static const String collections = "collections";
-  static const String collectionProducts = "collection-products";
-}
-
-/// كنوز · كل مسارات الـ API (الإصدار v1)
 class EndPoint {
   EndPoint._();
 
@@ -103,6 +93,7 @@ class EndPoint {
   static const String spinWheel = '/spin-wheel';
 
   /// GET حالة العجلة / POST لف العجلة
+  /// (لسه بـ userId — لو الـ API بقى بالتوكن بس بدّله زي السلة)
   static String userSpinWheel(int userId) => '/users/$userId/spin-wheel';
 
   // ───────────────────────── العميل والعناوين ─────────────────────────
@@ -110,9 +101,14 @@ class EndPoint {
   /// POST - multipart/form-data
   static const String createUser = '/users';
 
-  
-  /// POST - title, fullAddress, isDefault, lat, lng
-  static String userAddresses(int userId) => '/users/$userId/addresses';
+  /// POST إضافة عنوان (title, fullAddress, isDefault, lat, lng)
+  static const String addresses = '/addresses';
+
+  /// PATCH تعديل / DELETE حذف
+  static String address(int id) => '/addresses/$id';
+
+  /// POST تعيينه كعنوان افتراضي
+  static String addressDefault(int id) => '/addresses/$id/default';
 
   // ───────────────────────────── السلة ─────────────────────────────
 
@@ -120,19 +116,17 @@ class EndPoint {
   static const String cart = '/cart';
 
   /// PATCH تعديل الكمية / DELETE حذف السطر
-  static String cartItem( int itemId) =>
-      '/cart/$itemId';
+  static String cartItem(int itemId) => '/cart/$itemId';
 
   // ───────────────────────── الدفع والطلبات ─────────────────────────
 
   /// GET
-  static String checkout(int userId) => '/users/$userId/checkout';
+  static const String checkout = '/checkout';
 
   /// GET القائمة (?filter=last_30_days | this_year)
   /// POST إنشاء طلب (address_id, payment_method, coupon)
-  static String orders(int userId) => '/users/$userId/orders';
+  static const String orders = '/orders';
 
   /// GET
-  static String orderDetails(int userId, int orderId) =>
-      '/users/$userId/orders/$orderId';
+  static String orderDetails(int orderId) => '/orders/$orderId';
 }

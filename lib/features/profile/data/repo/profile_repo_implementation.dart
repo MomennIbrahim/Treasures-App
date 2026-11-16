@@ -10,6 +10,9 @@ class ProfileRepoImplementation implements ProfileRepo {
   final ApiService _apiService;
   ProfileRepoImplementation(this._apiService);
 
+  // حدود السيرفر: title حتى 80، fullAddress حتى 500
+  static const _maxTitle = 80;
+  static const _maxAddress = 500;
 
   Map<String, dynamic> _data(dynamic body) =>
       (body as Map<String, dynamic>)['data'] as Map<String, dynamic>? ?? {};
@@ -20,7 +23,7 @@ class ProfileRepoImplementation implements ProfileRepo {
           .map(AddressModel.fromJson)
           .toList();
 
-
+  String _clip(String s, int max) => s.length > max ? s.substring(0, max) : s;
 
   @override
   Future<Either<AppFailure, ProfileModel>> getProfile() async {
@@ -43,6 +46,9 @@ class ProfileRepoImplementation implements ProfileRepo {
     }
   }
 
+  /// POST /addresses — أول عنوان بيبقى افتراضي تلقائيًا،
+  /// و`isDefault: true` بيلغي الافتراضي عن باقي العناوين.
+  /// الـ body camelCase زي التوثيق (title, fullAddress, isDefault, lat, lng).
   @override
   Future<Either<AppFailure, AddressModel>> addAddress({
     required String title,
@@ -53,13 +59,13 @@ class ProfileRepoImplementation implements ProfileRepo {
   }) async {
     try {
       final res = await _apiService.postData(
-        endPoint: EndPoint.banners,
+        endPoint: EndPoint.addresses,
         data: {
-          'title': title,
-          'full_address': fullAddress,
+          'title': _clip(title.trim(), _maxTitle),
+          'fullAddress': _clip(fullAddress.trim(), _maxAddress),
+          'isDefault': isDefault,
           'lat': lat,
           'lng': lng,
-          'is_default': isDefault,
         },
       );
       return Right(AddressModel.fromJson(_data(res.data)));
@@ -68,20 +74,22 @@ class ProfileRepoImplementation implements ProfileRepo {
     }
   }
 
+  /// DELETE /addresses/{id}
   @override
   Future<Either<AppFailure, Unit>> deleteAddress({required int id}) async {
     try {
-      await _apiService.deleteData(endPoint: EndPoint.banners);
+      await _apiService.deleteData(endPoint: EndPoint.address(id));
       return const Right(unit);
     } catch (e) {
       return Left(toFailure(e));
     }
   }
 
+  /// POST /addresses/{id}/default
   @override
   Future<Either<AppFailure, Unit>> setDefaultAddress({required int id}) async {
     try {
-      await _apiService.patchData(endPoint: EndPoint.collections);
+      await _apiService.postData(endPoint: EndPoint.addressDefault(id));
       return const Right(unit);
     } catch (e) {
       return Left(toFailure(e));

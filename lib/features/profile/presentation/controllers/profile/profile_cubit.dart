@@ -16,6 +16,7 @@ class ProfileCubit extends SafeCubit<ProfileState> {
   bool get _hasToken => AppConstance.userToken != null;
 
   /// [silent] = true: تحديث هادي من غير skeleton (لو فيه بيانات قديمة)
+  /// [force] = true: يجيب من السيرفر حتى لو البيانات متحمّلة بالفعل
   Future<void> getProfile({bool silent = false, bool force = false}) async {
     if (!_hasToken) {
       emit(const ProfileState(status: ProfileStatus.guest));
@@ -39,6 +40,9 @@ class ProfileCubit extends SafeCubit<ProfileState> {
         }
         if (showLoading) {
           emit(state.copyWith(status: ProfileStatus.failure, failure: failure));
+        } else {
+          // تحديث هادي فشل: نرجّع الحالة لـ success بالبيانات القديمة
+          emit(state.copyWith(status: ProfileStatus.success));
         }
       },
       (profile) async =>
@@ -78,18 +82,20 @@ class ProfileCubit extends SafeCubit<ProfileState> {
   Future<void> deleteAddress(int id) => _run(
     ProfileAction.deleteAddress,
     () => _repo.deleteAddress(id: id),
-    reload: true, // السيرفر/الـ trigger ممكن يغيّر الافتراضي
+    reload: true, // السيرفر ممكن يغيّر الافتراضي بعد الحذف
   );
 
   Future<void> setDefaultAddress(int id) => _run(
     ProfileAction.setDefaultAddress,
     () => _repo.setDefaultAddress(id: id),
+    // تحديث فوري، وبعدها reload عشان نزامن الترتيب (الافتراضي الأول)
     onSuccess: () => state.profile?.copyWith(
       addresses: [
         for (final a in state.profile!.addresses)
           a.copyWith(isDefault: a.id == id),
       ],
     ),
+    reload: true,
   );
 
   Future<void> _run(
@@ -121,7 +127,8 @@ class ProfileCubit extends SafeCubit<ProfileState> {
             profile: onSuccess?.call(),
           ),
         );
-        if (reload) getProfile(silent: true);
+        // force: لازم، وإلا getProfile بتخرج فورًا لأن البروفايل متحمّل
+        if (reload) getProfile(silent: true, force: true);
       },
     );
   }

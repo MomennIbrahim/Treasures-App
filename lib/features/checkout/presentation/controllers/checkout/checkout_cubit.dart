@@ -2,7 +2,7 @@ import 'package:konoz/core/cubits/safe_cubit.dart';
 import 'package:konoz/core/error/app_failure.dart';
 import 'package:konoz/features/cart/presentation/controller/cart/cart_cubit.dart';
 import 'package:konoz/features/checkout/data/model/checkout_model.dart';
-import 'package:konoz/features/checkout/data/repo/checkout_rpo.dart';
+import 'package:konoz/features/checkout/data/repo/checkout_repo.dart';
 
 part 'checkout_state.dart';
 

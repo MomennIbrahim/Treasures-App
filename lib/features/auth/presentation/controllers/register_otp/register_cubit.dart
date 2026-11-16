@@ -33,7 +33,10 @@ class RegisterCubit extends SafeCubit<RegisterState> {
         state.copyWith(status: RegisterStatus.failure, failure: failure),
       ),
       (auth) async {
-        await SessionStorage.save(auth);
+        await SessionStorage.save(
+          accessToken: auth.token,
+          refreshToken: auth.refreshToken,
+        );
         emit(state.copyWith(status: RegisterStatus.success, auth: auth));
       },
     );

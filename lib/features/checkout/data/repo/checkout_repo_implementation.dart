@@ -2,7 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:konoz/core/error/app_failure.dart';
 import 'package:konoz/core/networking/supabase_db_service.dart';
 import 'package:konoz/features/checkout/data/model/checkout_model.dart';
-import 'package:konoz/features/checkout/data/repo/checkout_rpo.dart';
+import 'package:konoz/features/checkout/data/repo/checkout_repo.dart';
  
 
 class CheckoutRepoImplementation implements CheckoutRepo {

@@ -28,7 +28,10 @@ class LoginCubit extends SafeCubit<LoginState> {
       (failure) async =>
           emit(state.copyWith(status: LoginStatus.failure, failure: failure)),
       (auth) async {
-        await SessionStorage.save(auth);
+        await SessionStorage.save(
+          accessToken: auth.token,
+          refreshToken: auth.refreshToken,
+        );
         emit(state.copyWith(status: LoginStatus.success, auth: auth));
       },
     );

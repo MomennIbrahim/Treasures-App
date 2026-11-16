@@ -113,7 +113,11 @@
     "sms_failed": "تعذر إرسال الرسالة، حاول مرة أخرى",
     "unauthorized": "ليس لديك صلاحية",
     "already_exists": "هذه البيانات موجودة بالفعل",
-    "not_found": "غير موجود"
+    "not_found": "غير موجود",
+    "session_expired": "انتهت صلاحية الجلسة",
+    "request_cancelled": "تم إلغاء الطلب.",
+    "bad_certificate": "تعذّر إنشاء اتصال آمن، حاول مرة أخرى لاحقًا.",
+    "cache_error": "حدثت مشكلة في البيانات المحفوظة."
   },
 
   "validation": {
