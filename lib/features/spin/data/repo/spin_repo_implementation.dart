@@ -3,6 +3,7 @@ import 'package:konoz/core/error/app_failure.dart';
 import 'package:konoz/core/networking/api_service.dart';
 import 'package:konoz/core/networking/endpoints.dart';
 import 'package:konoz/features/home/data/repo/home_repo_implementation.dart'; // toFailure
+import 'package:konoz/features/spin/data/model/spin_result_model.dart';
 import 'package:konoz/features/spin/data/model/spin_wheel_model.dart';
 import 'package:konoz/features/spin/data/repo/spin_repo.dart';
 
@@ -23,18 +24,17 @@ class SpinRepoImplementation implements SpinRepo {
     }
   }
 
-  /// ⚠️ افتراض: `POST /spin-wheel` (نفس مسار الـ GET) بالتوكن.
-  /// الرد المتوقع: { data: { id, label?, color? } } أو { data: { section: {...} } }
-  /// أو { data: { section_id } } — بنتحمل الأشكال دي.
+  /// POST /spin-wheel/spins  body: { "sectionId": 9 }  (بالتوكن)
   @override
-  Future<Either<AppFailure, SpinSection>> spin() async {
+  Future<Either<AppFailure, SpinResultModel>> submitSpin({
+    required int sectionId,
+  }) async {
     try {
-      final res = await _api.postData(endPoint: EndPoint.spinWheel);
-      final data = _map(_map(res.data)['data']);
-      final raw = data['section'] is Map ? _map(data['section']) : data;
-      final id = raw['id'] ?? raw['section_id'] ?? data['section_id'];
-      if (id == null) throw const FormatException('Invalid spin response');
-      return Right(SpinSection.fromApi({...raw, 'id': id}));
+      final res = await _api.postData(
+        endPoint: EndPoint.spinWheelSpins,
+        data: {'sectionId': sectionId},
+      );
+      return Right(SpinResultModel.fromApi(_map(res.data)));
     } catch (e) {
       return Left(toFailure(e));
     }

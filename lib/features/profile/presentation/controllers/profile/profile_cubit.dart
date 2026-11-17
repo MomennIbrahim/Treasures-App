@@ -1,9 +1,13 @@
+import 'dart:async';
+
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:konoz/core/constance/app_keys.dart';
 import 'package:konoz/core/cubits/safe_cubit.dart';
+import 'package:konoz/core/di/dependency_injection.dart';
 import 'package:konoz/core/error/app_failure.dart';
 import 'package:konoz/core/local_storage/session_storage.dart';
+import 'package:konoz/core/notifications/notification_service.dart';
 import 'package:konoz/features/profile/data/model/profile_model.dart';
 import 'package:konoz/features/profile/data/repo/profile_repo.dart';
 
@@ -48,6 +52,7 @@ class ProfileCubit extends SafeCubit<ProfileState> {
       (profile) async =>
           emit(state.copyWith(status: ProfileStatus.success, profile: profile)),
     );
+    unawaited(getIt<NotificationService>().registerToken());
   }
 
   Future<void> updateProfile({required String name}) => _run(

@@ -1,6 +1,4 @@
-
 import 'package:equatable/equatable.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 class AuthResponseModel extends Equatable {
   final String token;
@@ -24,21 +22,13 @@ class AuthResponseModel extends Equatable {
       token: data['token']?.toString() ?? '',
       refreshToken: data['refresh_token']?.toString() ?? '',
       expiresIn: int.tryParse(data['expires_in'].toString()) ?? 0,
-      user: UserModel.fromJson(
-        data['user'] as Map<String, dynamic>? ?? {},
-      ),
+      user: UserModel.fromJson(data['user'] as Map<String, dynamic>? ?? {}),
       isNewUser: data['is_new_user'] == true,
     );
   }
 
   @override
-  List<Object?> get props => [
-    token,
-    refreshToken,
-    expiresIn,
-    user,
-    isNewUser,
-  ];
+  List<Object?> get props => [token, refreshToken, expiresIn, user, isNewUser];
 }
 
 class UserModel extends Equatable {
@@ -69,17 +59,6 @@ class UserModel extends Equatable {
       avatarUrl: json['avatar_url']?.toString(),
       createdAt: json['created_at']?.toString(),
       addresses: json['addresses'] as List? ?? [],
-    );
-  }
-
-  factory UserModel.fromSupabase(User user) {
-    return UserModel(
-      id: user.id,
-      name: user.userMetadata?['name']?.toString() ?? '',
-      email: user.email,
-      phone: user.phone ?? '',
-      avatarUrl: user.userMetadata?['avatar_url']?.toString(),
-      createdAt: user.createdAt,
     );
   }
 

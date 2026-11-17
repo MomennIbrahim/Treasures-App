@@ -4,6 +4,7 @@ enum SpinLoadStatus { initial, loading, success, failure }
 
 enum SpinRequestStatus { idle, loading, success, failure }
 
+
 extension SpinLoadStatusX on SpinState {
   bool get isInitial => status == SpinLoadStatus.initial;
   bool get isLoading => status == SpinLoadStatus.loading;
@@ -16,8 +17,8 @@ class SpinState {
   final AppFailure? failure;
   final SpinWheelModel? wheel;
 
-  final SpinRequestStatus spinStatus; // طلب اللف
-  final SpinSection? result;
+  final SpinRequestStatus spinStatus; // تسجيل اللفّة
+  final SpinResultModel? result;
   final AppFailure? spinFailure;
 
   const SpinState({
@@ -40,7 +41,7 @@ class SpinState {
     AppFailure? failure,
     SpinWheelModel? wheel,
     SpinRequestStatus? spinStatus,
-    SpinSection? result,
+    SpinResultModel? result,
     AppFailure? spinFailure,
   }) {
     return SpinState(

@@ -1,5 +1,6 @@
 import 'package:konoz/core/cubits/safe_cubit.dart';
 import 'package:konoz/core/error/app_failure.dart';
+import 'package:konoz/features/spin/data/model/spin_result_model.dart';
 import 'package:konoz/features/spin/data/model/spin_wheel_model.dart';
 import 'package:konoz/features/spin/data/repo/spin_repo.dart';
 
@@ -9,7 +10,7 @@ class SpinCubit extends SafeCubit<SpinState> {
   final SpinRepo _repo;
   SpinCubit(this._repo) : super(const SpinState());
 
-  /// [silent] = true: تحديث هادي (بعد اللف) من غير loader
+  /// [silent] = true: تحديث هادي (بعد اللف / بعد اللوجين) من غير loader
   Future<void> getWheel({bool silent = false}) async {
     if (state.status == SpinLoadStatus.loading) return;
     if (!silent || state.wheel == null) {
@@ -32,14 +33,14 @@ class SpinCubit extends SafeCubit<SpinState> {
     );
   }
 
-  /// بيلف على السيرفر وبيرجّع القطاع الفايز (null لو فشل أو فيه طلب شغال).
-  /// الشاشة هي اللي بتلف الأنيميشن على القطاع ده.
-  Future<SpinSection?> spin() async {
+  /// بتتنادى بعد ما العجلة تقف على [sectionId]: بتسجّل اللفّة على اليوزر
+  /// وبترجّع النتيجة (null لو فشلت أو فيه طلب شغال).
+  Future<SpinResultModel?> submitSpin(int sectionId) async {
     if (state.isSpinRequesting) return null;
     emit(state.copyWith(spinStatus: SpinRequestStatus.loading));
 
-    final result = await _repo.spin();
-    return result.fold<SpinSection?>(
+    final result = await _repo.submitSpin(sectionId: sectionId);
+    return result.fold<SpinResultModel?>(
       (f) {
         emit(
           state.copyWith(
@@ -49,14 +50,11 @@ class SpinCubit extends SafeCubit<SpinState> {
         );
         return null;
       },
-      (section) {
+      (r) {
         emit(
-          state.copyWith(
-            spinStatus: SpinRequestStatus.success,
-            result: section,
-          ),
+          state.copyWith(spinStatus: SpinRequestStatus.success, result: r),
         );
-        return section;
+        return r;
       },
     );
   }

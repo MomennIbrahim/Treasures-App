@@ -3,6 +3,8 @@ import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:konoz/core/networking/api_service.dart';
 import 'package:konoz/core/networking/connectivity_service.dart';
+import 'package:konoz/core/notifications/notification_service.dart';
+import 'package:konoz/core/router/app_router.dart';
 import 'package:konoz/features/auth/data/repo/auth_repo.dart';
 import 'package:konoz/features/auth/data/repo/auth_repo_implmentation.dart';
 import 'package:konoz/features/auth/presentation/controllers/google_signin/google_sign_in_cubit.dart';
@@ -50,26 +52,22 @@ import 'package:konoz/features/settings/presentation/controllers/logout/logout_c
 import 'package:konoz/features/spin/data/repo/spin_repo.dart';
 import 'package:konoz/features/spin/data/repo/spin_repo_implementation.dart';
 import 'package:konoz/features/spin/presentation/controllers/spin/spin_cubit.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 final getIt = GetIt.instance;
 
 Future<void> setupGetIt() async {
-  // ───────────── Supabase (للـ repos اللي لسه ما اتحولتش) ─────────────
-  getIt.registerLazySingleton<SupabaseClient>(() => Supabase.instance.client);
-
-  /*getIt.registerLazySingleton<SupabaseDbService>(
-    () => SupabaseDbService(getIt<SupabaseClient>()),
-  );*/
-
   // ───────────── Networking (Laravel API) ─────────────
   getIt.registerLazySingleton<Dio>(() => Dio());
   getIt.registerLazySingleton<Connectivity>(() => Connectivity());
   getIt.registerLazySingleton<ConnectivityService>(
     () => ConnectivityService(getIt<Connectivity>()),
   );
+
   getIt.registerLazySingleton<ApiService>(
     () => ApiService(getIt<Dio>(), getIt<ConnectivityService>()),
+  );
+  getIt.registerLazySingleton<NotificationService>(
+    () => NotificationService(AppRouter.router, getIt()),
   );
 
   /*
@@ -115,9 +113,7 @@ Future<void> setupGetIt() async {
   );
 
   // Search Repository
-  getIt.registerLazySingleton<SearchRepo>(
-    () => SearchRepoImplementation(getIt()),
-  );
+  getIt.registerLazySingleton<SearchRepo>(() => SearchRepoImplementation());
 
   // Orders Repository
   getIt.registerLazySingleton<OrdersRepo>(

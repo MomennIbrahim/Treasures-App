@@ -4,6 +4,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:konoz/core/constance/app_keys.dart';
 import 'package:konoz/core/helper/app_padding.dart';
 import 'package:konoz/core/helper/require_login.dart';
 import 'package:konoz/core/theme/app_colors.dart';
@@ -36,6 +37,8 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
 
   static const double _twoPi = 2 * math.pi;
 
+  bool get _loggedIn => AppConstance.userToken != null;
+
   @override
   void initState() {
     super.initState();
@@ -58,25 +61,41 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
     super.dispose();
   }
 
-  /// 1) تسجيل الدخول  2) السيرفر بيحدد الفايز  3) الأنيميشن  4) النتيجة
+  /// 1) تسجيل الدخول  2) التأكد إن العجلة متاحة  3) اللف لقطاع عشوائي
+  /// 4) لما تقف: نسجّل اللفّة بالـ sectionId  5) النتيجة
   Future<void> _onSpin(List<SpinSection> sections) async {
     if (_animating) return;
     if (!await requireLogin(context)) return;
     if (!mounted) return;
 
     final cubit = context.read<SpinCubit>();
-    final winner = await cubit.spin();
-    if (winner == null || !mounted) return; // الفشل بيظهر toast من الـ listener
 
-    // الـ label واللون الأصليين من العجلة (لو رد اللف مجاش فيه تفاصيل)
-    final index = sections.indexWhere((s) => s.id == winner.id);
-    final prize = index >= 0 ? sections[index] : winner;
-
-    if (index >= 0) await _animateTo(index, sections.length);
+    // حالة العجلة ممكن تكون اتجابت وهو ضيف، فنحدّثها بعد اللوجين قبل ما نلف
+    await cubit.getWheel(silent: true);
     if (!mounted) return;
+    if (!cubit.state.isEnabled) {
+      AppToast.show(
+        context,
+        message: LocaleKeys.general_not_available.tr(),
+        type: AppToastType.error,
+      );
+      return;
+    }
 
+    // القطاع اللي هتقف عليه العجلة
+    final index = _random.nextInt(sections.length);
+    final prize = sections[index];
+
+    await _animateTo(index, sections.length);
+    if (!mounted) return;
     setState(() => _lastPrize = prize);
-    await showSpinResultDialog(context, prize);
+
+    // اللفّة بتتسجّل على اليوزر. الفشل بيظهر toast من الـ listener
+    final result = await cubit.submitSpin(prize.id);
+    if (!mounted) return;
+    if (result != null) {
+      await showSpinResultDialog(context, prize: prize, result: result);
+    }
 
     // نحدّث حالة العجلة (enabled) من السيرفر بعد اللف
     if (mounted) cubit.getWheel(silent: true);
@@ -171,7 +190,9 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
   Widget _buildWheel(BuildContext context, SpinState state, double size) {
     final sections = state.sections;
     final busy = _animating || state.isSpinRequesting;
-    final canSpin = state.isEnabled && sections.isNotEmpty && !busy;
+    // الضيف بيقدر يضغط عشان يفتحله اللوجين (الـ enabled بيتأكد منه بعد اللوجين)
+    final canSpin =
+        sections.isNotEmpty && !busy && (state.isEnabled || !_loggedIn);
 
     return Center(
       child: Column(
@@ -193,7 +214,7 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
             buttonColor: canSpin ? AppColors.warning900 : AppColors.neutral500,
             padding: paddingSymmetric(36, 16),
           ),
-          if (!state.isEnabled || sections.isEmpty) ...[
+          if (sections.isEmpty || (_loggedIn && !state.isEnabled)) ...[
             12.verticalSpace,
             Text(
               LocaleKeys.general_not_available.tr(),

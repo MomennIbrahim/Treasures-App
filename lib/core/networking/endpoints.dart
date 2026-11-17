@@ -6,6 +6,7 @@ class EndPoint {
   // بدل الـ domain الحالي (الـ key الأول غلط، ده اسم الـ define مش الرابط)
   static const String domain = String.fromEnvironment(
     'URL_APP',
+    // defaultValue: 'https://konoz.valien.tech', //https://rugged-unfamiliarised-celine.ngrok-free.dev
     defaultValue: 'https://konoz.valien.tech',
   );
 
@@ -91,6 +92,7 @@ class EndPoint {
 
   /// GET
   static const String spinWheel = '/spin-wheel';
+  static const String spinWheelSpins = '/spin-wheel/spins';
 
   /// GET حالة العجلة / POST لف العجلة
   /// (لسه بـ userId — لو الـ API بقى بالتوكن بس بدّله زي السلة)
@@ -126,6 +128,7 @@ class EndPoint {
   /// GET القائمة (?filter=last_30_days | this_year)
   /// POST إنشاء طلب (address_id, payment_method, coupon)
   static const String orders = '/orders';
+  static const String devices = '/devices';
 
   /// GET
   static String orderDetails(int orderId) => '/orders/$orderId';
