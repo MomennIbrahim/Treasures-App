@@ -14,6 +14,12 @@ abstract class CartRepo {
     int quantity = 1,
   });
 
+  /// بيضيف باكدج كاملة بـ id بتاعها (السيرفر هو اللي بيفرد منتجاتها).
+  Future<Either<AppFailure, CartModel>> addPackageToCart({
+    required String packageId,
+    int quantity = 1,
+  });
+
   Future<Either<AppFailure, CartModel>> updateQuantity({
     required int itemId,
     required int quantity,

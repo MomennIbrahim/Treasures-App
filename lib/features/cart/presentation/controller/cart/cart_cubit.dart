@@ -45,11 +45,32 @@ class CartCubit extends SafeCubit<CartState> {
 
   // ───────── إضافة ─────────
   // null = الضغطة اتجاهلت لأن فيه إضافة شغالة
+
+  /// إضافة منتج واحد.
   Future<Either<AppFailure, Unit>?> addToCart({
     required String productId,
     required String size,
     int quantity = 1,
-  }) async {
+  }) => _add(
+    () => _repo.addToCart(
+      productId: productId,
+      size: size,
+      quantity: quantity,
+    ),
+  );
+
+  /// إضافة باكدج كاملة بـ id بتاعها (السيرفر بيفرد منتجاتها).
+  Future<Either<AppFailure, Unit>?> addPackage({
+    required String packageId,
+    int quantity = 1,
+  }) => _add(
+    () => _repo.addPackageToCart(packageId: packageId, quantity: quantity),
+  );
+
+  /// المنطق المشترك للإضافة (منتج أو باكدج).
+  Future<Either<AppFailure, Unit>?> _add(
+    Future<Either<AppFailure, CartModel>> Function() call,
+  ) async {
     if (state.isAdding) return null;
     emit(
       state.copyWith(
@@ -58,11 +79,7 @@ class CartCubit extends SafeCubit<CartState> {
       ),
     );
 
-    final result = await _repo.addToCart(
-      productId: productId,
-      size: size,
-      quantity: quantity,
-    );
+    final result = await call();
 
     return result.fold<Either<AppFailure, Unit>>(
       (f) {

@@ -73,30 +73,41 @@ Widget _buildNotesSection({
           final note = notes[index];
           return ZoomIn(
             delay: Duration(milliseconds: 100 * index),
-            child: Container(
-              padding: paddingSymmetric(4, 6),
-              decoration: BoxDecoration(
-                color: Colors.transparent,
-                borderRadius: AppRadius.br8,
-              ),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  AppImage.cachedNetwork(
-                    note.image,
-                    borderRadius: AppRadius.br8,
-                    width: 60,
-                    height: 60,
-                  ),
-                  8.verticalSpace,
-                  Text(
-                    note.name,
-                    maxLines: 2,
-                    textAlign: TextAlign.center,
-                    overflow: TextOverflow.ellipsis,
-                    style: AppTextStyles.text12Regular,
-                  ),
-                ],
+            child: Tooltip(
+              message: note.name,
+              triggerMode: TooltipTriggerMode.tap,  
+              showDuration: const Duration(seconds: 2),
+              waitDuration: Duration.zero,
+              preferBelow: false,
+              child: Container(
+                padding: paddingSymmetric(4, 6),
+                decoration: BoxDecoration(
+                  color: Colors.transparent,
+                  borderRadius: AppRadius.br8,
+                ),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    AppImage.cachedNetwork(
+                      note.image,
+                      borderRadius: AppRadius.br8,
+                      width: 60,
+                      height: 60,
+                    ),
+                    8.verticalSpace,
+                    SizedBox(
+                      width: 60.w,
+                      child: Text(
+                        note.name,
+                        maxLines: 1,
+                        textAlign: TextAlign.center,
+                        overflow: TextOverflow.ellipsis,
+                        style: AppTextStyles.text12Regular,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           );

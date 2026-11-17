@@ -29,6 +29,17 @@ class CartRepoImplementation implements CartRepo {
   );
 
   @override
+  Future<Either<AppFailure, CartModel>> addPackageToCart({
+    required String packageId,
+    int quantity = 1,
+  }) => _run(
+    () => _api.postData(
+      endPoint: EndPoint.cart,
+      data: {'package_id': packageId, 'quantity': quantity},
+    ),
+  );
+
+  @override
   Future<Either<AppFailure, CartModel>> updateQuantity({
     required int itemId,
     required int quantity,

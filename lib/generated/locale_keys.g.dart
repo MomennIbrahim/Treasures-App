@@ -91,6 +91,7 @@ abstract class  LocaleKeys {
   static const cart_discount = 'cart.discount';
   static const cart_total = 'cart.total';
   static const cart_empty_cart = 'cart.empty_cart';
+  static const cart_out_of_stock_notice = 'cart.out_of_stock_notice';
   static const cart = 'cart';
   static const errors_errors_timeout = 'errors.errors_timeout';
   static const errors_errors_no_internet = 'errors.errors_no_internet';

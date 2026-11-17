@@ -7,6 +7,7 @@ import 'package:konoz/core/helper/app_padding.dart';
 import 'package:konoz/core/router/routes.dart';
 import 'package:konoz/core/theme/app_text_style.dart';
 import 'package:konoz/core/widgets/app_button.dart';
+import 'package:konoz/core/widgets/app_toast.dart';
 import 'package:konoz/features/cart/presentation/controller/cart/cart_cubit.dart';
 import 'package:konoz/features/cart/presentation/ui/widgets/cart_items_list.dart';
 import 'package:konoz/features/cart/presentation/ui/widgets/cart_total_header.dart';
@@ -23,10 +24,10 @@ class CartScreen extends StatefulWidget {
 class _CartScreenState extends State<CartScreen> {
   @override
   void initState() {
+    super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<CartCubit>().getCart();
     });
-    super.initState();
   }
 
   final GlobalKey _summaryKey = GlobalKey();
@@ -34,12 +35,17 @@ class _CartScreenState extends State<CartScreen> {
   @override
   Widget build(BuildContext context) {
     final cartCount = context.watch<CartCubit>().state.count;
+
+    // فيه صنف واحد على الأقل مش متاح (خلص، أو الكمية أكبر من المتاح).
+    final hasOutOfStock = context.select<CartCubit, bool>(
+      (c) => c.state.items.any((i) => i.inStock < 1 || i.quantity > i.inStock),
+    );
+
     return SafeArea(
       top: false,
       child: Scaffold(
         body: Padding(
           padding: paddingOnly(left: 16, right: 16, bottom: 16),
-
           child: CustomScrollView(
             slivers: [
               if (cartCount != 0) ...[
@@ -55,8 +61,16 @@ class _CartScreenState extends State<CartScreen> {
                         label:
                             "${LocaleKeys.cart_proceed_to_buy.tr()} ($cartCount ${LocaleKeys.cart_items.tr()})",
                         labelStyle: AppTextStyles.text12Bold,
-                        icon: Icon(Icons.arrow_forward),
+                        icon: const Icon(Icons.arrow_forward),
                         onPressed: () {
+                          if (hasOutOfStock) {
+                            AppToast.show(
+                              context,
+                              message: LocaleKeys.cart_out_of_stock_notice.tr(),
+                              type: AppToastType.error,
+                            );
+                            return;
+                          }
                           context.push(Routes.checkout);
                         },
                       ),
@@ -66,12 +80,6 @@ class _CartScreenState extends State<CartScreen> {
               ],
               CartItemsList(),
               SliverToBoxAdapter(child: SummaryOrderWidget(key: _summaryKey)),
-
-              // SliverToBoxAdapter(
-              //   child: Column(
-              //     children: [const DiscountCodeWidget(), 25.],
-              //   ),
-              // ),
             ],
           ),
         ),

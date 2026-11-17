@@ -36,37 +36,31 @@ class PackageDetailsCubit extends SafeCubit<PackageDetailsState> {
 
   Future<void> retry() => load(_id);
 
-  /// الـ API مفيهوش إضافة باكدج للسلة، فبنضيف منتجاتها واحد واحد.
-  /// لو واحد فشل بنقف (اللي اتضاف قبله بيفضل في السلة).
-  Future<void> addToCart() async {
-    final pkg = state.package;
-    if (pkg == null || pkg.products.isEmpty || state.isAdding) return;
+ 
+ Future<void> addToCart() async {
+    if (state.package == null || state.isAdding) return;
 
     emit(state.copyWith(addStatus: PackageAddStatus.loading));
 
-    for (final p in pkg.products) {
-      final res = await _cart.addToCart(
-        productId: p.id,
-        size: p.size,
-        quantity: p.quantity,
-      );
-      if (isClosed) return;
+    final res = await _cart.addPackage(packageId: _id);
+    if (isClosed) return;
 
-      AppFailure? error;
-      res?.fold((f) => error = f, (_) {});
-
-      // res == null: الضغطة اتجاهلت (فيه إضافة تانية شغالة)
-      if (res == null || error != null) {
-        emit(
-          state.copyWith(
-            addStatus: PackageAddStatus.failure,
-            addFailure: error,
-          ),
-        );
-        return;
-      }
+    // res == null: الضغطة اتجاهلت (فيه إضافة تانية شغالة)
+    if (res == null) {
+      emit(state.copyWith(addStatus: PackageAddStatus.idle));
+      return;
     }
 
-    emit(state.copyWith(addStatus: PackageAddStatus.success));
+    AppFailure? error;
+    res.fold((f) => error = f, (_) {});
+
+    emit(
+      state.copyWith(
+        addStatus: error == null
+            ? PackageAddStatus.success
+            : PackageAddStatus.failure,
+        addFailure: error,
+      ),
+    );
   }
 }

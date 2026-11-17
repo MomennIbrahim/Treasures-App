@@ -130,7 +130,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                       padding: paddingOnly(
                         left: 16,
                         right: 16,
-                        bottom: 140,
+                        bottom: 170,
                         top: 12,
                       ),
                       sliver: SliverToBoxAdapter(
@@ -155,7 +155,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
     BuildContext context,
   ) {
     return Positioned(
-      bottom: 0,
+      bottom: 10,
       right: 16,
       left: 16,
       child: Container(
@@ -186,7 +186,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                       ),
                     ),
                     child: Text(
-                      "$price L.E",
+                      "$price EGP",
                       key: ValueKey(price),
                       style: AppTextStyles.text16Bold,
                     ),
