@@ -4,7 +4,6 @@ import 'package:get_it/get_it.dart';
 import 'package:konoz/core/networking/api_service.dart';
 import 'package:konoz/core/networking/connectivity_service.dart';
 import 'package:konoz/core/notifications/notification_service.dart';
-import 'package:konoz/features/profile/presentation/ui/widgets/app_router.dart';
 import 'package:konoz/features/auth/data/repo/auth_repo.dart';
 import 'package:konoz/features/auth/data/repo/auth_repo_implmentation.dart';
 import 'package:konoz/features/auth/presentation/controllers/google_signin/google_sign_in_cubit.dart';
@@ -45,6 +44,7 @@ import 'package:konoz/features/product_details/presentation/controllers/product_
 import 'package:konoz/features/profile/data/repo/profile_repo.dart';
 import 'package:konoz/features/profile/data/repo/profile_repo_implementation.dart';
 import 'package:konoz/features/profile/presentation/controllers/profile/profile_cubit.dart';
+import 'package:konoz/features/profile/presentation/ui/widgets/app_router.dart';
 import 'package:konoz/features/search/data/repo/search_repo.dart';
 import 'package:konoz/features/search/data/repo/search_repo_implmentation.dart';
 import 'package:konoz/features/search/presentation/controllers/search/search_cubit.dart';
@@ -113,7 +113,9 @@ Future<void> setupGetIt() async {
   );
 
   // Search Repository
-  getIt.registerLazySingleton<SearchRepo>(() => SearchRepoImplementation());
+  getIt.registerLazySingleton<SearchRepo>(
+    () => SearchRepoImplementation(getIt()),
+  );
 
   // Orders Repository
   getIt.registerLazySingleton<OrdersRepo>(

@@ -132,4 +132,9 @@ class EndPoint {
 
   /// GET
   static String orderDetails(int orderId) => '/orders/$orderId';
+
+  static const productsSearch = '/products/search';
+  static const productsSuggestions = '/products/suggestions';
+  static const searchTrending = '/search/trending'; // مقترح للباك إند
+  static const searchLog = '/search/log'; // مقترح للباك إند
 }
