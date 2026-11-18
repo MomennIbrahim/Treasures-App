@@ -151,9 +151,12 @@ abstract class  LocaleKeys {
   static const checkout_phone_required = 'checkout.phone_required';
   static const checkout = 'checkout';
   static const auth_get_started = 'auth.get_started';
+  static const auth_welcome_back_to_knooz = 'auth.welcome_back_to_knooz';
+  static const auth_login_in_to_continue_shopping = 'auth.login_in_to_continue_shopping';
   static const auth_app_name = 'auth.app_name';
   static const auth_subtitle = 'auth.subtitle';
   static const auth_phone_number = 'auth.phone_number';
+  static const auth_make_sure_whatsapp_available = 'auth.make_sure_whatsapp_available';
   static const auth_phone_hint = 'auth.phone_hint';
   static const auth_login = 'auth.login';
   static const auth_or_login_with = 'auth.or_login_with';
@@ -164,6 +167,9 @@ abstract class  LocaleKeys {
   static const auth_otp_title_action = 'auth.otp_title_action';
   static const auth_otp_subtitle = 'auth.otp_subtitle';
   static const auth_otp_description = 'auth.otp_description';
+  static const auth_full_name = 'auth.full_name';
+  static const auth_full_name_hint = 'auth.full_name_hint';
+  static const auth_password = 'auth.password';
   static const auth = 'auth';
   static const community_app_bar_title = 'community.app_bar_title';
   static const community_header_title = 'community.header_title';

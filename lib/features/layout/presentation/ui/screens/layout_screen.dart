@@ -4,7 +4,6 @@ import 'package:go_router/go_router.dart';
 import 'package:konoz/core/router/routes.dart';
 import 'package:konoz/core/widgets/app_search_bar.dart';
 import 'package:konoz/features/layout/presentation/ui/widgets/app_bottom_nav_bar.dart';
-import 'package:konoz/features/layout/presentation/ui/widgets/spin_icon_widget.dart';
 import 'package:konoz/features/spin/presentation/controllers/spin/spin_cubit.dart';
 
 class LayoutScreen extends StatefulWidget {
@@ -52,8 +51,8 @@ class _LayoutScreenState extends State<LayoutScreen> {
       top: false,
       bottom: false,
       child: Scaffold(
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-        floatingActionButton: SpinIconWidget(),
+        // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+        // floatingActionButton: SpinIconWidget(),
         appBar: hideSearchBar
             ? null
             : AppSearchBar(

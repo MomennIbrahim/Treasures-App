@@ -52,7 +52,12 @@ class SpinCubit extends SafeCubit<SpinState> {
       },
       (r) {
         emit(
-          state.copyWith(spinStatus: SpinRequestStatus.success, result: r),
+          state.copyWith(
+            spinStatus: SpinRequestStatus.success,
+            result: r,
+            // اللفّة اتستهلكت: الكارد في الهوم يختفي
+            wheel: state.wheel?.copyWith(hasSpin: false),
+          ),
         );
         return r;
       },

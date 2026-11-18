@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
 
-/// رد `GET /spin-wheel`: { data: { enabled, sections: [{id, label, color}] } }
+/// رد `GET /spin-wheel`: { data: { enabled, hasSpin, sections: [{id, label, color}] } }
 class SpinWheelModel {
   final bool enabled;
+  final bool hasSpin;
   final List<SpinSection> sections;
 
-  const SpinWheelModel({required this.enabled, required this.sections});
+  const SpinWheelModel({
+    required this.enabled,
+    required this.sections,
+    required this.hasSpin,
+  });
 
   factory SpinWheelModel.fromApi(Map<String, dynamic> body) {
     final raw = body['data'];
@@ -13,6 +18,7 @@ class SpinWheelModel {
     final list = data['sections'];
     return SpinWheelModel(
       enabled: data['enabled'] == true,
+      hasSpin: data['hasSpin'] == true,
       sections: list is List
           ? list
                 .whereType<Map>()
@@ -22,8 +28,11 @@ class SpinWheelModel {
     );
   }
 
-  SpinWheelModel copyWith({bool? enabled}) =>
-      SpinWheelModel(enabled: enabled ?? this.enabled, sections: sections);
+  SpinWheelModel copyWith({bool? enabled, bool? hasSpin}) => SpinWheelModel(
+    enabled: enabled ?? this.enabled,
+    hasSpin: hasSpin ?? this.hasSpin,
+    sections: sections,
+  );
 }
 
 /// قطاع في العجلة (وبنفس الشكل نتيجة اللفّة)

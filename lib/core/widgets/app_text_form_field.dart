@@ -8,6 +8,7 @@ class AppTextFormField extends StatefulWidget {
   final TextEditingController? controller;
   final String? hint;
   final String? label;
+  final String? labelInfo;
   final String? Function(String?)? validator;
   final void Function(String)? onChanged;
   final void Function(String)? onFieldSubmitted;
@@ -31,6 +32,7 @@ class AppTextFormField extends StatefulWidget {
     this.controller,
     this.hint,
     this.label,
+    this.labelInfo,
     this.validator,
     this.onChanged,
     this.onFieldSubmitted,
@@ -97,11 +99,22 @@ class _AppTextFormFieldState extends State<AppTextFormField> {
       mainAxisSize: MainAxisSize.min,
       children: [
         if (widget.label != null) ...[
-          Text(
-            widget.label!,
-            style: AppTextStyles.text14Regular.copyWith(
-              color: theme.colorScheme.onSurface,
-            ),
+          Row(
+            children: [
+              Text(
+                widget.label!,
+                style: AppTextStyles.text14Regular.copyWith(
+                  color: theme.colorScheme.onSurface,
+                ),
+              ),
+              if (widget.labelInfo != null)
+                Text(
+                  widget.labelInfo!,
+                  style: AppTextStyles.text10Regular.copyWith(
+                    color: theme.colorScheme.onSurface,
+                  ),
+                ),
+            ],
           ),
           8.verticalSpace,
         ],

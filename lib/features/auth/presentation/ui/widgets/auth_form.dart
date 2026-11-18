@@ -1,3 +1,5 @@
+import 'package:easy_localization/easy_localization.dart'
+    show StringTranslateExtension;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -13,6 +15,7 @@ import 'package:konoz/core/validation/password_validator.dart';
 import 'package:konoz/core/widgets/app_image.dart';
 import 'package:konoz/core/widgets/app_password_field.dart';
 import 'package:konoz/core/widgets/app_text_form_field.dart';
+import 'package:konoz/generated/locale_keys.g.dart';
 
 class AuthForm extends StatelessWidget {
   final GlobalKey<FormState> formKey;
@@ -38,7 +41,10 @@ class AuthForm extends StatelessWidget {
         children: [
           AppTextFormField(
             controller: phoneController,
-            label: "Phone Number",
+            label: "${LocaleKeys.auth_phone_number.tr()}: ",
+            labelInfo: isLogin
+                ? ""
+                : "(${LocaleKeys.auth_make_sure_whatsapp_available.tr()})",
             hint: "01x xxxxxxxx",
             keyboardType: TextInputType.phone,
             fixedTextDirection: TextDirection.ltr,
@@ -57,11 +63,12 @@ class AuthForm extends StatelessWidget {
             ),
             validator: validateEgyptianPhone,
           ),
-          if (!isLogin)
+          if (!isLogin) ...[
+            16.verticalSpace,
             AppTextFormField(
               controller: nameController,
-              label: "Full Name",
-              hint: "ex: User Name",
+              label: LocaleKeys.auth_full_name.tr(),
+              hint: LocaleKeys.auth_full_name_hint.tr(),
               keyboardType: TextInputType.name,
               validator: validateName,
               suffixIcon: Padding(
@@ -73,6 +80,8 @@ class AuthForm extends StatelessWidget {
                 ),
               ),
             ),
+          ],
+          16.verticalSpace,
           AppPasswordField(
             controller: passwordController,
             validator: isLogin ? validateRequiredPassword : validateNewPassword,

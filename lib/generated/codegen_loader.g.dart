@@ -180,9 +180,12 @@ class CodegenLoader extends AssetLoader{
   },
   "auth": {
     "get_started": "Get Started Now With ",
-    "app_name": "Konoz!",
-    "subtitle": "Discover the best products from around the world",
+    "welcome_back_to_knooz": "Welcome Back To",
+    "login_in_to_continue_shopping": "Login in to continue shopping",
+    "app_name": "Knooz!",
+    "subtitle": "Discover the best fragrances",
     "phone_number": "Phone Number",
+    "make_sure_whatsapp_available": "Make sure that WhatsApp is available on this number.",
     "phone_hint": "01x xxxxxxxx",
     "login": "Login",
     "or_login_with": "Or Login with",
@@ -192,7 +195,10 @@ class CodegenLoader extends AssetLoader{
     "otp_title_normal": "Enter OTP to ",
     "otp_title_action": "Verify ",
     "otp_subtitle": "Your Phone Number 🔒",
-    "otp_description": "A one-time password (OTP) has been sent to your phone number"
+    "otp_description": "A one-time password (OTP) has been sent to your phone number",
+    "full_name": "Full Name",
+    "full_name_hint": "ex: User Name",
+    "password": "Password"
   },
   "community": {
     "app_bar_title": "Our Community",
@@ -444,9 +450,12 @@ static const Map<String,dynamic> _ar = {
   },
   "auth": {
     "get_started": "ابدأ الآن مع ",
+    "welcome_back_to_knooz": "مرحبا بك مرة اخرى في",
+    "login_in_to_continue_shopping": "تسجيل الدخول لمتابعة التسوق",
     "app_name": "كنوز!",
-    "subtitle": "اكتشف أفضل المنتجات من حول العالم",
+    "subtitle": "اكتشف أفضل العطور",
     "phone_number": "رقم الهاتف",
+    "make_sure_whatsapp_available": "تأكد من وجود واتساب علي هذا الرقم",
     "phone_hint": "01x xxxxxxxx",
     "login": "تسجيل الدخول",
     "or_login_with": "أو سجل الدخول باستخدام",
@@ -456,7 +465,10 @@ static const Map<String,dynamic> _ar = {
     "otp_title_normal": "أدخل رمز التحقق ",
     "otp_title_action": "للتأكيد ",
     "otp_subtitle": "على رقم هاتفك 🔒",
-    "otp_description": "تم إرسال رمز تحقق لمرة واحدة (OTP) إلى رقم هاتفك"
+    "otp_description": "تم إرسال رمز تحقق لمرة واحدة (OTP) إلى رقم هاتفك",
+    "full_name": "اسم المستخدم",
+    "full_name_hint": "مثال: اسم المستخدم",
+    "password": "كلمة المرور"
   },
   "community": {
     "app_bar_title": "مجتمعنا",

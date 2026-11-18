@@ -38,7 +38,7 @@ import 'package:konoz/features/settings/presentation/ui/screens/settings_screen.
 import 'package:konoz/features/spin/presentation/controllers/spin/spin_cubit.dart';
 import 'package:konoz/features/spin/presentation/ui/screens/spin_screen.dart';
 
-import 'routes.dart';
+import '../../../../../core/router/routes.dart';
 
 class AppRouter {
   static final GoRouter router = GoRouter(
@@ -243,7 +243,10 @@ class AppRouter {
                 path: Routes.profile,
                 pageBuilder: (context, state) => AppPageTransition.fade(
                   state: state,
-                  child: const AuthGate(child: ProfileScreen()),
+                  child: BlocProvider(
+                    create: (_) => getIt<LogoutCubit>(),
+                    child: const ProfileScreen(),
+                  ),
                 ),
                 routes: [
                   GoRoute(
@@ -281,10 +284,7 @@ class AppRouter {
                     pageBuilder: (context, state) {
                       return AppPageTransition.fade(
                         state: state,
-                        child: BlocProvider(
-                          create: (_) => getIt<LogoutCubit>(),
-                          child: const SettingsScreen(),
-                        ),
+                        child: const SettingsScreen(),
                       );
                     },
                   ),

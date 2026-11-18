@@ -85,7 +85,7 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                       TextButton(
                         onPressed: () =>
                             context.read<ProfileCubit>().getProfile(),
-                        child: const Text('Retry'),
+                        child:   Text(LocaleKeys.general_retry.tr()),
                       ),
                     ],
                   ),

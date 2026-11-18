@@ -180,9 +180,12 @@
 
   "auth": {
     "get_started": "Get Started Now With ",
-    "app_name": "Konoz!",
-    "subtitle": "Discover the best products from around the world",
+    "welcome_back_to_knooz": "Welcome Back To",
+    "login_in_to_continue_shopping": "Login in to continue shopping",
+    "app_name": "Knooz!",
+    "subtitle": "Discover the best fragrances",
     "phone_number": "Phone Number",
+    "make_sure_whatsapp_available": "Make sure that WhatsApp is available on this number.",
     "phone_hint": "01x xxxxxxxx",
     "login": "Login",
     "or_login_with": "Or Login with",
@@ -192,7 +195,10 @@
     "otp_title_normal": "Enter OTP to ",
     "otp_title_action": "Verify ",
     "otp_subtitle": "Your Phone Number 🔒",
-    "otp_description": "A one-time password (OTP) has been sent to your phone number"
+    "otp_description": "A one-time password (OTP) has been sent to your phone number",
+    "full_name": "Full Name",
+    "full_name_hint": "ex: User Name",
+    "password": "Password"
   },
 
   "community": {

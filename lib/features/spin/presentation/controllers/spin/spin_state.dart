@@ -4,7 +4,6 @@ enum SpinLoadStatus { initial, loading, success, failure }
 
 enum SpinRequestStatus { idle, loading, success, failure }
 
-
 extension SpinLoadStatusX on SpinState {
   bool get isInitial => status == SpinLoadStatus.initial;
   bool get isLoading => status == SpinLoadStatus.loading;
@@ -32,10 +31,12 @@ class SpinState {
 
   List<SpinSection> get sections => wheel?.sections ?? const [];
   bool get isEnabled => wheel?.enabled ?? false;
+  bool get hasSpin => wheel?.hasSpin ?? false;
   bool get isFailure => status == SpinLoadStatus.failure;
   bool get isSpinRequesting => spinStatus == SpinRequestStatus.loading;
 
   // failure / spinFailure بيتصفّروا عن قصد لو متبعتوش
+  // enabled / hasSpin جزء من الـ wheel، فبيتغيروا عن طريق wheel.copyWith(...)
   SpinState copyWith({
     SpinLoadStatus? status,
     AppFailure? failure,

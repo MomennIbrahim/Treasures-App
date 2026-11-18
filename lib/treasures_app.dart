@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:konoz/core/di/dependency_injection.dart';
-import 'package:konoz/core/router/app_router.dart';
+import 'package:konoz/features/profile/presentation/ui/widgets/app_router.dart';
 import 'package:konoz/core/theme/app_theme_data.dart';
 import 'package:konoz/features/cart/presentation/controller/cart/cart_cubit.dart';
 import 'package:konoz/features/layout/presentation/controller/layout_cubit.dart';

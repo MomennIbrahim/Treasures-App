@@ -179,9 +179,12 @@
   
   "auth": {
     "get_started": "ابدأ الآن مع ",
+    "welcome_back_to_knooz": "مرحبا بك مرة اخرى في",
+    "login_in_to_continue_shopping": "تسجيل الدخول لمتابعة التسوق",
     "app_name": "كنوز!",
-    "subtitle": "اكتشف أفضل المنتجات من حول العالم",
+    "subtitle":  "اكتشف أفضل العطور",
     "phone_number": "رقم الهاتف",
+    "make_sure_whatsapp_available": "تأكد من وجود واتساب علي هذا الرقم",
     "phone_hint": "01x xxxxxxxx",
     "login": "تسجيل الدخول",
     "or_login_with": "أو سجل الدخول باستخدام",
@@ -191,7 +194,10 @@
     "otp_title_normal": "أدخل رمز التحقق ",
     "otp_title_action": "للتأكيد ",
     "otp_subtitle": "على رقم هاتفك 🔒",
-    "otp_description": "تم إرسال رمز تحقق لمرة واحدة (OTP) إلى رقم هاتفك"
+    "otp_description": "تم إرسال رمز تحقق لمرة واحدة (OTP) إلى رقم هاتفك",
+    "full_name": "اسم المستخدم",
+    "full_name_hint": "مثال: اسم المستخدم",
+    "password": "كلمة المرور"
   },
 
   "community": {

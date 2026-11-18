@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -14,6 +15,7 @@ import 'package:konoz/features/auth/presentation/ui/widgets/auth_bloc_listener.d
 import 'package:konoz/features/auth/presentation/ui/widgets/auth_form.dart';
 import 'package:konoz/features/auth/presentation/ui/widgets/auth_submit_button.dart';
 import 'package:konoz/features/profile/presentation/controllers/profile/profile_cubit.dart';
+import 'package:konoz/generated/locale_keys.g.dart';
 
 /// بيرجّع بيانات اليوزر لو سجّل دخول/حساب، و null لو قفل الشيت.
 Future<UserModel?> showRegisterSheet(BuildContext context) async {
@@ -107,10 +109,10 @@ class _RegisterSheetState extends State<RegisterSheet> {
                 child: AppRichText(
                   key: ValueKey(_isLogin),
                   normalText: _isLogin
-                      ? "Welcome Back to "
-                      : "Get Started Now With ",
+                      ? "${LocaleKeys.auth_welcome_back_to_knooz.tr()} "
+                      : "${LocaleKeys.auth_get_started.tr()} ",
                   normalStyle: AppTextStyles.text18Bold,
-                  actionText: "Konoz!",
+                  actionText: LocaleKeys.auth_app_name.tr(),
                   actionStyle: AppTextStyles.text18Bold.copyWith(
                     color: AppColors.primary,
                   ),
@@ -119,8 +121,8 @@ class _RegisterSheetState extends State<RegisterSheet> {
               4.verticalSpace,
               Text(
                 _isLogin
-                    ? "Login to continue shopping"
-                    : "Discover the best products from around the world",
+                    ? LocaleKeys.auth_login_in_to_continue_shopping.tr()
+                    : LocaleKeys.auth_subtitle.tr(),
                 style: AppTextStyles.text12Regular,
               ),
               24.verticalSpace,

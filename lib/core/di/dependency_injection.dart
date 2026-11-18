@@ -4,7 +4,7 @@ import 'package:get_it/get_it.dart';
 import 'package:konoz/core/networking/api_service.dart';
 import 'package:konoz/core/networking/connectivity_service.dart';
 import 'package:konoz/core/notifications/notification_service.dart';
-import 'package:konoz/core/router/app_router.dart';
+import 'package:konoz/features/profile/presentation/ui/widgets/app_router.dart';
 import 'package:konoz/features/auth/data/repo/auth_repo.dart';
 import 'package:konoz/features/auth/data/repo/auth_repo_implmentation.dart';
 import 'package:konoz/features/auth/presentation/controllers/google_signin/google_sign_in_cubit.dart';

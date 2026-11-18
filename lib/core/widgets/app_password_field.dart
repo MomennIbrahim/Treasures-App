@@ -1,21 +1,23 @@
 // core/widgets/app_password_field.dart
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hugeicons/hugeicons.dart';
 import 'package:konoz/core/theme/app_colors.dart';
 import 'package:konoz/core/widgets/app_text_form_field.dart';
+import 'package:konoz/generated/locale_keys.g.dart';
 
 class AppPasswordField extends StatefulWidget {
   final TextEditingController controller;
   final String? Function(String?)? validator;
-  final String label;
+  final String? label;
   final String hint;
 
   const AppPasswordField({
     super.key,
     required this.controller,
     this.validator,
-    this.label = 'Password',
+    this.label,
     this.hint = '*************',
   });
 
@@ -30,7 +32,7 @@ class _AppPasswordFieldState extends State<AppPasswordField> {
   Widget build(BuildContext context) {
     return AppTextFormField(
       controller: widget.controller,
-      label: widget.label,
+      label: widget.label ?? LocaleKeys.auth_password.tr(),
       hint: widget.hint,
       obscureText: _obscure,
       keyboardType: TextInputType.visiblePassword,
