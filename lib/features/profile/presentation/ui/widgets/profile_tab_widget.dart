@@ -35,26 +35,23 @@ class ProfileTabWidget extends StatelessWidget {
                 context: context,
                 title: LocaleKeys.me_personal_data,
                 icon: HugeIcons.strokeRoundedUser03,
-                onTap: () => context.push(
-                  "${Routes.profile}/${Routes.personalData}",
-                ),
+                onTap: () =>
+                    context.push("${Routes.profile}/${Routes.personalData}"),
               ),
               _buildCustomTab(
                 context: context,
                 title: LocaleKeys.me_orders,
                 icon: HugeIcons.strokeRoundedDeliveryBox01,
-                onTap: () =>
-                    context.push("${Routes.profile}/${Routes.orders}"),
+                onTap: () => context.push("${Routes.profile}/${Routes.orders}"),
               ),
             ],
             _buildCustomTab(
               context: context,
               title: LocaleKeys.me_settings,
               icon: HugeIcons.strokeRoundedSettings02,
-              onTap: () =>
-                  context.push("${Routes.profile}/${Routes.settings}"),
+              onTap: () => context.push("${Routes.profile}/${Routes.settings}"),
             ),
-            Divider(color: colorScheme.outline.withValues(alpha: 0.5)),
+            Divider(color: AppColors.neutral500.withValues(alpha: 0.5)),
             _buildCustomTab(
               context: context,
               title: LocaleKeys.me_faq,
@@ -69,7 +66,7 @@ class ProfileTabWidget extends StatelessWidget {
                   context.push("${Routes.profile}/${Routes.community}"),
             ),
             if (!isGuest) ...[
-              Divider(color: colorScheme.outline.withValues(alpha: 0.5)),
+              Divider(color: AppColors.neutral500.withValues(alpha: 0.5)),
               _buildCustomTab(
                 context: context,
                 title: LocaleKeys.settings_logout,

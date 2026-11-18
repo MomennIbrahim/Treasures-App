@@ -50,7 +50,8 @@
         "help_hint": "Fell free to Ask, We Ready to Help",
         "logout": "Logout",
         "delivery_addresses": "Delivery Addresses",
-        "hi": "Hi"
+        "hi": "Hi",
+        "change_password": "Change Password"
     },
 
     "personal_data": {
@@ -77,7 +78,14 @@
       "delete_confirm": "Delete",
       "default": "Default",
       "confirm_location": "Confirm location",
-      "default_updated": "Default address updated"
+      "default_updated": "Default address updated",
+      "current_pass": "Current password",
+      "account_deleted": "Your account has been deleted",
+      "password_changed": "Password changed",
+      "new_password": "New password",
+      "password_min": "Password must be at least 8 characters",
+      "confirm_password": "Confirm password",
+      "password_mismatch": "Passwords do not match"
     },
 
     "product_details":{

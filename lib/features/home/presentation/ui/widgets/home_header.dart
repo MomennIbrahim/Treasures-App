@@ -30,7 +30,7 @@ class _HomeHeaderState extends State<HomeHeader> {
   int _currentIndex = 0;
   Timer? _timer;
 
-  final List<String> _messages = [LocaleKeys.spin_event_banner.tr()];
+  final List<String> _messages = [LocaleKeys.spin_event_banner];
 
   @override
   void initState() {
@@ -129,16 +129,18 @@ class _HomeHeaderState extends State<HomeHeader> {
                                             AlignmentDirectional.centerStart,
                                         child: isArabic
                                             ? Text(
-                                                _messages[_currentIndex],
-                                                style: AppTextStyles.text14Bold
+                                                _messages[_currentIndex].tr(
+                                                  context: context,
+                                                ),
+                                                style: AppTextStyles.text12Bold
                                                     .copyWith(
                                                       color:
                                                           colorScheme.onSurface,
                                                     ),
                                               )
                                             : BouncingText(
-                                                _messages[_currentIndex],
-                                                style: AppTextStyles.text14Bold
+                                                _messages[_currentIndex].tr(),
+                                                style: AppTextStyles.text12Bold
                                                     .copyWith(
                                                       color:
                                                           colorScheme.onSurface,

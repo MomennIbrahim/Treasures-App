@@ -45,6 +45,7 @@ abstract class  LocaleKeys {
   static const me_logout = 'me.logout';
   static const me_delivery_addresses = 'me.delivery_addresses';
   static const me_hi = 'me.hi';
+  static const me_change_password = 'me.change_password';
   static const me = 'me';
   static const personal_data_name = 'personal_data.name';
   static const personal_data_email = 'personal_data.email';
@@ -70,6 +71,13 @@ abstract class  LocaleKeys {
   static const personal_data_default = 'personal_data.default';
   static const personal_data_confirm_location = 'personal_data.confirm_location';
   static const personal_data_default_updated = 'personal_data.default_updated';
+  static const personal_data_current_pass = 'personal_data.current_pass';
+  static const personal_data_account_deleted = 'personal_data.account_deleted';
+  static const personal_data_password_changed = 'personal_data.password_changed';
+  static const personal_data_new_password = 'personal_data.new_password';
+  static const personal_data_password_min = 'personal_data.password_min';
+  static const personal_data_confirm_password = 'personal_data.confirm_password';
+  static const personal_data_password_mismatch = 'personal_data.password_mismatch';
   static const personal_data = 'personal_data';
   static const product_details_longevity = 'product_details.longevity';
   static const product_details_sillage = 'product_details.sillage';

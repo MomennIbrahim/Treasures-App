@@ -55,17 +55,87 @@ class ProfileCubit extends SafeCubit<ProfileState> {
     unawaited(getIt<NotificationService>().registerToken());
   }
 
-  Future<void> updateProfile({required String name}) => _run(
-    ProfileAction.updateProfile,
-    () => _repo.updateProfile(name: name),
-    onSuccess: () => state.profile?.copyWith(name: name),
+  /// ابعت الحقول اللي اتغيّرت بس. الـ state بيتحدّث من رد السيرفر.
+  Future<void> updateProfile({String? name, String? email, String? phone}) =>
+      _update(
+        ProfileAction.updateProfile,
+        name: name,
+        email: email,
+        phone: phone,
+      );
+
+  Future<void> updatePhone(String phone) =>
+      _update(ProfileAction.updatePhone, phone: phone);
+
+  Future<void> _update(
+    ProfileAction action, {
+    String? name,
+    String? email,
+    String? phone,
+  }) {
+    ProfileModel? updated;
+    return _run(
+      action,
+      () async {
+        final res = await _repo.updateProfile(
+          name: name,
+          email: email,
+          phone: phone,
+        );
+        return res.map((p) {
+          updated = p;
+          return unit;
+        });
+      },
+      onSuccess: () => updated,
+    );
+  }
+
+  /// [currentPassword] مطلوب لو الحساب له كلمة مرور.
+  Future<void> changePassword({
+    required String newPassword,
+    String? currentPassword,
+  }) => _run(
+    ProfileAction.changePassword,
+    () => _repo.changePassword(
+      newPassword: newPassword,
+      currentPassword: currentPassword,
+    ),
   );
 
-  Future<void> updatePhone(String phone) => _run(
-    ProfileAction.updatePhone,
-    () => _repo.updatePhone(phone: phone),
-    onSuccess: () => state.profile?.copyWith(phone: phone),
-  );
+  /// بعد النجاح: بنمسح الجلسة ونرجّع حالة الضيف، والـ UI بيتولّى التنقّل.
+  /// (مفيش unregisterToken: التوكن بقى منتهي، والسيرفر بيحذف الأجهزة مع الحساب.)
+  Future<void> deleteAccount({String? password}) async {
+    if (state.isActionLoading) return;
+    emit(
+      state.copyWith(
+        actionStatus: ProfileActionStatus.loading,
+        action: ProfileAction.deleteAccount,
+      ),
+    );
+
+    final res = await _repo.deleteAccount(password: password);
+
+    await res.fold(
+      (failure) async => emit(
+        state.copyWith(
+          actionStatus: ProfileActionStatus.failure,
+          action: ProfileAction.deleteAccount,
+          actionFailure: failure,
+        ),
+      ),
+      (_) async {
+        await SessionStorage.clear();
+        emit(
+          const ProfileState(
+            status: ProfileStatus.guest,
+            actionStatus: ProfileActionStatus.success,
+            action: ProfileAction.deleteAccount,
+          ),
+        );
+      },
+    );
+  }
 
   Future<void> addAddress({
     required String title,

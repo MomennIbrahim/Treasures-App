@@ -10,6 +10,8 @@ enum ProfileAction {
   addAddress,
   deleteAddress,
   setDefaultAddress,
+  changePassword,
+  deleteAccount,
 }
 
 extension ProfileStateX on ProfileState {

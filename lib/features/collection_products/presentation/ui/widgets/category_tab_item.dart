@@ -24,7 +24,9 @@ class CategoryChip extends StatelessWidget {
       child: Container(
         padding: paddingHorizontal(16),
         decoration: BoxDecoration(
-          color: isSelected ? AppColors.primary : AppColors.lightWhite,
+          color: isSelected
+              ? AppColors.primary
+              : AppColors.neutral500.withAlpha(50),
           borderRadius: AppRadius.br48,
         ),
         alignment: Alignment.center,

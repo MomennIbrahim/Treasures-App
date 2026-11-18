@@ -49,7 +49,14 @@
         "help_hint": "لا تتردد في السؤال، نحن مستعدون لمساعدتك",
         "logout": "تسجيل الخروج",
         "delivery_addresses": "عناوين التوصيل",
-        "hi": "مرحبا"
+        "hi": "مرحبا",
+        "change_password": "تغيير كلمة المرور",
+        "account_deleted": "تم حذف الحساب بنجاح",
+        "password_changed": "تم تغيير كلمة المرور بنجاح",
+        "new_password": "كلمة المرور الجديدة",
+        "password_min": "يجب ان تكون كلمة المرور 8 احرف على الاقل",
+        "confirm_password": "تاكيد كلمة المرور",
+        "password_mismatch": "كلمة المرور غير صحيحة"
     },
 
    "personal_data": {
@@ -76,7 +83,8 @@
       "delete_confirm": "حذف",
       "default": "الأفتراضي",
       "confirm_location": "تأكيد العنوان",
-      "default_updated": "تم تحديث عنوانك الافتراضي"
+      "default_updated": "تم تحديث عنوانك الافتراضي",
+      "current_pass": "كلمة المرور الحالية"
     },
 
     "product_details":{

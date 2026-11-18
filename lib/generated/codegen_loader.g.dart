@@ -61,7 +61,8 @@ class CodegenLoader extends AssetLoader{
     "help_hint": "Fell free to Ask, We Ready to Help",
     "logout": "Logout",
     "delivery_addresses": "Delivery Addresses",
-    "hi": "Hi"
+    "hi": "Hi",
+    "change_password": "Change Password"
   },
   "personal_data": {
     "name": "Name",
@@ -87,7 +88,14 @@ class CodegenLoader extends AssetLoader{
     "delete_confirm": "Delete",
     "default": "Default",
     "confirm_location": "Confirm location",
-    "default_updated": "Default address updated"
+    "default_updated": "Default address updated",
+    "current_pass": "Current password",
+    "account_deleted": "Your account has been deleted",
+    "password_changed": "Password changed",
+    "new_password": "New password",
+    "password_min": "Password must be at least 8 characters",
+    "confirm_password": "Confirm password",
+    "password_mismatch": "Passwords do not match"
   },
   "product_details": {
     "longevity": "Longevity",
@@ -331,7 +339,14 @@ static const Map<String,dynamic> _ar = {
     "help_hint": "لا تتردد في السؤال، نحن مستعدون لمساعدتك",
     "logout": "تسجيل الخروج",
     "delivery_addresses": "عناوين التوصيل",
-    "hi": "مرحبا"
+    "hi": "مرحبا",
+    "change_password": "تغيير كلمة المرور",
+    "account_deleted": "تم حذف الحساب بنجاح",
+    "password_changed": "تم تغيير كلمة المرور بنجاح",
+    "new_password": "كلمة المرور الجديدة",
+    "password_min": "يجب ان تكون كلمة المرور 8 احرف على الاقل",
+    "confirm_password": "تاكيد كلمة المرور",
+    "password_mismatch": "كلمة المرور غير صحيحة"
   },
   "personal_data": {
     "name": "الاسم",
@@ -357,7 +372,8 @@ static const Map<String,dynamic> _ar = {
     "delete_confirm": "حذف",
     "default": "الأفتراضي",
     "confirm_location": "تأكيد العنوان",
-    "default_updated": "تم تحديث عنوانك الافتراضي"
+    "default_updated": "تم تحديث عنوانك الافتراضي",
+    "current_pass": "كلمة المرور الحالية"
   },
   "product_details": {
     "longevity": "الثبات",

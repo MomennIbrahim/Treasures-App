@@ -10,7 +10,8 @@ class ProfileRepoImplementation implements ProfileRepo {
   final ApiService _apiService;
   ProfileRepoImplementation(this._apiService);
 
-  // حدود السيرفر: title حتى 80، fullAddress حتى 500
+  // حدود السيرفر: name حتى 120، title حتى 80، fullAddress حتى 500
+  static const _maxName = 120;
   static const _maxTitle = 80;
   static const _maxAddress = 500;
 
@@ -36,10 +37,65 @@ class ProfileRepoImplementation implements ProfileRepo {
     }
   }
 
+  /// PATCH /auth/me — بيرجّع البروفايل كامل بعد التعديل.
+  /// الموبايل بيتبعت زي ما اليوزر كتبه (010...) والسيرفر بيحفظه 2010...
   @override
-  Future<Either<AppFailure, Unit>> updateProfile({required String name}) async {
+  Future<Either<AppFailure, ProfileModel>> updateProfile({
+    String? name,
+    String? email,
+    String? phone,
+  }) async {
+    final body = <String, dynamic>{
+      if (name != null) 'name': _clip(name.trim(), _maxName),
+      if (email != null) 'email': email.trim(),
+      if (phone != null) 'phone': phone.trim(),
+    };
+    if (body.isEmpty) return Left(RemoteServerFailure('Nothing to update'));
+
     try {
-      await _apiService.putData(endPoint: EndPoint.me, data: {'name': name});
+      final res = await _apiService.patchData(
+        endPoint: EndPoint.me,
+        data: body,
+      );
+      final data = _data(res.data);
+      return Right(ProfileModel.fromJson(data, addresses: _addresses(data)));
+    } catch (e) {
+      return Left(toFailure(e));
+    }
+  }
+
+  @override
+  Future<Either<AppFailure, Unit>> changePassword({
+    required String newPassword,
+    String? currentPassword,
+  }) async {
+    try {
+      await _apiService.patchData(
+        endPoint: EndPoint.me,
+        data: {
+          'password': newPassword,
+          if (currentPassword != null && currentPassword.isNotEmpty)
+            'current_password': currentPassword,
+        },
+      );
+      return const Right(unit);
+    } catch (e) {
+      return Left(toFailure(e));
+    }
+  }
+
+  /// DELETE /auth/me — الحد: 5 محاولات في الدقيقة.
+  @override
+  Future<Either<AppFailure, Unit>> deleteAccount({String? password}) async {
+    try {
+      if (password == null || password.isEmpty) {
+        await _apiService.deleteData(endPoint: EndPoint.me);
+      } else {
+        await _apiService.deleteData(
+          endPoint: EndPoint.me,
+          data: {'password': password},
+        );
+      }
       return const Right(unit);
     } catch (e) {
       return Left(toFailure(e));
@@ -48,7 +104,6 @@ class ProfileRepoImplementation implements ProfileRepo {
 
   /// POST /addresses — أول عنوان بيبقى افتراضي تلقائيًا،
   /// و`isDefault: true` بيلغي الافتراضي عن باقي العناوين.
-  /// الـ body camelCase زي التوثيق (title, fullAddress, isDefault, lat, lng).
   @override
   Future<Either<AppFailure, AddressModel>> addAddress({
     required String title,
@@ -95,9 +150,4 @@ class ProfileRepoImplementation implements ProfileRepo {
       return Left(toFailure(e));
     }
   }
-
-  /// الـ API بيعتمد الرقم كهوية دخول، فمفيش تعديل له (متأكد من الـ PDF؟).
-  @override
-  Future<Either<AppFailure, Unit>> updatePhone({required String phone}) async =>
-      Left(RemoteServerFailure('Phone update is not supported'));
 }

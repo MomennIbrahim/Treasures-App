@@ -10,7 +10,8 @@ import 'package:konoz/core/widgets/app_toast.dart';
 import 'package:konoz/core/widgets/custom_back_icon.dart';
 import 'package:konoz/core/widgets/show_loading_dialog.dart';
 import 'package:konoz/features/personal_data/presentation/ui/widgets/addresses_section.dart';
-import 'package:konoz/features/personal_data/presentation/ui/widgets/personal_information_form.dart';
+import 'package:konoz/features/personal_data/presentation/ui/widgets/change_password_sheet.dart';
+ import 'package:konoz/features/personal_data/presentation/ui/widgets/personal_information_form.dart';
 import 'package:konoz/features/profile/data/model/profile_model.dart';
 import 'package:konoz/features/profile/presentation/controllers/profile/profile_cubit.dart';
 import 'package:konoz/generated/locale_keys.g.dart';
@@ -39,9 +40,20 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
         return LocaleKeys.personal_data_address_deleted.tr();
       case ProfileAction.setDefaultAddress:
         return LocaleKeys.personal_data_default_updated.tr();
+      case ProfileAction.changePassword:
+        return LocaleKeys.personal_data_password_changed.tr();
       default:
         return LocaleKeys.personal_data_profile_updated.tr();
     }
+  }
+
+  Future<void> _changePassword() async {
+    final result = await ChangePasswordSheet.show(context);
+    if (result == null || !mounted) return;
+    context.read<ProfileCubit>().changePassword(
+      newPassword: result.newPassword,
+      currentPassword: result.currentPassword,
+    );
   }
 
   @override
@@ -53,6 +65,9 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
         child: BlocListener<ProfileCubit, ProfileState>(
           listenWhen: (p, c) => p.actionStatus != c.actionStatus,
           listener: (context, state) {
+            // الحذف: showDeleteAccountDialog بيتولّى اللودينج والتوست والتنقّل.
+            if (state.action == ProfileAction.deleteAccount) return;
+
             if (state.actionStatus == ProfileActionStatus.loading) {
               showLoadingDialog(context);
               return;
@@ -85,7 +100,7 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                       TextButton(
                         onPressed: () =>
                             context.read<ProfileCubit>().getProfile(),
-                        child:   Text(LocaleKeys.general_retry.tr()),
+                        child: Text(LocaleKeys.general_retry.tr()),
                       ),
                     ],
                   ),
@@ -170,6 +185,17 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                       AddressesSection(
                         addresses: profile.addresses,
                         isLoading: isLoading,
+                      ),
+                      16.verticalSpace,
+                      ListTile(
+                        enabled: !isLoading,
+                        contentPadding: EdgeInsets.zero,
+                        leading: const Icon(Icons.lock_outline),
+                        title: Text(
+                          LocaleKeys.me_change_password.tr(),
+                        ),
+                        trailing: const Icon(Icons.chevron_right),
+                        onTap: _changePassword,
                       ),
                       32.verticalSpace,
                     ],
