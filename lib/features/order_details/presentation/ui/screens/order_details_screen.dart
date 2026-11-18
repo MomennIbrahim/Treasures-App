@@ -51,7 +51,14 @@ class OrderDetailsScreen extends StatelessWidget {
                     16.verticalSpace,
                     OrderTrackingSection(steps: order.tracking),
                     16.verticalSpace,
-                    OrderItemsSection(items: order.items),
+                    OrderItemsSection(
+                      items: order.items,
+                      onSubmitReview: loading
+                          ? null
+                          : (item, rating, comment) => context
+                                .read<OrderDetailsCubit>()
+                                .submitReview(item, rating, comment),
+                    ),
                     if (!order.address.isEmpty) ...[
                       16.verticalSpace,
                       OrderAddressSection(address: order.address),

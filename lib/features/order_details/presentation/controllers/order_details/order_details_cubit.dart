@@ -1,4 +1,5 @@
- import 'package:equatable/equatable.dart';
+import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 import 'package:konoz/core/cubits/safe_cubit.dart';
 import 'package:konoz/core/error/app_failure.dart';
 import 'package:konoz/features/order_details/data/model/order_details_model.dart';
@@ -31,6 +32,26 @@ class OrderDetailsCubit extends SafeCubit<OrderDetailsState> {
           emit(state.copyWith(status: OrderDetailsStatus.failure, failure: f)),
       (o) => emit(state.copyWith(status: OrderDetailsStatus.success, order: o)),
     );
+  }
+
+  Future<bool> submitReview(
+    OrderDetailsItem item,
+    int rating,
+    String comment,
+  ) async {
+    debugPrint('SUBMIT REVIEW CUBIT CALLED');
+    debugPrint('Product ID: ${item.productId}');
+    debugPrint('Rating: $rating');
+    debugPrint('Comment: $comment');
+    if (item.productId.isEmpty) return false;
+
+    final res = await _repo.submitReview(
+      productId: item.productId,
+      rating: rating,
+      comment: comment,
+    );
+
+    return res.fold((failure) => false, (_) => true);
   }
 
   Future<void> retry() => load(_orderId);

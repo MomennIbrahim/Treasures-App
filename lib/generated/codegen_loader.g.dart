@@ -283,7 +283,14 @@ class CodegenLoader extends AssetLoader{
   },
   "order_details": {
     "order_details": "Order details",
-    "order_date": "Order date"
+    "order_date": "Order date",
+    "add_review": "Add Review",
+    "rate_product": "Rate this product",
+    "please_choose_rating": "Please choose a rating",
+    "submitted_thank_you": "Review submitted, thank you",
+    "could_not_submit_try_again": "Could not send the review, try again",
+    "write_review_optional": "Write your review (optional)",
+    "submit_review": "Submit review"
   },
   "spin": {
     "title": "Spin To Win",
@@ -567,7 +574,14 @@ static const Map<String,dynamic> _ar = {
   },
   "order_details": {
     "order_details": "تفاصيل الطلب",
-    "order_date": "تاريخ الطلب"
+    "order_date": "تاريخ الطلب",
+    "add_review": "اضافة مراجعة",
+    "rate_product": "قيّم المنتج",
+    "please_choose_rating": "من فضلك اختار التقييم",
+    "submitted_thank_you": "تم إرسال تقييمك، شكرًا لك",
+    "could_not_submit_try_again": "تعذّر إرسال التقييم، حاول مرة أخرى",
+    "write_review_optional": "اكتب رأيك في المنتج (اختياري)",
+    "submit_review": "إرسال التقييم"
   },
   "spin": {
     "title": "لف واكسب",

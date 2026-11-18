@@ -4,4 +4,10 @@ import 'package:konoz/features/order_details/data/model/order_details_model.dart
 
 abstract class OrderDetailsRepo {
   Future<Either<AppFailure, OrderDetailsModel>> getOrderDetails(int orderId);
+
+  Future<Either<AppFailure, Unit>> submitReview({
+    required String productId,
+    required int rating,
+    required String comment,
+  });
 }

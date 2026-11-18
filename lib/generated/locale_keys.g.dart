@@ -241,6 +241,13 @@ abstract class  LocaleKeys {
   static const orders = 'orders';
   static const order_details_order_details = 'order_details.order_details';
   static const order_details_order_date = 'order_details.order_date';
+  static const order_details_add_review = 'order_details.add_review';
+  static const order_details_rate_product = 'order_details.rate_product';
+  static const order_details_please_choose_rating = 'order_details.please_choose_rating';
+  static const order_details_submitted_thank_you = 'order_details.submitted_thank_you';
+  static const order_details_could_not_submit_try_again = 'order_details.could_not_submit_try_again';
+  static const order_details_write_review_optional = 'order_details.write_review_optional';
+  static const order_details_submit_review = 'order_details.submit_review';
   static const order_details = 'order_details';
   static const spin_title = 'spin.title';
   static const spin_spin_button = 'spin.spin_button';

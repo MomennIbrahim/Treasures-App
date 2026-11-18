@@ -8,6 +8,7 @@ Map<String, dynamic> _map(dynamic v) =>
     v is Map ? Map<String, dynamic>.from(v) : <String, dynamic>{};
 
 class OrderDetailsItem extends Equatable {
+  final String productId;
   final String name;
   final String image;
   final int quantity;
@@ -15,6 +16,7 @@ class OrderDetailsItem extends Equatable {
   final num total;
 
   const OrderDetailsItem({
+    this.productId = '',
     required this.name,
     required this.image,
     required this.quantity,
@@ -27,6 +29,7 @@ class OrderDetailsItem extends Equatable {
     final unit = _num(j['unit_price'] ?? j['price']);
     final total = j['total'] != null ? _num(j['total']) : unit * qty;
     return OrderDetailsItem(
+      productId: _str(j['product_id'] ?? j['productId']),
       name: _str(j['product_name'] ?? j['name']),
       image: _str(j['image']),
       quantity: qty,
@@ -36,7 +39,14 @@ class OrderDetailsItem extends Equatable {
   }
 
   @override
-  List<Object?> get props => [name, image, quantity, unitPrice, total];
+  List<Object?> get props => [
+    productId,
+    name,
+    image,
+    quantity,
+    unitPrice,
+    total,
+  ];
 }
 
 class OrderAmounts extends Equatable {

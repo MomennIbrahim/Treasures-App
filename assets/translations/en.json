@@ -268,7 +268,14 @@
   },
   "order_details": {
     "order_details": "Order details",
-    "order_date": "Order date"
+    "order_date": "Order date",
+    "add_review": "Add Review",
+    "rate_product": "Rate this product",
+    "please_choose_rating": "Please choose a rating",
+    "submitted_thank_you": "Review submitted, thank you",
+    "could_not_submit_try_again": "Could not send the review, try again",
+    "write_review_optional": "Write your review (optional)",
+    "submit_review": "Submit review"
   },
  "spin": {
   "title": "Spin To Win",

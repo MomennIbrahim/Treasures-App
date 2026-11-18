@@ -267,7 +267,14 @@
 
   "order_details": {
     "order_details": "تفاصيل الطلب",
-    "order_date": "تاريخ الطلب"
+    "order_date": "تاريخ الطلب",
+    "add_review": "اضافة مراجعة",
+    "rate_product": "قيّم المنتج",
+    "please_choose_rating": "من فضلك اختار التقييم",
+    "submitted_thank_you": "تم إرسال تقييمك، شكرًا لك",
+    "could_not_submit_try_again": "تعذّر إرسال التقييم، حاول مرة أخرى",
+    "write_review_optional": "اكتب رأيك في المنتج (اختياري)",
+    "submit_review": "إرسال التقييم"
   },
 
    "spin": {

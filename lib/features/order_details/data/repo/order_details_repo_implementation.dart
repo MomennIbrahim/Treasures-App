@@ -24,4 +24,21 @@ class OrderDetailsRepoImplementation implements OrderDetailsRepo {
       return Left(toFailure(e));
     }
   }
+
+  @override
+  Future<Either<AppFailure, Unit>> submitReview({
+    required String productId,
+    required int rating,
+    required String comment,
+  }) async {
+    try {
+      await _apiService.postData(
+        endPoint: EndPoint.productReviews(productId),
+        data: {'rating': rating, 'review': comment, 'product_id': productId},
+      );
+      return const Right(unit);
+    } catch (e) {
+      return Left(toFailure(e));
+    }
+  }
 }
