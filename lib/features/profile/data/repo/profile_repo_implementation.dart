@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:dio/dio.dart';
 import 'package:konoz/core/error/app_failure.dart';
 import 'package:konoz/core/networking/api_service.dart';
 import 'package:konoz/core/networking/endpoints.dart';
@@ -146,6 +147,26 @@ class ProfileRepoImplementation implements ProfileRepo {
     try {
       await _apiService.postData(endPoint: EndPoint.addressDefault(id));
       return const Right(unit);
+    } catch (e) {
+      return Left(toFailure(e));
+    }
+  }
+
+  /// الحقل `image` زي الـ PDF. الاسم بياخده Dio من مسار الملف.
+  @override
+  Future<Either<AppFailure, ProfileModel>> updateAvatar({
+    required String imagePath,
+  }) async {
+    try {
+      final form = FormData.fromMap({
+        'image': await MultipartFile.fromFile(imagePath),
+      });
+      final res = await _apiService.patchData(
+        endPoint: EndPoint.me,
+        data: form,
+      );
+      final data = _data(res.data);
+      return Right(ProfileModel.fromJson(data, addresses: _addresses(data)));
     } catch (e) {
       return Left(toFailure(e));
     }

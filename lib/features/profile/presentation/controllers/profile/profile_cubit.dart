@@ -74,21 +74,17 @@ class ProfileCubit extends SafeCubit<ProfileState> {
     String? phone,
   }) {
     ProfileModel? updated;
-    return _run(
-      action,
-      () async {
-        final res = await _repo.updateProfile(
-          name: name,
-          email: email,
-          phone: phone,
-        );
-        return res.map((p) {
-          updated = p;
-          return unit;
-        });
-      },
-      onSuccess: () => updated,
-    );
+    return _run(action, () async {
+      final res = await _repo.updateProfile(
+        name: name,
+        email: email,
+        phone: phone,
+      );
+      return res.map((p) {
+        updated = p;
+        return unit;
+      });
+    }, onSuccess: () => updated);
   }
 
   /// [currentPassword] مطلوب لو الحساب له كلمة مرور.
@@ -206,6 +202,18 @@ class ProfileCubit extends SafeCubit<ProfileState> {
         if (reload) getProfile(silent: true, force: true);
       },
     );
+  }
+
+  /// صورة البروفايل. الـ state بيتحدّث من رد السيرفر.
+  Future<void> updateAvatar(String imagePath) {
+    ProfileModel? updated;
+    return _run(ProfileAction.updateAvatar, () async {
+      final res = await _repo.updateAvatar(imagePath: imagePath);
+      return res.map((p) {
+        updated = p;
+        return unit;
+      });
+    }, onSuccess: () => updated);
   }
 
   /// عند الـ logout: بيرجّع حالة الضيف (مختلفة عن initial فبتعمل emit فعلًا)

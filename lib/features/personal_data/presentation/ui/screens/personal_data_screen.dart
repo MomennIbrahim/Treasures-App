@@ -3,6 +3,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:konoz/core/helper/app_padding.dart';
 import 'package:konoz/core/theme/app_colors.dart';
 import 'package:konoz/core/theme/app_shimmer.dart';
@@ -10,8 +11,9 @@ import 'package:konoz/core/widgets/app_toast.dart';
 import 'package:konoz/core/widgets/custom_back_icon.dart';
 import 'package:konoz/core/widgets/show_loading_dialog.dart';
 import 'package:konoz/features/personal_data/presentation/ui/widgets/addresses_section.dart';
+import 'package:konoz/features/personal_data/presentation/ui/widgets/avatar_source_sheet.dart';
 import 'package:konoz/features/personal_data/presentation/ui/widgets/change_password_sheet.dart';
- import 'package:konoz/features/personal_data/presentation/ui/widgets/personal_information_form.dart';
+import 'package:konoz/features/personal_data/presentation/ui/widgets/personal_information_form.dart';
 import 'package:konoz/features/profile/data/model/profile_model.dart';
 import 'package:konoz/features/profile/presentation/controllers/profile/profile_cubit.dart';
 import 'package:konoz/generated/locale_keys.g.dart';
@@ -25,6 +27,10 @@ class PersonalDataScreen extends StatefulWidget {
 }
 
 class _PersonalDataScreenState extends State<PersonalDataScreen> {
+  static const _maxImageBytes = 4 * 1024 * 1024; // حد السيرفر: 4MB
+
+  final _picker = ImagePicker();
+
   @override
   void initState() {
     super.initState();
@@ -44,6 +50,39 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
         return LocaleKeys.personal_data_password_changed.tr();
       default:
         return LocaleKeys.personal_data_profile_updated.tr();
+    }
+  }
+
+  void _showError(String message) {
+    if (!mounted) return;
+    AppToast.show(context, message: message, type: AppToastType.error);
+  }
+
+  Future<void> _pickAvatar() async {
+    final source = await showAvatarSourceSheet(context);
+    if (source == null || !mounted) return;
+
+    try {
+      // تصغير + ضغط: بيخلّي الصورة JPEG وأقل بكتير من 4MB.
+      // requestFullMetadata: false عشان iOS ميطلبش صلاحية المعرض كاملة.
+      final picked = await _picker.pickImage(
+        source: source,
+        maxWidth: 1024,
+        maxHeight: 1024,
+        imageQuality: 85,
+        requestFullMetadata: false,
+      );
+      if (picked == null || !mounted) return;
+
+      if (await picked.length() > _maxImageBytes) {
+        _showError(LocaleKeys.personal_data_image_too_large.tr());
+        return;
+      }
+      if (!mounted) return;
+      context.read<ProfileCubit>().updateAvatar(picked.path);
+    } catch (_) {
+      // PlatformException: صلاحية مرفوضة أو مفيش كاميرا
+      _showError(LocaleKeys.personal_data_image_pick_failed.tr());
     }
   }
 
@@ -162,7 +201,7 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                               bottom: 5.h,
                               right: 5.w,
                               child: InkWell(
-                                onTap: () {}, // رفع الصورة (خطوة لاحقة)
+                                onTap: isLoading ? null : _pickAvatar,
                                 child: CircleAvatar(
                                   radius: 14.r,
                                   backgroundColor: AppColors.primary,
@@ -191,9 +230,7 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                         enabled: !isLoading,
                         contentPadding: EdgeInsets.zero,
                         leading: const Icon(Icons.lock_outline),
-                        title: Text(
-                          LocaleKeys.me_change_password.tr(),
-                        ),
+                        title: Text(LocaleKeys.me_change_password.tr()),
                         trailing: const Icon(Icons.chevron_right),
                         onTap: _changePassword,
                       ),

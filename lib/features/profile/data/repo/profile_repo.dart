@@ -32,4 +32,8 @@ abstract class ProfileRepo {
 
   Future<Either<AppFailure, Unit>> deleteAddress({required int id});
   Future<Either<AppFailure, Unit>> setDefaultAddress({required int id});
+
+  Future<Either<AppFailure, ProfileModel>> updateAvatar({
+    required String imagePath,
+  });
 }

@@ -13,7 +13,8 @@
         "login_required_message": "You must be logged in to access this page",
         "cancel" : "Cancel",
         "hide" : "Hide",
-        "not_available" : "Not Available"
+        "not_available" : "Not Available",
+        "sale": "Sale"
     },
 
     "layout": {
@@ -85,7 +86,11 @@
       "new_password": "New password",
       "password_min": "Password must be at least 8 characters",
       "confirm_password": "Confirm password",
-      "password_mismatch": "Passwords do not match"
+      "password_mismatch": "Passwords do not match",
+      "from_gallery": "Choose from gallery",
+      "from_camera": "Take a photo",
+      "image_too_large": "Image is larger than 4 MB",
+      "image_pick_failed": "Couldn't pick the image. Check camera and photos permissions"
     },
 
     "product_details":{

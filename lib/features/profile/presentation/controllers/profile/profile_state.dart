@@ -7,6 +7,7 @@ enum ProfileActionStatus { idle, loading, success, failure }
 enum ProfileAction {
   updateProfile,
   updatePhone,
+  updateAvatar,
   addAddress,
   deleteAddress,
   setDefaultAddress,

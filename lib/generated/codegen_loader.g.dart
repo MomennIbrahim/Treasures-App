@@ -29,7 +29,8 @@ class CodegenLoader extends AssetLoader{
     "login_required_message": "You must be logged in to access this page",
     "cancel": "Cancel",
     "hide": "Hide",
-    "not_available": "Not Available"
+    "not_available": "Not Available",
+    "sale": "Sale"
   },
   "layout": {
     "home": "Home",
@@ -95,7 +96,11 @@ class CodegenLoader extends AssetLoader{
     "new_password": "New password",
     "password_min": "Password must be at least 8 characters",
     "confirm_password": "Confirm password",
-    "password_mismatch": "Passwords do not match"
+    "password_mismatch": "Passwords do not match",
+    "from_gallery": "Choose from gallery",
+    "from_camera": "Take a photo",
+    "image_too_large": "Image is larger than 4 MB",
+    "image_pick_failed": "Couldn't pick the image. Check camera and photos permissions"
   },
   "product_details": {
     "longevity": "Longevity",
@@ -307,7 +312,8 @@ static const Map<String,dynamic> _ar = {
     "login_required_message": "يجب عليك تسجيل الدخول للوصول لهذه الصفحة",
     "cancel": "الغاء",
     "hide": "اغلق",
-    "not_available": "غير متاح الان"
+    "not_available": "غير متاح الان",
+    "sale": "خصم"
   },
   "layout": {
     "home": "الرئيسية",
@@ -373,7 +379,11 @@ static const Map<String,dynamic> _ar = {
     "default": "الأفتراضي",
     "confirm_location": "تأكيد العنوان",
     "default_updated": "تم تحديث عنوانك الافتراضي",
-    "current_pass": "كلمة المرور الحالية"
+    "current_pass": "كلمة المرور الحالية",
+    "from_gallery": "اختيار من المعرض",
+    "from_camera": "التقاط صورة",
+    "image_too_large": "حجم الصورة أكبر من 4 ميغابايت",
+    "image_pick_failed": "تعذّر اختيار الصورة، تأكد من صلاحيات الكاميرا والصور"
   },
   "product_details": {
     "longevity": "الثبات",

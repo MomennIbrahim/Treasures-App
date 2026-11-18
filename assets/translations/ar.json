@@ -13,7 +13,8 @@
         "login_required_message": "يجب عليك تسجيل الدخول للوصول لهذه الصفحة",
         "cancel" : "الغاء",
         "hide" : "اغلق",
-        "not_available" : "غير متاح الان"
+        "not_available" : "غير متاح الان",
+        "sale" : "خصم"
     },
      
     "layout": {
@@ -84,7 +85,11 @@
       "default": "الأفتراضي",
       "confirm_location": "تأكيد العنوان",
       "default_updated": "تم تحديث عنوانك الافتراضي",
-      "current_pass": "كلمة المرور الحالية"
+      "current_pass": "كلمة المرور الحالية",
+      "from_gallery": "اختيار من المعرض",
+      "from_camera": "التقاط صورة",
+      "image_too_large": "حجم الصورة أكبر من 4 ميغابايت",
+      "image_pick_failed": "تعذّر اختيار الصورة، تأكد من صلاحيات الكاميرا والصور"
     },
 
     "product_details":{

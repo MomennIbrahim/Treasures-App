@@ -17,6 +17,7 @@ abstract class  LocaleKeys {
   static const general_cancel = 'general.cancel';
   static const general_hide = 'general.hide';
   static const general_not_available = 'general.not_available';
+  static const general_sale = 'general.sale';
   static const general = 'general';
   static const layout_home = 'layout.home';
   static const layout_collections = 'layout.collections';
@@ -78,6 +79,10 @@ abstract class  LocaleKeys {
   static const personal_data_password_min = 'personal_data.password_min';
   static const personal_data_confirm_password = 'personal_data.confirm_password';
   static const personal_data_password_mismatch = 'personal_data.password_mismatch';
+  static const personal_data_from_gallery = 'personal_data.from_gallery';
+  static const personal_data_from_camera = 'personal_data.from_camera';
+  static const personal_data_image_too_large = 'personal_data.image_too_large';
+  static const personal_data_image_pick_failed = 'personal_data.image_pick_failed';
   static const personal_data = 'personal_data';
   static const product_details_longevity = 'product_details.longevity';
   static const product_details_sillage = 'product_details.sillage';
