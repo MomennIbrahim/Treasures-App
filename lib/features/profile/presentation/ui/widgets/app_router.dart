@@ -47,6 +47,26 @@ class AppRouter {
     initialLocation: Routes.home,
     routes: [
       GoRoute(
+        path: '/products/:id',
+        pageBuilder: (context, state) => AppPageTransition.fade(
+          state: state,
+          child: BlocProvider(
+            create: (_) => getIt.get<ProductDetailsCubit>(),
+            child: ProductDetailsScreen(productId: state.pathParameters['id']!),
+          ),
+        ),
+      ),
+      GoRoute(
+        path: '/packages/:id',
+        pageBuilder: (context, state) => AppPageTransition.fade(
+          state: state,
+          child: BlocProvider(
+            create: (_) => getIt<PackageDetailsCubit>(),
+            child: PackageDetailsScreen(packageId: state.pathParameters['id']!),
+          ),
+        ),
+      ),
+      GoRoute(
         path: Routes.spin,
         pageBuilder: (context, state) {
           return AppPageTransition.fade(

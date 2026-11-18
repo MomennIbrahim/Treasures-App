@@ -4,6 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hugeicons/hugeicons.dart';
 import 'package:konoz/core/helper/app_padding.dart';
+import 'package:konoz/core/services/share_service.dart';
+import 'package:konoz/core/theme/app_colors.dart';
 import 'package:konoz/core/widgets/custom_back_icon.dart';
 import 'package:konoz/features/product_details/data/model/product_details_model.dart';
 import 'package:konoz/features/product_details/presentation/controllers/product_details/product_details_cubit.dart';
@@ -42,44 +44,6 @@ class ProductImagesAndSizingSection extends StatelessWidget {
                       : productDetails.images,
                 ),
               ),
-
-              Positioned(
-                bottom: 35.h,
-                left: 35.w,
-                child: BlocBuilder<ProductDetailsCubit, ProductDetailsState>(
-                  buildWhen: (previous, current) =>
-                      previous.selectedSize != current.selectedSize,
-                  builder: (context, state) {
-                    final selectedSize = state.selectedSize;
-
-                    if (selectedSize == null) {
-                      return const SizedBox.shrink();
-                    }
-
-                    return AnimatedSwitcher(
-                      duration: const Duration(milliseconds: 400),
-                      reverseDuration: const Duration(milliseconds: 200),
-                      switchInCurve: Curves.easeOutBack,
-                      switchOutCurve: Curves.easeIn,
-                      transitionBuilder: (child, animation) {
-                        return ScaleTransition(
-                          scale: animation,
-                          child: FadeTransition(
-                            opacity: animation,
-                            child: child,
-                          ),
-                        );
-                      },
-                      child: ProductSizeItem(
-                        key: ValueKey(selectedSize.id),
-                        size: selectedSize,
-                        isSelected: true,
-                      ),
-                    );
-                  },
-                ),
-              ),
-
               PositionedDirectional(
                 start: 16.w,
                 child: SafeArea(
@@ -91,6 +55,40 @@ class ProductImagesAndSizingSection extends StatelessWidget {
                         color: Colors.white24,
                       ),
                       child: CustomBackIcon(),
+                    ),
+                  ),
+                ),
+              ),
+
+              // زرار المشاركة: في الطرف المقابل لزرار الرجوع
+              PositionedDirectional(
+                start: 16.w,
+                bottom: 30.h,
+                child: FadeInDown(
+                  child: Builder(
+                    builder: (btnContext) => Opacity(
+                      opacity: isLoading ? 0.4 : 1,
+                      child: GestureDetector(
+                        onTap: isLoading
+                            ? null
+                            : () => ShareService.shareProduct(
+                                btnContext,
+                                id: productDetails.id,
+                                name: productDetails.name,
+                              ),
+                        child: Container(
+                          padding: paddingAll(12),
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: AppColors.primary.withAlpha(150),
+                          ),
+                          child: HugeIcon(
+                            icon: HugeIcons.strokeRoundedShare01,
+                            color: AppColors.white,
+                            size: 24.sp,
+                          ),
+                        ),
+                      ),
                     ),
                   ),
                 ),

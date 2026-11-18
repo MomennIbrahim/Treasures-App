@@ -6,6 +6,8 @@
 	<true/>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>نحتاج الوصول للصور لتغيير صورة حسابك</string>
+	<key>FlutterDeepLinkingEnabled</key>
+	<true/>
 	<key>NSCameraUsageDescription</key>
 	<string>نحتاج الكاميرا لالتقاط صورة حسابك</string>
 	<key>CFBundleDevelopmentRegion</key>

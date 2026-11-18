@@ -22,19 +22,35 @@
                 android:name="io.flutter.embedding.android.NormalTheme"
                 android:resource="@style/NormalTheme" />
 
+            <!-- تفعيل الـ deep links في Flutter (go_router بيستقبلها تلقائي) -->
+            <meta-data
+                android:name="flutter_deeplinking_enabled"
+                android:value="true" />
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
+            <!-- App Links: لينكات المنتجات والباكدجات بتفتح التطبيق مباشرة -->
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data
+                    android:scheme="https"
+                    android:host="konoz.valien.tech" />
+                <data android:pathPrefix="/products" />
+                <data android:pathPrefix="/packages" />
+            </intent-filter>
         </activity>
 
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
         <meta-data
-        android:name="com.google.firebase.messaging.default_notification_channel_id"
-        android:value="konoz_default" />
+            android:name="com.google.firebase.messaging.default_notification_channel_id"
+            android:value="konoz_default" />
         <!-- أيقونة ولون الإشعارات (لازم جوه application مش جوه activity) -->
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
