@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
@@ -7,6 +8,7 @@ import 'package:konoz/core/theme/app_radius.dart';
 import 'package:konoz/core/theme/app_text_style.dart';
 import 'package:konoz/core/widgets/app_image.dart';
 import 'package:konoz/features/home/data/model/packages_model.dart';
+import 'package:konoz/generated/locale_keys.g.dart';
 
 class PackageItem extends StatelessWidget {
   final PackageItemModel package;
@@ -21,6 +23,8 @@ class PackageItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
+    final isAr = context.locale.languageCode == "ar";
+    const radius = Radius.circular(12);
 
     final productsCount = package.items.length;
 
@@ -40,11 +44,13 @@ class PackageItem extends StatelessWidget {
           children: [
             AppImage.cachedNetwork(
               package.image,
-              height: 160,
-              width: 150,
+              width: 135,
+              fit: BoxFit.cover,
               borderRadius: AppRadius.only(
-                topLeft: const Radius.circular(12),
-                bottomLeft: const Radius.circular(12),
+                topLeft: isAr ? Radius.zero : radius,
+                bottomLeft: isAr ? Radius.zero : radius,
+                topRight: isAr ? radius : Radius.zero,
+                bottomRight: isAr ? radius : Radius.zero,
               ),
             ),
 
@@ -64,7 +70,7 @@ class PackageItem extends StatelessWidget {
                     8.verticalSpace,
 
                     Text(
-                      '${package.price} L.E',
+                      '${package.price} EGP',
                       style: AppTextStyles.text14Bold.copyWith(
                         color: Colors.amber,
                       ),
@@ -73,24 +79,37 @@ class PackageItem extends StatelessWidget {
                     6.verticalSpace,
 
                     Text(
-                      '$productsCount Products Included',
+                      '$productsCount ${LocaleKeys.home_products_included.tr()}',
                       style: AppTextStyles.text10Bold.copyWith(
                         color: Colors.amber,
                       ),
                     ),
-
                     6.verticalSpace,
 
-                    ...package.items.map(
-                      (item) => Padding(
-                        padding: EdgeInsets.only(bottom: 4.h),
-                        child: Text(
-                          '${item.quantity} × ${item.name}',
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: AppTextStyles.text10Bold,
-                        ),
-                      ),
+                    // الأصناف جنب بعض، ولما السطر يتملي بتنزل سطر جديد،
+                    // فطول الكارد مبيكبرش لو الباكدج فيها أصناف كتير
+                    Wrap(
+                      spacing: 6.w,
+                      runSpacing: 4.h,
+                      children: package.items
+                          .map(
+                            (item) => Container(
+                              padding: paddingSymmetric(6, 2),
+                              decoration: BoxDecoration(
+                                color: colorScheme.onSurface.withValues(
+                                  alpha: 0.06,
+                                ),
+                                borderRadius: AppRadius.br8,
+                              ),
+                              child: Text(
+                                '${item.quantity}× ${item.name}',
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: AppTextStyles.text10Bold,
+                              ),
+                            ),
+                          )
+                          .toList(),
                     ),
                   ],
                 ),

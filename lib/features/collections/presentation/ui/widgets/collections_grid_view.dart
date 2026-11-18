@@ -29,7 +29,12 @@ class CollectionsGridView extends StatelessWidget {
           final collection = isLoading
               ? collections.isNotEmpty
                     ? collections[index % collections.length]
-                    : const CollectionsModel(id: "", name: 'Collection', image: '')
+                    : const CollectionsModel(
+                        id: "",
+                        name: 'Collection',
+                        image:
+                            'https://konoz.valien.tech/storage/products/01M7F7Z436ZM7EZHP3XWTQWSC4/Q7JGQrdSZnEDdMYRIsTjuA8lwfG0ePx26H2rcuic.jpg',
+                      )
               : collections[index];
 
           return FadeIn(

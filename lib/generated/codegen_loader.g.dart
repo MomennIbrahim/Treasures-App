@@ -44,6 +44,7 @@ class CodegenLoader extends AssetLoader{
     "currently_trending": "Currently Trending",
     "best_selling": "Best Selling",
     "packages": "Packages",
+    "products_included": "Products Included",
     "explore": "Explore"
   },
   "collections": {
@@ -327,6 +328,7 @@ static const Map<String,dynamic> _ar = {
     "currently_trending": "الأكثر رواجًا حاليًا",
     "best_selling": "الأكثر مبيعًا",
     "packages": "الباقات",
+    "products_included": "المنتجات المضافة",
     "explore": "اكتشف"
   },
   "collections": {

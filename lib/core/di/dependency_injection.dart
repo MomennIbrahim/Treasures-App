@@ -21,6 +21,9 @@ import 'package:konoz/features/collection_products/presentation/controllers/coll
 import 'package:konoz/features/collections/data/repo/collections_repo.dart';
 import 'package:konoz/features/collections/data/repo/collections_repo_implementation.dart';
 import 'package:konoz/features/collections/presentation/controllers/collections/collections_cubit.dart';
+import 'package:konoz/features/faq/data/repo/faq_repo.dart';
+import 'package:konoz/features/faq/data/repo/faq_repo_impl.dart';
+import 'package:konoz/features/faq/presentation/controllers/faq_cubit.dart';
 import 'package:konoz/features/home/data/repo/home_repo.dart';
 import 'package:konoz/features/home/data/repo/home_repo_implementation.dart';
 import 'package:konoz/features/home/presentation/controllers/banners_cubit/banners_cubit.dart';
@@ -134,6 +137,10 @@ Future<void> setupGetIt() async {
 
   // Spin Repository
   getIt.registerLazySingleton<SpinRepo>(() => SpinRepoImplementation(getIt()));
+
+  getIt.registerLazySingleton<FaqRepo>(() => FaqRepoImpl(getIt<Dio>()));
+
+
   //ــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــ
 
   /// All Cubits ====>
@@ -199,4 +206,7 @@ Future<void> setupGetIt() async {
 
   // Spin Cubit
   getIt.registerFactory<SpinCubit>(() => SpinCubit(getIt()));
+
+  // Faq Cubit
+  getIt.registerFactory<FaqCubit>(() => FaqCubit(getIt<FaqRepo>()));
 }

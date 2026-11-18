@@ -30,7 +30,8 @@
         "currently_trending": "الأكثر رواجًا حاليًا",
         "best_selling": "الأكثر مبيعًا",
         "packages": "الباقات",
-         "explore": "اكتشف"
+        "products_included": "المنتجات المضافة",
+        "explore": "اكتشف"
     },
 
     "collections": {

@@ -29,6 +29,7 @@ abstract class  LocaleKeys {
   static const home_currently_trending = 'home.currently_trending';
   static const home_best_selling = 'home.best_selling';
   static const home_packages = 'home.packages';
+  static const home_products_included = 'home.products_included';
   static const home_explore = 'home.explore';
   static const home = 'home';
   static const collections_featured_collections = 'collections.featured_collections';

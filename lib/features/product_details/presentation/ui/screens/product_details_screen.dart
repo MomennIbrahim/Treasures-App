@@ -60,7 +60,6 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                 CustomScrollView(
                   slivers: [
                     ProductImagesAndSizingSection(productDetails: product),
-
                     SliverPadding(
                       padding: paddingAll(16),
                       sliver: SliverToBoxAdapter(

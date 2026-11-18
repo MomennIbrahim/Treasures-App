@@ -2,6 +2,7 @@ import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hugeicons/hugeicons.dart';
 import 'package:konoz/core/helper/app_padding.dart';
 import 'package:konoz/core/widgets/custom_back_icon.dart';
 import 'package:konoz/features/product_details/data/model/product_details_model.dart';
@@ -14,7 +15,6 @@ import 'blurred_images_carousel.dart';
 class ProductImagesAndSizingSection extends StatelessWidget {
   final ProductDetailsModel productDetails;
 
- 
   /// صورة الكارت: بتتعرض أثناء التحميل بدل الصور الوهمية
   final String? heroImage;
   final bool isLoading;
@@ -22,7 +22,7 @@ class ProductImagesAndSizingSection extends StatelessWidget {
   const ProductImagesAndSizingSection({
     super.key,
     required this.productDetails,
-     this.heroImage,
+    this.heroImage,
     this.isLoading = false,
   });
 
@@ -40,7 +40,7 @@ class ProductImagesAndSizingSection extends StatelessWidget {
                   images: (isLoading && heroImage != null)
                       ? [heroImage!]
                       : productDetails.images,
-                 ),
+                ),
               ),
 
               Positioned(

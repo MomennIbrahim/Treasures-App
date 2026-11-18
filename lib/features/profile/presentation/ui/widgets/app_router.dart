@@ -11,6 +11,7 @@ import 'package:konoz/features/collection_products/presentation/ui/screens/colle
 import 'package:konoz/features/collections/presentation/controllers/collections/collections_cubit.dart';
 import 'package:konoz/features/collections/presentation/ui/screens/collectoins_screen.dart';
 import 'package:konoz/features/community/presentation/ui/community_screen.dart';
+import 'package:konoz/features/faq/presentation/controllers/faq_cubit.dart';
 import 'package:konoz/features/faq/presentation/ui/faq_screen.dart';
 import 'package:konoz/features/home/presentation/controllers/banners_cubit/banners_cubit.dart';
 import 'package:konoz/features/home/presentation/controllers/best_selling/best_selling_cubit.dart';
@@ -302,7 +303,10 @@ class AppRouter {
                     pageBuilder: (context, state) {
                       return AppPageTransition.fade(
                         state: state,
-                        child: FaqScreen(),
+                        child: BlocProvider(
+                          create: (context) => getIt.get<FaqCubit>(),
+                          child: FaqScreen(),
+                        ),
                       );
                     },
                   ),

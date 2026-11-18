@@ -1,11 +1,16 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:konoz/core/helper/app_padding.dart';
 import 'package:konoz/core/theme/app_radius.dart';
 import 'package:konoz/core/theme/app_text_style.dart';
+import 'package:konoz/core/widgets/app_button.dart';
 import 'package:konoz/core/widgets/custom_back_icon.dart';
+import 'package:konoz/features/faq/data/model/faq_model.dart';
+import 'package:konoz/features/faq/presentation/controllers/faq_cubit.dart';
 import 'package:konoz/generated/locale_keys.g.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 class FaqScreen extends StatefulWidget {
   const FaqScreen({super.key});
@@ -18,32 +23,13 @@ class _FaqScreenState extends State<FaqScreen> {
   // -1 يعني كل الأسئلة مقفولة، أي رقم تاني يبقى ده اللي مفتوح
   int _expandedIndex = -1;
 
-  late final List<_FaqData> _faqs = [
-    _FaqData(
-      question: LocaleKeys.faq_q1_question.tr(),
-      answer: LocaleKeys.faq_q1_answer.tr(),
-    ),
-    _FaqData(
-      question: LocaleKeys.faq_q2_question.tr(),
-      answer: LocaleKeys.faq_q2_answer.tr(),
-    ),
-    _FaqData(
-      question: LocaleKeys.faq_q3_question.tr(),
-      answer: LocaleKeys.faq_q3_answer.tr(),
-    ),
-    _FaqData(
-      question: LocaleKeys.faq_q4_question.tr(),
-      answer: LocaleKeys.faq_q4_answer.tr(),
-    ),
-    _FaqData(
-      question: LocaleKeys.faq_q5_question.tr(),
-      answer: LocaleKeys.faq_q5_answer.tr(),
-    ),
-    _FaqData(
-      question: LocaleKeys.faq_q6_question.tr(),
-      answer: LocaleKeys.faq_q6_answer.tr(),
-    ),
-  ];
+  @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<FaqCubit>().getFaqs();
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -86,23 +72,43 @@ class _FaqScreenState extends State<FaqScreen> {
 
             32.verticalSpace,
 
-            // FAQ list
-            ...List.generate(_faqs.length, (index) {
-              final isExpanded = _expandedIndex == index;
-              return Padding(
-                padding: paddingOnly(bottom: 12),
-                child: _FaqTile(
-                  question: _faqs[index].question,
-                  answer: _faqs[index].answer,
-                  isExpanded: isExpanded,
-                  onTap: () {
-                    setState(() {
-                      _expandedIndex = isExpanded ? -1 : index;
-                    });
-                  },
-                ),
-              );
-            }),
+            BlocBuilder<FaqCubit, FaqState>(
+              builder: (context, state) {
+                if (state.isFailure) {
+                  return _ErrorView(
+                    message: state.failure?.message ?? '',
+                    onRetry: () => context.read<FaqCubit>().getFaqs(),
+                  );
+                }
+
+                final loading = state.isLoading || state.isInitial;
+                final faqs = loading
+                    ? List.filled(4, FaqModel.empty())
+                    : state.faqs;
+
+                return Skeletonizer(
+                  enabled: loading,
+                  child: Column(
+                    children: List.generate(faqs.length, (index) {
+                      final isExpanded = _expandedIndex == index;
+                      return Padding(
+                        padding: paddingOnly(bottom: 12),
+                        child: _FaqTile(
+                          question: faqs[index].question,
+                          answer: faqs[index].answer,
+                          isExpanded: isExpanded,
+                          onTap: loading
+                              ? () {}
+                              : () => setState(() {
+                                  _expandedIndex = isExpanded ? -1 : index;
+                                }),
+                        ),
+                      );
+                    }),
+                  ),
+                );
+              },
+            ),
           ],
         ),
       ),
@@ -110,11 +116,29 @@ class _FaqScreenState extends State<FaqScreen> {
   }
 }
 
-class _FaqData {
-  final String question;
-  final String answer;
+class _ErrorView extends StatelessWidget {
+  const _ErrorView({required this.message, required this.onRetry});
+  final String message;
+  final VoidCallback onRetry;
 
-  const _FaqData({required this.question, required this.answer});
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Text(
+          message,
+          textAlign: TextAlign.center,
+          style: AppTextStyles.text14Regular,
+        ),
+        12.verticalSpace,
+        AppButton(
+          onPressed: onRetry,
+          label: LocaleKeys.general_retry.tr(),
+          variant: AppButtonVariant.outlined,
+        ),
+      ],
+    );
+  }
 }
 
 class _FaqTile extends StatelessWidget {
@@ -186,11 +210,13 @@ class _FaqTile extends StatelessWidget {
                 child: isExpanded
                     ? Padding(
                         padding: paddingOnly(top: 10),
+                        // الإجابة جاية من الـ API (ممكن تبقى إنجليزي أو عربي)،
+                        // فمحاذاتها حسب اتجاه اللغة مش يمين ثابت
                         child: Align(
-                          alignment: Alignment.centerRight,
+                          alignment: AlignmentDirectional.centerStart,
                           child: Text(
                             answer,
-                            textAlign: TextAlign.right,
+                            textAlign: TextAlign.start,
                             style: AppTextStyles.text12Regular,
                           ),
                         ),
