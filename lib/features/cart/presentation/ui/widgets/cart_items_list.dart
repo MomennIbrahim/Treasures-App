@@ -2,7 +2,9 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:konoz/core/helper/app_padding.dart';
+import 'package:konoz/core/router/routes.dart';
 import 'package:konoz/core/theme/app_colors.dart';
 import 'package:konoz/core/theme/app_radius.dart';
 import 'package:konoz/core/theme/app_text_style.dart';
@@ -61,11 +63,32 @@ class _CartItemCard extends StatelessWidget {
   final CartItemModel item;
   final bool enabled;
 
+  /// الـ details routes متعرفة كـ children جوه home، فبنبني الـ path الكامل
+  String _homeChild(String child) {
+    final base = Routes.home == '/' ? '' : Routes.home;
+    final c = child.startsWith('/') ? child.substring(1) : child;
+    return '$base/$c';
+  }
+
   @override
   Widget build(BuildContext context) {
     final cubit = context.read<CartCubit>();
     final colorScheme = Theme.of(context).colorScheme;
     final inStock = item.isAvailable && !item.exceedsStock;
+    final isPackageType = item.type == "package";
+
+    void openDetails() {
+      if (!enabled) return;
+      if (isPackageType) {
+        final id = item.packageId; // package_id مش id الرقمي
+        if (id == null || id.isEmpty) return;
+        context.push(_homeChild(Routes.packageDetails), extra: id);
+      } else {
+        final id = item.productId;
+        if (id == null || id.isEmpty) return;
+        context.push(_homeChild(Routes.productDetails), extra: id);
+      }
+    }
 
     return Dismissible(
       key: ValueKey('cart_item_${item.id}'),
@@ -80,100 +103,148 @@ class _CartItemCard extends StatelessWidget {
         ),
         child: const Icon(Icons.delete_outline, color: Colors.white),
       ),
-      child: Container(
-        padding: paddingAll(16),
-        decoration: BoxDecoration(
-          color: colorScheme.onSurface.withValues(alpha: 0.05),
-          borderRadius: AppRadius.br12,
-        ),
-        child: Row(
-          children: [
-            Column(
-              children: [
-                AppImage.cachedNetwork(
-                  item.image,
-                  width: 100,
-                  borderRadius: AppRadius.br8,
-                ),
-                6.verticalSpace,
-                Container(
-                  padding: paddingAll(8),
-                  decoration: BoxDecoration(
-                    color: Colors.white10,
-                    borderRadius: AppRadius.br24,
-                    border: Border.all(
-                      color: AppColors.neutral500.withValues(alpha: 0.4),
-                    ),
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      _ActionButton(
-                        icon: Icons.add,
-                        onTap: enabled && item.canIncrease
-                            ? () =>
-                                  cubit.updateQuantity(item, item.quantity + 1)
-                            : null,
-                      ),
-                      7.horizontalSpace,
-                      Text(
-                        '${item.quantity}',
-                        style: AppTextStyles.text14Regular,
-                      ),
-                      7.horizontalSpace,
-                      _ActionButton(
-                        // عند 1 بيحذف العنصر
-                        icon: item.quantity == 1
-                            ? Icons.delete_outline
-                            : Icons.remove,
-                        onTap: enabled
-                            ? () =>
-                                  cubit.updateQuantity(item, item.quantity - 1)
-                            : null,
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-            15.horizontalSpace,
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+      child: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: openDetails,
+        child: Container(
+          padding: paddingAll(16),
+          decoration: BoxDecoration(
+            color: colorScheme.onSurface.withValues(alpha: 0.05),
+            borderRadius: AppRadius.br12,
+          ),
+          child: Row(
+            children: [
+              Column(
                 children: [
-                  Text(
-                    '${item.name} ${item.sizeLabel}',
-                    style: AppTextStyles.text12Bold,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
+                  AppImage.cachedNetwork(
+                    item.image,
+                    width: 100,
+                    borderRadius: AppRadius.br8,
                   ),
                   6.verticalSpace,
-                  Text(
-                    '${item.total.toStringAsFixed(0)} EGP',
-                    style: AppTextStyles.text16Bold,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  if (item.quantity > 1) ...[
-                    4.verticalSpace,
-                    Text(
-                      '${item.unitPrice.toStringAsFixed(0)} EGP × ${item.quantity}',
-                      style: AppTextStyles.text12Regular,
+                  Container(
+                    padding: paddingAll(8),
+                    decoration: BoxDecoration(
+                      color: Colors.white10,
+                      borderRadius: AppRadius.br24,
+                      border: Border.all(
+                        color: AppColors.neutral500.withValues(alpha: 0.4),
+                      ),
                     ),
-                  ],
-                  6.verticalSpace,
-                  Text(
-                    inStock
-                        ? LocaleKeys.general_available.tr()
-                        : LocaleKeys.general_out_of_stock.tr(),
-                    style: AppTextStyles.text12Bold.copyWith(
-                      color: inStock ? AppColors.success800 : colorScheme.error,
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        _ActionButton(
+                          icon: Icons.add,
+                          onTap: enabled && item.canIncrease
+                              ? () => cubit.updateQuantity(
+                                  item,
+                                  item.quantity + 1,
+                                )
+                              : null,
+                        ),
+                        7.horizontalSpace,
+                        Text(
+                          '${item.quantity}',
+                          style: AppTextStyles.text14Regular,
+                        ),
+                        7.horizontalSpace,
+                        _ActionButton(
+                          // عند 1 بيحذف العنصر
+                          icon: item.quantity == 1
+                              ? Icons.delete_outline
+                              : Icons.remove,
+                          onTap: enabled
+                              ? () => cubit.updateQuantity(
+                                  item,
+                                  item.quantity - 1,
+                                )
+                              : null,
+                        ),
+                      ],
                     ),
                   ),
                 ],
               ),
-            ),
-          ],
+              15.horizontalSpace,
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      '${item.name} ${item.sizeLabel}',
+                      style: AppTextStyles.text12Bold,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    6.verticalSpace,
+                    Text(
+                      '${item.total.toStringAsFixed(0)} EGP',
+                      style: AppTextStyles.text16Bold,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    if (item.quantity > 1) ...[
+                      4.verticalSpace,
+                      Text(
+                        '${item.unitPrice.toStringAsFixed(0)} EGP × ${item.quantity}',
+                        style: AppTextStyles.text12Regular,
+                      ),
+                    ],
+                    6.verticalSpace,
+                    if (!isPackageType)
+                      Text(
+                        inStock
+                            ? LocaleKeys.general_available.tr()
+                            : LocaleKeys.general_out_of_stock.tr(),
+                        style: AppTextStyles.text12Bold.copyWith(
+                          color: inStock
+                              ? AppColors.success800
+                              : colorScheme.error,
+                        ),
+                      ),
+                    if (isPackageType && item.packageItems.isNotEmpty) ...[
+                      8.verticalSpace,
+                      Wrap(
+                        spacing: 6,
+                        runSpacing: 6,
+                        children: item.packageItems
+                            .map((p) => _PackageThumb(content: p))
+                            .toList(),
+                      ),
+                    ],
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// صورة صغيرة لمنتج جوه الباكدج
+class _PackageThumb extends StatelessWidget {
+  const _PackageThumb({required this.content});
+  final CartPackageContentModel content;
+
+  @override
+  Widget build(BuildContext context) {
+    return Tooltip(
+      message: '${content.name} ${content.size}',
+      child: Container(
+        width: 36.w,
+        height: 36.w,
+        decoration: BoxDecoration(
+          borderRadius: AppRadius.br8,
+          border: Border.all(
+            color: AppColors.neutral500.withValues(alpha: 0.4),
+          ),
+        ),
+        child: ClipRRect(
+          borderRadius: AppRadius.br8,
+          child: AppImage.cachedNetwork(content.image, width: 36.w),
         ),
       ),
     );
