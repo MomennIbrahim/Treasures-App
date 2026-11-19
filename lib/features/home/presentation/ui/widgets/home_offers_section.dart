@@ -68,6 +68,7 @@ class _HomeOffersSectionState extends State<HomeOffersSection> {
                   ),
                   10.verticalSpace,
                   AppSlider(
+                    isLoading: isLoading,
                     items: displayBanners
                         .map(
                           (e) => ImageBannerItem(

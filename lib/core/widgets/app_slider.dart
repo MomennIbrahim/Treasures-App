@@ -13,6 +13,7 @@ class AppSlider extends StatefulWidget {
   final Duration autoScrollDuration;
   final bool showBannerInfo;
   final BoxFit? fit;
+  final bool isLoading;
 
   const AppSlider({
     super.key,
@@ -21,6 +22,7 @@ class AppSlider extends StatefulWidget {
     this.autoScrollDuration = const Duration(seconds: 4),
     this.showBannerInfo = true,
     this.fit,
+    required this.isLoading,
   });
 
   @override
@@ -74,6 +76,7 @@ class _AppSliderState extends State<AppSlider> {
             itemBuilder: (context, index) {
               final item = widget.items[index];
               return BannerItem(
+                isLoading: widget.isLoading,
                 showInfo: widget.showBannerInfo,
                 boxFit: widget.fit,
                 imagePath: item.imagePath,

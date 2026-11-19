@@ -1,9 +1,11 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hugeicons/hugeicons.dart';
 import 'package:konoz/core/theme/app_colors.dart';
 import 'package:konoz/features/order_details/data/model/order_details_model.dart';
+import 'package:konoz/features/order_details/presentation/controllers/order_details/order_details_cubit.dart';
 import 'package:konoz/features/order_details/presentation/ui/widgets/order_details_card.dart';
 import 'package:konoz/features/order_details/presentation/ui/widgets/order_details_helpers.dart';
 import 'package:konoz/features/orders/data/model/order_model.dart';
@@ -152,6 +154,7 @@ class _StepBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
+    final isLoading = context.watch<OrderDetailsCubit>().state.isLoading;
 
     // الحالية: أخضر ممتلئ | عدّت: أخضر فاتح | لسه: رمادي
     final Color bg = isCurrent
@@ -169,9 +172,11 @@ class _StepBadge extends StatelessWidget {
       width: 38.w,
       height: 38.w,
       decoration: BoxDecoration(
-        color: bg,
+        color: isLoading ? AppColors.neutral500.withValues(alpha: 0.2) : bg,
         shape: BoxShape.circle,
-        boxShadow: isCurrent
+        boxShadow: isLoading
+            ? null
+            : isCurrent
             ? [
                 BoxShadow(
                   color: color.withValues(alpha: 0.35),

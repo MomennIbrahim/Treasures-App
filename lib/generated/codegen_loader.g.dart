@@ -101,7 +101,8 @@ class CodegenLoader extends AssetLoader{
     "from_gallery": "Choose from gallery",
     "from_camera": "Take a photo",
     "image_too_large": "Image is larger than 4 MB",
-    "image_pick_failed": "Couldn't pick the image. Check camera and photos permissions"
+    "image_pick_failed": "Couldn't pick the image. Check camera and photos permissions",
+    "points": "Points"
   },
   "product_details": {
     "longevity": "Longevity",
@@ -392,7 +393,8 @@ static const Map<String,dynamic> _ar = {
     "from_gallery": "اختيار من المعرض",
     "from_camera": "التقاط صورة",
     "image_too_large": "حجم الصورة أكبر من 4 ميغابايت",
-    "image_pick_failed": "تعذّر اختيار الصورة، تأكد من صلاحيات الكاميرا والصور"
+    "image_pick_failed": "تعذّر اختيار الصورة، تأكد من صلاحيات الكاميرا والصور",
+    "points": "نقاط"
   },
   "product_details": {
     "longevity": "الثبات",

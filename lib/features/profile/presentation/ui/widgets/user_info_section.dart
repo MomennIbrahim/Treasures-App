@@ -4,10 +4,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:konoz/core/di/dependency_injection.dart';
 import 'package:konoz/core/helper/app_padding.dart';
+import 'package:konoz/core/theme/app_colors.dart';
 import 'package:konoz/core/theme/app_radius.dart';
 import 'package:konoz/core/theme/app_shimmer.dart';
 import 'package:konoz/core/theme/app_text_style.dart';
 import 'package:konoz/core/widgets/app_image.dart';
+import 'package:konoz/core/widgets/app_text_rich.dart';
 import 'package:konoz/core/widgets/app_toast.dart';
 import 'package:konoz/features/auth/presentation/ui/widgets/auth_sheet.dart';
 import 'package:konoz/features/profile/data/model/profile_model.dart';
@@ -24,7 +26,7 @@ class UserInfoSection extends StatelessWidget {
 
     return SliverToBoxAdapter(
       child: BlocConsumer<ProfileCubit, ProfileState>(
-        listenWhen: (p, c) => p.status != c.status && c.isFailure ,
+        listenWhen: (p, c) => p.status != c.status && c.isFailure,
         listener: (context, state) {
           AppToast.show(
             context,
@@ -62,18 +64,18 @@ class UserInfoSection extends StatelessWidget {
                     child: profile.avatarUrl.isNotEmpty
                         ? AppImage.cachedNetwork(
                             profile.avatarUrl,
-                            height: 50,
-                            width: 50,
+                            height: 45,
+                            width: 45,
                             fit: BoxFit.cover,
                             borderRadius: AppRadius.br8,
                           )
                         : CircleAvatar(
-                            radius: 25.r,
+                            radius: 40.r,
                             backgroundColor: colorScheme.primary,
                             child: Text(
                               displayName[0].toUpperCase(),
-                              style: AppTextStyles.text16Bold.copyWith(
-                                color: Colors.white,
+                              style: AppTextStyles.text14Bold.copyWith(
+                                color: AppColors.white,
                               ),
                             ),
                           ),
@@ -85,7 +87,7 @@ class UserInfoSection extends StatelessWidget {
                       children: [
                         Text(
                           '${LocaleKeys.me_hi.tr()}, $displayName',
-                          style: AppTextStyles.text16Bold,
+                          style: AppTextStyles.text14Bold,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                         ),
@@ -97,6 +99,21 @@ class UserInfoSection extends StatelessWidget {
                             overflow: TextOverflow.ellipsis,
                           ),
                       ],
+                    ),
+                  ),
+                  Container(
+                    padding: paddingSymmetric(8, 4),
+                    decoration: BoxDecoration(
+                      color: colorScheme.onSurface.withValues(alpha: 0.05),
+                      borderRadius: AppRadius.br12,
+                    ),
+                    child: AppRichText(
+                      normalText: "${LocaleKeys.personal_data_points.tr()}: ",
+                      actionText: profile.points.toString(),
+                      normalStyle: AppTextStyles.text14Regular,
+                      actionStyle: AppTextStyles.text14Bold.copyWith(
+                        color: AppColors.primary,
+                      ),
                     ),
                   ),
                 ],

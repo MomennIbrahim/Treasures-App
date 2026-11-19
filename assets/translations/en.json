@@ -91,7 +91,8 @@
       "from_gallery": "Choose from gallery",
       "from_camera": "Take a photo",
       "image_too_large": "Image is larger than 4 MB",
-      "image_pick_failed": "Couldn't pick the image. Check camera and photos permissions"
+      "image_pick_failed": "Couldn't pick the image. Check camera and photos permissions",
+      "points": "Points"
     },
 
     "product_details":{

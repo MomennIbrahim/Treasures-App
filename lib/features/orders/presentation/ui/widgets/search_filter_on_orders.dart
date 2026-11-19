@@ -43,7 +43,7 @@ class SearchFilterOnOrders extends StatelessWidget {
               color: colorScheme.surface,
               surfaceTintColor: Colors.transparent,
               elevation: 4,
-              shape: RoundedRectangleBorder(borderRadius: AppRadius.br8),
+              shape: RoundedRectangleBorder(borderRadius: AppRadius.br12),
               offset: const Offset(0, 50),
               itemBuilder: (context) {
                 final selected = cubit.state.filter;
@@ -66,9 +66,9 @@ class SearchFilterOnOrders extends StatelessWidget {
                 padding: paddingAll(12),
                 decoration: BoxDecoration(
                   border: Border.all(
-                    color: colorScheme.onSurface.withValues(alpha: 0.5),
+                    color: colorScheme.onSurface.withValues(alpha: 0.2),
                   ),
-                  borderRadius: AppRadius.br8,
+                  borderRadius: AppRadius.br12,
                 ),
                 child: Row(
                   children: [

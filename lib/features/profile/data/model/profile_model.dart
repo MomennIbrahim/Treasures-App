@@ -6,6 +6,7 @@ class ProfileModel extends Equatable {
   final String phone;
   final String email;
   final String avatarUrl;
+  final int points;
   final List<AddressModel> addresses;
 
   const ProfileModel({
@@ -14,6 +15,7 @@ class ProfileModel extends Equatable {
     required this.phone,
     required this.email,
     required this.avatarUrl,
+    required this.points,
     required this.addresses,
   });
 
@@ -29,6 +31,7 @@ class ProfileModel extends Equatable {
       phone: phone ?? this.phone,
       email: email ?? this.email,
       avatarUrl: avatarUrl,
+      points: points,
       addresses: addresses ?? this.addresses,
     );
   }
@@ -39,6 +42,7 @@ class ProfileModel extends Equatable {
     phone: '+20000000000',
     email: 'email@example.com',
     avatarUrl: "asdasd",
+    points: 0,
     addresses: [
       AddressModel(id: 0, title: 'Home', fullAddress: 'Placeholder address'),
     ],
@@ -53,13 +57,22 @@ class ProfileModel extends Equatable {
       name: json['name']?.toString() ?? '',
       phone: json['phone']?.toString() ?? '',
       avatarUrl: json['avatar_url']?.toString() ?? '',
+      points: json['points'] ?? 0,
       email: json['email']?.toString() ?? '',
       addresses: addresses,
     );
   }
 
   @override
-  List<Object?> get props => [id, name, phone, email, avatarUrl, addresses];
+  List<Object?> get props => [
+    id,
+    name,
+    phone,
+    email,
+    avatarUrl,
+    points,
+    addresses,
+  ];
 }
 
 class AddressModel extends Equatable {
@@ -98,7 +111,8 @@ class AddressModel extends Equatable {
       json['area'],
       json['city'],
     ].where((e) => e != null && e.toString().trim().isNotEmpty).join(', ');
-    final full = (json['fullAddress'] ?? json['full_address'])?.toString() ?? '';
+    final full =
+        (json['fullAddress'] ?? json['full_address'])?.toString() ?? '';
     final def = json['isDefault'] ?? json['is_default'];
 
     return AddressModel(

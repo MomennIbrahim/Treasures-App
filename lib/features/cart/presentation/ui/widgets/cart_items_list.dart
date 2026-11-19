@@ -142,6 +142,7 @@ class _CartItemCard extends StatelessWidget {
                                   item.quantity + 1,
                                 )
                               : null,
+                          isLoading: cubit.state.isLoading,
                         ),
                         7.horizontalSpace,
                         Text(
@@ -160,6 +161,7 @@ class _CartItemCard extends StatelessWidget {
                                   item.quantity - 1,
                                 )
                               : null,
+                          isLoading: cubit.state.isLoading,
                         ),
                       ],
                     ),
@@ -252,9 +254,14 @@ class _PackageThumb extends StatelessWidget {
 }
 
 class _ActionButton extends StatelessWidget {
-  const _ActionButton({required this.icon, this.onTap});
+  const _ActionButton({
+    required this.icon,
+    this.onTap,
+    required this.isLoading,
+  });
   final IconData icon;
   final VoidCallback? onTap;
+  final bool isLoading;
 
   @override
   Widget build(BuildContext context) {
@@ -265,7 +272,9 @@ class _ActionButton extends StatelessWidget {
         child: Container(
           padding: paddingSymmetric(6, 3),
           decoration: BoxDecoration(
-            color: AppColors.primary,
+            color: isLoading
+                ? AppColors.neutral500.withAlpha(100)
+                : AppColors.primary,
             shape: BoxShape.circle,
           ),
           child: Icon(icon, color: AppColors.white, size: 14.sp),

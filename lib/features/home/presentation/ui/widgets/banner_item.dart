@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:konoz/core/helper/app_padding.dart';
 import 'package:konoz/core/router/routes.dart';
+import 'package:konoz/core/theme/app_colors.dart';
 import 'package:konoz/core/theme/app_radius.dart';
 import 'package:konoz/core/theme/app_text_style.dart';
 import 'package:konoz/core/widgets/app_image.dart';
@@ -16,17 +17,18 @@ class BannerItem extends StatelessWidget {
   final double height;
   final bool showInfo;
   final BoxFit? boxFit;
+  final bool isLoading;
 
   const BannerItem({
     super.key,
     required this.imagePath,
     required this.title,
-
     required this.buttonLabel,
     required this.onPressed,
     this.height = 170,
     this.showInfo = true,
     this.boxFit,
+    required this.isLoading,
   });
 
   @override
@@ -93,7 +95,9 @@ class BannerItem extends StatelessWidget {
                             child: Container(
                               padding: paddingSymmetric(16, 8),
                               decoration: BoxDecoration(
-                                color: colorScheme.primary,
+                                color: isLoading
+                                    ? AppColors.neutral500.withAlpha(50)
+                                    : colorScheme.primary,
                                 borderRadius: AppRadius.br24,
                               ),
                               child: Text(

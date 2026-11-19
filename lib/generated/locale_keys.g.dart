@@ -84,6 +84,7 @@ abstract class  LocaleKeys {
   static const personal_data_from_camera = 'personal_data.from_camera';
   static const personal_data_image_too_large = 'personal_data.image_too_large';
   static const personal_data_image_pick_failed = 'personal_data.image_pick_failed';
+  static const personal_data_points = 'personal_data.points';
   static const personal_data = 'personal_data';
   static const product_details_longevity = 'product_details.longevity';
   static const product_details_sillage = 'product_details.sillage';
