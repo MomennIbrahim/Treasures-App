@@ -52,6 +52,7 @@ class PackageDetailsModel extends Equatable {
   final String id;
   final String name;
   final String description;
+  final bool inStock;
   final List<String> howToUse;
   final num price;
   final List<String> images;
@@ -61,6 +62,7 @@ class PackageDetailsModel extends Equatable {
     required this.id,
     required this.name,
     required this.description,
+    required this.inStock,
     required this.howToUse,
     required this.price,
     required this.images,
@@ -75,6 +77,7 @@ class PackageDetailsModel extends Equatable {
         'Package description goes here, a couple of lines of text to fill.',
     howToUse: const ['Spray on pulse points.', 'Keep the bottle away.'],
     price: 0,
+    inStock: true,
     images: const [],
     products: List.generate(
       3,
@@ -99,6 +102,8 @@ class PackageDetailsModel extends Equatable {
         .map((e) => PackageProductModel.fromJson(Map<String, dynamic>.from(e)))
         .toList();
 
+    final inStock = j['in_stock'] is bool ? j['in_stock'] : true;
+
     final howToUse =
         (j['how_to_use'] is List ? j['how_to_use'] as List : const [])
             .map((e) => e.toString())
@@ -115,6 +120,7 @@ class PackageDetailsModel extends Equatable {
       id: _str(j['id']),
       name: _str(j['name']),
       description: _str(j['description']),
+      inStock: inStock,
       howToUse: howToUse,
       price: _num(j['price']),
       images: images,
@@ -129,6 +135,7 @@ class PackageDetailsModel extends Equatable {
     id,
     name,
     description,
+    inStock,
     howToUse,
     price,
     images,

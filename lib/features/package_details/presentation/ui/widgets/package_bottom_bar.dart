@@ -53,9 +53,14 @@ class PackageBottomBar extends StatelessWidget {
               break;
           }
         },
-        buildWhen: (p, c) => p.addStatus != c.addStatus,
+        // لازم يتبني تاني لما الباكدج نفسه يتغير، مش بس addStatus
+        buildWhen: (p, c) =>
+            p.addStatus != c.addStatus || p.package != c.package,
         builder: (context, state) {
-          final canTap = enabled && !state.isAdding;
+          // بدون "!" : لو state.package null نرجع للـ package اللي جاي من برا
+          final pkg = state.package ?? package;
+          final inStock = pkg.inStock;
+          final canTap = enabled && inStock && !state.isAdding;
 
           return Container(
             padding: paddingAll(16),
@@ -64,7 +69,7 @@ class PackageBottomBar extends StatelessWidget {
               top: false,
               child: Row(
                 children: [
-                  Text(package.priceLabel, style: AppTextStyles.text16Bold),
+                  Text(pkg.priceLabel, style: AppTextStyles.text16Bold),
                   16.horizontalSpace,
                   Expanded(
                     child: state.isAdding
@@ -76,7 +81,9 @@ class PackageBottomBar extends StatelessWidget {
                                       .read<PackageDetailsCubit>()
                                       .addToCart()
                                 : null,
-                            label: LocaleKeys.general_add_to_cart.tr(),
+                            label: (enabled && !inStock)
+                                ? LocaleKeys.general_out_of_stock.tr()
+                                : LocaleKeys.general_add_to_cart.tr(),
                           ),
                   ),
                 ],

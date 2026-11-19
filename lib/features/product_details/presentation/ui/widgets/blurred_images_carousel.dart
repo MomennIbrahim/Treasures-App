@@ -145,7 +145,7 @@ class _BlurredImagesCarouselState extends State<BlurredImagesCarousel> {
   Widget _buildImage(int i) {
     final image = AppImage.cachedNetwork(
       widget.images[i],
-      fit: BoxFit.cover,
+      fit: BoxFit.contain,
       borderRadius: AppRadius.br16,
     );
     return image;
