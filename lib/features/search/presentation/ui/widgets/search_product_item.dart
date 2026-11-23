@@ -32,6 +32,7 @@ class SearchProductItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     final size = _displaySize;
     final hasDiscount = size?.hasDiscount ?? false;
 
@@ -49,8 +50,9 @@ class SearchProductItem extends StatelessWidget {
             ),
       child: Container(
         decoration: BoxDecoration(
-          borderRadius: AppRadius.br4,
-          color: Colors.white10,
+          borderRadius: AppRadius.br8,
+          color: colorScheme.onSurface.withValues(alpha: 0.02),
+          border: Border.all(color: AppColors.neutral500.withAlpha(40)),
         ),
         // الصورة تاخد طول الكارد اللي بيحدده المحتوى
         child: IntrinsicHeight(
@@ -58,7 +60,7 @@ class SearchProductItem extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               SizedBox(
-                width: 130.w,
+                width: 110.w,
                 child: Stack(
                   children: [
                     Positioned.fill(
@@ -84,7 +86,9 @@ class SearchProductItem extends StatelessWidget {
                           ),
                           child: Text(
                             LocaleKeys.general_sale.tr(),
-                            style: AppTextStyles.text10Bold,
+                            style: AppTextStyles.text10Bold.copyWith(
+                              color: AppColors.white,
+                            ),
                           ),
                         ),
                       ),
