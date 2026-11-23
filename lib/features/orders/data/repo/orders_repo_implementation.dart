@@ -2,7 +2,6 @@ import 'package:dartz/dartz.dart';
 import 'package:konoz/core/error/app_failure.dart';
 import 'package:konoz/core/networking/api_service.dart';
 import 'package:konoz/core/networking/endpoints.dart';
-// نفس الـ import اللي باقي الـ repos
 import 'package:konoz/features/home/data/repo/home_repo_implementation.dart'
     show toFailure;
 import 'package:konoz/features/orders/data/model/order_model.dart';
@@ -20,15 +19,11 @@ class OrdersRepoImplementation implements OrdersRepo {
     try {
       final res = await _api.getData(
         endPoint: EndPoint.orders,
-        query: {
-          if (filter.apiValue != null) 'filter': filter.apiValue,
-        },
+        query: {if (filter.apiValue != null) 'filter': filter.apiValue},
       );
 
       final body = res.data;
-      final rows = body is Map
-          ? body['data']
-          : body; // بيتحمل لو الرد قايمة مباشرة
+      final rows = body is Map ? body['data'] : body;
 
       final orders = (rows is List ? rows : const [])
           .whereType<Map>()
@@ -36,6 +31,17 @@ class OrdersRepoImplementation implements OrdersRepo {
           .toList();
 
       return Right(orders);
+    } catch (e) {
+      return Left(toFailure(e));
+    }
+  }
+
+  /// POST /orders/{id}/cancel (من غير body، والرد رسالة نجاح بس)
+  @override
+  Future<Either<AppFailure, Unit>> cancelOrder(int orderId) async {
+    try {
+      await _api.postData(endPoint: EndPoint.cancelOrder(orderId));
+      return const Right(unit);
     } catch (e) {
       return Left(toFailure(e));
     }

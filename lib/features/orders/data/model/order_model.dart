@@ -9,11 +9,17 @@ enum OrderStatus {
   cancelled;
 
   static OrderStatus from(String? raw) {
+    final value = raw?.trim().toLowerCase();
     for (final s in OrderStatus.values) {
-      if (s.name == raw) return s;
+      if (s.name == value) return s;
     }
     return OrderStatus.pending;
   }
+
+  /// الإلغاء مسموح قبل الشحن بس (بعد كده مرتجعات).
+  /// السيرفر هو المرجع النهائي لو الحالة اتغيرت في الأثناء.
+  bool get canCancel =>
+      this == OrderStatus.pending || this == OrderStatus.confirmed;
 }
 
 class OrderItemModel extends Equatable {
@@ -83,6 +89,16 @@ class OrderModel extends Equatable {
       items: items,
     );
   }
+
+  OrderModel copyWith({OrderStatus? status}) => OrderModel(
+    id: id,
+    status: status ?? this.status,
+    total: total,
+    createdAt: createdAt,
+    items: items,
+  );
+
+  bool get canCancel => status.canCancel;
 
   String get image => items.isEmpty ? '' : items.first.image;
 

@@ -128,6 +128,7 @@ class EndPoint {
   /// GET القائمة (?filter=last_30_days | this_year)
   /// POST إنشاء طلب (address_id, payment_method, coupon)
   static const String orders = '/orders';
+  static String cancelOrder(int orderId) => '/orders/$orderId/cancel';
   static const String devices = '/devices';
 
   /// GET

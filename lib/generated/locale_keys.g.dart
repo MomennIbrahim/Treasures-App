@@ -239,6 +239,12 @@ abstract class  LocaleKeys {
   static const orders_status_shipped = 'orders.status_shipped';
   static const orders_status_delivered = 'orders.status_delivered';
   static const orders_status_cancelled = 'orders.status_cancelled';
+  static const orders_cancel_order = 'orders.cancel_order';
+  static const orders_cancel_order_title = 'orders.cancel_order_title';
+  static const orders_cancel_order_body = 'orders.cancel_order_body';
+  static const orders_cancel_order_keep = 'orders.cancel_order_keep';
+  static const orders_cancel_order_confirm = 'orders.cancel_order_confirm';
+  static const orders_cancelled_success = 'orders.cancelled_success';
   static const orders = 'orders';
   static const order_details_order_details = 'order_details.order_details';
   static const order_details_order_date = 'order_details.order_date';

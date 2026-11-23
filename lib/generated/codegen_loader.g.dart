@@ -280,7 +280,13 @@ class CodegenLoader extends AssetLoader{
     "status_confirmed": "Order confirmed",
     "status_shipped": "Out for delivery",
     "status_delivered": "Delivered",
-    "status_cancelled": "Cancelled"
+    "status_cancelled": "Cancelled",
+    "cancel_order": "Cancel order",
+    "cancel_order_title": "Cancel this order?",
+    "cancel_order_body": "This action can't be undone.",
+    "cancel_order_keep": "Keep order",
+    "cancel_order_confirm": "Yes, cancel",
+    "cancelled_success": "Your order has been cancelled."
   },
   "order_details": {
     "order_details": "Order details",
@@ -572,7 +578,13 @@ static const Map<String,dynamic> _ar = {
     "status_confirmed": "تم تأكيد الطلب",
     "status_shipped": "في الطريق إليك",
     "status_delivered": "تم التوصيل",
-    "status_cancelled": "تم الإلغاء"
+    "status_cancelled": "تم الإلغاء",
+    "cancel_order": "إلغاء الطلب",
+    "cancel_order_title": "إلغاء الطلب؟",
+    "cancel_order_body": "لا يمكن التراجع عن هذا الإجراء.",
+    "cancel_order_keep": "الاحتفاظ بالطلب",
+    "cancel_order_confirm": "نعم، إلغاء",
+    "cancelled_success": "تم إلغاء طلبك."
   },
   "order_details": {
     "order_details": "تفاصيل الطلب",

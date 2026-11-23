@@ -7,4 +7,6 @@ abstract class OrdersRepo {
   Future<Either<AppFailure, List<OrderModel>>> getOrders({
     required OrdersFilter filter,
   });
+
+  Future<Either<AppFailure, Unit>> cancelOrder(int orderId);
 }

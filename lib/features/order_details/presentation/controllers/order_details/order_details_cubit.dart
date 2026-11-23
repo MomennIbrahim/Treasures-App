@@ -1,15 +1,17 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter/material.dart';
 import 'package:konoz/core/cubits/safe_cubit.dart';
 import 'package:konoz/core/error/app_failure.dart';
 import 'package:konoz/features/order_details/data/model/order_details_model.dart';
 import 'package:konoz/features/order_details/data/repo/order_details_repo.dart';
+import 'package:konoz/features/orders/data/repo/orders_repo.dart';
 
 part 'order_details_state.dart';
 
 class OrderDetailsCubit extends SafeCubit<OrderDetailsState> {
   final OrderDetailsRepo _repo;
-  OrderDetailsCubit(this._repo) : super(const OrderDetailsState());
+  final OrdersRepo _ordersRepo;
+  OrderDetailsCubit(this._repo, this._ordersRepo)
+    : super(const OrderDetailsState());
 
   int _orderId = 0;
 
@@ -34,15 +36,36 @@ class OrderDetailsCubit extends SafeCubit<OrderDetailsState> {
     );
   }
 
+  /// إلغاء الأوردر المفتوح. بعد النجاح بنعيد التحميل من السيرفر
+  /// عشان الحالة والـ tracking يتحدثوا.
+  Future<void> cancel() async {
+    final order = state.order;
+    if (state.isCancelling || order == null || !order.canCancel) return;
+
+    emit(state.copyWith(cancelStatus: OrderCancelStatus.loading));
+
+    final res = await _ordersRepo.cancelOrder(order.id);
+    if (isClosed) return;
+
+    await res.fold(
+      (f) async => emit(
+        state.copyWith(
+          cancelStatus: OrderCancelStatus.failure,
+          cancelFailure: f,
+        ),
+      ),
+      (_) async {
+        emit(state.copyWith(cancelStatus: OrderCancelStatus.success));
+        await load(order.id, silent: true);
+      },
+    );
+  }
+
   Future<bool> submitReview(
     OrderDetailsItem item,
     int rating,
     String comment,
   ) async {
-    debugPrint('SUBMIT REVIEW CUBIT CALLED');
-    debugPrint('Product ID: ${item.productId}');
-    debugPrint('Rating: $rating');
-    debugPrint('Comment: $comment');
     if (item.productId.isEmpty) return false;
 
     final res = await _repo.submitReview(

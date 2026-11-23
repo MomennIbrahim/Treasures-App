@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:konoz/core/helper/app_padding.dart';
@@ -9,6 +10,7 @@ import 'package:konoz/core/theme/app_radius.dart';
 import 'package:konoz/core/theme/app_text_style.dart';
 import 'package:konoz/core/widgets/app_image.dart';
 import 'package:konoz/features/orders/data/model/order_model.dart';
+import 'package:konoz/features/orders/presentation/controllers/orders/orders_cubit.dart';
 import 'package:konoz/generated/locale_keys.g.dart';
 
 class OrderCard extends StatelessWidget {
@@ -41,6 +43,13 @@ class OrderCard extends StatelessWidget {
     }
   }
 
+  Future<void> _open(BuildContext context) async {
+    final cubit = context.read<OrdersCubit>();
+    await context.push(Routes.orderDetails, extra: order.id);
+    // رجعنا من التفاصيل: refresh هادي (ممكن الحالة اتغيرت/اتلغى)
+    if (!cubit.isClosed) cubit.getOrders(silent: true);
+  }
+
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
@@ -55,7 +64,7 @@ class OrderCard extends StatelessWidget {
     );
 
     return GestureDetector(
-      onTap: () => context.push(Routes.orderDetails, extra: order.id),
+      onTap: () => _open(context),
       child: Container(
         decoration: BoxDecoration(
           border: Border.all(color: colorScheme.onSurfaceVariant.withAlpha(20)),
@@ -65,8 +74,8 @@ class OrderCard extends StatelessWidget {
           children: [
             if (order.image.isEmpty)
               Container(
-                width: 100,
-                height: 110,
+                width: 100.w,
+                height: 110.h,
                 decoration: BoxDecoration(
                   color: Colors.white10,
                   borderRadius: imageRadius,
@@ -118,9 +127,15 @@ class OrderCard extends StatelessWidget {
                       style: AppTextStyles.text10Regular,
                     ),
                     4.verticalSpace,
-                    Text(
-                      '${order.totalLabel} L.E',
-                      style: AppTextStyles.text12Bold,
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            '${order.totalLabel} EGP',
+                            style: AppTextStyles.text12Bold,
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),

@@ -83,6 +83,8 @@ class TrackingStep extends Equatable {
   final bool done;
 
   const TrackingStep({required this.status, this.at, required this.done});
+  
+  bool get canCancel => status.canCancel;
 
   @override
   List<Object?> get props => [status, at, done];
@@ -249,9 +251,8 @@ class OrderDetailsModel extends Equatable {
     ];
   }
 
- 
-
   bool get isCash => paymentMethod.isEmpty || paymentMethod == 'cod';
+  bool get canCancel => status.canCancel;
 
   @override
   List<Object?> get props => [

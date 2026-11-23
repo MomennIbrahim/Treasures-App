@@ -263,7 +263,13 @@
     "status_confirmed": "تم تأكيد الطلب",
     "status_shipped": "في الطريق إليك",
     "status_delivered": "تم التوصيل",
-    "status_cancelled": "تم الإلغاء"
+    "status_cancelled": "تم الإلغاء",
+    "cancel_order": "إلغاء الطلب",
+    "cancel_order_title": "إلغاء الطلب؟",
+    "cancel_order_body": "لا يمكن التراجع عن هذا الإجراء.",
+    "cancel_order_keep": "الاحتفاظ بالطلب",
+    "cancel_order_confirm": "نعم، إلغاء",
+    "cancelled_success": "تم إلغاء طلبك."
   },
 
   "order_details": {

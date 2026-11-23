@@ -140,7 +140,6 @@ Future<void> setupGetIt() async {
 
   getIt.registerLazySingleton<FaqRepo>(() => FaqRepoImpl(getIt<Dio>()));
 
-
   //ــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــ
 
   /// All Cubits ====>
@@ -197,7 +196,9 @@ Future<void> setupGetIt() async {
   getIt.registerFactory<OrdersCubit>(() => OrdersCubit(getIt()));
 
   // Order Details Cubit
-  getIt.registerFactory<OrderDetailsCubit>(() => OrderDetailsCubit(getIt()));
+  getIt.registerFactory<OrderDetailsCubit>(
+    () => OrderDetailsCubit(getIt(), getIt()),
+  );
 
   // Package Details Cubit
   getIt.registerFactory<PackageDetailsCubit>(

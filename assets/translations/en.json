@@ -265,8 +265,15 @@
     "status_confirmed": "Order confirmed",
     "status_shipped": "Out for delivery",
     "status_delivered": "Delivered",
-    "status_cancelled": "Cancelled"
+    "status_cancelled": "Cancelled",
+    "cancel_order": "Cancel order",
+    "cancel_order_title": "Cancel this order?",
+    "cancel_order_body": "This action can't be undone.",
+    "cancel_order_keep": "Keep order",
+    "cancel_order_confirm": "Yes, cancel",
+    "cancelled_success": "Your order has been cancelled."
   },
+  
   "order_details": {
     "order_details": "Order details",
     "order_date": "Order date",

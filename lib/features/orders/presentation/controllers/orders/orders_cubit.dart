@@ -32,12 +32,10 @@ class OrdersCubit extends SafeCubit<OrdersState> {
     if (id != _requestId || isClosed) return;
 
     res.fold(
-      (failure) => emit(
-        state.copyWith(status: OrdersStatus.failure, failure: failure),
-      ),
-      (orders) => emit(
-        state.copyWith(status: OrdersStatus.success, orders: orders),
-      ),
+      (failure) =>
+          emit(state.copyWith(status: OrdersStatus.failure, failure: failure)),
+      (orders) =>
+          emit(state.copyWith(status: OrdersStatus.success, orders: orders)),
     );
   }
 

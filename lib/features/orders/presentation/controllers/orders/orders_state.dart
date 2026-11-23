@@ -22,8 +22,9 @@ class OrdersState extends Equatable {
   bool get isFailure => status == OrdersStatus.failure;
 
   /// الأوردرات بعد السيرش
-  List<OrderModel> get visibleOrders =>
-      query.trim().isEmpty ? orders : orders.where((o) => o.matches(query)).toList();
+  List<OrderModel> get visibleOrders => query.trim().isEmpty
+      ? orders
+      : orders.where((o) => o.matches(query)).toList();
 
   // failure بيتصفّر عن قصد
   OrdersState copyWith({
