@@ -41,4 +41,21 @@ class OrderDetailsRepoImplementation implements OrderDetailsRepo {
       return Left(toFailure(e));
     }
   }
+
+  @override
+  Future<Either<AppFailure, Unit>> requestRefund({
+    required int orderId,
+    required int amount,
+    required String reason,
+  }) async {
+    try {
+      await _apiService.postData(
+        endPoint: EndPoint.orderRefunds(orderId),
+        data: {'amount': amount, 'reason': reason},
+      );
+      return const Right(unit);
+    } catch (e) {
+      return Left(toFailure(e));
+    }
+  }
 }

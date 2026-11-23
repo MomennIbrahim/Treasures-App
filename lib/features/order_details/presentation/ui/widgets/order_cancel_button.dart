@@ -15,24 +15,28 @@ class OrderCancelButton extends StatelessWidget {
     return BlocSelector<OrderDetailsCubit, OrderDetailsState, bool>(
       selector: (s) => s.isCancelling,
       builder: (context, busy) => Flexible(
-        child: AppButton(
-          height: 36,
-          width: 100,
-          label: LocaleKeys.orders_cancel_order.tr(),
-          buttonColor: AppColors.error700.withAlpha(180),
-          onPressed: busy
-              ? null
-              : () {
-                  final cubit = context.read<OrderDetailsCubit>();
-                  showBlurredConfirmationDialog(
-                    context: context,
-                    title: LocaleKeys.orders_cancel_order_title,
-                    message: LocaleKeys.orders_cancel_order_body,
-                    confirmText: LocaleKeys.orders_cancel_order_confirm.tr(),
-                    secondaryText: LocaleKeys.orders_cancel_order_keep.tr(),
-                    onConfirm: cubit.cancel,
-                  );
-                },
+        flex: 2,
+        child: Align(
+          alignment: AlignmentGeometry.topEnd,
+          child: AppButton(
+            height: 36,
+            width: 100,
+            label: LocaleKeys.orders_cancel_order.tr(),
+            buttonColor: AppColors.error700.withAlpha(180),
+            onPressed: busy
+                ? null
+                : () {
+                    final cubit = context.read<OrderDetailsCubit>();
+                    showBlurredConfirmationDialog(
+                      context: context,
+                      title: LocaleKeys.orders_cancel_order_title,
+                      message: LocaleKeys.orders_cancel_order_body,
+                      confirmText: LocaleKeys.orders_cancel_order_confirm.tr(),
+                      secondaryText: LocaleKeys.orders_cancel_order_keep.tr(),
+                      onConfirm: cubit.cancel,
+                    );
+                  },
+          ),
         ),
       ),
     );

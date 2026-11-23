@@ -299,6 +299,24 @@ class CodegenLoader extends AssetLoader{
     "write_review_optional": "Write your review (optional)",
     "submit_review": "Submit review"
   },
+  "refund": {
+    "title": "Refund requests",
+    "request": "Request a refund",
+    "sheet_title": "Request a refund",
+    "remaining": "Refundable amount: {} L.E",
+    "amount_label": "Refund amount (L.E)",
+    "amount_required": "Enter the amount",
+    "amount_invalid": "Amount must be between 1 and {}",
+    "reason_label": "Reason for the refund",
+    "reason_required": "Please write the reason",
+    "submit": "Submit request",
+    "submitted": "Your refund request was sent.",
+    "status_requested": "Under review",
+    "status_approved": "Approved",
+    "status_rejected": "Rejected",
+    "status_refunded": "Refunded",
+    "note_label": "Note from support"
+  },
   "spin": {
     "title": "Spin To Win",
     "spin_button": "Spin the Wheel",
@@ -596,6 +614,24 @@ static const Map<String,dynamic> _ar = {
     "could_not_submit_try_again": "تعذّر إرسال التقييم، حاول مرة أخرى",
     "write_review_optional": "اكتب رأيك في المنتج (اختياري)",
     "submit_review": "إرسال التقييم"
+  },
+  "refund": {
+    "title": "طلبات الإرجاع",
+    "request": "طلب إرجاع",
+    "sheet_title": "طلب إرجاع",
+    "remaining": "المبلغ القابل للإرجاع: {} ج.م",
+    "amount_label": "مبلغ الإرجاع (ج.م)",
+    "amount_required": "أدخل المبلغ",
+    "amount_invalid": "المبلغ لازم يكون بين 1 و {}",
+    "reason_label": "سبب الإرجاع",
+    "reason_required": "من فضلك اكتب السبب",
+    "submit": "إرسال الطلب",
+    "submitted": "تم إرسال طلب الإرجاع.",
+    "status_requested": "قيد المراجعة",
+    "status_approved": "تم القبول",
+    "status_rejected": "مرفوض",
+    "status_refunded": "تم الاسترداد",
+    "note_label": "ملاحظة من الدعم"
   },
   "spin": {
     "title": "لف واكسب",

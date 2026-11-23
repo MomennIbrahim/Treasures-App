@@ -129,6 +129,7 @@ class EndPoint {
   /// POST إنشاء طلب (address_id, payment_method, coupon)
   static const String orders = '/orders';
   static String cancelOrder(int orderId) => '/orders/$orderId/cancel';
+  static String orderRefunds(int orderId) => '/orders/$orderId/refunds';
   static const String devices = '/devices';
 
   /// GET

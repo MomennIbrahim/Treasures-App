@@ -284,16 +284,35 @@
     "submit_review": "إرسال التقييم"
   },
 
-   "spin": {
-  "title": "لف واكسب",
-  "spin_button": "لف العجلة",
-  "spinning": "بتلف...",
-  "last_result": "آخر نتيجة",
-  "result_title": "🎉 النتيجة",
-  "you_won": "مبروك! كسبت: {}",
-  "better_luck": "حظ أوفر المرة الجاية!",
-  "ok": "تمام",
-  "free_spin": "لفة مجانية",
-  "event_banner": "إيفنت لف واكسب بدأ! لف العجلة واكسب جوايز مفاجأة، متفوتش الفرصة!"
- }
+  "refund": {
+    "title": "طلبات الإرجاع",
+    "request": "طلب إرجاع",
+    "sheet_title": "طلب إرجاع",
+    "remaining": "المبلغ القابل للإرجاع: {} ج.م",
+    "amount_label": "مبلغ الإرجاع (ج.م)",
+    "amount_required": "أدخل المبلغ",
+    "amount_invalid": "المبلغ لازم يكون بين 1 و {}",
+    "reason_label": "سبب الإرجاع",
+    "reason_required": "من فضلك اكتب السبب",
+    "submit": "إرسال الطلب",
+    "submitted": "تم إرسال طلب الإرجاع.",
+    "status_requested": "قيد المراجعة",
+    "status_approved": "تم القبول",
+    "status_rejected": "مرفوض",
+    "status_refunded": "تم الاسترداد",
+    "note_label": "ملاحظة من الدعم"
+  },
+
+  "spin": {
+    "title": "لف واكسب",
+    "spin_button": "لف العجلة",
+    "spinning": "بتلف...",
+    "last_result": "آخر نتيجة",
+    "result_title": "🎉 النتيجة",
+    "you_won": "مبروك! كسبت: {}",
+    "better_luck": "حظ أوفر المرة الجاية!",
+    "ok": "تمام",
+    "free_spin": "لفة مجانية",
+    "event_banner": "إيفنت لف واكسب بدأ! لف العجلة واكسب جوايز مفاجأة، متفوتش الفرصة!"
+  }
 }

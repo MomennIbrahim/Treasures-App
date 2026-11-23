@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:konoz/core/helper/date_format_helper.dart';
+import 'package:konoz/features/order_details/data/model/refund_model.dart';
 import 'package:konoz/features/orders/data/model/order_model.dart';
 
 num _num(dynamic v) => v is num ? v : (num.tryParse('${v ?? ''}') ?? 0);
@@ -83,8 +84,6 @@ class TrackingStep extends Equatable {
   final bool done;
 
   const TrackingStep({required this.status, this.at, required this.done});
-  
-  bool get canCancel => status.canCancel;
 
   @override
   List<Object?> get props => [status, at, done];
@@ -116,6 +115,7 @@ class OrderDetailsModel extends Equatable {
   final List<OrderDetailsItem> items;
   final OrderAmounts amounts;
   final List<TrackingStep> tracking;
+  final OrderRefundInfo refund;
 
   const OrderDetailsModel({
     required this.id,
@@ -126,7 +126,9 @@ class OrderDetailsModel extends Equatable {
     required this.items,
     required this.amounts,
     required this.tracking,
+    this.refund = const OrderRefundInfo(),
   });
+
   String get dateLabel => DateFormatHelper.dayMonth(createdAt);
 
   /// للـ skeleton وقت التحميل فقط
@@ -200,6 +202,7 @@ class OrderDetailsModel extends Equatable {
       items: items,
       amounts: amounts,
       tracking: _parseTracking(j['tracking'], status, createdAt),
+      refund: OrderRefundInfo.fromJson(_map(j['refund'])),
     );
   }
 
@@ -252,6 +255,7 @@ class OrderDetailsModel extends Equatable {
   }
 
   bool get isCash => paymentMethod.isEmpty || paymentMethod == 'cod';
+
   bool get canCancel => status.canCancel;
 
   @override
@@ -264,5 +268,6 @@ class OrderDetailsModel extends Equatable {
     items,
     amounts,
     tracking,
+    refund,
   ];
 }

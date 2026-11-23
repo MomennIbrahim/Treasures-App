@@ -10,4 +10,11 @@ abstract class OrderDetailsRepo {
     required int rating,
     required String comment,
   });
+
+  /// POST /orders/{id}/refunds  { amount, reason }
+  Future<Either<AppFailure, Unit>> requestRefund({
+    required int orderId,
+    required int amount,
+    required String reason,
+  });
 }

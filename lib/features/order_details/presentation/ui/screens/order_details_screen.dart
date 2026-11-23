@@ -14,6 +14,7 @@ import 'package:konoz/features/order_details/presentation/ui/widgets/order_detai
 import 'package:konoz/features/order_details/presentation/ui/widgets/order_header_card.dart';
 import 'package:konoz/features/order_details/presentation/ui/widgets/order_items_section.dart';
 import 'package:konoz/features/order_details/presentation/ui/widgets/order_payment_section.dart';
+import 'package:konoz/features/order_details/presentation/ui/widgets/order_refund_section.dart';
 import 'package:konoz/features/order_details/presentation/ui/widgets/order_tracking_section.dart';
 import 'package:konoz/generated/locale_keys.g.dart';
 import 'package:skeletonizer/skeletonizer.dart';
@@ -26,31 +27,61 @@ class OrderDetailsScreen extends StatelessWidget {
     return SafeArea(
       top: false,
       child: Scaffold(
-        body: BlocListener<OrderDetailsCubit, OrderDetailsState>(
-          listenWhen: (p, c) => p.cancelStatus != c.cancelStatus,
-          listener: (context, state) {
-            switch (state.cancelStatus) {
-              case OrderCancelStatus.loading:
-                showLoadingDialog(context);
-              case OrderCancelStatus.success:
-                hideLoadingDialog(context);
-                AppToast.show(
-                  context,
-                  message: LocaleKeys.orders_cancelled_success.tr(),
-                );
-              case OrderCancelStatus.failure:
-                hideLoadingDialog(context);
-                AppToast.show(
-                  context,
-                  message:
-                      state.cancelFailure?.message ??
-                      LocaleKeys.errors_errors_unexpected.tr(),
-                  type: AppToastType.error,
-                );
-              case OrderCancelStatus.idle:
-                break;
-            }
-          },
+        body: MultiBlocListener(
+          listeners: [
+            BlocListener<OrderDetailsCubit, OrderDetailsState>(
+              listenWhen: (p, c) => p.cancelStatus != c.cancelStatus,
+              listener: (context, state) {
+                switch (state.cancelStatus) {
+                  case OrderCancelStatus.loading:
+                    showLoadingDialog(context);
+                  case OrderCancelStatus.success:
+                    hideLoadingDialog(context);
+                    AppToast.show(
+                      context,
+                      message: LocaleKeys.orders_cancelled_success.tr(),
+                    );
+                  case OrderCancelStatus.failure:
+                    hideLoadingDialog(context);
+                    AppToast.show(
+                      context,
+                      message:
+                          state.cancelFailure?.message ??
+                          LocaleKeys.errors_errors_unexpected.tr(),
+                      type: AppToastType.error,
+                    );
+                  case OrderCancelStatus.idle:
+                    break;
+                }
+              },
+            ),
+            BlocListener<OrderDetailsCubit, OrderDetailsState>(
+              listenWhen: (p, c) => p.refundStatus != c.refundStatus,
+              listener: (context, state) {
+                switch (state.refundStatus) {
+                  case OrderRefundStatus.loading:
+                    showLoadingDialog(context);
+                  case OrderRefundStatus.success:
+                    hideLoadingDialog(context);
+                    AppToast.show(
+                      context,
+                      message: LocaleKeys.refund_submitted.tr(),
+                    );
+                  case OrderRefundStatus.failure:
+                    hideLoadingDialog(context);
+                    AppToast.show(
+                      context,
+                      message:
+                          state.refundFailure?.message ??
+                          LocaleKeys.errors_errors_unexpected.tr(),
+                      type: AppToastType.error,
+                    );
+                  case OrderRefundStatus.idle:
+                    break;
+                }
+              },
+            ),
+          ],
           child: BlocBuilder<OrderDetailsCubit, OrderDetailsState>(
             builder: (context, state) {
               if (state.isFailure && state.order == null) {
@@ -76,8 +107,13 @@ class OrderDetailsScreen extends StatelessWidget {
                     children: [
                       OrderDetailsBar(
                         canCancel: order.canCancel,
+                        canRefund: order.refund.canRequest,
                         loading: loading,
                       ),
+                      if (!loading && order.refund.items.isNotEmpty) ...[
+                        16.verticalSpace,
+                        OrderRefundSection(refund: order.refund),
+                      ],
                       16.verticalSpace,
                       OrderHeaderCard(order: order),
                       16.verticalSpace,

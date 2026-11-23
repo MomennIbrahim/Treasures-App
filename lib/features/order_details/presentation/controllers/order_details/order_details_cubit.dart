@@ -36,8 +36,7 @@ class OrderDetailsCubit extends SafeCubit<OrderDetailsState> {
     );
   }
 
-  /// إلغاء الأوردر المفتوح. بعد النجاح بنعيد التحميل من السيرفر
-  /// عشان الحالة والـ tracking يتحدثوا.
+  /// إلغاء الأوردر (قبل الشحن). بعد النجاح بنعيد التحميل من السيرفر.
   Future<void> cancel() async {
     final order = state.order;
     if (state.isCancelling || order == null || !order.canCancel) return;
@@ -56,6 +55,38 @@ class OrderDetailsCubit extends SafeCubit<OrderDetailsState> {
       ),
       (_) async {
         emit(state.copyWith(cancelStatus: OrderCancelStatus.success));
+        await load(order.id, silent: true);
+      },
+    );
+  }
+
+  /// طلب إرجاع (بعد التسليم). بعد النجاح بنعيد التحميل عشان يظهر الطلب
+  /// في كارت المرتجعات ويتقفل الزرار (`refund.can_request` بتبقى false).
+  Future<void> requestRefund({
+    required int amount,
+    required String reason,
+  }) async {
+    final order = state.order;
+    if (state.isRefunding || order == null || !order.refund.canRequest) return;
+
+    emit(state.copyWith(refundStatus: OrderRefundStatus.loading));
+
+    final res = await _repo.requestRefund(
+      orderId: order.id,
+      amount: amount,
+      reason: reason.trim(),
+    );
+    if (isClosed) return;
+
+    await res.fold(
+      (f) async => emit(
+        state.copyWith(
+          refundStatus: OrderRefundStatus.failure,
+          refundFailure: f,
+        ),
+      ),
+      (_) async {
+        emit(state.copyWith(refundStatus: OrderRefundStatus.success));
         await load(order.id, silent: true);
       },
     );
