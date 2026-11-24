@@ -12,7 +12,13 @@ class CustomBackIcon extends StatelessWidget {
     return Align(
       alignment: AlignmentDirectional.centerStart,
       child: InkWell(
-        onTap: () => context.pop(),
+        onTap: () {
+          if (context.canPop()) {
+            context.pop();
+          } else {
+            context.go('/home');
+          }
+        },
         child: Icon(Icons.arrow_back, color: color ?? colorScheme.onSurface),
       ),
     );

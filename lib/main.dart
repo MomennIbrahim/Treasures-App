@@ -22,7 +22,10 @@ Future<void> firebaseBackgroundHandler(RemoteMessage message) async {
 }
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+  final binding = WidgetsFlutterBinding.ensureInitialized();
+  // iOS delivers cold-start links after the first rendered frame. Wait until
+  // MaterialApp's router is mounted, including localization initialization.
+  binding.deferFirstFrame();
   await ScreenUtil.ensureScreenSize();
 
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);

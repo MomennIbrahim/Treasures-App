@@ -10,8 +10,15 @@ import 'package:konoz/features/layout/presentation/controller/layout_cubit.dart'
 import 'package:konoz/features/profile/presentation/controllers/profile/profile_cubit.dart';
 import 'package:konoz/features/profile/presentation/ui/widgets/app_router.dart';
 
-class TreasuresApp extends StatelessWidget {
+class TreasuresApp extends StatefulWidget {
   const TreasuresApp({super.key});
+
+  @override
+  State<TreasuresApp> createState() => _TreasuresAppState();
+}
+
+class _TreasuresAppState extends State<TreasuresApp> {
+  bool _firstFrameScheduled = false;
 
   @override
   Widget build(BuildContext context) {
@@ -32,6 +39,15 @@ class TreasuresApp extends StatelessWidget {
               AppConstance.currentLanguage = context.locale.languageCode;
 
               return MaterialApp.router(
+                builder: (context, child) {
+                  if (!_firstFrameScheduled) {
+                    _firstFrameScheduled = true;
+                    WidgetsBinding.instance.addPostFrameCallback((_) {
+                      WidgetsBinding.instance.allowFirstFrame();
+                    });
+                  }
+                  return child!;
+                },
                 debugShowCheckedModeBanner: false,
                 routerConfig: AppRouter.router,
                 locale: context.locale,
