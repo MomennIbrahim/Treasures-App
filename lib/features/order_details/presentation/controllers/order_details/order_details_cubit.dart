@@ -2,6 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:konoz/core/cubits/safe_cubit.dart';
 import 'package:konoz/core/error/app_failure.dart';
 import 'package:konoz/features/order_details/data/model/order_details_model.dart';
+import 'package:konoz/features/order_details/data/model/refund_model.dart';
 import 'package:konoz/features/order_details/data/repo/order_details_repo.dart';
 import 'package:konoz/features/orders/data/repo/orders_repo.dart';
 
@@ -60,21 +61,22 @@ class OrderDetailsCubit extends SafeCubit<OrderDetailsState> {
     );
   }
 
-  /// طلب إرجاع (بعد التسليم). بعد النجاح بنعيد التحميل عشان يظهر الطلب
-  /// في كارت المرتجعات ويتقفل الزرار (`refund.can_request` بتبقى false).
+  /// طلب إرجاع بالمنتجات (بعد التسليم). بعد النجاح بنعيد التحميل
+  /// عشان يظهر الكارت وتتحدث الكميات المتاحة.
   Future<void> requestRefund({
-    required int amount,
     required String reason,
+    required List<RefundItemSelection> items,
   }) async {
     final order = state.order;
-    if (state.isRefunding || order == null || !order.refund.canRequest) return;
+    if (state.isRefunding || order == null || !order.canRequestRefund) return;
+    if (items.isEmpty) return;
 
     emit(state.copyWith(refundStatus: OrderRefundStatus.loading));
 
     final res = await _repo.requestRefund(
       orderId: order.id,
-      amount: amount,
       reason: reason.trim(),
+      items: items,
     );
     if (isClosed) return;
 

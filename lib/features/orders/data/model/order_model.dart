@@ -1,5 +1,6 @@
 // features/orders/data/model/order_model.dart
 import 'package:equatable/equatable.dart';
+import 'package:konoz/features/order_details/data/model/refund_model.dart';
 
 enum OrderStatus {
   pending,
@@ -52,12 +53,17 @@ class OrderModel extends Equatable {
   final DateTime createdAt;
   final List<OrderItemModel> items;
 
+  /// آخر طلب إرجاع على الأوردر (null = مفيش، والبادج بيتخفى).
+  /// حالة التوصيل بتفضل في [status] (Delivered ما بيتبدلش).
+  final OrderRefundSummary? refund;
+
   const OrderModel({
     required this.id,
     required this.status,
     required this.total,
     required this.createdAt,
     required this.items,
+    this.refund,
   });
 
   // للـ skeleton وقت التحميل فقط
@@ -79,6 +85,8 @@ class OrderModel extends Equatable {
         .map((e) => OrderItemModel.fromJson(Map<String, dynamic>.from(e)))
         .toList();
 
+    final refundJson = json['refund'];
+
     return OrderModel(
       id: int.tryParse(json['id'].toString()) ?? 0,
       status: OrderStatus.from(json['status']?.toString()),
@@ -87,6 +95,9 @@ class OrderModel extends Equatable {
           DateTime.tryParse(json['created_at']?.toString() ?? '')?.toLocal() ??
           DateTime.now(),
       items: items,
+      refund: refundJson is Map
+          ? OrderRefundSummary.fromJson(Map<String, dynamic>.from(refundJson))
+          : null,
     );
   }
 
@@ -96,6 +107,7 @@ class OrderModel extends Equatable {
     total: total,
     createdAt: createdAt,
     items: items,
+    refund: refund,
   );
 
   bool get canCancel => status.canCancel;
@@ -117,5 +129,5 @@ class OrderModel extends Equatable {
   }
 
   @override
-  List<Object?> get props => [id, status, total, createdAt, items];
+  List<Object?> get props => [id, status, total, createdAt, items, refund];
 }

@@ -5,7 +5,7 @@ import 'package:konoz/generated/locale_keys.g.dart';
 
 /// لو عندك formatMoney في core استخدمها بدل دي
 String orderMoney(num n) =>
-    '${n % 1 == 0 ? n.toInt() : n.toStringAsFixed(2)} L.E';
+    '${n % 1 == 0 ? n.toInt() : n.toStringAsFixed(2)} EGP';
 
 String orderStatusText(OrderStatus s) => switch (s) {
   OrderStatus.pending => LocaleKeys.orders_status_pending.tr(),

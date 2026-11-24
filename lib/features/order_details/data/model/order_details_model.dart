@@ -9,20 +9,29 @@ Map<String, dynamic> _map(dynamic v) =>
     v is Map ? Map<String, dynamic>.from(v) : <String, dynamic>{};
 
 class OrderDetailsItem extends Equatable {
+  /// id البند في الأوردر (اللي بيتبعت في طلب الإرجاع بالمنتجات)
+  final int id;
   final String productId;
   final String name;
+  final String size;
   final String image;
   final int quantity;
   final num unitPrice; // 0 لو الـ API مش بيرجّعه
   final num total;
 
+  /// الكمية المتاحة للإرجاع (0 = مش بيظهر في اختيار المنتجات)
+  final int refundableQuantity;
+
   const OrderDetailsItem({
+    this.id = 0,
     this.productId = '',
     required this.name,
+    this.size = '',
     required this.image,
     required this.quantity,
     required this.unitPrice,
     required this.total,
+    this.refundableQuantity = 0,
   });
 
   factory OrderDetailsItem.fromJson(Map<String, dynamic> j) {
@@ -30,23 +39,29 @@ class OrderDetailsItem extends Equatable {
     final unit = _num(j['unit_price'] ?? j['price']);
     final total = j['total'] != null ? _num(j['total']) : unit * qty;
     return OrderDetailsItem(
+      id: int.tryParse(_str(j['id'])) ?? 0,
       productId: _str(j['product_id'] ?? j['productId']),
       name: _str(j['product_name'] ?? j['name']),
+      size: _str(j['size']),
       image: _str(j['image']),
       quantity: qty,
       unitPrice: unit,
       total: total,
+      refundableQuantity: int.tryParse(_str(j['refundable_quantity'])) ?? 0,
     );
   }
 
   @override
   List<Object?> get props => [
+    id,
     productId,
     name,
+    size,
     image,
     quantity,
     unitPrice,
     total,
+    refundableQuantity,
   ];
 }
 
@@ -257,6 +272,12 @@ class OrderDetailsModel extends Equatable {
   bool get isCash => paymentMethod.isEmpty || paymentMethod == 'cod';
 
   bool get canCancel => status.canCancel;
+
+  /// الإرجاع بالمنتجات بس: لازم السيرفر يسمح (`can_request`) وفيه بند
+  /// فيه كمية متاحة. لو الباقي بس شحن (من غير منتجات متاحة) الزرار بيتخفى.
+  bool get canRequestRefund =>
+      refund.canRequest &&
+      items.any((i) => i.id != 0 && i.refundableQuantity > 0);
 
   @override
   List<Object?> get props => [

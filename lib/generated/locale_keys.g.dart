@@ -260,6 +260,12 @@ abstract class  LocaleKeys {
   static const refund_request = 'refund.request';
   static const refund_sheet_title = 'refund.sheet_title';
   static const refund_remaining = 'refund.remaining';
+  static const refund_mode_amount = 'refund.mode_amount';
+  static const refund_mode_items = 'refund.mode_items';
+  static const refund_pick_items = 'refund.pick_items';
+  static const refund_estimated = 'refund.estimated';
+  static const refund_estimate_exceeds = 'refund.estimate_exceeds';
+  static const refund_select_one = 'refund.select_one';
   static const refund_amount_label = 'refund.amount_label';
   static const refund_amount_required = 'refund.amount_required';
   static const refund_amount_invalid = 'refund.amount_invalid';
@@ -267,6 +273,8 @@ abstract class  LocaleKeys {
   static const refund_reason_required = 'refund.reason_required';
   static const refund_submit = 'refund.submit';
   static const refund_submitted = 'refund.submitted';
+  static const refund_scope_order = 'refund.scope_order';
+  static const refund_badge = 'refund.badge';
   static const refund_status_requested = 'refund.status_requested';
   static const refund_status_approved = 'refund.status_approved';
   static const refund_status_rejected = 'refund.status_rejected';
