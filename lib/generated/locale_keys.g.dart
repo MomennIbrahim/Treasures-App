@@ -18,6 +18,7 @@ abstract class  LocaleKeys {
   static const general_hide = 'general.hide';
   static const general_not_available = 'general.not_available';
   static const general_sale = 'general.sale';
+  static const general_only_few_left = 'general.only_few_left';
   static const general = 'general';
   static const layout_home = 'layout.home';
   static const layout_collections = 'layout.collections';

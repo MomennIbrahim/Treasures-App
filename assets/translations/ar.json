@@ -14,7 +14,8 @@
         "cancel" : "الغاء",
         "hide" : "اغلق",
         "not_available" : "غير متاح الان",
-        "sale" : "خصم"
+        "sale" : "خصم",
+        "only_few_left": "متبقي قطع قليلة!"
     },
      
     "layout": {

@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:konoz/core/cubits/safe_cubit.dart';
 import 'package:konoz/core/error/app_failure.dart';
+import 'package:konoz/core/pagination/paged_list.dart';
 import 'package:konoz/core/shared_model.dart/product_item_model.dart';
 import 'package:konoz/features/collection_products/data/repo/collection_products_repo.dart';
 
@@ -10,7 +11,8 @@ class CollectionProductsCubit extends SafeCubit<CollectionProductsState> {
   final CollectionProductsRepo _repo;
   CollectionProductsCubit(this._repo) : super(const CollectionProductsState());
 
-  final Map<String, List<ProductItemModel>> _cache = {};
+  /// كاش لكل كولكشن بصفحاته اللي اتحمّلت (الرجوع لتاب زاره قبل كده فوري)
+  final Map<String, PagedList<ProductItemModel>> _cache = {};
   int _requestId = 0;
 
   /// id = '' (فاضي) يعني All. غير كده هو id المجموعة النصي زي "oud".
@@ -21,7 +23,7 @@ class CollectionProductsCubit extends SafeCubit<CollectionProductsState> {
       return;
     }
 
-    final reqId = ++_requestId; // أي رد قديم يتجاهل
+    final reqId = ++_requestId; // أي رد قديم (حتى loadMore) يتجاهل
 
     final cached = _cache[id];
     if (!force && cached != null) {
@@ -29,7 +31,7 @@ class CollectionProductsCubit extends SafeCubit<CollectionProductsState> {
         state.copyWith(
           selectedCollectionId: id,
           status: CollectionProductsStatus.success,
-          products: cached,
+          list: cached,
         ),
       );
       return;
@@ -39,7 +41,7 @@ class CollectionProductsCubit extends SafeCubit<CollectionProductsState> {
       state.copyWith(
         selectedCollectionId: id,
         status: CollectionProductsStatus.loading,
-        products: const [],
+        list: const PagedList(),
       ),
     );
 
@@ -52,14 +54,41 @@ class CollectionProductsCubit extends SafeCubit<CollectionProductsState> {
       (f) => emit(
         state.copyWith(status: CollectionProductsStatus.failure, failure: f),
       ),
-      (list) {
+      (page) {
+        final list = const PagedList<ProductItemModel>().first(page);
         _cache[id] = list;
         emit(
-          state.copyWith(
-            status: CollectionProductsStatus.success,
-            products: list,
-          ),
+          state.copyWith(status: CollectionProductsStatus.success, list: list),
         );
+      },
+    );
+  }
+
+  /// الصفحة التالية. بتتنادى أوتوماتيك من الـ scroll، فلازم تتحمي من التكرار.
+  /// [retry] = true لما اليوزر يدوس "حاول تاني" بعد فشل صفحة.
+  Future<void> loadMore({bool retry = false}) async {
+    final list = state.list;
+    if (!state.isSuccess || list.isLoadingMore || !list.hasMore) return;
+    // بعد فشل صفحة مبنكرّرش لوحدنا مع كل scroll، اليوزر هو اللي يعيد
+    if (list.loadMoreFailure != null && !retry) return;
+
+    final id = state.selectedCollectionId;
+    final reqId = _requestId; // لو التاب اتغير أثناء التحميل نتجاهل الرد
+
+    emit(state.copyWith(list: list.loadingMore()));
+
+    final res = await _repo.getCollectionProducts(
+      collectionId: id.isEmpty ? null : id,
+      page: list.nextPage,
+    );
+    if (reqId != _requestId || isClosed) return;
+
+    res.fold(
+      (f) => emit(state.copyWith(list: state.list.loadMoreFailed(f))),
+      (page) {
+        final updated = state.list.appended(page);
+        _cache[id] = updated;
+        emit(state.copyWith(list: updated));
       },
     );
   }

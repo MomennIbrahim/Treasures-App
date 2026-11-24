@@ -7,6 +7,7 @@ import 'package:konoz/core/helper/app_padding.dart';
 import 'package:konoz/core/shared_model.dart/product_item_model.dart';
 import 'package:konoz/core/theme/app_shimmer.dart';
 import 'package:konoz/core/theme/app_text_style.dart';
+import 'package:konoz/core/widgets/app_loading.dart';
 import 'package:konoz/features/collection_products/presentation/controllers/collection_products/collection_products_cubit.dart';
 import 'package:konoz/features/collection_products/presentation/ui/widgets/collection_product_item.dart';
 import 'package:konoz/generated/locale_keys.g.dart';
@@ -60,19 +61,35 @@ class CollectionProductsList extends StatelessWidget {
           );
         }
 
+        // سطر زيادة في آخر القايمة: loading للصفحة التالية، أو فشلها + إعادة
+        final list = state.list;
+        final showFooter =
+            !isLoading && (list.isLoadingMore || list.loadMoreFailure != null);
+
         return SliverPadding(
           padding: paddingAll(16),
           sliver: Skeletonizer.sliver(
             effect: AppShimmer.effect(context),
             enabled: isLoading,
             child: SliverList.separated(
-              itemCount: products.length,
+              itemCount: products.length + (showFooter ? 1 : 0),
               separatorBuilder: (_, _) => 16.verticalSpace,
               itemBuilder: (context, index) {
+                if (index >= products.length) {
+                  return _Footer(
+                    isLoading: list.isLoadingMore,
+                    message: list.loadMoreFailure?.getAllError(),
+                    onRetry: () => context
+                        .read<CollectionProductsCubit>()
+                        .loadMore(retry: true),
+                  );
+                }
+
                 return ZoomIn(
                   // الـ key بيخلي الأنيميشن يتعاد عند تغيير التاب
                   key: ValueKey('${state.selectedCollectionId}-$index'),
-                  delay: Duration(milliseconds: 25 * index),
+                  // الدلاي على أول صفحة بس، عشان صفحات التحميل المتأخرة متستناش
+                  delay: Duration(milliseconds: 25 * (index % 10)),
                   child: CollectionProductItem(
                     product: products[index],
                     isLoading: isLoading,
@@ -83,6 +100,42 @@ class CollectionProductsList extends StatelessWidget {
           ),
         );
       },
+    );
+  }
+}
+
+class _Footer extends StatelessWidget {
+  final bool isLoading;
+  final String? message;
+  final VoidCallback onRetry;
+
+  const _Footer({
+    required this.isLoading,
+    required this.message,
+    required this.onRetry,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    if (isLoading) {
+      return Padding(
+        padding: paddingSymmetric(0, 12),
+        child: SizedBox(width: 24.w, height: 24.w, child: AppLoading()),
+      );
+    }
+
+    return Column(
+      children: [
+        Text(
+          message ?? LocaleKeys.errors_errors_unexpected.tr(),
+          style: AppTextStyles.text12Regular,
+          textAlign: TextAlign.center,
+        ),
+        TextButton(
+          onPressed: onRetry,
+          child: Text(LocaleKeys.general_retry.tr()),
+        ),
+      ],
     );
   }
 }

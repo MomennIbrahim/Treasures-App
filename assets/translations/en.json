@@ -14,7 +14,8 @@
         "cancel" : "Cancel",
         "hide" : "Hide",
         "not_available" : "Not Available",
-        "sale": "Sale"
+        "sale": "Sale",
+        "only_few_left": "Only a Few Left!"
     },
 
     "layout": {

@@ -12,7 +12,7 @@ import 'package:konoz/core/helper/bloc_observe.dart';
 import 'package:konoz/core/local_storage/app_cache.dart';
 import 'package:konoz/core/local_storage/secure_cache.dart';
 import 'package:konoz/core/local_storage/session_storage.dart';
- import 'package:konoz/core/notifications/notification_service.dart';
+import 'package:konoz/core/notifications/notification_service.dart';
 import 'package:konoz/firebase_options.dart';
 import 'package:konoz/treasures_app.dart';
 

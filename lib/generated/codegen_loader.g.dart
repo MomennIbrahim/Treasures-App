@@ -30,7 +30,8 @@ class CodegenLoader extends AssetLoader{
     "cancel": "Cancel",
     "hide": "Hide",
     "not_available": "Not Available",
-    "sale": "Sale"
+    "sale": "Sale",
+    "only_few_left": "Only a Few Left!"
   },
   "layout": {
     "home": "Home",
@@ -354,7 +355,8 @@ static const Map<String,dynamic> _ar = {
     "cancel": "الغاء",
     "hide": "اغلق",
     "not_available": "غير متاح الان",
-    "sale": "خصم"
+    "sale": "خصم",
+    "only_few_left": "متبقي قطع قليلة!"
   },
   "layout": {
     "home": "الرئيسية",
