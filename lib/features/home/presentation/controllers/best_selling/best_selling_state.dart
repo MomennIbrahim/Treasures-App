@@ -1,54 +1,45 @@
 part of 'best_selling_cubit.dart';
 
-enum BestSellingStatus {
-  initial,
-  loading,
-  loadingMore,
-  success,
-  failure,
-}
+enum BestSellingStatus { initial, loading, success, failure }
 
 extension BestSellingStatusX on BestSellingState {
   bool get isInitial => status == BestSellingStatus.initial;
 
   bool get isLoading => status == BestSellingStatus.loading;
 
-  bool get isLoadingMore => status == BestSellingStatus.loadingMore;
-
   bool get isSuccess => status == BestSellingStatus.success;
 
   bool get isFailure => status == BestSellingStatus.failure;
+
+  bool get isLoadingMore => list.isLoadingMore;
 }
 
-@immutable
 class BestSellingState extends Equatable {
   final BestSellingStatus status;
-  final BestSellingModel? bestSelling;
+  final PagedList<ProductItemModel> list;
   final AppFailure? failure;
 
   const BestSellingState({
     this.status = BestSellingStatus.initial,
-    this.bestSelling,
+    this.list = const PagedList(),
     this.failure,
   });
 
+  List<ProductItemModel> get products => list.items;
+
+  // failure بيتصفّر عن قصد
   BestSellingState copyWith({
     BestSellingStatus? status,
-    BestSellingModel? bestSelling,
+    PagedList<ProductItemModel>? list,
     AppFailure? failure,
-    bool clearFailure = false,
   }) {
     return BestSellingState(
       status: status ?? this.status,
-      bestSelling: bestSelling ?? this.bestSelling,
-      failure: clearFailure ? null : failure ?? this.failure,
+      list: list ?? this.list,
+      failure: failure,
     );
   }
 
   @override
-  List<Object?> get props => [
-        status,
-        bestSelling,
-        failure,
-      ];
+  List<Object?> get props => [status, list, failure];
 }

@@ -1,44 +1,45 @@
 part of 'packages_cubit.dart';
 
-enum PackagesStatus { initial, loading, loadingMore, success, failure }
+enum PackagesStatus { initial, loading, success, failure }
 
 extension PackagesStatusX on PackagesState {
   bool get isInitial => status == PackagesStatus.initial;
 
   bool get isLoading => status == PackagesStatus.loading;
 
-  bool get isLoadingMore => status == PackagesStatus.loadingMore;
-
   bool get isSuccess => status == PackagesStatus.success;
 
   bool get isFailure => status == PackagesStatus.failure;
+
+  bool get isLoadingMore => list.isLoadingMore;
 }
 
-@immutable
 class PackagesState extends Equatable {
   final PackagesStatus status;
-  final PackagesModel? packages;
+  final PagedList<PackageItemModel> list;
   final AppFailure? failure;
 
   const PackagesState({
     this.status = PackagesStatus.initial,
-    this.packages,
+    this.list = const PagedList(),
     this.failure,
   });
 
+  List<PackageItemModel> get packages => list.items;
+
+  // failure بيتصفّر عن قصد
   PackagesState copyWith({
     PackagesStatus? status,
-    PackagesModel? packages,
+    PagedList<PackageItemModel>? list,
     AppFailure? failure,
-    bool clearFailure = false,
   }) {
     return PackagesState(
       status: status ?? this.status,
-      packages: packages ?? this.packages,
-      failure: clearFailure ? null : failure ?? this.failure,
+      list: list ?? this.list,
+      failure: failure,
     );
   }
 
   @override
-  List<Object?> get props => [status, packages, failure];
+  List<Object?> get props => [status, list, failure];
 }

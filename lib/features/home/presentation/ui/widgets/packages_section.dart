@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:konoz/core/helper/app_padding.dart';
+import 'package:konoz/core/pagination/load_more_footer.dart';
 import 'package:konoz/core/theme/app_shimmer.dart';
 import 'package:konoz/core/theme/app_text_style.dart';
 import 'package:konoz/core/widgets/app_toast.dart';
@@ -46,11 +47,13 @@ class _PackagesSectionState extends State<PackagesSection> {
         builder: (context, state) {
           final bool isLoading = state.isLoading || state.isInitial;
 
-          final packages = state.packages?.packages ?? [];
+          final packages = state.packages;
 
           if (packages.isEmpty && !isLoading) {
             return const SizedBox.shrink();
           }
+
+          final list = state.list;
 
           return Skeletonizer(
             enabled: isLoading,
@@ -66,7 +69,18 @@ class _PackagesSectionState extends State<PackagesSection> {
                   ),
                 ),
                 10.verticalSpace,
-                PackagesListView(packages: packages, isLoading: isLoading),
+                PackagesListView(
+                  packages: packages,
+                  isLoading: isLoading,
+                  footer: (list.isLoadingMore || list.loadMoreFailure != null)
+                      ? LoadMoreFooter(
+                          isLoading: list.isLoadingMore,
+                          onRetry: () => context.read<PackagesCubit>().loadMore(
+                            retry: true,
+                          ),
+                        )
+                      : null,
+                ),
               ],
             ),
           );

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:konoz/core/helper/app_padding.dart';
+import 'package:konoz/core/pagination/load_more_footer.dart';
 import 'package:konoz/core/shared_model.dart/product_item_model.dart';
 import 'package:konoz/core/theme/app_shimmer.dart';
 import 'package:konoz/core/theme/app_text_style.dart';
@@ -47,7 +48,7 @@ class _BestSellingSectionState extends State<BestSellingSection> {
         builder: (context, state) {
           final bool isLoading = state.isLoading || state.isInitial;
 
-          final products = state.bestSelling?.products ?? [];
+          final products = state.products;
 
           final displayBestSelling = isLoading
               ? List.generate(4, (_) => ProductItemModel.empty())
@@ -56,6 +57,9 @@ class _BestSellingSectionState extends State<BestSellingSection> {
           if (products.isEmpty && !isLoading) {
             return const SizedBox.shrink();
           }
+
+          final list = state.list;
+          final cubit = context.read<BestSellingCubit>();
 
           return Skeletonizer(
             enabled: isLoading,
@@ -74,6 +78,14 @@ class _BestSellingSectionState extends State<BestSellingSection> {
                 BestSellingListviewHorizontal(
                   products: displayBestSelling,
                   isLoading: isLoading,
+                  onLoadMore: cubit.loadMore,
+                  footer: (list.isLoadingMore || list.loadMoreFailure != null)
+                      ? LoadMoreFooter(
+                          axis: Axis.horizontal,
+                          isLoading: list.isLoadingMore,
+                          onRetry: () => cubit.loadMore(retry: true),
+                        )
+                      : null,
                 ),
               ],
             ),

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:konoz/core/helper/app_padding.dart';
+import 'package:konoz/core/pagination/load_more_footer.dart';
 import 'package:konoz/core/shared_model.dart/product_item_model.dart';
 import 'package:konoz/core/theme/app_shimmer.dart';
 import 'package:konoz/core/theme/app_text_style.dart';
@@ -48,7 +49,7 @@ class _CurrenttlyTrendingSectionState extends State<CurrenttlyTrendingSection> {
         builder: (context, state) {
           final bool isLoading = state.isLoading || state.isInitial;
 
-          final products = state.currentlyTrending?.products ?? [];
+          final products = state.products;
           final displayCurrentlyTrending = isLoading
               ? List.generate(4, (_) => ProductItemModel.empty())
               : products;
@@ -56,6 +57,9 @@ class _CurrenttlyTrendingSectionState extends State<CurrenttlyTrendingSection> {
           if (products.isEmpty && !isLoading) {
             return const SizedBox.shrink();
           }
+
+          final list = state.list;
+          final cubit = context.read<CurrentlyTrendingCubit>();
 
           return Skeletonizer(
             enabled: isLoading,
@@ -74,6 +78,14 @@ class _CurrenttlyTrendingSectionState extends State<CurrenttlyTrendingSection> {
                 CurrentlyTrendingListviewHorizontal(
                   products: displayCurrentlyTrending,
                   isLoading: isLoading,
+                  onLoadMore: cubit.loadMore,
+                  footer: (list.isLoadingMore || list.loadMoreFailure != null)
+                      ? LoadMoreFooter(
+                          axis: Axis.horizontal,
+                          isLoading: list.isLoadingMore,
+                          onRetry: () => cubit.loadMore(retry: true),
+                        )
+                      : null,
                 ),
               ],
             ),

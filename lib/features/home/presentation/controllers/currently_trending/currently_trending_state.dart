@@ -1,44 +1,45 @@
 part of 'currently_trending_cubit.dart';
 
-enum CurrentlyTrendingStatus { initial, loading, loadingMore, success, failure }
+enum CurrentlyTrendingStatus { initial, loading, success, failure }
 
 extension CurrentlyTrendingStatusX on CurrentlyTrendingState {
   bool get isInitial => status == CurrentlyTrendingStatus.initial;
 
   bool get isLoading => status == CurrentlyTrendingStatus.loading;
 
-  bool get isLoadingMore => status == CurrentlyTrendingStatus.loadingMore;
-
   bool get isSuccess => status == CurrentlyTrendingStatus.success;
 
   bool get isFailure => status == CurrentlyTrendingStatus.failure;
+
+  bool get isLoadingMore => list.isLoadingMore;
 }
 
-@immutable
 class CurrentlyTrendingState extends Equatable {
   final CurrentlyTrendingStatus status;
-  final CurrentlyTrendingModel? currentlyTrending;
+  final PagedList<ProductItemModel> list;
   final AppFailure? failure;
 
   const CurrentlyTrendingState({
     this.status = CurrentlyTrendingStatus.initial,
-    this.currentlyTrending,
+    this.list = const PagedList(),
     this.failure,
   });
 
+  List<ProductItemModel> get products => list.items;
+
+  // failure بيتصفّر عن قصد
   CurrentlyTrendingState copyWith({
     CurrentlyTrendingStatus? status,
-    CurrentlyTrendingModel? currentlyTrending,
+    PagedList<ProductItemModel>? list,
     AppFailure? failure,
-    bool clearFailure = false,
   }) {
     return CurrentlyTrendingState(
       status: status ?? this.status,
-      currentlyTrending: currentlyTrending ?? this.currentlyTrending,
-      failure: clearFailure ? null : failure ?? this.failure,
+      list: list ?? this.list,
+      failure: failure,
     );
   }
 
   @override
-  List<Object?> get props => [status, currentlyTrending, failure];
+  List<Object?> get props => [status, list, failure];
 }
