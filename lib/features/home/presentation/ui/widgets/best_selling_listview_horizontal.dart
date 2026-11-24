@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:konoz/core/extension/layout_builder.dart';
 import 'package:konoz/core/helper/app_padding.dart';
 import 'package:konoz/core/pagination/load_more_listener.dart';
 import 'package:konoz/core/shared_model.dart/product_item_model.dart';
@@ -30,27 +31,32 @@ class BestSellingListviewHorizontal extends StatelessWidget {
         : products;
     final showFooter = !isLoading && footer != null;
 
-    return SizedBox(
-      height: 240.h,
-      child: LoadMoreListener(
-        axis: Axis.horizontal,
-        threshold: 200,
-        onLoadMore: onLoadMore,
-        child: ListView.separated(
-          physics: const BouncingScrollPhysics(),
-          padding: paddingHorizontal(16),
-          scrollDirection: Axis.horizontal,
-          itemCount: displayProducts.length + (showFooter ? 1 : 0),
-          separatorBuilder: (context, index) => 10.horizontalSpace,
-          itemBuilder: (context, index) {
-            if (index >= displayProducts.length) return footer!;
-            return BestSellingItem(
-              product: displayProducts[index],
-              isLoading: isLoading,
-            );
-          },
-        ),
-      ),
+    return LayoutBuilder(
+      builder: (context, constrains) {
+        return SizedBox(
+          height: constrains.responsive(mobile: 240.h, tablet: 250.h),
+          child: LoadMoreListener(
+            axis: Axis.horizontal,
+            threshold: 200,
+            onLoadMore: onLoadMore,
+            child: ListView.separated(
+              physics: const BouncingScrollPhysics(),
+              padding: paddingHorizontal(16),
+              scrollDirection: Axis.horizontal,
+              itemCount: displayProducts.length + (showFooter ? 1 : 0),
+              separatorBuilder: (context, index) => 10.horizontalSpace,
+              itemBuilder: (context, index) {
+                if (index >= displayProducts.length) return footer!;
+                return BestSellingItem(
+                  constraints: constrains,
+                  product: displayProducts[index],
+                  isLoading: isLoading,
+                );
+              },
+            ),
+          ),
+        );
+      },
     );
   }
 }

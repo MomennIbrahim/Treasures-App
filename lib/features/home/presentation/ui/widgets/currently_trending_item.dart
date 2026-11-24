@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import 'package:konoz/core/extension/layout_builder.dart';
 import 'package:konoz/core/helper/app_padding.dart';
 import 'package:konoz/core/router/routes.dart';
 import 'package:konoz/core/shared_model.dart/product_item_model.dart';
@@ -12,11 +13,13 @@ import 'package:konoz/core/widgets/app_image.dart';
 class CurrentlyTrendingItem extends StatelessWidget {
   final ProductItemModel product;
   final bool isLoading;
+  final BoxConstraints constraints;
 
   const CurrentlyTrendingItem({
     super.key,
     required this.product,
     required this.isLoading,
+    required this.constraints,
   });
 
   /// المقاس اللي بيتعرض سعره في البطاقة: الأرخص بعد الخصم (نفس from_price).
@@ -40,7 +43,7 @@ class CurrentlyTrendingItem extends StatelessWidget {
               extra: product.id,
             ),
       child: Container(
-        width: 140.w,
+        width: constraints.responsive(mobile: 140.w, tablet: 100.w),
         decoration: BoxDecoration(
           borderRadius: AppRadius.br16,
           color: Colors.transparent,
@@ -53,7 +56,7 @@ class CurrentlyTrendingItem extends StatelessWidget {
               children: [
                 AppImage.cachedNetwork(
                   product.image ?? "",
-                  height: 145,
+                  height: constraints.responsive(mobile: 145, tablet: 250),
                   width: double.infinity,
                   borderRadius: AppRadius.only(
                     topLeft: const Radius.circular(12),
@@ -69,7 +72,10 @@ class CurrentlyTrendingItem extends StatelessWidget {
                       backgroundColor: isLoading
                           ? Colors.transparent
                           : AppColors.error700,
-                      radius: 13.r,
+                      radius: constraints.responsive(
+                        mobile: 13.r,
+                        tablet: 18.r,
+                      ),
                       child: Text(
                         '${size!.discountPercent}%',
                         style: AppTextStyles.text10Bold,
@@ -130,9 +136,7 @@ class CurrentlyTrendingItem extends StatelessWidget {
                 ],
               ),
             ),
-
             6.verticalSpace,
-
             Padding(
               padding: paddingHorizontal(8),
               child: Row(

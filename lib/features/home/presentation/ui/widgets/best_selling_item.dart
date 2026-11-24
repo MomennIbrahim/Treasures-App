@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import 'package:konoz/core/extension/layout_builder.dart';
 import 'package:konoz/core/helper/app_padding.dart';
 import 'package:konoz/core/router/routes.dart';
 import 'package:konoz/core/shared_model.dart/product_item_model.dart';
@@ -14,11 +15,13 @@ import 'package:konoz/generated/locale_keys.g.dart';
 class BestSellingItem extends StatelessWidget {
   final ProductItemModel product;
   final bool isLoading;
+  final BoxConstraints constraints;
 
   const BestSellingItem({
     super.key,
     required this.product,
     required this.isLoading,
+    required this.constraints,
   });
 
   /// المقاس اللي بيتعرض سعره في البطاقة: الأرخص بعد الخصم (نفس from_price).
@@ -41,7 +44,7 @@ class BestSellingItem extends StatelessWidget {
               extra: product.id,
             ),
       child: SizedBox(
-        width: 160.w,
+        width: constraints.responsive(mobile: 160.w, tablet: 115.w),
         height: 200.h,
         child: Stack(
           children: [

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import 'package:konoz/core/extension/layout_builder.dart';
 import 'package:konoz/core/helper/app_padding.dart';
 import 'package:konoz/core/router/routes.dart';
 import 'package:konoz/core/theme/app_colors.dart';
@@ -65,84 +66,94 @@ class OrderCard extends StatelessWidget {
 
     return GestureDetector(
       onTap: () => _open(context),
-      child: Container(
-        decoration: BoxDecoration(
-          border: Border.all(color: colorScheme.onSurfaceVariant.withAlpha(20)),
-          borderRadius: AppRadius.br8,
-        ),
-        child: Row(
-          children: [
-            if (order.image.isEmpty)
-              Container(
-                width: 100.w,
-                height: 110.h,
-                decoration: BoxDecoration(
-                  color: Colors.white10,
-                  borderRadius: imageRadius,
-                ),
-                child: Icon(Icons.shopping_bag_outlined, size: 28.sp),
-              )
-            else
-              AppImage.cachedNetwork(
-                order.image,
-                borderRadius: imageRadius,
-                width: 100,
-                height: 110,
+      child: LayoutBuilder(
+        builder: (context, constrains) {
+          return Container(
+            decoration: BoxDecoration(
+              border: Border.all(
+                color: colorScheme.onSurfaceVariant.withAlpha(20),
               ),
-            Expanded(
-              child: Padding(
-                padding: paddingAll(8),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Expanded(
-                          child: Text(
-                            name,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: AppTextStyles.text14Bold,
-                          ),
-                        ),
-                        if (extra > 0) ...[
-                          4.horizontalSpace,
-                          Text(
-                            LocaleKeys.orders_more_items.tr(args: ['$extra']),
-                            style: AppTextStyles.text10Regular,
-                          ),
-                        ],
-                      ],
-                    ),
-                    4.verticalSpace,
-                    Text(
-                      _statusText,
-                      style: AppTextStyles.text12Bold.copyWith(
-                        color: _statusColor,
-                      ),
-                    ),
-                    4.verticalSpace,
-                    Text(
-                      '#${order.id} • ${order.dateLabel}',
-                      style: AppTextStyles.text10Regular,
-                    ),
-                    4.verticalSpace,
-                    Row(
-                      children: [
-                        Expanded(
-                          child: Text(
-                            '${order.totalLabel} EGP',
-                            style: AppTextStyles.text12Bold,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
+              borderRadius: AppRadius.br8,
             ),
-          ],
-        ),
+            child: Row(
+              children: [
+                if (order.image.isEmpty)
+                  Container(
+                    width: 100.w,
+                    height: 110.h,
+                    decoration: BoxDecoration(
+                      color: Colors.white10,
+                      borderRadius: imageRadius,
+                    ),
+                    child: Icon(Icons.shopping_bag_outlined, size: 28.sp),
+                  )
+                else
+                  AppImage.cachedNetwork(
+                    order.image,
+                    borderRadius: imageRadius,
+                    width: constrains.responsive(mobile: 100, tablet: 260),
+                    height: constrains.responsive(mobile: 110, tablet: 240),
+                    fit: BoxFit.contain,
+                  ),
+                8.horizontalSpace,
+                Expanded(
+                  child: Padding(
+                    padding: paddingAll(8),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            Expanded(
+                              child: Text(
+                                name,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: AppTextStyles.text14Bold,
+                              ),
+                            ),
+                            if (extra > 0) ...[
+                              4.horizontalSpace,
+                              Text(
+                                LocaleKeys.orders_more_items.tr(
+                                  args: ['$extra'],
+                                ),
+                                style: AppTextStyles.text10Regular,
+                              ),
+                            ],
+                          ],
+                        ),
+                        4.verticalSpace,
+                        Text(
+                          _statusText,
+                          style: AppTextStyles.text12Bold.copyWith(
+                            color: _statusColor,
+                          ),
+                        ),
+                        4.verticalSpace,
+                        Text(
+                          '#${order.id} • ${order.dateLabel}',
+                          style: AppTextStyles.text10Regular,
+                        ),
+                        4.verticalSpace,
+                        Row(
+                          children: [
+                            Expanded(
+                              child: Text(
+                                '${order.totalLabel} EGP',
+                                style: AppTextStyles.text12Bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          );
+        },
       ),
     );
   }

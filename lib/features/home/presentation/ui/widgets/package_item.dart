@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import 'package:konoz/core/extension/layout_builder.dart';
 import 'package:konoz/core/helper/app_padding.dart';
 import 'package:konoz/core/router/routes.dart';
 import 'package:konoz/core/theme/app_radius.dart';
@@ -42,16 +43,20 @@ class PackageItem extends StatelessWidget {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            AppImage.cachedNetwork(
-              package.image,
-              width: 135,
-              fit: BoxFit.cover,
-              borderRadius: AppRadius.only(
-                topLeft: isAr ? Radius.zero : radius,
-                bottomLeft: isAr ? Radius.zero : radius,
-                topRight: isAr ? radius : Radius.zero,
-                bottomRight: isAr ? radius : Radius.zero,
-              ),
+            LayoutBuilder(
+              builder: (context, constraints) {
+                return AppImage.cachedNetwork(
+                  package.image,
+                  width: constraints.responsive(mobile: 135, tablet: 300),
+                  fit: BoxFit.cover,
+                  borderRadius: AppRadius.only(
+                    topLeft: isAr ? Radius.zero : radius,
+                    bottomLeft: isAr ? Radius.zero : radius,
+                    topRight: isAr ? radius : Radius.zero,
+                    bottomRight: isAr ? radius : Radius.zero,
+                  ),
+                );
+              },
             ),
 
             Expanded(
