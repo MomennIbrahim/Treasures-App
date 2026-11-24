@@ -7,6 +7,25 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:1068605269082:android:d2d3bf145ab023ee8ea463",
+        "android_client_info": {
+          "package_name": "com.knoooz.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBvALn9q9WzPbDZD8vFpL8CbLQDq76nBf0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:1068605269082:android:d14c8cda4abcfa1c8ea463",
         "android_client_info": {
           "package_name": "com.konoz.app"

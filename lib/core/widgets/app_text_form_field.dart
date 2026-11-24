@@ -101,17 +101,22 @@ class _AppTextFormFieldState extends State<AppTextFormField> {
         if (widget.label != null) ...[
           Row(
             children: [
-              Text(
-                widget.label!,
-                style: AppTextStyles.text14Regular.copyWith(
-                  color: theme.colorScheme.onSurface,
+              Expanded(
+                child: Text(
+                  widget.label!,
+                  style: AppTextStyles.text14Regular.copyWith(
+                    color: theme.colorScheme.onSurface,
+                  ),
                 ),
               ),
               if (widget.labelInfo != null)
-                Text(
-                  widget.labelInfo!,
-                  style: AppTextStyles.text10Regular.copyWith(
-                    color: theme.colorScheme.onSurface,
+                Expanded(
+                  flex: 2,
+                  child: Text(
+                    widget.labelInfo!,
+                    style: AppTextStyles.text10Regular.copyWith(
+                      color: theme.colorScheme.onSurface,
+                    ),
                   ),
                 ),
             ],

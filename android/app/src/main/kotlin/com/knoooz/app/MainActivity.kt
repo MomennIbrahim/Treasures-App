@@ -1,4 +1,4 @@
-package com.konoz.app
+package com.knoooz.app
 
 import io.flutter.embedding.android.FlutterActivity
 

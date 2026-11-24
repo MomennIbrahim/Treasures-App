@@ -32,16 +32,26 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
-            <!-- App Links: لينكات المنتجات والباكدجات بتفتح التطبيق مباشرة -->
+            <!-- App Links: روابط تفاصيل المنتجات تفتح التطبيق مباشرة -->
             <intent-filter android:autoVerify="true">
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
                 <data
                     android:scheme="https"
-                    android:host="konoz.valien.tech" />
-                <data android:pathPrefix="/products" />
-                <data android:pathPrefix="/packages" />
+                    android:host="konoz.valien.tech"
+                    android:pathPrefix="/products/" />
+            </intent-filter>
+
+            <!-- App Links: روابط تفاصيل الباكدجات تفتح التطبيق مباشرة -->
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data
+                    android:scheme="https"
+                    android:host="konoz.valien.tech"
+                    android:pathPrefix="/packages/" />
             </intent-filter>
         </activity>
 
