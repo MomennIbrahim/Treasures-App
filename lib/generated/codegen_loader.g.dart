@@ -115,7 +115,8 @@ class CodegenLoader extends AssetLoader{
     "notes": "Notes",
     "base_notes": "Base Notes",
     "heart_notes": "Heart Notes",
-    "top_notes": "Top Notes"
+    "top_notes": "Top Notes",
+    "menu_price": "Menu price: {} EGP"
   },
   "cart": {
     "proceed_to_buy": "Proceed to Buy",
@@ -440,7 +441,8 @@ static const Map<String,dynamic> _ar = {
     "reviews": "التقييمات",
     "top_notes": "المكونات العليا",
     "heart_notes": "قلب العطر",
-    "base_notes": "المكونات الأساسية"
+    "base_notes": "المكونات الأساسية",
+    "menu_price": "سعر القائمة: {} جنيه"
   },
   "cart": {
     "proceed_to_buy": "المتابعة للشراء",

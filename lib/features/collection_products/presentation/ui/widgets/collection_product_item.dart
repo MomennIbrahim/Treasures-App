@@ -101,7 +101,9 @@ class CollectionProductItem extends StatelessWidget {
                         ),
                         if (hasDiscount)
                           Text(
-                            'menu price: ${size!.price} EGP',
+                            LocaleKeys.product_details_menu_price.tr(
+                              args: [size!.price.toString()],
+                            ),
                             overflow: TextOverflow.ellipsis,
                             maxLines: 1,
                             style: AppTextStyles.text10Regular.copyWith(
@@ -114,8 +116,8 @@ class CollectionProductItem extends StatelessWidget {
                         2.verticalSpace,
                         Text(
                           "${LocaleKeys.product_details_sillage.tr()}: ${product.sillage} | ${LocaleKeys.product_details_longevity.tr()}: ${product.longevity}",
-                          style: AppTextStyles.text12Regular.copyWith(
-                            color: AppColors.darkBackground,
+                          style: AppTextStyles.text10Regular.copyWith(
+                            color: colorScheme.onSurface,
                           ),
                         ),
                         2.verticalSpace,
@@ -154,7 +156,7 @@ class CollectionProductItem extends StatelessWidget {
                                   child: Text(
                                     product.sizes[index].label.toUpperCase(),
                                     style: AppTextStyles.text10Bold.copyWith(
-                                      color: AppColors.neutral600,
+                                      color: colorScheme.onSurface,
                                     ),
                                   ),
                                 );

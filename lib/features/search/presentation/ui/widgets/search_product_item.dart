@@ -35,7 +35,8 @@ class SearchProductItem extends StatelessWidget {
     final colorScheme = Theme.of(context).colorScheme;
     final size = _displaySize;
     final hasDiscount = size?.hasDiscount ?? false;
-
+    final bool isLastFew =
+        size?.status == "available" || size?.status == "out_of_stock";
     // فيه خصم: السعر بعد الخصم + menu price متشطب. مفيش خصم: السعر العادي بس.
     final price = hasDiscount
         ? size!.priceAfter
@@ -133,7 +134,9 @@ class SearchProductItem extends StatelessWidget {
                       ),
                       if (hasDiscount)
                         Text(
-                          'menu price: ${size!.price} EGP',
+                          LocaleKeys.product_details_menu_price.tr(
+                            args: [size!.price.toString()],
+                          ),
                           overflow: TextOverflow.ellipsis,
                           maxLines: 1,
                           style: AppTextStyles.text10Regular.copyWith(
@@ -144,14 +147,21 @@ class SearchProductItem extends StatelessWidget {
                           ),
                         ),
                       2.verticalSpace,
-                      Text(
-                        _inStock ? 'delivery today 6pm' : 'out of stock',
-                        style: AppTextStyles.text12Bold.copyWith(
-                          color: _inStock
-                              ? AppColors.success800
-                              : AppColors.error700,
+                      if (!isLastFew)
+                        Text(
+                          LocaleKeys.general_only_few_left.tr(),
+                          style: AppTextStyles.text12Bold.copyWith(
+                            color: AppColors.warning900,
+                          ),
                         ),
-                      ),
+                      2.verticalSpace,
+                      if (!_inStock)
+                        Text(
+                          LocaleKeys.general_out_of_stock.tr(),
+                          style: AppTextStyles.text12Bold.copyWith(
+                            color: AppColors.error700,
+                          ),
+                        ),
                       4.verticalSpace,
                       if (product.sizes.isNotEmpty)
                         SizedBox(

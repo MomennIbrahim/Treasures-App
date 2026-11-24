@@ -97,6 +97,7 @@ abstract class  LocaleKeys {
   static const product_details_base_notes = 'product_details.base_notes';
   static const product_details_heart_notes = 'product_details.heart_notes';
   static const product_details_top_notes = 'product_details.top_notes';
+  static const product_details_menu_price = 'product_details.menu_price';
   static const product_details = 'product_details';
   static const cart_proceed_to_buy = 'cart.proceed_to_buy';
   static const cart_items = 'cart.items';

@@ -106,7 +106,8 @@
         "notes": "Notes",
         "base_notes": "Base Notes",
         "heart_notes": "Heart Notes",
-        "top_notes": "Top Notes"
+        "top_notes": "Top Notes",
+        "menu_price": "Menu price: {} EGP"
     },
 
     "cart":{
